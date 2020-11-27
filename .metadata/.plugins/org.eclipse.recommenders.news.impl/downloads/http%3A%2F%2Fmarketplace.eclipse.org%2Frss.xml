@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xml:base="http://marketplace.eclipse.org/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:og="http://ogp.me/ns#" xmlns:article="http://ogp.me/ns/article#" xmlns:book="http://ogp.me/ns/book#" xmlns:profile="http://ogp.me/ns/profile#" xmlns:video="http://ogp.me/ns/video#" xmlns:product="http://ogp.me/ns/product#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <channel>
+    <title>Eclipse Plugins, Bundles and Products - Eclipse Marketplace</title>
+    <link>http://marketplace.eclipse.org/</link>
+    <description></description>
+    <language>en</language>
+     <atom:link href="http://marketplace.eclipse.org/rss.xml" rel="self" type="application/rss+xml" />
+      <item>
+    <title>g9 Anonymizer</title>
+    <link>http://marketplace.eclipse.org/content/g9-anonymizer</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/Esito-g9-110x80_2.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Fri, 2020-11-27 04:06&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22Esito%22&quot;&gt;Esito&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Fri, 2018-04-27 05:19&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/dbyesen/listings&quot; title=&quot;Dag Bøyesen&quot;&gt;Dag Bøyesen&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;p&gt;Are you looking for developer tools that supports data anonymizing, database sub-setting, creation of synthetic data, GDPR erasure and subject access requests? &lt;strong&gt;g9 Anonymizer&lt;/strong&gt; provides a fully programmable anonymization solution and solves some of your GDPR requirements. It connects to your JDBC compliant database and constructs a database model from which you can define&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;anonymization rules&lt;/li&gt;
+&lt;li&gt;data deletion rules for sub-setting data&lt;/li&gt;
+&lt;li&gt;create rules for creating synthetic data&lt;/li&gt;
+&lt;li&gt;erase rules for complying with Erasure requests&lt;/li&gt;
+&lt;li&gt;Subject Access Request rules&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;Install &lt;strong&gt;g9 Anonymizer&lt;/strong&gt;, restart Eclipse and select &lt;strong&gt;File &amp;gt; New &amp;gt; Example...&lt;/strong&gt; to open an existing example project or &lt;strong&gt;File &amp;gt; New &amp;gt; Other...&lt;/strong&gt; to create a new Anonymizer project (see the Screenshots).&lt;/p&gt;
+&lt;p&gt;Complete documentation is available from &lt;strong&gt;Help &amp;gt; Help Contents&lt;/strong&gt;.&lt;br /&gt;
+Select &lt;strong&gt;g9 Documentation &amp;gt;  g9 Anonymizer &amp;gt; Getting started with g9 Anonymizer&lt;/strong&gt; or download the &lt;strong&gt;pdf&lt;/strong&gt; from&lt;br /&gt;&lt;a href=&quot;http://www.esito.no/dl/Getting%20started%20with%20g9%20Anonymizer.pdf&quot; rel=&quot;nofollow&quot;&gt;http://www.esito.no/dl/Getting%20started%20with%20g9%20Anonymizer.pdf&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;g9 Anonymizer&lt;/strong&gt; generates JDBC application code which automatically registers the JDBC drivers, opens a connection and executes the specified SQL queries. Foreign key definitions are used to propagate data anonymizations across related tables. The anonymization can be repeated and can be performed on multiple databases to ensure data consistency. When the database schema is modified, the database model can be refreshed with the new changes without affecting the rules.&lt;/p&gt;
+&lt;p&gt;Using Maven, it builds a JAR file containing compiled code for all rules including the Javadoc and source code. The JAR file can be independently run against a test database or it can be integrated into other programs for performing GDPR tasks.&lt;/p&gt;
+&lt;p&gt;Download and try out &lt;strong&gt;g9 Anonymizer&lt;/strong&gt; and check if this is something you and your team can benefit from. A trial license is available.&lt;/p&gt;
+&lt;p&gt;Please visit &lt;a href=&quot;http://www.esito.no/en/products/anonymizer&quot; rel=&quot;nofollow&quot;&gt;http://www.esito.no/en/products/anonymizer&lt;/a&gt; for more information.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Fri, 27 Apr 2018 09:19:53 +0000</pubDate>
+ <dc:creator>dbyesen</dc:creator>
+ <guid isPermaLink="false">4054060 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/g9-anonymizer#comments</comments>
+  </item>
+  <item>
+    <title>g9 Modeling Tools</title>
+    <link>http://marketplace.eclipse.org/content/g9-modeling-tools</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/Esito-g9-110x80_0.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Fri, 2020-11-27 04:03&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22Esito%22&quot;&gt;Esito&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Mon, 2017-06-26 10:27&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/dbyesen/listings&quot; title=&quot;Dag Bøyesen&quot;&gt;Dag Bøyesen&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;p&gt;Are you developing Java applications that are taking forever to complete? Have you considered implementing web based UIs using React along with RESTful web services, but the time to code is overwhelming? Are your domain experts frequently changing their business requirements resulting in major code rewrites? If so, consider the &lt;strong&gt;g9 &lt;/strong&gt;Low-Code Modeling and code generation tools.&lt;/p&gt;
+&lt;p&gt;As a low-code development platform, &lt;strong&gt;g9&lt;/strong&gt; is a suite of Eclipse plugins that integrates with the Java Development Tools that can manage the complexities of application development. It follows a domain driven methodology with automatic code generation providing visual UI design tools. Domain experts can focus their efforts on the domain logic and capture the knowledge in a domain model. The g9 tools can import the domain model into its workspace and allow users to add abstract data, model user interfaces using the WYSIWYG visual editor, model databases and specify web services. Using the supplied generators, both front-end and back-end application code can be generated, some of which make use of the included runtime libraries. This eliminates the need to code much application functionality.&lt;/p&gt;
+&lt;p&gt;Install &lt;strong&gt;g9 Modeling Tools&lt;/strong&gt;, restart Eclipse and open the g9 perspective. Select &lt;strong&gt;File &amp;gt; New &amp;gt; Example...&lt;/strong&gt; to open an existing example project (see the Screenshots).&lt;/p&gt;
+&lt;p&gt;Complete documentation is available from &lt;strong&gt;Help &amp;gt; Help Contents&lt;/strong&gt;. Select &lt;strong&gt;g9 Documentation &amp;gt;  Getting Started &amp;gt; Getting started with g9&lt;/strong&gt; or download the pdf from &lt;a href=&quot;http://www.esito.no/dl/Getting%20started%20with%20g9.pdf&quot; rel=&quot;nofollow&quot;&gt;http://www.esito.no/dl/Getting%20started%20with%20g9.pdf&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;g9 Modeling Tools&lt;/strong&gt; help programmers become more efficient and more consistent by generating code, saving you time and money. Included with g9 are a series of generators used to generate the various parts of a java application utilizing various frameworks including Hibernate, Spring and Castor. Front-end supported UIs include React, ICEfaces, Angular/Bootstrap and Swing. Written in Xtend, the g9 generators are very readable and more concise than straight Java although generators can be written in any JVM compatible language (e.g. Java/Scala). Also, generators can be copied to create new variants or they can be modified to adhere to company standards and adapt best practices. You may even create a generator for another language. As business requirements change, the domain model can be updated and code regenerated without worrying about overwriting custom handwritten code. If you are spending too much time writing boilerplate code and implementing changing business requirements into your existing application, consider moving to a &lt;strong&gt;g9 low-code&lt;/strong&gt; development environment.&lt;/p&gt;
+&lt;p&gt;To do this you need the following:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;The g9 Eclipse plugins.&lt;/li&gt;
+&lt;li&gt;A code generator. Included with g9 are Dialog generators for developing user interfaces, Domain generators for generating java classes, Web Service generators, Object Selection generators for CRUD services and SOAP message generation and Database generators for Hibernate mapping and schema scripts (For a full list of the g9 generators, please visit &lt;a href=&quot;http://www.esito.no/en/generators&quot; rel=&quot;nofollow&quot;&gt;http://www.esito.no/en/generators&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;A supported domain model. These include a UML model using Enterprise Architect, an Ecore/Xcore model using the Eclipse Modeling Framework or a WSDL document,  Also supported is using Java source code with annotations to describe the domain model. You can also connect to an existing database and convert the database schema to an Ecore/Xcore model or to Java source.&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;Download and try out g9 and check if this is something you and your team can benefit from.&lt;/p&gt;
+&lt;p&gt;Please visit &lt;a href=&quot;http://www.esito.no/en/download&quot; rel=&quot;nofollow&quot;&gt;http://www.esito.no/en/download&lt;/a&gt; for more information.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Mon, 26 Jun 2017 14:27:28 +0000</pubDate>
+ <dc:creator>dbyesen</dc:creator>
+ <guid isPermaLink="false">3512486 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/g9-modeling-tools#comments</comments>
+  </item>
+  <item>
+    <title>SonarLint</title>
+    <link>http://marketplace.eclipse.org/content/sonarlint</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/sonarlint-110x80_0.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Thu, 2020-11-26 12:06&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22SonarSource%20S.A%22&quot;&gt;SonarSource S.A&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Thu, 2015-10-15 14:54&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/jhenrym6y/listings&quot; title=&quot;Julien HENRY&quot;&gt;Julien HENRY&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;p&gt;SonarLint is an IDE extension that helps you detect and fix quality issues as you write code. Like a spell checker, SonarLint squiggles flaws so they can be fixed before committing code. You can get it directly from the Eclipse Marketplace, and it will then detect new bugs and quality issues as you code (Java, JavaScript, PHP, Python and HTML).&lt;/p&gt;
+&lt;p&gt;If your project is analyzed on SonarQube or on SonarCloud, SonarLint can connect to the server to retrieve the appropriate quality profiles and settings for that project, as well as some additional languages support.&lt;/p&gt;
+&lt;p&gt;Discover more at &lt;a href=&quot;http://www.sonarlint.org&quot; rel=&quot;nofollow&quot;&gt;www.sonarlint.org&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;SonarLint requires Eclipse to use Java 8+ as runtime (but you can analyze Java projects targeting older Java versions). For any question or feedback please join the &lt;a href=&quot;https://community.sonarsource.com/c/help/sl&quot; rel=&quot;nofollow&quot;&gt;SonarSource Community Forum&lt;/a&gt; .&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Thu, 15 Oct 2015 18:54:47 +0000</pubDate>
+ <dc:creator>jhenrym6y</dc:creator>
+ <guid isPermaLink="false">2568658 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/sonarlint#comments</comments>
+  </item>
+  <item>
+    <title>vmlens</title>
+    <link>http://marketplace.eclipse.org/content/vmlens</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/logo_43.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Thu, 2020-11-26 03:52&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22vmlens%22&quot;&gt;vmlens&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Sun, 2013-04-28 07:37&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/tkrieger0xc/listings&quot; title=&quot;Thomas Krieger&quot;&gt;Thomas Krieger&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;p&gt;vmlens, testing multi-threaded applications on the JVM made easy. Simply running your tests with multiple threads does not work. Bugs depend on a specific thread interleaving, which is often impossible to reach by simply rerunning your test multiple times. And data races only occur on specific hardware architectures and JVMs. Therefore vmlens uses the Java Memory Model to execute all possible thread interleavings and to check for data races in the program flow&lt;/p&gt;
+&lt;h2&gt;Using vmlens is easy.&lt;/h2&gt;
+&lt;p&gt;Surround your test with a while loop iterating over all thread interleavings using the class AllInterleaving.&lt;/p&gt;
+&lt;h2&gt;Documentation&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;http://vmlens.com/&quot; rel=&quot;nofollow&quot;&gt;https://vmlens.com&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Sun, 28 Apr 2013 11:37:58 +0000</pubDate>
+ <dc:creator>tkrieger0xc</dc:creator>
+ <guid isPermaLink="false">825595 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/vmlens#comments</comments>
+  </item>
+  <item>
+    <title>CodeMR Static Code Analyser</title>
+    <link>http://marketplace.eclipse.org/content/codemr-static-code-analyser</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/codemr-icon-black-1.png&quot; width=&quot;80&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Wed, 2020-11-25 14:13&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22CodeMR%20Software%20Solution%22&quot;&gt;CodeMR Software Solution&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Thu, 2018-06-14 20:53&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/cteamqoj/listings&quot; title=&quot;CodeMR Team&quot;&gt;CodeMR Team&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;h2&gt;&lt;strong&gt;CodeMR Summary&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;CodeMR&lt;/strong&gt; is a&lt;strong&gt; multi-language (Java and C++) &lt;/strong&gt;software quality and static code analysis tool.&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;You can measure your software metrics and high-level quality attributes: &lt;strong&gt;coupling, cohesion, complexity, size&lt;/strong&gt;. &lt;/li&gt;
+&lt;li&gt;You can visualise your projects in Package Structure, TreeMap, Sunburst, Dependency and Graph Views. &lt;/li&gt;
+&lt;li&gt;You can analyze your software classes and their relationship with CodeMR graphs.&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;CodeMR has different filtering options and supports custom queries. It visualizes high-level Object Oriented quality attributes and low-level metrics. Quality attributes are derived from the combinations of several metrics. You can also create different HTML reports for the project. &lt;/p&gt;
+&lt;p&gt;With Community Edition you can extract up to 50 source files and 60 classes. You can download a trial license or buy a license from CodeMR website to analyse more files. Once you download and activate the license on a development machine, the plugin validates the license for this machine via the license management server. CodeMR plugin analyse your source code on your machine and save model/graph files on your local working directory under the &quot;codemr&quot; folder. It does not upload or expose your source code to any third-party server. &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;For more information, please visit &lt;strong&gt;&lt;a href=&quot;https://www.codemr.co.uk&quot; rel=&quot;nofollow&quot;&gt;https://www.codemr.co.uk&lt;/a&gt;&lt;/strong&gt; and follow us on Twitter &lt;strong&gt;@CodeMR_&lt;/strong&gt;&lt;br /&gt;
+ &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Better Code, Better Quality!&lt;/strong&gt;&lt;/p&gt;
+&lt;h3&gt; &lt;/h3&gt;
+&lt;h2&gt;&lt;strong&gt;Requirements&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;
+&lt;p&gt;Eclipse 2018 or an upper version&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Eclipse Java&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Optional Eclipse CDT C/C++ Development Tooling to use C++ analyzer&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;h3&gt; &lt;/h3&gt;
+&lt;h2&gt;&lt;strong&gt;Software metrics and statistics which are supported by CodeMR&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3&gt;&lt;strong&gt;Project Metrics&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;&lt;li&gt;Project Total Lines of Code&lt;/li&gt;
+&lt;li&gt;Number of Packages&lt;/li&gt;
+&lt;li&gt;Number of External Packages&lt;/li&gt;
+&lt;li&gt;Number of External Entities&lt;/li&gt;
+&lt;li&gt;Number of Problematic Classes&lt;/li&gt;
+&lt;li&gt;Number of Highly Problematic Classes&lt;/li&gt;
+&lt;/ul&gt;&lt;h3&gt;&lt;strong&gt;Package Metrics&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;&lt;li&gt;Package Total Lines of Code&lt;/li&gt;
+&lt;li&gt;Efferent Coupling&lt;/li&gt;
+&lt;li&gt;Afferent Coupling&lt;/li&gt;
+&lt;li&gt;Number of Interfaces&lt;/li&gt;
+&lt;li&gt;Number of Classes&lt;/li&gt;
+&lt;li&gt;Number of Entities&lt;/li&gt;
+&lt;li&gt;Abstractness&lt;/li&gt;
+&lt;li&gt;Instability&lt;/li&gt;
+&lt;li&gt;Normalized Distance&lt;/li&gt;
+&lt;/ul&gt;&lt;h3&gt;&lt;strong&gt;Class Metrics&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;&lt;li&gt;Lines of Code&lt;/li&gt;
+&lt;li&gt;Weighted Method Count&lt;/li&gt;
+&lt;li&gt;Depth of Inheritance Tree&lt;/li&gt;
+&lt;li&gt;Number of Children&lt;/li&gt;
+&lt;li&gt;Coupling Between Object Classes (CBO)&lt;/li&gt;
+&lt;li&gt;Response For a Class (RFC)&lt;/li&gt;
+&lt;li&gt;Lack of Cohesion of Methods (LCOM)&lt;/li&gt;
+&lt;li&gt;Cohesion Among Methods(CAM)&lt;/li&gt;
+&lt;li&gt;Number of Fields&lt;/li&gt;
+&lt;li&gt;Number of Methods&lt;/li&gt;
+&lt;li&gt;Number of Static Fields&lt;/li&gt;
+&lt;li&gt;Number of Static Methods&lt;/li&gt;
+&lt;li&gt;Number of Overridden Methods&lt;/li&gt;
+&lt;li&gt;Specialization Index&lt;/li&gt;
+&lt;li&gt;Access to Foreign Data&lt;/li&gt;
+&lt;li&gt;Lack of Tight Class Cohesion&lt;/li&gt;
+&lt;/ul&gt;&lt;h3&gt;&lt;strong&gt;Method Metrics&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;&lt;li&gt;McCabe Cyclomatic Complexity&lt;/li&gt;
+&lt;li&gt;Nested Block Depth&lt;/li&gt;
+&lt;li&gt;Method Lines of Code&lt;/li&gt;
+&lt;li&gt;Number of Parameters&lt;/li&gt;
+&lt;li&gt;Number of Methods Called&lt;/li&gt;
+&lt;li&gt;Number of Accessed Fields&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt; &lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Fri, 15 Jun 2018 00:53:03 +0000</pubDate>
+ <dc:creator>cteamqoj</dc:creator>
+ <guid isPermaLink="false">4135631 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/codemr-static-code-analyser#comments</comments>
+  </item>
+  <item>
+    <title>Protector4J</title>
+    <link>http://marketplace.eclipse.org/content/protector4j</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/android-chrome-512x512.png&quot; width=&quot;80&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2020-11-24 22:00&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22VLINX%20Software%22&quot;&gt;VLINX Software&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2017-06-27 05:41&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/ylin0gf/listings&quot; title=&quot;Yongfa Lin&quot;&gt;Yongfa Lin&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;p&gt;Protect Java Code from Decompilation by Encrypting the Java Classes, beyond Obfuscation.&lt;/p&gt;
+&lt;p&gt;Support JavaSE App, Tomcat Web App, Spring Boot App, GlassFish App, Payara App and Java 8, Java 11 Environment.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Guide of installation of eclipse plugin: &lt;a href=&quot;https://protector4j.com/docs/eclipse-plugin/&quot; rel=&quot;nofollow&quot;&gt;https://protector4j.com/docs/eclipse-plugin/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;After installed, please click Window -&amp;gt; Show View-&amp;gt;Other..., then find the Protector4J View in the dialog&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Documention: &lt;a href=&quot;https://protector4j.com/docs/get-started&quot; rel=&quot;nofollow&quot;&gt;https://protector4j.com/docs/get-started&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Site: &lt;a href=&quot;https://protector4j.com&quot; rel=&quot;nofollow&quot;&gt;https://protector4j.com&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Tue, 27 Jun 2017 09:41:40 +0000</pubDate>
+ <dc:creator>ylin0gf</dc:creator>
+ <guid isPermaLink="false">3513853 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/protector4j#comments</comments>
+  </item>
+  <item>
+    <title>ContextQuickie2</title>
+    <link>http://marketplace.eclipse.org/content/contextquickie2</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/default_images/default_2.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2020-11-24 11:00&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22ContextQuickie%22&quot;&gt;ContextQuickie&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Mon, 2020-11-23 05:05&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/cquickie/listings&quot; title=&quot;Roland Reinl&quot;&gt;Roland Reinl&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;p&gt;Showing the Windows Explorer Context Menu in Eclipse&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Mon, 23 Nov 2020 10:05:23 +0000</pubDate>
+ <dc:creator>cquickie</dc:creator>
+ <guid isPermaLink="false">5305264 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/contextquickie2#comments</comments>
+  </item>
+  <item>
+    <title>Design and Verification Tools (DVT) IDE for e, SystemVerilog, VHDL, and PSS</title>
+    <link>http://marketplace.eclipse.org/content/design-and-verification-tools-dvt-ide-e-systemverilog-vhdl-and-pss</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/AMIQ_logo_web_110x63.jpg&quot; width=&quot;110&quot; height=&quot;63&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2020-11-24 08:32&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22AMIQ%20EDA%22&quot;&gt;AMIQ EDA&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Wed, 2006-04-19 08:00&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/emisingname6ia/listings&quot; title=&quot;etools Mising name&quot;&gt;etools Mising name&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;p&gt;Design and Verification Tools (DVT) is an integrated development environment (IDE) for the design and verification engineers working with &lt;strong&gt;SystemVerilog, Verilog, VHDL, e, UPF, CPF, SLN, PSS, SDL&lt;/strong&gt;. &lt;strong&gt;Including Universal Verification Methodology (UVM)&lt;/strong&gt; support. It is similar to well-known programming tools like Visual Studio®, NetBeans®, and IntelliJ®. DVT comprises a proprietary IEEE standard-compliant parser, a smart code editor, an intuitive GUI, a comprehensive set of features that help with code inspection, navigation, documentation, and debugging, and an innovative linting framework. DVT allows design and verification engineers to overcome the limitations of plain text editors and use a modern and powerful tool that enables them to:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Increase the speed and quality of new code development&lt;/li&gt;
+&lt;li&gt;Easily understand complex or poorly documented source code&lt;/li&gt;
+&lt;li&gt;Simplify the maintenance of legacy code and reusable libraries&lt;/li&gt;
+&lt;li&gt;Accelerate language and methodology learning&lt;/li&gt;
+&lt;li&gt;Automatically generate well-organized source code documentation&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;
+FEATURES  Some of the features that DVT offers include:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Compilation errors signaled on the fly&lt;/li&gt;
+&lt;li&gt;Autocomplete / Content Assist&lt;/li&gt;
+&lt;li&gt;Customizable code and project templates&lt;/li&gt;
+&lt;li&gt;Dedicated wizards to generate getters and setters, override functions, or help with UVM factory registration&lt;/li&gt;
+&lt;li&gt;Hyperlinks&lt;/li&gt;
+&lt;li&gt;Semantic Search and Show Usages&lt;/li&gt;
+&lt;li&gt;Quick fixes / Autocorrect&lt;/li&gt;
+&lt;li&gt;Refactoring&lt;/li&gt;
+&lt;li&gt;Macro expansion&lt;/li&gt;
+&lt;li&gt;Project database query views (types, macros, checks, etc.)&lt;/li&gt;
+&lt;li&gt;Structural views (type hierarchy, design hierarch, call hierarchy, etc.)&lt;/li&gt;
+&lt;li&gt;Signal tracing&lt;/li&gt;
+&lt;li&gt;UML and TLM diagrams for inspecting and documenting the verification environment&lt;/li&gt;
+&lt;li&gt;Schematic, trace, state machine diagrams for inspecting and documenting the design&lt;/li&gt;
+&lt;li&gt;Dedicated UVM support&lt;/li&gt;
+&lt;li&gt;Cross-language capabilities for mixed-language projects&lt;/li&gt;
+&lt;li&gt;In-line reminders for task tracking (TO DOs)&lt;/li&gt;
+&lt;li&gt;Vi and emacs emulation&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;INTEGRATION WITH OTHER TOOLS Since it is built on the Eclipse Platform, the DVT IDE can be easily integrated within a large plug-in ecosystem. It also integrates seamlessly with all major hardware simulators such as NCSim , Specman , VCS , and Questa, to enable simplified simulation analysis and debugging. In addition, it works with revision control systems like CVS, Git, Subversion, ClearCase and bug tracking systems such as Bugzilla and ClearQuest.&lt;br /&gt;
+RESOURCES &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.dvteclipse.com/products/dvt-eclipse-ide&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;DVT Eclipse IDE Web Page&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.dvteclipse.com/datasheets/amiq_dvt_datasheet.pdf&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;DVT Eclipse IDE Datasheet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/playlist?list=PLBx64n-99iZNiUJj_I8WkLLbRl8u0mi94&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Demo movies&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.dvteclipse.com/products/dvt-debugger&quot; rel=&quot;nofollow&quot;&gt;DVT Debugger Add-on&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Wed, 19 Apr 2006 12:00:18 +0000</pubDate>
+ <dc:creator>emisingname6ia</dc:creator>
+ <guid isPermaLink="false">192 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/design-and-verification-tools-dvt-ide-e-systemverilog-vhdl-and-pss#comments</comments>
+  </item>
+  <item>
+    <title>JRebel and XRebel for Eclipse</title>
+    <link>http://marketplace.eclipse.org/content/jrebel-and-xrebel-eclipse</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/pluginIcon_transparent.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2020-11-24 05:14&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22Perforce%20Software%22&quot;&gt;Perforce Software&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2011-01-25 08:59&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/mrasmussenton/listings&quot; title=&quot;Michael Rasmussen&quot;&gt;Michael Rasmussen&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;p&gt;&lt;a href=&quot;https://www.jrebel.com/&quot; rel=&quot;nofollow&quot;&gt;JRebel&lt;/a&gt; is a productivity tool that allows developers to reload code changes instantly. It skips the rebuild, restart, and redeploy cycle common in Java development. JRebel enables developers to get more done in the same amount of time and stay in the flow while coding. JRebel supports a majority of real-world enterprise java stacks and is easy to install into existing development environments.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.xrebel.com&quot; rel=&quot;nofollow&quot;&gt;XRebel&lt;/a&gt; is a performance tool for Java development which gives developers real time performance insights to help them understand and resolve potential issues faster and earlier, during the development phase.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Tue, 25 Jan 2011 13:59:21 +0000</pubDate>
+ <dc:creator>mrasmussenton</dc:creator>
+ <guid isPermaLink="false">29591 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/jrebel-and-xrebel-eclipse#comments</comments>
+  </item>
+  <item>
+    <title> Virtual Service Eclipse Plugin for CA Service Virtualization</title>
+    <link>http://marketplace.eclipse.org/content/virtual-service-eclipse-plugin-ca-service-virtualization</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img typeof=&quot;foaf:Image&quot; class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/CA-Broadcom_Stacked_red-black%20%281%29.png&quot; width=&quot;107&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2020-11-24 02:51&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22CA%20Technologies%20a%20Broadcom%20Company%22&quot;&gt;CA Technologies a Broadcom Company&lt;/a&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Wed, 2019-05-15 09:11&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/ssubramaniam4no/listings&quot; title=&quot;Sankar Subramaniam&quot;&gt;Sankar Subramaniam&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot; property=&quot;content:encoded&quot;&gt;&lt;p&gt;Smarter Mocking: Eclipse IDE with Service Virtualization&lt;/p&gt;
+&lt;p&gt;When developing apps, developers want to have all the dependencies, like virtual services, to be available/accessible from within their Eclipse IDE. If they can emulate the missing, unavailable, or costly components or systems in their IDEs, then errors can be easily and quickly identified, and fixed long before they get to production.&lt;/p&gt;
+&lt;p&gt;With Service Virtualization/DevTest 10.5, we have enhanced the Virtual Services Environment (VSE) Manager plugin that allows for easier development adoption by supporting the creation of virtual services directly through Eclipse. The Eclipse plugin functionality enables you to create, manage, update, and deploy virtual services from MAR files, directories of RR pairs and Swagger specification files, creation of HTTPs virtual services, and augmenting virtual services by updating the RR pairs to DevTest Solutions (CA Service Virtualization). You can achieve all of these in a standard environment, enabling developers to work with virtual services based out of their IDE. &lt;/p&gt;
+&lt;p&gt;You can access the plugin on the Eclipse Marketplace here.&lt;/p&gt;
+&lt;p&gt;This is a fundamental shift in the way developers develop and test software today. It can be defined as a “smarter mocking”. It’s a new way for developers to “have everything” they need when they need it in order to be as efficient as possible. Learn more about our eclipse plugin in our &lt;a href=&quot;https://docops.ca.com/devtest-solutions/10-5/en/using/using-service-virtualization/vse-manager-create-manage-and-deploy-virtual-services&quot; rel=&quot;nofollow&quot;&gt;documentation&lt;/a&gt; or watch&lt;a href=&quot;https://www.youtube.com/watch?v=WwRRzjOVZyk&quot; rel=&quot;nofollow&quot;&gt; this video.&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+     <pubDate>Wed, 15 May 2019 13:11:13 +0000</pubDate>
+ <dc:creator>ssubramaniam4no</dc:creator>
+ <guid isPermaLink="false">4636467 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/virtual-service-eclipse-plugin-ca-service-virtualization#comments</comments>
+  </item>
+  </channel>
+</rss>
