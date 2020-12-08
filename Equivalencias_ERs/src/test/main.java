@@ -19,18 +19,18 @@ public class main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Automata aut = new Automata();
-		aut.addEstado("es1");
-		aut.addEstado("es2");
-		aut.addEstado("es3");
+		aut.addEstado();
+		aut.addEstado();
+		aut.addEstado();
 		
-		aut.addTransicion("es1", "es2", 'a');
-		aut.addTransicion("es2", "es3", 'a');
-		aut.addTransicion("es3", "es1", 'b');
-		aut.addTransicion("es2", "es3", 'b');
+		aut.addTransicion(1, 2, 'a');
+		aut.addTransicion(2, 3, 'a');
+		aut.addTransicion(3, 1, 'b');
+		aut.addTransicion(2, 3, 'b');
 		
 		aut.show();
 		System.out.println("\n\n");
-		aut.eliminarEstado("es2");
+		aut.eliminarEstado(2);
 		aut.show();
 	}
 

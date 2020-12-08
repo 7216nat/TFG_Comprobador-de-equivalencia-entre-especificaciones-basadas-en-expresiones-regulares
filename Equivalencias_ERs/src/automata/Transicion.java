@@ -1,14 +1,14 @@
 package automata;
 
 public class Transicion {
-	private String estadoF;
+	private int estadoF;
 	private char symbol;
 	
-	public Transicion(String st, char s) {
+	public Transicion(int st, char s) {
 		estadoF = st;
 		symbol = s;
 	}
 	public String toString() {
-		return ("Viaja a " + estadoF.toString() + " por " + symbol); 
+		return ("Viaja a " + estadoF + " por " + symbol); 
 	}
 }
