@@ -1,5 +1,6 @@
 package test;
 import automata.Automata;
+import automata.Automata2;
 import objects.*;
 import parser.ParserER;
 
@@ -23,14 +24,17 @@ public class main {
 		aut.addEstado();
 		aut.addEstado();
 		
+		aut.addTransicion(0, 1, 'a');
 		aut.addTransicion(1, 2, 'a');
-		aut.addTransicion(2, 3, 'a');
-		aut.addTransicion(3, 1, 'b');
-		aut.addTransicion(2, 3, 'b');
+		aut.addTransicion(2, 0, 'b');
+		aut.addTransicion(1, 2, 'b');
 		
 		aut.show();
-		System.out.println("\n\n");
-		aut.eliminarEstado(2);
+		System.out.println("\n");
+		aut.eliminarEstado(1);
+		aut.show();
+		System.out.println("\n");
+		aut.unir(0, 2);
 		aut.show();
 	}
 
