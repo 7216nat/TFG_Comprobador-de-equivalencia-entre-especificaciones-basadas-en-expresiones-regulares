@@ -70,12 +70,7 @@ public class Estado {
 		this.fin = fin;
 	}
 	
-	public String toString() {
-		String salida = "";
-		trans.forEach((k) -> System.out.println(k.getId() + " por " + k.getSymb()));
-		return salida;
-		
-	}
+
 
 	public void eliminarTransicionesA(int estado) {
 		Iterator it = trans.iterator();
@@ -101,5 +96,10 @@ public class Estado {
 		}
 		trans.addAll(aux);
 	}
-	
+	public String toString() {
+		String salida = "";
+		trans.forEach((k) -> System.out.println(k.getId() + " por " + k.getSymb()));
+		return salida;
+		
+	}
 }

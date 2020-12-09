@@ -38,7 +38,15 @@ public class Automata {
 		aut.remove(estado);
 		aut.forEach((k,v) -> v.eliminarTransicionesA(estado) );
 	}
-
+	
+	public void cambioIni(int estado, boolean ini) {
+		aut.get(estado).cambioIni(ini);
+	}
+	
+	public void cambioFin (int estado, boolean fin) {
+		this.aut.get(estado).cambioFin(fin);
+	}
+	
 	public void show() {
 		aut.forEach((k, v) -> System.out.println("Key: " + k + ": Value: " + v.toString()));
 
