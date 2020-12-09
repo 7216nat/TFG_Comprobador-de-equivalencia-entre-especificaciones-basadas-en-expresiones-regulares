@@ -54,7 +54,10 @@ public class Estado {
 	public HashSet<Transicion> getTrans(){
 		return trans;
 	}
-	
+	/**
+	 * Se llama con el estado al que vamos a meterle las transiciones
+	 * del estado entre parentesis
+	 * */
 	public void unir(HashSet<Transicion> es2) {
 		this.trans.addAll(es2);
 	}
@@ -72,6 +75,31 @@ public class Estado {
 		trans.forEach((k) -> System.out.println(k.getId() + " por " + k.getSymb()));
 		return salida;
 		
+	}
+
+	public void eliminarTransicionesA(int estado) {
+		Iterator it = trans.iterator();
+		while(it.hasNext()) {
+			Transicion t = (Transicion) it.next();
+			if(t.getId() == estado) {
+				it.remove();
+			}
+		}
+	}
+	/**
+	 * Se hace que las transiciones que iban a es2, ahora vayan a es1
+	 */
+	public void recolocarTransiciones(int es2, int es1) {
+		Iterator it = trans.iterator();
+		HashSet<Transicion> aux = new HashSet<Transicion>();
+		while(it.hasNext()) {
+			Transicion t = (Transicion) it.next();
+			if(t.getId() == es2) {
+				aux.add(new Transicion(es1, t.getSymb()));
+				it.remove();
+			}
+		}
+		trans.addAll(aux);
 	}
 	
 }
