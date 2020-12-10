@@ -96,7 +96,7 @@ public class Estado {
 	}
 	public String toString() {
 		String salida = "";
-		trans.forEach((k) -> System.out.println(k.getId() + " por " + k.getSymb()));
+		trans.forEach((k) -> System.out.print(k.getSymb() + " -> " + k.getId() + "; "));
 		return salida;
 		
 	}

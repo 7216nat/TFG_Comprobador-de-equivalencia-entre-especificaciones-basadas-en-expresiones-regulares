@@ -1,5 +1,8 @@
 package objects;
-import java.util.regex.*;  
+import java.util.regex.*;
+
+import automata.Automata;
+import automata.IdEstado;  
 public class Concat extends ExpressionBase {
 	
 	// private static final String _regex = "\\w\\w[\\w\\+\\*\\(\\)]+";
@@ -27,6 +30,24 @@ public class Concat extends ExpressionBase {
 	public boolean match(String string) {
 		// TODO Auto-generated method stub
 		return false; // Pattern.matches(_regex, string);
+	}
+	@Override
+	public Automata ThomsonAFN(IdEstado id) {
+		// TODO Auto-generated method stub
+		int iniPrev, aceptPrev;
+		Automata a1 = _e1.ThomsonAFN(id);
+		Automata a2 = _e2.ThomsonAFN(id);
+		
+		a2.cambioIni(false);
+		a1.cambioFin(false);
+		iniPrev = a2.getIni();
+		aceptPrev = a1.getFin();
+		Automata aut = new Automata(a1.getIni(), a2.getFin());
+		aut.copyAll(a1);
+		aut.copyAll(a2);
+		
+		aut.addTransicion(aceptPrev, iniPrev, "&");
+		return aut;
 	}
 
 }

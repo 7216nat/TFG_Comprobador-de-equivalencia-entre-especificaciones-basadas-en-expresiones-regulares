@@ -13,12 +13,17 @@ public class Automata {
 		aut = new HashMap<Integer, Estado>();
 	}
 	
+	public Automata(int ini) {
+		_ini = ini;
+		aut = new HashMap<Integer, Estado>();
+		addEstado(new Estado(ini, true, false));
+	}
 	public Automata(int ini, int acept) {
 		_ini = ini;
 		_acept = acept;
+		aut = new HashMap<Integer, Estado>();
 		addEstado(new Estado(ini, true, false));
 		addEstado(new Estado(acept, false, true));
-		
 	}
 	
 	public void addEstado(Estado estado) {
@@ -59,8 +64,21 @@ public class Automata {
 		this.aut.get(_acept).cambioFin(fin);
 	}
 	
+	public int getIni() {
+		return _ini;
+	}
+	
+	public int getFin() {
+		return _acept;
+	}
 	public void show() {
-		aut.forEach((k, v) -> System.out.println("Key: " + k + ": Value: " + v.toString()));
+		// aut.forEach((k, v) ->  + ));
+		for (Integer k: aut.keySet()) {
+			if (k == _ini) System.out.print("-Estado Inicial- ");
+			if (k == _acept) System.out.print("-Estado Final- ");
+			System.out.print("Key: " + k + ": Transitions: ");
+			System.out.println(aut.get(k).toString());
+		}
 
 	}
 }
