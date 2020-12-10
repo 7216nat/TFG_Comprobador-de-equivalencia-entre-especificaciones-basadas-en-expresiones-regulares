@@ -1,4 +1,5 @@
 package objects;
+import automata.*;
 
 public abstract class ExpressionBase {
 	protected String _sim;
@@ -13,6 +14,8 @@ public abstract class ExpressionBase {
 	public String toString() {
 		return _sim;
 	}
+	
+	public abstract Automata ThomsonAFN(IdEstado id);
 	
 	// devuelve una copia de la clase: funcion de la factoria
 	public abstract ExpressionBase cloneMe();

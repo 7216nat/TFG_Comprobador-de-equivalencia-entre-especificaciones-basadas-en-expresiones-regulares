@@ -1,29 +1,41 @@
 package automata;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class Automata {
 	private HashMap<Integer, Estado> aut;
 	// El nombre del proximo estado que se creara
-	private int cont;
+	private int _ini;
+	private int _acept;
+	// problemente necesitemos ArrayList ac
 
 	public Automata() {
 		aut = new HashMap<Integer, Estado>();
-		cont = 0;
+	}
+	
+	public Automata(int ini, int acept) {
+		_ini = ini;
+		_acept = acept;
+		addEstado(new Estado(ini, true, false));
+		addEstado(new Estado(acept, false, true));
+		
+	}
+	
+	public void addEstado(Estado estado) {
+		aut.put(estado.getId(), estado);
 	}
 
-	public void addEstado() {
-		Estado est = new Estado(cont);
-		aut.put(cont, est);
-		cont++;
-	}
-
-	public void addTransicion(int estado, int dest, char simb) {
+	public void addTransicion(int estado, int dest, String simb) {
 		aut.get(estado).addTrans(new Transicion(dest, simb));
 	}
 	
+	public HashMap<Integer, Estado> getAutomata(){
+		return this.aut;
+	}
+	
+	public void copyAll(Automata aut) {
+		this.aut.putAll(aut.getAutomata());
+	}
 	/**
 	 * es1 es el estado en que quedarán los estados es1 y es2
 	 * Se elimina es2
@@ -39,12 +51,12 @@ public class Automata {
 		aut.forEach((k,v) -> v.eliminarTransicionesA(estado) );
 	}
 	
-	public void cambioIni(int estado, boolean ini) {
-		aut.get(estado).cambioIni(ini);
+	public void cambioIni(boolean ini) {
+		aut.get(_ini).cambioIni(ini);
 	}
 	
-	public void cambioFin (int estado, boolean fin) {
-		this.aut.get(estado).cambioFin(fin);
+	public void cambioFin (boolean fin) {
+		this.aut.get(_acept).cambioFin(fin);
 	}
 	
 	public void show() {

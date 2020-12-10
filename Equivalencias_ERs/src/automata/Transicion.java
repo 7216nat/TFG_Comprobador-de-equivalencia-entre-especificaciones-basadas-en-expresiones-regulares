@@ -2,17 +2,17 @@ package automata;
 
 public class Transicion {
 	private int estadoF;
-	private char symbol;
+	private String symbol;
 	
-	public Transicion(int st, char s) {
+	public Transicion(int st, String simb) {
 		estadoF = st;
-		symbol = s;
+		symbol = simb;
 	}
 	
 	public int getId() {
 		return estadoF;
 	}
-	public char getSymb() {
+	public String getSymb() {
 		return symbol;
 	}
 	public boolean compare(Transicion tr) {

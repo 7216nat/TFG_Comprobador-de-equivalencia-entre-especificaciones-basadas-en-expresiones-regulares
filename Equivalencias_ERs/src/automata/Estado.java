@@ -1,9 +1,7 @@
 package automata;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 
 public class Estado {
@@ -73,7 +71,7 @@ public class Estado {
 
 
 	public void eliminarTransicionesA(int estado) {
-		Iterator it = trans.iterator();
+		Iterator<Transicion> it = trans.iterator();
 		while(it.hasNext()) {
 			Transicion t = (Transicion) it.next();
 			if(t.getId() == estado) {
@@ -85,7 +83,7 @@ public class Estado {
 	 * Se hace que las transiciones que iban a es2, ahora vayan a es1
 	 */
 	public void recolocarTransiciones(int es2, int es1) {
-		Iterator it = trans.iterator();
+		Iterator<Transicion> it = trans.iterator();
 		HashSet<Transicion> aux = new HashSet<Transicion>();
 		while(it.hasNext()) {
 			Transicion t = (Transicion) it.next();
@@ -101,5 +99,9 @@ public class Estado {
 		trans.forEach((k) -> System.out.println(k.getId() + " por " + k.getSymb()));
 		return salida;
 		
+	}
+
+	public int getId() {
+		return id;
 	}
 }
