@@ -45,10 +45,12 @@ public class Union extends ExpressionBase {
 		a1.cambioIni(false);
 		a2.cambioFin(false);
 		a2.cambioIni(false);
+		
 		iniPrev1 = a1.getIni();
 		aceptPrev1 = a1.getFin();
 		iniPrev2 = a2.getIni();
 		aceptPrev2 = a2.getFin();
+		
 		acept = id.nextId();
 		Automata aut = new Automata(ini, acept);
 		aut.copyAll(a1);
