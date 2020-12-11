@@ -4,27 +4,36 @@ import java.util.HashMap;
 
 public class Automata {
 	private HashMap<Integer, Estado> aut;
-	// El nombre del proximo estado que se creara
-	private int _ini;
-	private int _acept;
-	// problemente necesitemos ArrayList ac
-
+	// referencias al estado inicial y final
+	private Estado _ini;
+	private Estado _acept;
+	// problemente necesitemos ArrayList para los estados de aceptacion
+	
+	/**
+	 * Constructora por defecto
+	 */
 	public Automata() {
 		aut = new HashMap<Integer, Estado>();
 	}
-
+	
+	/*
+	 * Constructora para el conjunto vacio
+	 */
 	public Automata(int ini) {
-		_ini = ini;
+		_ini = new Estado(ini, true, false);
 		aut = new HashMap<Integer, Estado>();
-		addEstado(new Estado(ini, true, false));
+		addEstado(_ini);
 	}
-
+	
+	/**
+	 * Constructora para automata cualquiera 
+	 */
 	public Automata(int ini, int acept) {
-		_ini = ini;
-		_acept = acept;
+		_ini = new Estado(ini, true, false);
+		_acept = new Estado(acept, false, true);
 		aut = new HashMap<Integer, Estado>();
-		addEstado(new Estado(ini, true, false));
-		addEstado(new Estado(acept, false, true));
+		addEstado(_ini);
+		addEstado(_acept);
 	}
 
 	public void addEstado(Estado estado) {
@@ -38,7 +47,10 @@ public class Automata {
 	public HashMap<Integer, Estado> getAutomata() {
 		return this.aut;
 	}
-
+	
+	/**
+	 * copia del otro automata
+	 */
 	public void copyAll(Automata aut) {
 		this.aut.putAll(aut.getAutomata());
 	}
@@ -58,28 +70,28 @@ public class Automata {
 	}
 
 	public void cambioIni(boolean ini) {
-		aut.get(_ini).cambioIni(ini);
+		_ini.cambioIni(ini);
 	}
 
 	public void cambioFin(boolean fin) {
-		this.aut.get(_acept).cambioFin(fin);
+		_acept.cambioFin(fin);
 	}
 
 	public int getIni() {
-		return _ini;
+		return _ini.getId();
 	}
 
 	public int getFin() {
-		return _acept;
+		return _acept.getId();
 	}
 
 	public void show() {
 		// aut.forEach((k, v) -> + ));
 		for (Integer k : aut.keySet()) {
 			Estado aux = aut.get(k);
-			if (k == _ini)
+			if (aux.esIni())
 				System.out.print("-Estado Inicial- ");
-			if (k == _acept)
+			if (aux.esFin())
 				System.out.print("-Estado Final- ");
 			System.out.print("Key: " + k + ": Transitions: ");
 			System.out.println(aux.toString());
