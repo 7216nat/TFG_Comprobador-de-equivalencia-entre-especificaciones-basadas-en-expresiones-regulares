@@ -39,7 +39,7 @@ public class ParserER {
 		return c;
 	}
 
-	/*
+	/**
 	 * dado un puntero, concatenar todas las instancias de ExpressionBase
 	 * posteriores la CONCATENACIÓN está implicta en esta funcion
 	 */
@@ -67,7 +67,7 @@ public class ParserER {
 		return this.pila.pop();
 	}
 
-	/*
+	/**
 	 * La idea de union y parentesis es que cada vez que ocurran, al terminar formen
 	 * solo una ER
 	 */
@@ -126,7 +126,7 @@ public class ParserER {
 				return; // union es considerado tambien con si fuera entre parentesis
 			} else {
 
-				/*
+				/**
 				 * comprobar si es simbolo o lambda No está restringido el vacio()
 				 */
 				ExpressionBase simbolo = FactoryER.parseER("" + prim());
