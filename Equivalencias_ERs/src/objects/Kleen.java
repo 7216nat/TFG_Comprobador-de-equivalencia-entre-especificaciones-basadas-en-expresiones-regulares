@@ -1,23 +1,29 @@
 package objects;
 
+import java.util.ArrayList;
+
 import automata.Automata;
+import automata.Estado;
 import automata.IdEstado;
 
 //import java.util.regex.*;  
 public class Kleen extends ExpressionBase {
-	
-	//private static final String _regex = "\\w\\*[\\w\\+\\*\\(\\)]+|\\)\\*[\\w\\+\\*\\(\\)]*";
-	//private static final String _regex = "\\w\\*.*";
+
+	// private static final String _regex =
+	// "\\w\\*[\\w\\+\\*\\(\\)]+|\\)\\*[\\w\\+\\*\\(\\)]*";
+	// private static final String _regex = "\\w\\*.*";
 	private ExpressionBase _e1;
+
 	public Kleen(ExpressionBase e1) {
 		_e1 = e1;
 	}
-	
-	public Kleen() {}
-	
+
+	public Kleen() {
+	}
+
 	@Override
 	public String toString() {
-		return  "["+_e1.toString() + "]*";
+		return "[" + _e1.toString() + "]*";
 	}
 
 	@Override
@@ -29,15 +35,17 @@ public class Kleen extends ExpressionBase {
 	@Override
 	public boolean match(String string) {
 		// TODO Auto-generated method stub
-		return false; //Pattern.matches(_regex, string);
+		return false; // Pattern.matches(_regex, string);
 	}
 
 	@Override
 	public Automata ThomsonAFN(IdEstado id) {
 		// TODO Auto-generated method stub
-		int ini = id.nextId(), acept, iniPrev, aceptPrev;
+		int ini = id.nextId(), acept;
+		Estado iniPrev;
+		ArrayList<Estado> aceptPrev;
 		Automata a1 = _e1.ThomsonAFN(id);
-		
+
 		a1.cambioFin(false);
 		a1.cambioIni(false);
 		iniPrev = a1.getIni();
@@ -45,13 +53,25 @@ public class Kleen extends ExpressionBase {
 		acept = id.nextId();
 		Automata aut = new Automata(ini, acept);
 		aut.copyAll(a1);
-		
-		
+
 		aut.addTransicion(ini, acept, "&");
-		aut.addTransicion(ini, iniPrev, "&");
-		aut.addTransicion(aceptPrev, acept, "&");
-		aut.addTransicion(aceptPrev, iniPrev, "&");
+		aut.addTransicion(ini, iniPrev.getId(), "&");
+		for (Estado e : aceptPrev) {
+			aut.addTransicion(e.getId(), acept, "&");
+			aut.addTransicion(e.getId(), iniPrev.getId(), "&");
+		}
 		return aut;
+	}
+
+	@Override
+	public Automata ThomsonSimplAFN(IdEstado id) {
+		// TODO Auto-generated method stub
+		Automata a1 = _e1.ThomsonSimplAFN(id);
+		for (Estado e : a1.getFin()) {
+			a1.unir(e.getId(), a1.getIni().getId());
+		}
+		a1.IniEsFin();
+		return a1;
 	}
 
 }

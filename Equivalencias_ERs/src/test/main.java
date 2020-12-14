@@ -1,4 +1,8 @@
 package test;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import automata.Automata;
 import automata.IdEstado;
 import objects.*;
@@ -10,10 +14,13 @@ public class main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String str = "hola+mundo(hola*+m)*(u+ndo)+sad*";
-		str = "ab*";
-		ParserER parser = new ParserER(new String_ref(str));
+		str = "(a+c+de)*a*";
+		//str = "abb";
+		Set<Character> set = new HashSet<Character> ();
+		ParserER parser = new ParserER(new String_ref(str), set);
 		ExpressionBase er = parser.parse();
-		Automata aut = er.ThomsonAFN(new IdEstado());
+		Automata aut = er.ThomsonSimplAFN(new IdEstado());
+		System.out.println(set.toString());
 		System.out.println(er.toString());
 		aut.show();
 	}

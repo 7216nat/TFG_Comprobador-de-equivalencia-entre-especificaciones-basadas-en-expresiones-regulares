@@ -40,4 +40,13 @@ public class Lambdaa extends ExpressionBase {
 		return aut;
 	}
 
+	@Override
+	public Automata ThomsonSimplAFN(IdEstado id) {
+		// TODO Auto-generated method stub
+		int ini = id.nextId(), acept = id.nextId();
+		Automata aut = new Automata(ini, acept);
+		aut.addTransicion(ini, acept, _sim);
+		return aut;
+	}
+
 }

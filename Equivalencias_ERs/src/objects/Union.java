@@ -1,6 +1,9 @@
 package objects;
 
+import java.util.ArrayList;
+
 import automata.Automata;
+import automata.Estado;
 import automata.IdEstado;
 
 //import java.util.regex.*; 
@@ -37,7 +40,8 @@ public class Union extends ExpressionBase {
 	@Override
 	public Automata ThomsonAFN(IdEstado id) {
 		// TODO Auto-generated method stub
-		int ini = id.nextId(), acept, iniPrev1, aceptPrev1, iniPrev2, aceptPrev2;
+		int ini = id.nextId(), acept, iniPrev1, iniPrev2;
+		ArrayList<Estado> aceptPrev1, aceptPrev2;
 		Automata a1 = _e1.ThomsonAFN(id);
 		Automata a2 = _e2.ThomsonAFN(id);
 		
@@ -46,9 +50,9 @@ public class Union extends ExpressionBase {
 		a2.cambioFin(false);
 		a2.cambioIni(false);
 		
-		iniPrev1 = a1.getIni();
+		iniPrev1 = a1.getIni().getId();
 		aceptPrev1 = a1.getFin();
-		iniPrev2 = a2.getIni();
+		iniPrev2 = a2.getIni().getId();
 		aceptPrev2 = a2.getFin();
 		
 		acept = id.nextId();
@@ -59,9 +63,28 @@ public class Union extends ExpressionBase {
 		
 		aut.addTransicion(ini, iniPrev1, "&");
 		aut.addTransicion(ini, iniPrev2, "&");
-		aut.addTransicion(aceptPrev1, acept, "&");
-		aut.addTransicion(aceptPrev2, acept, "&");
+		for (Estado e: aceptPrev1)
+			aut.addTransicion(e.getId(), acept, "&");
+		for (Estado e: aceptPrev2)
+			aut.addTransicion(e.getId(), acept, "&");
 		return aut;
+	}
+	@Override
+	public Automata ThomsonSimplAFN(IdEstado id) {
+		// TODO Auto-generated method stub
+		Estado iniPrev1, iniPrev2;
+		Automata a1 = _e1.ThomsonSimplAFN(id);
+		Automata a2 = _e2.ThomsonSimplAFN(id);
+		
+		iniPrev1 = a1.getIni();
+		iniPrev2 = a2.getIni();
+		a1.copyAll(a2);
+		a1.copyFinals(a2);
+		if (!iniPrev1.esFin() && iniPrev2.esFin()) a1.IniEsFin();
+		a1.unir(iniPrev1.getId(), iniPrev2.getId());
+		a1.eliminarEstado(iniPrev2.getId());
+		
+		return a1;
 	}
 
 }

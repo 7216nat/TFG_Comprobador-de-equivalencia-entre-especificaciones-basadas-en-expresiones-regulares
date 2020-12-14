@@ -1,8 +1,10 @@
 package objects;
 
+import java.util.ArrayList;
 import java.util.regex.*;
 
 import automata.Automata;
+import automata.Estado;
 import automata.IdEstado;
 
 public class Concat extends ExpressionBase {
@@ -39,7 +41,8 @@ public class Concat extends ExpressionBase {
 	@Override
 	public Automata ThomsonAFN(IdEstado id) {
 		// TODO Auto-generated method stub
-		int iniPrev, aceptPrev;
+		Estado iniPrev;
+		ArrayList<Estado> aceptPrev;
 		Automata a1 = _e1.ThomsonAFN(id);
 		Automata a2 = _e2.ThomsonAFN(id);
 
@@ -47,12 +50,34 @@ public class Concat extends ExpressionBase {
 		a1.cambioFin(false);
 		iniPrev = a2.getIni();
 		aceptPrev = a1.getFin();
-		Automata aut = new Automata(a1.getIni(), a2.getFin());
-		aut.copyAll(a1);
-		aut.copyAll(a2);
+		a1.copyAll(a2);
+		
+		for (Estado e: aceptPrev)
+			a1.addTransicion(e.getId(), iniPrev.getId(), "&");
+		return a1;
+	}
 
-		aut.addTransicion(aceptPrev, iniPrev, "&");
-		return aut;
+	@Override
+	public Automata ThomsonSimplAFN(IdEstado id) {
+		// TODO Auto-generated method stub
+		Estado iniPrev;
+		ArrayList<Estado> aceptPrev;
+		Automata a1 = _e1.ThomsonSimplAFN(id);
+		Automata a2 = _e2.ThomsonSimplAFN(id);
+
+		
+		iniPrev = a2.getIni();
+		aceptPrev = a1.getFin();
+		if (!iniPrev.esFin()) {
+			a1.cambioFin(false);
+		}
+		a1.copyAll(a2);
+		for (Estado e: aceptPrev)
+			a1.unir(e.getId(), iniPrev.getId());
+		a1.getFin().clear();
+		a1.copyFinals(a2);
+		a1.eliminarEstado(iniPrev.getId());
+		return a1;
 	}
 
 }

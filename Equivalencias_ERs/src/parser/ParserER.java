@@ -1,5 +1,6 @@
 package parser;
 
+import java.util.Set;
 import java.util.Stack;
 
 import factories.FactoryER;
@@ -10,13 +11,15 @@ public class ParserER {
 
 	private String_ref exreg; // string a analizar
 	private Stack<ExpressionBase> pila; // pila para controlar parentesis, suma y cierre kleen
+	private Set<Character> set;
 	private int parentesis; // controlar si los parentesis están bien cerrados
 
 	// constructor
-	public ParserER(String_ref exreg) {
+	public ParserER(String_ref exreg, Set<Character> set) {
 		this.exreg = exreg;
 		this.pila = new Stack<ExpressionBase>();
 		this.parentesis = 0;
+		this.set = set;
 	}
 
 	// si quedan más simbolos por procesar
@@ -134,7 +137,7 @@ public class ParserER {
 					System.out.println("Simbolo inválido");
 					System.exit(0);
 				}
-
+				set.add(prim());
 				simbolo.set_sim("" + next());
 				this.pila.push(simbolo);
 			}

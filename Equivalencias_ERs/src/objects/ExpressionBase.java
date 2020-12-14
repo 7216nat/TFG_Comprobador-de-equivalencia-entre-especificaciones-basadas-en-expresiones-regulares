@@ -20,7 +20,9 @@ public abstract class ExpressionBase {
 	public String toString() {
 		return _sim;
 	}
-
+	
+	public abstract Automata ThomsonSimplAFN(IdEstado id);
+	
 	public abstract Automata ThomsonAFN(IdEstado id);
 
 	// devuelve una copia de la clase: funcion de la factoria

@@ -1,21 +1,22 @@
 package automata;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Automata {
 	private HashMap<Integer, Estado> aut;
 	// referencias al estado inicial y final
 	private Estado _ini;
-	private Estado _acept;
+	private ArrayList<Estado> _acept;
 	// problemente necesitemos ArrayList para los estados de aceptacion
-	
+
 	/**
 	 * Constructora por defecto
 	 */
 	public Automata() {
 		aut = new HashMap<Integer, Estado>();
 	}
-	
+
 	/*
 	 * Constructora para el conjunto vacio
 	 */
@@ -24,16 +25,25 @@ public class Automata {
 		aut = new HashMap<Integer, Estado>();
 		addEstado(_ini);
 	}
-	
+
 	/**
-	 * Constructora para automata cualquiera 
+	 * Constructora para automata cualquiera
 	 */
 	public Automata(int ini, int acept) {
-		_ini = new Estado(ini, true, false);
-		_acept = new Estado(acept, false, true);
+		_acept = new ArrayList<Estado> ();
 		aut = new HashMap<Integer, Estado>();
-		addEstado(_ini);
-		addEstado(_acept);
+		if (ini != acept) {
+			_ini = new Estado(ini, true, false);
+			Estado tmp = new Estado(acept, false, true);
+			_acept.add(tmp);
+			addEstado(_ini);
+			addEstado(tmp);
+		}
+		else {
+			_ini = new Estado(ini, true, true);
+			_acept.add(_ini);
+			addEstado(_ini);
+		}
 	}
 
 	public void addEstado(Estado estado) {
@@ -47,13 +57,6 @@ public class Automata {
 	public HashMap<Integer, Estado> getAutomata() {
 		return this.aut;
 	}
-	
-	/**
-	 * copia del otro automata
-	 */
-	public void copyAll(Automata aut) {
-		this.aut.putAll(aut.getAutomata());
-	}
 
 	/**
 	 * es1 es el estado en que quedarán los estados es1 y es2 Se elimina es2
@@ -61,28 +64,44 @@ public class Automata {
 	public void unir(int es1, int es2) {
 		aut.get(es1).unir(aut.get(es2).getTrans());
 		aut.forEach((k, v) -> v.recolocarTransiciones(es2, es1));
-		eliminarEstado(es2);
+		//eliminarEstado(es2);
 	}
 
 	public void eliminarEstado(int estado) {
 		aut.remove(estado);
 		aut.forEach((k, v) -> v.eliminarTransicionesA(estado));
 	}
-
+	
+	/**
+	 * copia del otro automata
+	 */
+	public void copyAll(Automata aut) {
+		this.aut.putAll(aut.getAutomata());
+	}
+	
+	public void copyFinals(Automata aut) {
+		this._acept.addAll(aut.getFin());
+	}
+	
+	public void IniEsFin() {
+		_ini.cambioFin(true);
+		_acept.add(_ini);
+	}
+	
 	public void cambioIni(boolean ini) {
 		_ini.cambioIni(ini);
 	}
 
 	public void cambioFin(boolean fin) {
-		_acept.cambioFin(fin);
+		for (Estado e: _acept) e.cambioFin(fin);
 	}
 
-	public int getIni() {
-		return _ini.getId();
+	public Estado getIni() {
+		return _ini;
 	}
 
-	public int getFin() {
-		return _acept.getId();
+	public ArrayList<Estado> getFin() {
+		return _acept;
 	}
 
 	public void show() {
