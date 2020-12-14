@@ -14,7 +14,7 @@ public class main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String str = "hola+mundo(hola*+m)*(u+ndo)+sad*";
-		str = "(a+c+de)*a*";
+		str = "(a+b)*a*";
 		//str = "abb";
 		Set<Character> set = new HashSet<Character> ();
 		ParserER parser = new ParserER(new String_ref(str), set);

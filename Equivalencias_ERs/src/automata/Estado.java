@@ -40,7 +40,7 @@ public class Estado {
 	public void deleteTrans(Transicion tr) {
 		boolean encontrado = false;
 		Iterator<Transicion> it = trans.iterator();
-		while (!encontrado || !it.hasNext()) {
+		while (!encontrado && it.hasNext()) {
 			if (it.next().compare(tr)) {
 				it.remove();
 				encontrado = true;
@@ -88,6 +88,7 @@ public class Estado {
 
 	/**
 	 * Se hace que las transiciones que iban a es2, ahora vayan a es1
+	 *
 	 */
 	public void recolocarTransiciones(int es2, int es1) {
 		Iterator<Transicion> it = trans.iterator();

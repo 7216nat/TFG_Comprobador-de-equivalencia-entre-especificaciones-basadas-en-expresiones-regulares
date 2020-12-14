@@ -63,7 +63,7 @@ public class Automata {
 	 */
 	public void unir(int es1, int es2) {
 		aut.get(es1).unir(aut.get(es2).getTrans());
-		aut.forEach((k, v) -> v.recolocarTransiciones(es2, es1));
+		//aut.forEach((k, v) -> v.recolocarTransiciones(es2, es1));
 		//eliminarEstado(es2);
 	}
 
@@ -72,7 +72,10 @@ public class Automata {
 		aut.forEach((k, v) -> v.eliminarTransicionesA(estado));
 	}
 	
+	
 	/**
+	 * Funciones para Thomson Simplificado
+	 * 
 	 * copia del otro automata
 	 */
 	public void copyAll(Automata aut) {
@@ -103,7 +106,15 @@ public class Automata {
 	public ArrayList<Estado> getFin() {
 		return _acept;
 	}
-
+	
+	public void finClear() {
+		this._acept.clear();
+	}
+	/*
+	 * End
+	 */
+	
+	
 	public void show() {
 		// aut.forEach((k, v) -> + ));
 		for (Integer k : aut.keySet()) {
