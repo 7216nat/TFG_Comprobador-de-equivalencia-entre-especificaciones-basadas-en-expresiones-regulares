@@ -63,7 +63,7 @@ public class Automata {
 	 */
 	public void unir(int es1, int es2) {
 		aut.get(es1).unir(aut.get(es2).getTrans());
-		//aut.forEach((k, v) -> v.recolocarTransiciones(es2, es1));
+		aut.forEach((k, v) -> v.recolocarTransiciones(es2, es1));
 		//eliminarEstado(es2);
 	}
 

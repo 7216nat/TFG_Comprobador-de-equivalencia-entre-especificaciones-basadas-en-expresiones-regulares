@@ -97,7 +97,7 @@ public class Estado {
 			Transicion t = (Transicion) it.next();
 			if (t.getId() == es2) {
 				aux.add(new Transicion(es1, t.getSymb()));
-				it.remove();
+				//it.remove();
 			}
 		}
 		trans.addAll(aux);
