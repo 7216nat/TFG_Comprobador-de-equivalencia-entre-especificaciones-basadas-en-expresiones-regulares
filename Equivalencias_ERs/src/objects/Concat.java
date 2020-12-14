@@ -73,7 +73,7 @@ public class Concat extends ExpressionBase {
 		}
 		a1.copyAll(a2);
 		for (Estado e: aceptPrev)
-			a1.unir(e.getId(), iniPrev.getId());
+			a1.unirSinEliminar(e.getId(), iniPrev.getId());
 		a1.finClear();;
 		a1.copyFinals(a2);
 		a1.eliminarEstado(iniPrev.getId());

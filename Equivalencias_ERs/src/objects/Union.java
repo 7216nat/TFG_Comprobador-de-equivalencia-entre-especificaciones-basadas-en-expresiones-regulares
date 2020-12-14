@@ -81,7 +81,7 @@ public class Union extends ExpressionBase {
 		a1.copyAll(a2);
 		a1.copyFinals(a2);
 		if (!iniPrev1.esFin() && iniPrev2.esFin()) a1.IniEsFin();
-		a1.unir(iniPrev1.getId(), iniPrev2.getId());
+		a1.unirSinEliminar(iniPrev1.getId(), iniPrev2.getId());
 		a1.eliminarEstado(iniPrev2.getId());
 		
 		return a1;

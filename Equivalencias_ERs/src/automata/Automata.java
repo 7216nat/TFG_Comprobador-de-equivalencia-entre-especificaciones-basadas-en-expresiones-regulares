@@ -64,9 +64,10 @@ public class Automata {
 	public void unir(int es1, int es2) {
 		aut.get(es1).unir(aut.get(es2).getTrans());
 		aut.forEach((k, v) -> v.recolocarTransiciones(es2, es1));
-		//eliminarEstado(es2);
+		eliminarEstado(es2);
 	}
-
+	
+	
 	public void eliminarEstado(int estado) {
 		aut.remove(estado);
 		aut.forEach((k, v) -> v.eliminarTransicionesA(estado));
@@ -78,6 +79,12 @@ public class Automata {
 	 * 
 	 * copia del otro automata
 	 */
+	public void unirSinEliminar(int es1, int es2) {
+		aut.get(es1).unir(aut.get(es2).getTrans());
+		aut.forEach((k, v) -> v.recolocarTransicionesSinBorrar(es2, es1));
+		//eliminarEstado(es2);
+	}
+	
 	public void copyAll(Automata aut) {
 		this.aut.putAll(aut.getAutomata());
 	}
@@ -111,7 +118,7 @@ public class Automata {
 		this._acept.clear();
 	}
 	/*
-	 * End
+	 * End Funciones para Thomson Simplificado
 	 */
 	
 	

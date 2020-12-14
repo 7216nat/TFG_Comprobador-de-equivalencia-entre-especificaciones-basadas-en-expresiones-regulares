@@ -68,7 +68,7 @@ public class Kleen extends ExpressionBase {
 		// TODO Auto-generated method stub
 		Automata a1 = _e1.ThomsonSimplAFN(id);
 		for (Estado e : a1.getFin()) {
-			a1.unir(e.getId(), a1.getIni().getId());
+			a1.unirSinEliminar(e.getId(), a1.getIni().getId());
 		}
 		a1.IniEsFin();
 		return a1;

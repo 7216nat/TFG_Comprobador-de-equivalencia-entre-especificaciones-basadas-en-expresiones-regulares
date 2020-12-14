@@ -68,14 +68,6 @@ public class Estado {
 		this.fin = fin;
 	}
 
-	public boolean esIni() {
-		return inicial;
-	}
-
-	public boolean esFin() {
-		return fin;
-	}
-
 	public void eliminarTransicionesA(int estado) {
 		Iterator<Transicion> it = trans.iterator();
 		while (it.hasNext()) {
@@ -97,12 +89,39 @@ public class Estado {
 			Transicion t = (Transicion) it.next();
 			if (t.getId() == es2) {
 				aux.add(new Transicion(es1, t.getSymb()));
+				it.remove();
+			}
+		}
+		trans.addAll(aux);
+	}
+	
+	/*
+	 *  Funciones para Thomson Simplificado
+	 */
+	
+	public boolean esIni() {
+		return inicial;
+	}
+
+	public boolean esFin() {
+		return fin;
+	}
+	public void recolocarTransicionesSinBorrar(int es2, int es1) {
+		Iterator<Transicion> it = trans.iterator();
+		HashSet<Transicion> aux = new HashSet<Transicion>();
+		while (it.hasNext()) {
+			Transicion t = (Transicion) it.next();
+			if (t.getId() == es2) {
+				aux.add(new Transicion(es1, t.getSymb()));
 				//it.remove();
 			}
 		}
 		trans.addAll(aux);
 	}
-
+	
+	/*
+	 * end Funciones para Thomson Simplificado
+	 */
 	public String toString() {
 		String salida = "";
 		trans.forEach((k) -> System.out.print(k.getSymb() + " -> " + k.getId() + "; "));
