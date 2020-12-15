@@ -45,22 +45,25 @@ public class Union extends ExpressionBase {
 		Automata a1 = _e1.ThomsonAFN(id);
 		Automata a2 = _e2.ThomsonAFN(id);
 		
+		// deshacer todos los estados finales e iniciales
 		a1.quitarTodosFin();
 		a1.quitarIni();
 		a2.quitarTodosFin();
 		a2.quitarIni();
 		
+		// referencias a estos
 		iniPrev1 = a1.getIni().getId();
 		aceptPrev1 = a1.getFin();
 		iniPrev2 = a2.getIni().getId();
 		aceptPrev2 = a2.getFin();
 		
+		// nueva automata
 		acept = id.nextId();
 		Automata aut = new Automata(ini, acept);
 		aut.copyAll(a1);
 		aut.copyAll(a2);
 		
-		
+		// consulte memoria
 		aut.addTransicion(ini, iniPrev1, '&');
 		aut.addTransicion(ini, iniPrev2, '&');
 		for (Estado e: aceptPrev1)
@@ -78,9 +81,15 @@ public class Union extends ExpressionBase {
 		
 		iniPrev1 = a1.getIni();
 		iniPrev2 = a2.getIni();
+		
+		// copio todas las transiciones de otra automata y sus estados finales
 		a1.copyAll(a2);
 		a1.copyFinals(a2);
-		if (!iniPrev1.esFin() && iniPrev2.esFin()) a1.IniEsFin();
+		
+		// en caso de que algun estado inicial sea final, el estado inicial que queda es final 
+		if (iniPrev1.esFin() || iniPrev2.esFin()) a1.IniEsFin();
+		
+		// añadir las transiciones del a2.estadoinicial a a1.estadoinicila y eliminar el primero
 		a1.unirSinEliminar(iniPrev1.getId(), iniPrev2.getId());
 		a1.eliminarEstado(iniPrev2.getId());
 		

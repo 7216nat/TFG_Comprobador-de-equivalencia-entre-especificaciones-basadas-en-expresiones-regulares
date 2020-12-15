@@ -16,7 +16,12 @@ public class Transicion {
 	public char getSymb() {
 		return symbol;
 	}
-
+	
+	/**
+	 * compruba si dos transiciones son iguales
+	 * @param tr
+	 * @return
+	 */
 	public boolean compare(Transicion tr) {
 		return (this.estadoF == tr.estadoF && tr.symbol == this.symbol);
 	}

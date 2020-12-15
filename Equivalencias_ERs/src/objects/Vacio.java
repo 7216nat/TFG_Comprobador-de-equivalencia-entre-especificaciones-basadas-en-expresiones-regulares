@@ -39,8 +39,7 @@ public class Vacio extends ExpressionBase {
 	public Automata ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		int ini = id.nextId();
-		int acept = ini;
-		Automata aut = new Automata(ini, acept);
+		Automata aut = new Automata(ini);
 		return aut;
 	}
 

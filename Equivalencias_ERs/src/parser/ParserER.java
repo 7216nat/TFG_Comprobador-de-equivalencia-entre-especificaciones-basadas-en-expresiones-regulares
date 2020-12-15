@@ -6,7 +6,9 @@ import java.util.Stack;
 import factories.FactoryER;
 import objects.*;
 
-// Clase para parsear de string a un árbol de ERs
+/**
+ *  Clase para parsear de string a un árbol de ERs
+ */
 public class ParserER {
 
 	private String_ref exreg; // string a analizar
@@ -14,7 +16,11 @@ public class ParserER {
 	private Set<Character> set;
 	private int parentesis; // controlar si los parentesis están bien cerrados
 
-	// constructor
+	/**
+	 *  constructor
+	 * @param exreg
+	 * @param set
+	 */
 	public ParserER(String_ref exreg, Set<Character> set) {
 		this.exreg = exreg;
 		this.pila = new Stack<ExpressionBase>();
@@ -22,12 +28,18 @@ public class ParserER {
 		this.set = set;
 	}
 
-	// si quedan más simbolos por procesar
+	/**
+	 *  si quedan más simbolos por procesar
+	 * @return
+	 */
 	private boolean terminado() {
 		return exreg.get_len() > 0;
 	}
 
-	// el primer simbolo
+	/**
+	 *  el primer simbolo
+	 * @return
+	 */
 	private char prim() {
 		if (this.exreg.get_len() > 0)
 			return this.exreg.ini();
@@ -35,7 +47,10 @@ public class ParserER {
 			return '\0';
 	}
 
-	// consume un simbolo y devuelve el consumido
+	/**
+	 *  consume un simbolo y devuelve el consumido
+	 * @return
+	 */
 	private char next() {
 		char c = prim();
 		this.exreg.sub(1);
@@ -55,7 +70,10 @@ public class ParserER {
 		}
 	}
 
-	// Llamada inicial para el parse
+	/**
+	 *  Llamada inicial para el parse
+	 * @return
+	 */
 	public ExpressionBase parse() {
 
 		parseDeVerdad(1);
@@ -127,6 +145,14 @@ public class ParserER {
 				ExpressionBase union = new Union(er2, er1);
 				this.pila.push(union);
 				return; // union es considerado tambien con si fuera entre parentesis
+			} else if (prim() == '%') {
+				next();
+				if (pila.size() == 0 && terminado()) {
+					pila.push(new Vacio());
+					return;
+				}
+				System.out.println("error conjunto vacio");
+				System.exit(0);
 			} else {
 
 				/**

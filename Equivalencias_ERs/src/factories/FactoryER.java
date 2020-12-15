@@ -10,6 +10,11 @@ public class FactoryER {
 			new Lambdaa()
 	};
 	
+	/**
+	 * parser, devuelve el tipo de expresion
+	 * @param er
+	 * @return
+	 */
 	public static ExpressionBase parseER(String er) {
 		ExpressionBase _er = null;
 		for (ExpressionBase eb: availableERs) {

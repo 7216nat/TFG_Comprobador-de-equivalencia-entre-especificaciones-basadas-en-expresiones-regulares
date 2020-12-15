@@ -42,19 +42,18 @@ public class Automata {
 		if (ini != acept) {
 			_ini = new Estado(ini, true, false);
 			Estado tmp = new Estado(acept, false, true);
-			_acept.add(tmp);
 			addEstado(_ini);
 			addEstado(tmp);
 		}
 		else {
 			_ini = new Estado(ini, true, true);
-			_acept.add(_ini);
 			addEstado(_ini);
 		}
 	}
 	
 	/**
-	 * Añade estado
+	 * Añade estado, compruba si es inicial o final 
+	 * para añadir nuevas referencias
 	 */
 	public void addEstado(Estado estado) {
 		aut.put(estado.getId(), estado);
@@ -91,7 +90,8 @@ public class Automata {
 	}
 	
 	/**
-	 * Se elimina el estado con id estado
+	 * Se elimina el estado con id estado, dependiendo de que sea
+	 * inicial o final se eliminan tambien sus referencias
 	 */
 	public void eliminarEstado(int estado) {
 		if(estado == this._ini.getId())
@@ -145,6 +145,11 @@ public class Automata {
 		
 	}
 	
+	/**
+	 * devuelve el conjunto de transiciones de estado id
+	 * @param id
+	 * @return
+	 */
 	public HashSet<Transicion> getTransEstado(int id){
 		return aut.get(id).getTrans();
 	}
@@ -161,20 +166,26 @@ public class Automata {
 	}
 	
 	/**
-	 * Hace una copia de todo el automata
+	 * Hace una copia de todo el automata sin las refenrencias
 	 */
 	public void copyAll(Automata aut) {
 		this.aut.putAll(aut.getAutomata());
 	}
 	
+	/**
+	 * copiar la lista de referencias a los estados finales
+	 * @param aut
+	 */
 	public void copyFinals(Automata aut) {
 		this._acept.addAll(aut.getFin());
 	}
 	
 	
+	/**
+	 * pone a estado inicial tambien final
+	 */
 	public void IniEsFin() {
 		_ini.cambioFin(true);
-		_acept.add(_ini);
 	}
 	/**
 	 * Hace que el estado inicial deje de ser inicial
@@ -209,17 +220,26 @@ public class Automata {
 			}
 		}
 	}
-
+	
+	/**
+	 * pone todos los estados finales no finales
+	 */
 	public void quitarTodosFin() {
 		for (Estado e: _acept) e.cambioFin(false);
 	}
 	
-
+	/**
+	 * devuelve estado inicial
+	 * @return
+	 */
 	public Estado getIni() {
 		return _ini;
 	}
 
-	
+	/**
+	 * devuelve lista de estados finales
+	 * @return
+	 */
 	public ArrayList<Estado> getFin() {
 		return _acept;
 	}

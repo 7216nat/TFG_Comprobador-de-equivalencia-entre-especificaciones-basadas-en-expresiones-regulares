@@ -45,13 +45,15 @@ public class Concat extends ExpressionBase {
 		ArrayList<Estado> aceptPrev;
 		Automata a1 = _e1.ThomsonAFN(id);
 		Automata a2 = _e2.ThomsonAFN(id);
-
+		
+		// deshago estado inicial de a2 y finales de a1
 		a2.quitarIni();
 		a1.quitarTodosFin();
 		iniPrev = a2.getIni();
 		aceptPrev = a1.getFin();
 		a1.copyAll(a2);
 		
+		// añadir una lambda-transicion de a1.estadofinal a a2.estadoinicial 
 		for (Estado e: aceptPrev)
 			a1.addTransicion(e.getId(), iniPrev.getId(), '&');
 		return a1;
@@ -65,16 +67,25 @@ public class Concat extends ExpressionBase {
 		Automata a1 = _e1.ThomsonSimplAFN(id);
 		Automata a2 = _e2.ThomsonSimplAFN(id);
 
-		
 		iniPrev = a2.getIni();
 		aceptPrev = a1.getFin();
-		if (!iniPrev.esFin()) {
-			a1.quitarTodosFin();
-		}
 		a1.copyAll(a2);
+		
+		// añadir a los estados finales de a1 todos las transiciones de a2.estadoinicial
 		for (Estado e: aceptPrev)
 			a1.unirSinEliminar(e.getId(), iniPrev.getId());
-		a1.finClear();;
+		
+		// si a2.estado inicial no es final, se elimina la lista de estado finales
+		if (iniPrev.esFin() == false) {
+			a1.quitarTodosFin();
+			a1.finClear();
+		}
+		// en caso contrario
+		else {
+			for (Estado e: aceptPrev)
+				a1.addTransicion(a1.getIni().getId(), e.getId(), '&');
+		}
+		
 		a1.copyFinals(a2);
 		a1.eliminarEstado(iniPrev.getId());
 		return a1;

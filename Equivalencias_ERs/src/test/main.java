@@ -18,17 +18,17 @@ public class main {
 	//Test paso de String a expresion regular
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		IdEstado state = new IdEstado();
 		
-		String str = "a*(ba*)*";
+		String str = "a*b*";
 		String str2 = "(a+b)*";
 		
 		Set<Character> set = new HashSet<Character> ();
 		ParserER parser = new ParserER(new String_ref(str), set);
 		ExpressionBase er = parser.parse();
-		Automata aut = er.ThomsonAFN(state);
-		//Automata aut = er.ThomsonSimplAFN(state);
+		//Automata aut = er.ThomsonAFN(state);
+		Automata aut = er.ThomsonSimplAFN(state);
 		System.out.println(set.toString());
 		System.out.println(er.toString());
 		aut.show();
@@ -36,8 +36,8 @@ public class main {
 		Set<Character> set2 = new HashSet<Character> ();
 		ParserER parser2 = new ParserER(new String_ref(str2), set2);
 		ExpressionBase er2 = parser2.parse();
-		Automata aut2 = er2.ThomsonAFN(state);
-		//Automata aut2 = er2.ThomsonSimplAFN(state);
+		//Automata aut2 = er2.ThomsonAFN(state);
+		Automata aut2 = er2.ThomsonSimplAFN(state);
 		System.out.println(set2.toString());
 		System.out.println(er2.toString());
 		aut2.show();
@@ -51,7 +51,6 @@ public class main {
 		
 		String resul = Algoritmos.detHopKarp(aut, aut2, state, simb);
 		System.out.println(resul);
-		
 		/*
 		String str = "hola+mundo(hola*+m)*(u+ndo)+sad*";
 		//str = "((a+b)a)*";

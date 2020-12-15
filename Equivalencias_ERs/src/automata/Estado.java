@@ -28,19 +28,26 @@ public class Estado {
 		this.fin = fin;
 		trans = new HashSet<Transicion>();
 	}
-
+	
+	/**
+	 * añadir transicion al set
+	 * @param tr
+	 */
 	public void addTrans(Transicion tr) {
 		trans.add(tr);
 	}
 
 	/**
-	 * 
 	 * Elimina una transición del estado
 	 */
 	public void deleteTrans(Transicion tr) {
 		this.trans.remove(tr);
 	}
-
+	
+	/**
+	 * devuelve set de transiciones
+	 * @return
+	 */
 	public HashSet<Transicion> getTrans() {
 		return trans;
 	}
@@ -52,15 +59,27 @@ public class Estado {
 	public void unir(HashSet<Transicion> es2) {
 		this.trans.addAll(es2);
 	}
-
+	
+	/**
+	 * cambiar inicial a ini
+	 * @param ini
+	 */
 	public void cambioIni(boolean ini) {
 		inicial = ini;
 	}
-
+	
+	/**
+	 * cambiar final a fin
+	 * @param fin
+	 */
 	public void cambioFin(boolean fin) {
 		this.fin = fin;
 	}
-
+	
+	/**
+	 * elimina todas las transiciones que vayan a "estado"
+	 * @param estado
+	 */
 	public void eliminarTransicionesA(int estado) {
 		Iterator<Transicion> it = trans.iterator();
 		while (it.hasNext()) {
@@ -73,7 +92,6 @@ public class Estado {
 
 	/**
 	 * Se hace que las transiciones que iban a es2, ahora vayan a es1
-	 *
 	 */
 	public void recolocarTransiciones(int es2, int es1) {
 		Iterator<Transicion> it = trans.iterator();
@@ -92,13 +110,27 @@ public class Estado {
 	 *  Funciones para Thomson Simplificado
 	 */
 	
+	/**
+	 * getter de ini
+	 * @return
+	 */
 	public boolean esIni() {
 		return inicial;
 	}
-
+	
+	/**
+	 * getter de fin
+	 * @return
+	 */
 	public boolean esFin() {
 		return fin;
 	}
+	
+	/**
+	 * Se copia las transiciones que iban a es2 para es1 
+	 * @param es2
+	 * @param es1
+	 */
 	public void recolocarTransicionesSinBorrar(int es2, int es1) {
 		Iterator<Transicion> it = trans.iterator();
 		HashSet<Transicion> aux = new HashSet<Transicion>();
@@ -106,7 +138,6 @@ public class Estado {
 			Transicion t = (Transicion) it.next();
 			if (t.getEstadoDest() == es2) {
 				aux.add(new Transicion(es1, t.getSymb()));
-				//it.remove();
 			}
 		}
 		trans.addAll(aux);

@@ -10,11 +10,19 @@ public class Lambdaa extends ExpressionBase {
 	private static final String _regex = "&";
 	//private static final String _regex = "\\w\\*.*";
 	private static final char lambda = '&';
+	
+	/**
+	 * constructora 
+	 * @param er
+	 */
 	public Lambdaa(String er) {
 		_sim = lambda;
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	/**
+	 * construtora por defecto
+	 */
 	public Lambdaa() {
 		// TODO Auto-generated constructor stub
 	}
