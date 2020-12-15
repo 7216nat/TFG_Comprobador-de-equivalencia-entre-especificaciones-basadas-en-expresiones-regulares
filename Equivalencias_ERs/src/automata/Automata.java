@@ -213,7 +213,6 @@ public class Automata {
 
 	public void quitarTodosFin() {
 		for (Estado e: _acept) e.cambioFin(false);
-		finClear();
 	}
 	
 
