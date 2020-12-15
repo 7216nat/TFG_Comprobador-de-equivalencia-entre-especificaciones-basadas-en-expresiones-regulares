@@ -46,19 +46,19 @@ public class Kleen extends ExpressionBase {
 		ArrayList<Estado> aceptPrev;
 		Automata a1 = _e1.ThomsonAFN(id);
 
-		a1.cambioFin(false);
-		a1.cambioIni(false);
+		a1.quitarTodosFin();
+		a1.quitarIni();
 		iniPrev = a1.getIni();
 		aceptPrev = a1.getFin();
 		acept = id.nextId();
 		Automata aut = new Automata(ini, acept);
 		aut.copyAll(a1);
 
-		aut.addTransicion(ini, acept, "&");
-		aut.addTransicion(ini, iniPrev.getId(), "&");
+		aut.addTransicion(ini, acept, '&');
+		aut.addTransicion(ini, iniPrev.getId(), '&');
 		for (Estado e : aceptPrev) {
-			aut.addTransicion(e.getId(), acept, "&");
-			aut.addTransicion(e.getId(), iniPrev.getId(), "&");
+			aut.addTransicion(e.getId(), acept, '&');
+			aut.addTransicion(e.getId(), iniPrev.getId(), '&');
 		}
 		return aut;
 	}

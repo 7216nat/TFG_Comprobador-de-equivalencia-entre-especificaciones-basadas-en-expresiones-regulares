@@ -46,14 +46,14 @@ public class Concat extends ExpressionBase {
 		Automata a1 = _e1.ThomsonAFN(id);
 		Automata a2 = _e2.ThomsonAFN(id);
 
-		a2.cambioIni(false);
-		a1.cambioFin(false);
+		a2.quitarIni();
+		a1.quitarTodosFin();
 		iniPrev = a2.getIni();
 		aceptPrev = a1.getFin();
 		a1.copyAll(a2);
 		
 		for (Estado e: aceptPrev)
-			a1.addTransicion(e.getId(), iniPrev.getId(), "&");
+			a1.addTransicion(e.getId(), iniPrev.getId(), '&');
 		return a1;
 	}
 
@@ -69,7 +69,7 @@ public class Concat extends ExpressionBase {
 		iniPrev = a2.getIni();
 		aceptPrev = a1.getFin();
 		if (!iniPrev.esFin()) {
-			a1.cambioFin(false);
+			a1.quitarTodosFin();
 		}
 		a1.copyAll(a2);
 		for (Estado e: aceptPrev)

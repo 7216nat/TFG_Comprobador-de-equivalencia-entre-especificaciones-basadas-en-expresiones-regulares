@@ -3,22 +3,22 @@ package objects;
 import automata.*;
 
 public abstract class ExpressionBase {
-	protected String _sim;
+	protected char _sim;
 
 	public ExpressionBase() {
 	}
 
-	public String get_sim() {
+	public char get_sim() {
 		return _sim;
 	}
 
-	public void set_sim(String sim) {
+	public void set_sim(char sim) {
 		this._sim = sim;
 	}
 
 	@Override
 	public String toString() {
-		return _sim;
+		return "" + _sim;
 	}
 	
 	public abstract Automata ThomsonSimplAFN(IdEstado id);

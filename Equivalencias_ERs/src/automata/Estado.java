@@ -38,14 +38,7 @@ public class Estado {
 	 * Elimina una transición del estado
 	 */
 	public void deleteTrans(Transicion tr) {
-		boolean encontrado = false;
-		Iterator<Transicion> it = trans.iterator();
-		while (!encontrado && it.hasNext()) {
-			if (it.next().compare(tr)) {
-				it.remove();
-				encontrado = true;
-			}
-		}
+		this.trans.remove(tr);
 	}
 
 	public HashSet<Transicion> getTrans() {
@@ -72,7 +65,7 @@ public class Estado {
 		Iterator<Transicion> it = trans.iterator();
 		while (it.hasNext()) {
 			Transicion t = (Transicion) it.next();
-			if (t.getId() == estado) {
+			if (t.getEstadoDest() == estado) {
 				it.remove();
 			}
 		}
@@ -87,7 +80,7 @@ public class Estado {
 		HashSet<Transicion> aux = new HashSet<Transicion>();
 		while (it.hasNext()) {
 			Transicion t = (Transicion) it.next();
-			if (t.getId() == es2) {
+			if (t.getEstadoDest() == es2) {
 				aux.add(new Transicion(es1, t.getSymb()));
 				it.remove();
 			}
@@ -111,7 +104,7 @@ public class Estado {
 		HashSet<Transicion> aux = new HashSet<Transicion>();
 		while (it.hasNext()) {
 			Transicion t = (Transicion) it.next();
-			if (t.getId() == es2) {
+			if (t.getEstadoDest() == es2) {
 				aux.add(new Transicion(es1, t.getSymb()));
 				//it.remove();
 			}
@@ -124,7 +117,7 @@ public class Estado {
 	 */
 	public String toString() {
 		String salida = "";
-		trans.forEach((k) -> System.out.print(k.getSymb() + " -> " + k.getId() + "; "));
+		trans.forEach((k) -> System.out.print(k.getSymb() + " -> " + k.getEstadoDest() + "; "));
 		return salida;
 
 	}

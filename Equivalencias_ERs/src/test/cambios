@@ -1,0 +1,9 @@
+En clase Automata:
+He cambiado la función cambioIni a quitarIni (sin parámetros)
+	porque solo se usa para hacer que el estado inicial
+	deje de serlo
+El nuevo cambioIni pone el estado cuyo indicador se le pase como
+	nuevo estado inicial del autómata
+addEstado ahora modifica la lista de iniciales y aceptación si procede.
+cambioFin sustituido por quitarTodosFin, sin parámetros, que
+	pone todos los estados finales a no finales y limpia la lista de estados finales

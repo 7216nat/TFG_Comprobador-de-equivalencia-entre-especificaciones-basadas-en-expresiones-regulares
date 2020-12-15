@@ -2,9 +2,9 @@ package automata;
 
 public class Transicion {
 	private int estadoF;
-	private String symbol;
+	private char symbol;
 
-	public Transicion(int st, String simb) {
+	public Transicion(int st, char simb) {
 		estadoF = st;
 		symbol = simb;
 	}
@@ -13,7 +13,7 @@ public class Transicion {
 		return estadoF;
 	}
 
-	public String getSymb() {
+	public char getSymb() {
 		return symbol;
 	}
 
@@ -23,5 +23,9 @@ public class Transicion {
 
 	public String toString() {
 		return ("Viaja a " + estadoF + " por " + symbol);
+	}
+
+	public int getEstadoDest() {
+		return estadoF;
 	}
 }

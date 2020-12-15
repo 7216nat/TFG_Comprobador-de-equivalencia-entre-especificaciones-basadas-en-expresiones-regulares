@@ -10,7 +10,7 @@ public class Simbolo extends ExpressionBase {
 	private static final String _regex = "\\w";
 	
 	public Simbolo() {}
-	public Simbolo(String er) {
+	public Simbolo(char er) {
 		_sim = er;
 	}
 

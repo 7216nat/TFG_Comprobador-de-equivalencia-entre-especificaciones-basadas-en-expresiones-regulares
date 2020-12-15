@@ -138,7 +138,7 @@ public class ParserER {
 					System.exit(0);
 				}
 				set.add(prim());
-				simbolo.set_sim("" + next());
+				simbolo.set_sim(next());
 				this.pila.push(simbolo);
 			}
 		}

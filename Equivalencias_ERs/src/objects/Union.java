@@ -45,10 +45,10 @@ public class Union extends ExpressionBase {
 		Automata a1 = _e1.ThomsonAFN(id);
 		Automata a2 = _e2.ThomsonAFN(id);
 		
-		a1.cambioFin(false);
-		a1.cambioIni(false);
-		a2.cambioFin(false);
-		a2.cambioIni(false);
+		a1.quitarTodosFin();
+		a1.quitarIni();
+		a2.quitarTodosFin();
+		a2.quitarIni();
 		
 		iniPrev1 = a1.getIni().getId();
 		aceptPrev1 = a1.getFin();
@@ -61,12 +61,12 @@ public class Union extends ExpressionBase {
 		aut.copyAll(a2);
 		
 		
-		aut.addTransicion(ini, iniPrev1, "&");
-		aut.addTransicion(ini, iniPrev2, "&");
+		aut.addTransicion(ini, iniPrev1, '&');
+		aut.addTransicion(ini, iniPrev2, '&');
 		for (Estado e: aceptPrev1)
-			aut.addTransicion(e.getId(), acept, "&");
+			aut.addTransicion(e.getId(), acept, '&');
 		for (Estado e: aceptPrev2)
-			aut.addTransicion(e.getId(), acept, "&");
+			aut.addTransicion(e.getId(), acept, '&');
 		return aut;
 	}
 	@Override
