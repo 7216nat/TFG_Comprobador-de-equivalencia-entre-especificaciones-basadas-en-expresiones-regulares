@@ -181,7 +181,6 @@ public class Automata {
 	 */
 	public void quitarIni() {
 		_ini.cambioIni(false);
-		_ini = null;
 	}
 	
 	/**
