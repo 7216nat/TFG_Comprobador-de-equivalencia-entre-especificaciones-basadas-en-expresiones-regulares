@@ -17,8 +17,8 @@ public class main {
 
 	//Test paso de String a expresion regular
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		// TODO Auto-generated method stub		
+		
 		IdEstado state = new IdEstado();
 		
 		String str = "a*(ba*)*";

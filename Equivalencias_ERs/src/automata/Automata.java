@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import algoritmo.EstadoTh;
 
@@ -22,7 +24,7 @@ public class Automata {
 		_ini = null;
 		_acept = new ArrayList<Estado>();
 	}
-	
+
 	/**
 	 * Constructora para el conjunto vacio
 	 */
@@ -37,37 +39,35 @@ public class Automata {
 	 * Constructora para automata cualquiera
 	 */
 	public Automata(int ini, int acept) {
-		_acept = new ArrayList<Estado> ();
+		_acept = new ArrayList<Estado>();
 		aut = new HashMap<Integer, Estado>();
 		if (ini != acept) {
 			_ini = new Estado(ini, true, false);
 			Estado tmp = new Estado(acept, false, true);
 			addEstado(_ini);
 			addEstado(tmp);
-		}
-		else {
+		} else {
 			_ini = new Estado(ini, true, true);
 			addEstado(_ini);
 		}
 	}
-	
+
 	/**
-	 * Añade estado, compruba si es inicial o final 
-	 * para añadir nuevas referencias
+	 * Añade estado, compruba si es inicial o final para añadir nuevas referencias
 	 */
 	public void addEstado(Estado estado) {
 		aut.put(estado.getId(), estado);
-		if(estado.esIni()) {
+		if (estado.esIni()) {
 			cambioIni(estado.getId());
 		}
-		if(estado.esFin()) {
+		if (estado.esFin()) {
 			this._acept.add(estado);
 		}
 	}
 
 	/**
-	 * Añade transicion del estado con id estado al estado con id dest,
-	 * a través del símbolo simb
+	 * Añade transicion del estado con id estado al estado con id dest, a través del
+	 * símbolo simb
 	 */
 	public void addTransicion(int estado, int dest, char simb) {
 		aut.get(estado).addTrans(new Transicion(dest, simb));
@@ -88,29 +88,28 @@ public class Automata {
 		aut.forEach((k, v) -> v.recolocarTransiciones(es2, es1));
 		eliminarEstado(es2);
 	}
-	
+
 	/**
-	 * Se elimina el estado con id estado, dependiendo de que sea
-	 * inicial o final se eliminan tambien sus referencias
+	 * Se elimina el estado con id estado, dependiendo de que sea inicial o final se
+	 * eliminan tambien sus referencias
 	 */
 	public void eliminarEstado(int estado) {
-		if(estado == this._ini.getId())
+		if (estado == this._ini.getId())
 			this._ini = null;
-		if(aut.get(estado).esFin()) {
-			this._acept.removeIf(k-> k.getId()==estado);
+		if (aut.get(estado).esFin()) {
+			this._acept.removeIf(k -> k.getId() == estado);
 		}
 		aut.remove(estado);
 		aut.forEach((k, v) -> v.eliminarTransicionesA(estado));
 	}
-	
+
 	/**
-	 *Devuelve true si el estado con id: id es final,
-	 *false si no
+	 * Devuelve true si el estado con id: id es final, false si no
 	 */
 	public boolean esFinal(int id) {
 		return (aut.get(id).esFin());
 	}
-	
+
 	/**
 	 * Devuelve true si la transición que sale de estado con simbolo s existe.
 	 * Devuelve false si no.
@@ -119,7 +118,7 @@ public class Automata {
 		Transicion cmp = new Transicion(estado, s);
 		return this.aut.get(estado).getTrans().contains(cmp);
 	}
-	
+
 	/**
 	 * Devuelve el id del destino de la transición que sale de estado con simbolo s
 	 */
@@ -128,108 +127,113 @@ public class Automata {
 		Iterator<Transicion> trIt = tr.iterator();
 		boolean encontrado = false;
 		int destino = -1;
-		while(!encontrado && trIt.hasNext()) {
+		while (!encontrado && trIt.hasNext()) {
 			Transicion aux = trIt.next();
-			if(aux.getSymb()== s) {
+			if (aux.getSymb() == s) {
 				destino = aux.getEstadoDest();
 				encontrado = true;
 			}
 		}
 		return destino;
 	}
+
 	/**
 	 * Devuelve el estado identificado por id
 	 */
 	public Estado getEstado(int id) {
 		return this.aut.get(id);
-		
+
 	}
-	
+
 	/**
 	 * devuelve el conjunto de transiciones de estado id
+	 * 
 	 * @param id
 	 * @return
 	 */
-	public HashSet<Transicion> getTransEstado(int id){
+	public HashSet<Transicion> getTransEstado(int id) {
 		return aut.get(id).getTrans();
 	}
-	
-	/*Funciones para Thompson simplificado*/
-	
+
+	/* Funciones para Thompson simplificado */
+
 	/**
-	 * Une los estados con id. es1 y es2, no elimina ninguno,
-	 * aunque deja es2 inalcanzable
+	 * Une los estados con id. es1 y es2, no elimina ninguno, aunque deja es2
+	 * inalcanzable
 	 */
 	public void unirSinEliminar(int es1, int es2) {
 		aut.get(es1).unir(aut.get(es2).getTrans());
 		aut.forEach((k, v) -> v.recolocarTransicionesSinBorrar(es2, es1));
 	}
-	
+
 	/**
 	 * Hace una copia de todo el automata sin las refenrencias
 	 */
 	public void copyAll(Automata aut) {
 		this.aut.putAll(aut.getAutomata());
 	}
-	
+
 	/**
 	 * copiar la lista de referencias a los estados finales
+	 * 
 	 * @param aut
 	 */
 	public void copyFinals(Automata aut) {
 		this._acept.addAll(aut.getFin());
 	}
-	
-	
+
 	/**
 	 * pone a estado inicial tambien final
 	 */
 	public void IniEsFin() {
 		_ini.cambioFin(true);
 	}
+
 	/**
 	 * Hace que el estado inicial deje de ser inicial
 	 */
 	public void quitarIni() {
 		_ini.cambioIni(false);
 	}
-	
+
 	/**
-	 * Cambia a inicial el estado con el id
-	 * que le pasemos por parámetro
+	 * Cambia a inicial el estado con el id que le pasemos por parámetro
 	 */
 	public void cambioIni(int id) {
-		if(this._ini != null)
+		if (this._ini != null)
 			aut.get(this._ini.getId()).cambioIni(false);
 		aut.get(id).cambioIni(true);
 		this._ini = aut.get(id);
 	}
+
 	/**
 	 * Cambia si estado con identificador "es" es final o no
 	 */
-	public void cambioFin (int es, boolean fin) {
+	public void cambioFin(int es, boolean fin) {
 		this.aut.get(es).cambioFin(fin);
-		if(fin) {
-			if(!this._acept.contains(aut.get(es))) {
+		if (fin) {
+			if (!this._acept.contains(aut.get(es))) {
 				_acept.add(aut.get(es));
 			}
 		}
-		if(!fin) {
-			if(this._acept.contains(aut.get(es))) {
+		if (!fin) {
+			if (this._acept.contains(aut.get(es))) {
 				_acept.remove(aut.get(es));
 			}
 		}
 	}
-	
+
 	/**
 	 * pone todos los estados finales no finales
 	 */
 	public void quitarTodosFin() {
-		for (Estado e: _acept) e.cambioFin(false);
+		for (Estado e : _acept)
+			e.cambioFin(false);
 	}
-	
+
 	/**
 	 * devuelve estado inicial
+	 * 
 	 * @return
 	 */
 	public Estado getIni() {
@@ -238,11 +242,13 @@ public class Automata {
 
 	/**
 	 * devuelve lista de estados finales
+	 * 
 	 * @return
 	 */
 	public ArrayList<Estado> getFin() {
 		return _acept;
 	}
+
 	/**
 	 * Limpia la lista de los estados de aceptación
 	 */
@@ -252,8 +258,7 @@ public class Automata {
 	/*
 	 * End Funciones para Thomson Simplificado
 	 */
-	
-	
+
 	public void show() {
 		// aut.forEach((k, v) -> + ));
 		for (Integer k : aut.keySet()) {
@@ -267,44 +272,53 @@ public class Automata {
 		}
 
 	}
-	
-	/*Funciones Hopcroft-karp*/
+
+	/* Funciones Hopcroft-karp */
 	/**
-	 * Solo se puede usar si el automata tiene estados EstadoTh.
-	 * Dado un estado y un carácter, devuelve -1 si no hay una transición que sale del estado con caracter s,
-	 * si existe, devuelve el id del estado
+	 * Solo se puede usar si el automata tiene estados EstadoTh. Dado un estado y un
+	 * carácter, devuelve -1 si no hay una transición que sale del estado con
+	 * caracter s, si existe, devuelve el id del estado
 	 */
 	public int existsTransEq(int estado, char s) {
 		int exist = -1;
 		EstadoTh es = (EstadoTh) this.aut.get(estado);
 		Iterator<Transicion> it = es.getTrans().iterator();
-		while(exist==-1 && it.hasNext()) {
+		while (exist == -1 && it.hasNext()) {
 			Transicion tr = it.next();
-			if(tr.getSymb() == s)
+			if (tr.getSymb() == s)
 				exist = tr.getEstadoDest();
 		}
 		return exist;
 	}
-	
-	public EstadoTh lambdaCierre(Estado es, int idst) {
-		//Creo el estado que entrará en el AFD
+
+	public EstadoTh lambdaCierre(Estado es, int idst, Automata at) {
+		// Creo el estado que entrará en el AFD
 		EstadoTh nuevo = new EstadoTh(idst);
-		//Le añado a sí mismo
+		// Le añado a sí mismo
 		nuevo.addEquiv(es.getId());
 		
-		//Recorro las transiciones del viejo estado buscando vacías
-		//Cuando encuentro transición vacía, añado el objetivo a la clase de equivalencia
-		//También le añado al nuevo sus transiciones para no tener que volver a él
-		Iterator<Transicion> it = es.getTrans().iterator();
-		while(it.hasNext()) {
-			Transicion aux = it.next();
-			if(aux.getSymb() == '&') {
-				nuevo.addEquiv(aux.getEstadoDest());
-				if(aut.get(aux.getEstadoDest()).esFin())
-					nuevo.cambioFin(true);
+		Queue<Estado> estados = new LinkedList<Estado>();
+		estados.add(es);
+		Estado estado;
+		
+		while (!estados.isEmpty()) {
+			estado = estados.poll();
+			// Recorro las transiciones del viejo estado buscando vacías
+			// Cuando encuentro transición vacía, añado el objetivo a la clase de
+			// equivalencia
+			// También le añado al nuevo sus transiciones para no tener que volver a él
+			Iterator<Transicion> it = estado.getTrans().iterator();
+			while (it.hasNext()) {
+				Transicion aux = it.next();
+				if (aux.getSymb() == '&') {
+					nuevo.addEquiv(aux.getEstadoDest());
+					estados.add(at.getEstado(aux.getEstadoDest()));
+					if (aut.get(aux.getEstadoDest()).esFin())
+						nuevo.cambioFin(true);
+				}
 			}
 		}
 		return nuevo;
 	}
-	
+
 }
