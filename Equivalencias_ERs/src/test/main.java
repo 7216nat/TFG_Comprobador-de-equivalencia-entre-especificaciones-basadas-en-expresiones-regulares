@@ -21,14 +21,14 @@ public class main {
 		
 		IdEstado state = new IdEstado();
 		
-		String str = "a*(ba*)*";
-		String str2 = "(a+b)*";
+		String str = "&a+aa*";
+		String str2 = "a*a";
 		
 		Set<Character> set = new HashSet<Character> ();
 		ParserER parser = new ParserER(new String_ref(str), set);
 		ExpressionBase er = parser.parse();
-		//Automata aut = er.ThomsonAFN(state);
-		Automata aut = er.ThomsonSimplAFN(state);
+		Automata aut = er.ThomsonAFN(state);
+		//Automata aut = er.ThomsonSimplAFN(state);
 		System.out.println(set.toString());
 		System.out.println(er.toString());
 		aut.show();
@@ -36,8 +36,8 @@ public class main {
 		Set<Character> set2 = new HashSet<Character> ();
 		ParserER parser2 = new ParserER(new String_ref(str2), set2);
 		ExpressionBase er2 = parser2.parse();
-		//Automata aut2 = er2.ThomsonAFN(state);
-		Automata aut2 = er2.ThomsonSimplAFN(state);
+		Automata aut2 = er2.ThomsonAFN(state);
+		//Automata aut2 = er2.ThomsonSimplAFN(state);
 		System.out.println(set2.toString());
 		System.out.println(er2.toString());
 		aut2.show();

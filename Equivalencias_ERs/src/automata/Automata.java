@@ -291,7 +291,7 @@ public class Automata {
 		return exist;
 	}
 
-	public EstadoTh lambdaCierre(Estado es, int idst, Automata at) {
+	public EstadoTh lambdaCierre(Estado es, int idst) {
 		// Creo el estado que entrará en el AFD
 		EstadoTh nuevo = new EstadoTh(idst);
 		// Le añado a sí mismo
@@ -313,7 +313,7 @@ public class Automata {
 				if (aux.getSymb() == '&') {
 					//Solo lo añado como estado para explorar más lambdatransiciones si no lo he hecho ya.
 					if(!nuevo.getEq().contains(aux.getEstadoDest()))
-						estados.add(at.getEstado(aux.getEstadoDest()));
+						estados.add(aut.get(aux.getEstadoDest()));
 					nuevo.addEquiv(aux.getEstadoDest());
 					if (aut.get(aux.getEstadoDest()).esFin())
 						nuevo.cambioFin(true);

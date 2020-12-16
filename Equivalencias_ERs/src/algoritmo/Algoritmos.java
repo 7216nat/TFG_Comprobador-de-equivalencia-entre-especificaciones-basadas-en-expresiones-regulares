@@ -35,11 +35,11 @@ public class Algoritmos {
 		Automata afd2 = new Automata();
 
 		// Creo el primer estado del autómata
-		EstadoTh iniAFD1 = at1.lambdaCierre(inicial, idst.getId(), at1);
+		EstadoTh iniAFD1 = at1.lambdaCierre(inicial, idst.getId());
 		if (inicial.esFin())
 			iniAFD1.cambioFin(true);
 		idst.nextId();
-		EstadoTh iniAFD2 = at2.lambdaCierre(inicial2, idst.getId(), at2);
+		EstadoTh iniAFD2 = at2.lambdaCierre(inicial2, idst.getId());
 		if (inicial2.esFin())
 			iniAFD2.cambioFin(true);
 		idst.nextId();
@@ -135,9 +135,9 @@ public class Algoritmos {
 					Transicion tAux = transIt.next();
 					// Si la transición es con el símbolo que estoy evaluando:
 					if (tAux.getSymb() == simb) {
-						EstadoTh aux = at.lambdaCierre(at.getEstado(tAux.getEstadoDest()), -1, at);
+						EstadoTh aux = at.lambdaCierre(at.getEstado(tAux.getEstadoDest()), -1);
 						aux.getEq().forEach((k) -> nuevoEstado.addEquiv(k));
-						if (at.getEstado(tAux.getEstadoDest()).esFin())
+						if (aux.esFin() || at.getEstado(tAux.getEstadoDest()).esFin() )
 							nuevoEstado.cambioFin(true);
 					}
 				}
