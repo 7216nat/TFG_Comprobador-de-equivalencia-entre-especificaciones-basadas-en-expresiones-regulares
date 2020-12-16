@@ -63,27 +63,28 @@ public class Concat extends ExpressionBase {
 	public Automata ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		Estado iniPrev;
-		ArrayList<Estado> aceptPrev;
+		ArrayList<Estado> aceptPrev1, aceptPrev2;
 		Automata a1 = _e1.ThomsonSimplAFN(id);
 		Automata a2 = _e2.ThomsonSimplAFN(id);
 
 		iniPrev = a2.getIni();
-		aceptPrev = a1.getFin();
+		aceptPrev1 = a1.getFin();
+		aceptPrev2 = a2.getFin();
 		a1.copyAll(a2);
 		
 		// añadir a los estados finales de a1 todos las transiciones de a2.estadoinicial
-		for (Estado e: aceptPrev)
+		for (Estado e: aceptPrev1)
 			a1.unirSinEliminar(e.getId(), iniPrev.getId());
 		
 		// si a2.estado inicial no es final, se elimina la lista de estado finales
-		if (iniPrev.esFin() == false) {
-			a1.quitarTodosFin();
-			a1.finClear();
+		if (iniPrev.esFin()) {
+			/*for (Estado e: aceptPrev2)
+				a1.addTransicion(a1.getIni().getId(), e.getId(), '&');*/
 		}
 		// en caso contrario
 		else {
-			for (Estado e: aceptPrev)
-				a1.addTransicion(a1.getIni().getId(), e.getId(), '&');
+			a1.quitarTodosFin();
+			a1.finClear();
 		}
 		
 		a1.copyFinals(a2);

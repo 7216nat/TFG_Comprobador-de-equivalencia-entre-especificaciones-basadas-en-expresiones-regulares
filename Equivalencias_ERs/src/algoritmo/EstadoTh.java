@@ -30,6 +30,7 @@ public class EstadoTh extends Estado{
 		return this.equiv;
 	}
 	
+	
 	public boolean same(EstadoTh es) {
 		return (equiv.containsAll(es.equiv) && es.equiv.containsAll(this.equiv));
 	}
