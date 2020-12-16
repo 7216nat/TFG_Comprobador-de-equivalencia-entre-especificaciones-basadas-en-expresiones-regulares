@@ -49,6 +49,7 @@ public class Automata {
 		} else {
 			_ini = new Estado(ini, true, true);
 			addEstado(_ini);
+			_acept.clear();
 		}
 	}
 
@@ -170,7 +171,7 @@ public class Automata {
 	 * Hace una copia de todo el automata sin las refenrencias
 	 */
 	public void copyAll(Automata aut) {
-		this.aut.putAll(aut.getAutomata());
+		this.aut.putAll(aut.aut);
 	}
 
 	/**
@@ -179,14 +180,14 @@ public class Automata {
 	 * @param aut
 	 */
 	public void copyFinals(Automata aut) {
-		this._acept.addAll(aut.getFin());
+		this._acept.addAll(aut._acept);
 	}
 
 	/**
-	 * pone a estado inicial tambien final
+	 * pone a estado final de ini al parametro
 	 */
-	public void IniEsFin() {
-		_ini.cambioFin(true);
+	public void IniFinalEs(boolean es) {
+		_ini.cambioFin(es);
 	}
 
 	/**
@@ -194,6 +195,7 @@ public class Automata {
 	 */
 	public void quitarIni() {
 		_ini.cambioIni(false);
+		_ini.cambioFin(false);
 	}
 
 	/**

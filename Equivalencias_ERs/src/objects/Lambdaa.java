@@ -54,7 +54,7 @@ public class Lambdaa extends ExpressionBase {
 		int ini = id.nextId(), acept;
 		acept = ini;
 		Automata aut = new Automata(ini, acept);
-		//aut.addTransicion(ini, acept, _sim);
+		// aut.addTransicion(ini, acept, _sim);
 		return aut;
 	}
 
