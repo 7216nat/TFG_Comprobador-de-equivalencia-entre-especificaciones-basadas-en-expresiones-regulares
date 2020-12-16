@@ -311,8 +311,10 @@ public class Automata {
 			while (it.hasNext()) {
 				Transicion aux = it.next();
 				if (aux.getSymb() == '&') {
+					//Solo lo añado como estado para explorar más lambdatransiciones si no lo he hecho ya.
+					if(!nuevo.getEq().contains(aux.getEstadoDest()))
+						estados.add(at.getEstado(aux.getEstadoDest()));
 					nuevo.addEquiv(aux.getEstadoDest());
-					estados.add(at.getEstado(aux.getEstadoDest()));
 					if (aut.get(aux.getEstadoDest()).esFin())
 						nuevo.cambioFin(true);
 				}
