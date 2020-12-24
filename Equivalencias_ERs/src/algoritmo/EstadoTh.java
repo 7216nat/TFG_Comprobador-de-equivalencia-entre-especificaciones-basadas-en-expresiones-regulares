@@ -3,7 +3,6 @@ package algoritmo;
 import java.util.HashSet;
 
 import automata.Estado;
-import automata.Transicion;
 
 public class EstadoTh extends Estado{
 	private HashSet<Integer> equiv;

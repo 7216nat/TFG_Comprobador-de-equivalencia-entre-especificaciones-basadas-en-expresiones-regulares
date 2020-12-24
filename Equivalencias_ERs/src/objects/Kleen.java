@@ -2,9 +2,7 @@ package objects;
 
 import java.util.ArrayList;
 
-import automata.Automata;
-import automata.Estado;
-import automata.IdEstado;
+import automata.*;
 
 //import java.util.regex.*;  
 public class Kleen extends ExpressionBase {
@@ -39,12 +37,12 @@ public class Kleen extends ExpressionBase {
 	}
 
 	@Override
-	public Automata ThomsonAFN(IdEstado id) {
+	public AutomataTS ThomsonAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		int ini = id.nextId(), acept;
 		Estado iniPrev;
 		ArrayList<Estado> aceptPrev;
-		Automata a1 = _e1.ThomsonAFN(id);
+		AutomataTS a1 = _e1.ThomsonAFN(id);
 		
 		// deshago todos los estados iniciales y finales 
 		a1.quitarTodosFin();
@@ -54,7 +52,7 @@ public class Kleen extends ExpressionBase {
 		acept = id.nextId();
 		
 		// Creo nueva automata
-		Automata aut = new Automata(ini, acept);
+		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.copyAll(a1);
 		
 		
@@ -69,9 +67,9 @@ public class Kleen extends ExpressionBase {
 	}
 
 	@Override
-	public Automata ThomsonSimplAFN(IdEstado id) {
+	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
-		Automata a1 = _e1.ThomsonSimplAFN(id);
+		AutomataTS a1 = _e1.ThomsonSimplAFN(id);
 		
 		// Añado todas las transiciones del estado inicial a los estados finales
 		for (Estado e : a1.getFin()) {

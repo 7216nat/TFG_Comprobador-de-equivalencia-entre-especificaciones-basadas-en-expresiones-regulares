@@ -32,14 +32,14 @@ public abstract class ExpressionBase {
 	 * @param id
 	 * @return
 	 */
-	public abstract Automata ThomsonSimplAFN(IdEstado id);
+	public abstract AutomataTS ThomsonSimplAFN(IdEstado id);
 	
 	/**
 	 * Thomson AFN normal con más lambda-transiciones
 	 * @param id
 	 * @return
 	 */
-	public abstract Automata ThomsonAFN(IdEstado id);
+	public abstract AutomataTS ThomsonAFN(IdEstado id);
 
 	/**
 	 * devuelve una copia de la clase: funcion de la factoria

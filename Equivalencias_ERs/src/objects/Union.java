@@ -2,9 +2,7 @@ package objects;
 
 import java.util.ArrayList;
 
-import automata.Automata;
-import automata.Estado;
-import automata.IdEstado;
+import automata.*;
 
 //import java.util.regex.*; 
 
@@ -38,12 +36,12 @@ public class Union extends ExpressionBase {
 		return false; //Pattern.matches(_regex, string);
 	}
 	@Override
-	public Automata ThomsonAFN(IdEstado id) {
+	public AutomataTS ThomsonAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		int ini = id.nextId(), acept, iniPrev1, iniPrev2;
 		ArrayList<Estado> aceptPrev1, aceptPrev2;
-		Automata a1 = _e1.ThomsonAFN(id);
-		Automata a2 = _e2.ThomsonAFN(id);
+		AutomataTS a1 = _e1.ThomsonAFN(id);
+		AutomataTS a2 = _e2.ThomsonAFN(id);
 		
 		// deshacer todos los estados finales e iniciales
 		a1.quitarTodosFin();
@@ -59,7 +57,7 @@ public class Union extends ExpressionBase {
 		
 		// nueva automata
 		acept = id.nextId();
-		Automata aut = new Automata(ini, acept);
+		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.copyAll(a1);
 		aut.copyAll(a2);
 		
@@ -73,11 +71,11 @@ public class Union extends ExpressionBase {
 		return aut;
 	}
 	@Override
-	public Automata ThomsonSimplAFN(IdEstado id) {
+	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		Estado iniPrev1, iniPrev2;
-		Automata a1 = _e1.ThomsonSimplAFN(id);
-		Automata a2 = _e2.ThomsonSimplAFN(id);
+		AutomataTS a1 = _e1.ThomsonSimplAFN(id);
+		AutomataTS a2 = _e2.ThomsonSimplAFN(id);
 		
 		iniPrev1 = a1.getIni();
 		iniPrev2 = a2.getIni();

@@ -29,6 +29,10 @@ public class Estado {
 		trans = new HashSet<Transicion>();
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 	/**
 	 * añadir transicion al set
 	 * @param tr
@@ -153,7 +157,4 @@ public class Estado {
 
 	}
 
-	public int getId() {
-		return id;
-	}
 }

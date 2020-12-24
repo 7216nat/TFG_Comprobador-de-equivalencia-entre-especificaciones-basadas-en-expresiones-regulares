@@ -32,18 +32,18 @@ public class Simbolo extends ExpressionBase {
 		return Pattern.matches(_regex, string);
 	}
 	@Override
-	public Automata ThomsonAFN(IdEstado id) {
+	public AutomataTS ThomsonAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		int ini = id.nextId(), acept = id.nextId();
-		Automata aut = new Automata(ini, acept);
+		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
 	}
 	@Override
-	public Automata ThomsonSimplAFN(IdEstado id) {
+	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		int ini = id.nextId(), acept = id.nextId();
-		Automata aut = new Automata(ini, acept);
+		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
 	}

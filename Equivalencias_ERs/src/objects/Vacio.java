@@ -2,8 +2,7 @@ package objects;
 
 import java.util.regex.Pattern;
 
-import automata.Automata;
-import automata.IdEstado;
+import automata.*;
 
 public class Vacio extends ExpressionBase {
 
@@ -28,18 +27,18 @@ public class Vacio extends ExpressionBase {
 	}
 
 	@Override
-	public Automata ThomsonAFN(IdEstado id) {
+	public AutomataTS ThomsonAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		int ini = id.nextId();
-		Automata aut = new Automata(ini);
+		AutomataTS aut = new AutomataTS(ini);
 		return aut;
 	}
 
 	@Override
-	public Automata ThomsonSimplAFN(IdEstado id) {
+	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		int ini = id.nextId();
-		Automata aut = new Automata(ini);
+		AutomataTS aut = new AutomataTS(ini);
 		return aut;
 	}
 

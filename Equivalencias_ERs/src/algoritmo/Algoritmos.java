@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 
@@ -26,7 +25,7 @@ public class Algoritmos {
 	 */
 	public static String detHopKarp(Automata at1, Automata at2, IdEstado idst, ArrayList<Character> simb) {
 		HashMap<Integer, EstadoTh> aExplorar = new HashMap<Integer, EstadoTh>();
-		Queue<SimEsEs> aComparar = new LinkedList();
+		Queue<SimEsEs> aComparar = new LinkedList<SimEsEs>();
 		Estado inicial = at1.getIni();
 		Estado inicial2 = at2.getIni();
 
@@ -144,11 +143,11 @@ public class Algoritmos {
 			}
 
 			// Si el nuevo estado que he creado no estaba ya:
-			Iterator itAut = afd.getAutomata().entrySet().iterator();
+			Iterator<Entry<Integer, Estado>> itAut = afd.getAutomata().entrySet().iterator();
 			boolean noEsta = true;
 			int yaExistente = -1;
 			while (noEsta && itAut.hasNext()) {
-				Map.Entry par = (Entry) itAut.next();
+				Entry<Integer, Estado> par = (Entry<Integer, Estado>) itAut.next();
 				EstadoTh comp = (EstadoTh) par.getValue();
 				if (comp.same(nuevoEstado)) {
 					noEsta = false;

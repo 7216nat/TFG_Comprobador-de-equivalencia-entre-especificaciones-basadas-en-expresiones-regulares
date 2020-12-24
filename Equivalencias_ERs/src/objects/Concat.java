@@ -1,11 +1,9 @@
 package objects;
 
 import java.util.ArrayList;
-import java.util.regex.*;
+// import java.util.regex.*;
 
-import automata.Automata;
-import automata.Estado;
-import automata.IdEstado;
+import automata.*;
 
 public class Concat extends ExpressionBase {
 
@@ -39,12 +37,12 @@ public class Concat extends ExpressionBase {
 	}
 
 	@Override
-	public Automata ThomsonAFN(IdEstado id) {
+	public AutomataTS ThomsonAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		Estado iniPrev;
 		ArrayList<Estado> aceptPrev;
-		Automata a1 = _e1.ThomsonAFN(id);
-		Automata a2 = _e2.ThomsonAFN(id);
+		AutomataTS a1 = _e1.ThomsonAFN(id);
+		AutomataTS a2 = _e2.ThomsonAFN(id);
 		
 		// deshago estado inicial de a2 y finales de a1
 		a2.quitarIni();
@@ -61,16 +59,15 @@ public class Concat extends ExpressionBase {
 	}
 
 	@Override
-	public Automata ThomsonSimplAFN(IdEstado id) {
+	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		Estado iniPrev;
-		ArrayList<Estado> aceptPrev1, aceptPrev2;
-		Automata a1 = _e1.ThomsonSimplAFN(id);
-		Automata a2 = _e2.ThomsonSimplAFN(id);
+		ArrayList<Estado> aceptPrev1;
+		AutomataTS a1 = _e1.ThomsonSimplAFN(id);
+		AutomataTS a2 = _e2.ThomsonSimplAFN(id);
 
 		iniPrev = a2.getIni();
 		aceptPrev1 = a1.getFin();
-		aceptPrev2 = a2.getFin();
 		a1.copyAll(a2);
 		
 		// añadir a los estados finales de a1 todos las transiciones de a2.estadoinicial
@@ -78,7 +75,7 @@ public class Concat extends ExpressionBase {
 			a1.unirSinEliminar(e.getId(), iniPrev.getId());
 		
 		// si a2.estado inicial no es final, se elimina la lista de estado finales
-		if (iniPrev.esFin() == false) {
+		if (!iniPrev.esFin()) {
 			a1.quitarTodosFin();
 		}
 		

@@ -10,10 +10,10 @@ import java.util.Queue;
 import algoritmo.EstadoTh;
 
 public class Automata {
-	private HashMap<Integer, Estado> aut;
+	protected HashMap<Integer, Estado> aut;
 	// referencias al estado inicial y final
-	private Estado _ini;
-	private ArrayList<Estado> _acept;
+	protected Estado _ini;
+	protected ArrayList<Estado> _acept;
 	// problemente necesitemos ArrayList para los estados de aceptacion
 
 	/**
@@ -30,9 +30,9 @@ public class Automata {
 	 */
 	public Automata(int ini) {
 		_ini = new Estado(ini, true, false);
+		_acept = new ArrayList<Estado>();
 		aut = new HashMap<Integer, Estado>();
 		addEstado(_ini);
-		_acept = new ArrayList<Estado>();
 	}
 
 	/**
@@ -155,84 +155,37 @@ public class Automata {
 	public HashSet<Transicion> getTransEstado(int id) {
 		return aut.get(id).getTrans();
 	}
-
-	/* Funciones para Thompson simplificado */
-
-	/**
-	 * Une los estados con id. es1 y es2, no elimina ninguno, aunque deja es2
-	 * inalcanzable
-	 */
-	public void unirSinEliminar(int es1, int es2) {
-		aut.get(es1).unir(aut.get(es2).getTrans());
-		aut.forEach((k, v) -> v.recolocarTransicionesSinBorrar(es2, es1));
-	}
-
-	/**
-	 * Hace una copia de todo el automata sin las refenrencias
-	 */
-	public void copyAll(Automata aut) {
-		this.aut.putAll(aut.aut);
-	}
-
-	/**
-	 * copiar la lista de referencias a los estados finales
-	 * 
-	 * @param aut
-	 */
-	public void copyFinals(Automata aut) {
-		this._acept.addAll(aut._acept);
-	}
-
-	/**
-	 * pone a estado final de ini al parametro
-	 */
-	public void IniFinalEs(boolean es) {
-		_ini.cambioFin(es);
-	}
-
-	/**
-	 * Hace que el estado inicial deje de ser inicial
-	 */
-	public void quitarIni() {
-		_ini.cambioIni(false);
-		_ini.cambioFin(false);
-	}
-
+	
+	// -----------------Funciones comunes sacadas de Thomson------------------ 
+	
 	/**
 	 * Cambia a inicial el estado con el id que le pasemos por parámetro
 	 */
 	public void cambioIni(int id) {
 		if (this._ini != null)
-			aut.get(this._ini.getId()).cambioIni(false);
-		aut.get(id).cambioIni(true);
+			this._ini.cambioIni(false);
 		this._ini = aut.get(id);
+		this._ini.cambioIni(true);
 	}
 
 	/**
 	 * Cambia si estado con identificador "es" es final o no
 	 */
 	public void cambioFin(int es, boolean fin) {
-		this.aut.get(es).cambioFin(fin);
+		Estado tmp = this.aut.get(es);
+		tmp.cambioFin(fin);
 		if (fin) {
-			if (!this._acept.contains(aut.get(es))) {
-				_acept.add(aut.get(es));
+			if (!this._acept.contains(tmp)) {
+				_acept.add(tmp);
 			}
 		}
 		if (!fin) {
-			if (this._acept.contains(aut.get(es))) {
-				_acept.remove(aut.get(es));
+			if (this._acept.contains(tmp)) {
+				_acept.remove(tmp);
 			}
 		}
 	}
-
-	/**
-	 * pone todos los estados finales no finales
-	 */
-	public void quitarTodosFin() {
-		for (Estado e : _acept)
-			e.cambioFin(false);
-	}
-
+	
 	/**
 	 * devuelve estado inicial
 	 * 
@@ -250,16 +203,70 @@ public class Automata {
 	public ArrayList<Estado> getFin() {
 		return _acept;
 	}
+	
+	// ---------------END Funciones comunes sacadas de Thomson --------------------
 
-	/**
-	 * Limpia la lista de los estados de aceptación
-	 */
-	public void finClear() {
-		this._acept.clear();
-	}
-	/*
-	 * End Funciones para Thomson Simplificado
-	 */
+//	/* ---------------Funciones para Thompson simplificado------------------------- */
+//	
+//	/**
+//	 * Une los estados con id. es1 y es2, no elimina ninguno, aunque deja es2
+//	 * inalcanzable
+//	 */
+//	
+//	public void unirSinEliminar(int es1, int es2) {
+//		aut.get(es1).unir(aut.get(es2).getTrans());
+//		aut.forEach((k, v) -> v.recolocarTransicionesSinBorrar(es2, es1));
+//	}
+//
+//	/**
+//	 * Hace una copia de todo el automata sin las refenrencias
+//	 */
+//	public void copyAll(Automata aut) {
+//		this.aut.putAll(aut.aut);
+//	}
+//
+//	/**
+//	 * copiar la lista de referencias a los estados finales
+//	 * 
+//	 * @param aut
+//	 */
+//	public void copyFinals(Automata aut) {
+//		this._acept.addAll(aut._acept);
+//	}
+//
+//	/**
+//	 * pone a estado final de ini al parametro
+//	 */
+//	public void IniFinalEs(boolean es) {
+//		_ini.cambioFin(es);
+//	}
+//
+//	/**
+//	 * Hace que el estado inicial deje de ser inicial
+//	 */
+//	public void quitarIni() {
+//		_ini.cambioIni(false);
+//		_ini.cambioFin(false);
+//	}
+//
+//	/**
+//	 * pone todos los estados finales no finales
+//	 */
+//	public void quitarTodosFin() {
+//		for (Estado e : _acept)
+//			e.cambioFin(false);
+//	}
+//
+//	/**
+//	 * Limpia la lista de los estados de aceptación
+//	 */
+//	public void finClear() {
+//		this._acept.clear();
+//	}
+//
+//	/*
+//	 * ----------------------End Funciones para Thomson Simplificado--------------------
+//	 */
 
 	public void show() {
 		// aut.forEach((k, v) -> + ));
