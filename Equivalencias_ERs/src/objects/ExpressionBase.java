@@ -3,14 +3,14 @@ package objects;
 import automata.*;
 
 public abstract class ExpressionBase {
-	protected char _sim;
+	protected String _sim;
 
 	public ExpressionBase() {}
 	
 	/**
 	 * @return simbolo
 	 */
-	public char get_sim() {
+	public String get_sim() {
 		return _sim;
 	}
 	
@@ -19,7 +19,7 @@ public abstract class ExpressionBase {
 	 * @param sim
 	 */
 	public void set_sim(char sim) {
-		this._sim = sim;
+		this._sim = ""+sim;
 	}
 
 	@Override

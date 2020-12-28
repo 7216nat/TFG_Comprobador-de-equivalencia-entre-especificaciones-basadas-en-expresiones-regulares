@@ -2,9 +2,9 @@ package automata;
 
 public class Transicion {
 	private int estadoF;
-	private char symbol;
+	private String symbol;
 
-	public Transicion(int st, char simb) {
+	public Transicion(int st, String simb) {
 		estadoF = st;
 		symbol = simb;
 	}
@@ -13,17 +13,8 @@ public class Transicion {
 		return estadoF;
 	}
 
-	public char getSymb() {
+	public String getSymb() {
 		return symbol;
-	}
-	
-	/**
-	 * compruba si dos transiciones son iguales
-	 * @param tr
-	 * @return
-	 */
-	public boolean compare(Transicion tr) {
-		return (this.estadoF == tr.estadoF && tr.symbol == this.symbol);
 	}
 
 	public String toString() {
@@ -32,5 +23,19 @@ public class Transicion {
 
 	public int getEstadoDest() {
 		return estadoF;
+	}
+	/**
+	 * 
+	 * Comprueba si dos transiciones son iguales. Sobreescribe de la clase Object
+	 */
+	@Override
+	public boolean equals(Object trans) {
+		Transicion tr = (Transicion) trans;
+		return (this.estadoF == tr.estadoF && this.symbol.equals(tr.symbol));
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.estadoF;
 	}
 }

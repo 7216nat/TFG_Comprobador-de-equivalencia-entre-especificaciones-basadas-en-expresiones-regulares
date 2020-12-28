@@ -8,7 +8,7 @@ public class Vacio extends ExpressionBase {
 
 	private static final String _regex = "%";
 
-	private static final char CojVacio = '%';
+	private static final String CojVacio = "%";
 	public Vacio() {
 		_sim = CojVacio;
 		// TODO Auto-generated constructor stub

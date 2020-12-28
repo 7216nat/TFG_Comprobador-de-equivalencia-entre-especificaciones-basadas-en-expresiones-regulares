@@ -18,7 +18,7 @@ public class Simbolo extends ExpressionBase {
 	 * constructora
 	 * @param er
 	 */
-	public Simbolo(char er) {
+	public Simbolo(String er) {
 		_sim = er;
 	}
 

@@ -43,10 +43,10 @@ public class main {
 		System.out.println(er2.toString());
 		aut2.show();
 		
-		ArrayList<Character> simb = new ArrayList<Character>();
+		ArrayList<String> simb = new ArrayList<String>();
 		Iterator<Character> it = set.iterator();
 		while(it.hasNext()) {
-			char c = (char) it.next();
+			String c = "" + (char) it.next();
 			simb.add(c);
 		}
 		

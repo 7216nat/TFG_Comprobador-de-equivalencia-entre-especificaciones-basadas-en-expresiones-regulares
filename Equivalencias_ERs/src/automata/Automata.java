@@ -70,7 +70,7 @@ public class Automata {
 	 * Añade transicion del estado con id estado al estado con id dest, a través del
 	 * símbolo simb
 	 */
-	public void addTransicion(int estado, int dest, char simb) {
+	public void addTransicion(int estado, int dest, String simb) {
 		aut.get(estado).addTrans(new Transicion(dest, simb));
 	}
 
@@ -115,7 +115,7 @@ public class Automata {
 	 * Devuelve true si la transición que sale de estado con simbolo s existe.
 	 * Devuelve false si no.
 	 */
-	public boolean existsTrans(int estado, char s) {
+	public boolean existsTrans(int estado, String s) {
 		Transicion cmp = new Transicion(estado, s);
 		return this.aut.get(estado).getTrans().contains(cmp);
 	}
@@ -123,14 +123,14 @@ public class Automata {
 	/**
 	 * Devuelve el id del destino de la transición que sale de estado con simbolo s
 	 */
-	public int getDestTrans(int estado, char s) {
+	public int getDestTrans(int estado, String s) {
 		HashSet<Transicion> tr = this.aut.get(estado).getTrans();
 		Iterator<Transicion> trIt = tr.iterator();
 		boolean encontrado = false;
 		int destino = -1;
 		while (!encontrado && trIt.hasNext()) {
 			Transicion aux = trIt.next();
-			if (aux.getSymb() == s) {
+			if (aux.getSymb().equals(s)) {
 				destino = aux.getEstadoDest();
 				encontrado = true;
 			}
@@ -288,13 +288,13 @@ public class Automata {
 	 * carácter, devuelve -1 si no hay una transición que sale del estado con
 	 * caracter s, si existe, devuelve el id del estado
 	 */
-	public int existsTransEq(int estado, char s) {
+	public int existsTransEq(int estado, String s) {
 		int exist = -1;
 		EstadoTh es = (EstadoTh) this.aut.get(estado);
 		Iterator<Transicion> it = es.getTrans().iterator();
 		while (exist == -1 && it.hasNext()) {
 			Transicion tr = it.next();
-			if (tr.getSymb() == s)
+			if (tr.getSymb().equals(s))
 				exist = tr.getEstadoDest();
 		}
 		return exist;
@@ -319,7 +319,7 @@ public class Automata {
 			Iterator<Transicion> it = estado.getTrans().iterator();
 			while (it.hasNext()) {
 				Transicion aux = it.next();
-				if (aux.getSymb() == '&') {
+				if (aux.getSymb().equals("&")) {
 					//Solo lo añado como estado para explorar más lambdatransiciones si no lo he hecho ya.
 					if(!nuevo.getEq().contains(aux.getEstadoDest()))
 						estados.add(aut.get(aux.getEstadoDest()));

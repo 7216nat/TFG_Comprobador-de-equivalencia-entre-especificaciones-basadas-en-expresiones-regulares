@@ -23,7 +23,7 @@ public class Algoritmos {
 	 *              expresión
 	 * @return
 	 */
-	public static String detHopKarp(Automata at1, Automata at2, IdEstado idst, ArrayList<Character> simb) {
+	public static String detHopKarp(Automata at1, Automata at2, IdEstado idst, ArrayList<String> simb) {
 		HashMap<Integer, EstadoTh> aExplorar = new HashMap<Integer, EstadoTh>();
 		Queue<SimEsEs> aComparar = new LinkedList<SimEsEs>();
 		Estado inicial = at1.getIni();
@@ -63,13 +63,13 @@ public class Algoritmos {
 		while (!aComparar.isEmpty()) {
 			SimEsEs comparo = aComparar.remove();
 
-			Iterator<Character> it = simb.iterator();
+			Iterator<String> it = simb.iterator();
 			while (it.hasNext()) {
-				char s = it.next();
+				String s = it.next();
 				// si aún no se han explorado los estados, lo hago
-				if (aExplorar.containsKey(comparo.getEstado1()) && s != '&')
+				if (aExplorar.containsKey(comparo.getEstado1()) && !s.equals("&"))
 					determinarEstado(comparo.getEstado1(), afd1, s, idst, at1, aExplorar);
-				if (aExplorar.containsKey(comparo.getEstado2()) && s != '&')
+				if (aExplorar.containsKey(comparo.getEstado2()) && !s.equals("&"))
 					determinarEstado(comparo.getEstado2(), afd2, s, idst, at2, aExplorar);
 
 				// Compruebo la existencia de las transiciones y su destino
@@ -114,7 +114,7 @@ public class Algoritmos {
 		return "Equivalentes";
 	}
 
-	private static void determinarEstado(int viejo, Automata afd, char simb, IdEstado idst, Automata at,
+	private static void determinarEstado(int viejo, Automata afd, String simb, IdEstado idst, Automata at,
 			HashMap<Integer, EstadoTh> aExplorar) {
 		
 			EstadoTh nuevoEstado = new EstadoTh(idst.getId());
@@ -133,7 +133,7 @@ public class Algoritmos {
 				while (transIt.hasNext()) {
 					Transicion tAux = transIt.next();
 					// Si la transición es con el símbolo que estoy evaluando:
-					if (tAux.getSymb() == simb) {
+					if (tAux.getSymb().equals(simb)) {
 						EstadoTh aux = at.lambdaCierre(at.getEstado(tAux.getEstadoDest()), -1);
 						aux.getEq().forEach((k) -> nuevoEstado.addEquiv(k));
 						if (aux.esFin() || at.getEstado(tAux.getEstadoDest()).esFin() )
@@ -159,7 +159,7 @@ public class Algoritmos {
 				afd.addEstado(nuevoEstado);
 				aExplorar.put(nuevoEstado.getId(), nuevoEstado);
 				afd.addTransicion(viejo, nuevoEstado.getId(), simb);
-			} else if(!noEsta && simb != '&')
+			} else if(!noEsta && simb.equals("&"))
 				afd.addTransicion(viejo, yaExistente, simb);
 		}
 	

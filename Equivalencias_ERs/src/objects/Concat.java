@@ -51,7 +51,7 @@ public class Concat extends ExpressionBase {
 		aceptPrev = a1.getFin();
 		a1.copyAll(a2);
 		for (Estado e: aceptPrev)
-			a1.addTransicion(e.getId(), iniPrev.getId(), '&');
+			a1.addTransicion(e.getId(), iniPrev.getId(), "&");
 		a1.finClear();	
 		a1.copyFinals(a2);
 		// añadir una lambda-transicion de a1.estadofinal a a2.estadoinicial 
