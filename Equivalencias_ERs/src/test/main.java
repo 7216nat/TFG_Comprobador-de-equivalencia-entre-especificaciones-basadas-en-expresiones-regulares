@@ -18,12 +18,12 @@ public class main {
 	//Test paso de String a expresion regular
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub		
-		///*
-		System.out.println(!false);
+		/*
 		IdEstado state = new IdEstado();
 		
-		String str = "(cb*c+cb*b)*";
-		String str2 = "(cc)*+(cc)*(cb)(b+c)*";
+		String str = "(cb*c|cb*b)*";
+		String str2 = "(cc)*|(cc)*(cb)(b|c)*";
+		System.out.println(str + 'a');
 		
 		Set<Character> set = new HashSet<Character> ();
 		ParserER parser = new ParserER(new String_ref(str), set);
@@ -49,14 +49,14 @@ public class main {
 			String c = "" + (char) it.next();
 			simb.add(c);
 		}
-		
+		System.out.println(simb.toString());
 		String resul = Algoritmos.detHopKarp(aut, aut2, state, simb);
 		System.out.println(resul);
-		//*/
-		/*
+		*/
+		///*
 		String str = "hola+mundo(hola*+m)*(u+ndo)+sad*";
 		//str = "((a+b)a)*";
-		str = "abb";
+		str = "ab?b+[a-dgx]";
 		Set<Character> set = new HashSet<Character> ();
 		ParserER parser = new ParserER(new String_ref(str), set);
 		ExpressionBase er = parser.parse();
@@ -64,7 +64,7 @@ public class main {
 		System.out.println(set.toString());
 		System.out.println(er.toString());
 		aut.show();
-		*/
+		//*/
 		}
 
 }

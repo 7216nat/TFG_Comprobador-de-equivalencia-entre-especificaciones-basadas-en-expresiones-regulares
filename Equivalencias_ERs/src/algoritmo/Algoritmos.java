@@ -159,7 +159,7 @@ public class Algoritmos {
 				afd.addEstado(nuevoEstado);
 				aExplorar.put(nuevoEstado.getId(), nuevoEstado);
 				afd.addTransicion(viejo, nuevoEstado.getId(), simb);
-			} else if(!noEsta && simb.equals("&"))
+			} else if(!noEsta && !simb.equals("&"))
 				afd.addTransicion(viejo, yaExistente, simb);
 		}
 	

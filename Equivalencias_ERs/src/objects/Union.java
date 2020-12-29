@@ -21,7 +21,7 @@ public class Union extends ExpressionBase {
 	
 	@Override
 	public String toString() {
-		return  "( " + _e1.toString() + "+" +  _e2.toString() + " )";
+		return  "( " + _e1.toString() + "|" +  _e2.toString() + " )";
 	}
 
 	@Override

@@ -56,6 +56,14 @@ public class ParserER {
 		this.exreg.sub(1);
 		return c;
 	}
+	
+	private void comprobarSintasisError() {
+		// error al tener 2 * seguidos o no hay simbolo
+		if (prim() == '*' || prim() == '+' || prim() == '?' || pila.empty()) {
+			System.out.println("ER inválido");
+			System.exit(0);
+		}	
+	}
 
 	/**
 	 * dado un puntero, concatenar todas las instancias de ExpressionBase
@@ -112,24 +120,34 @@ public class ParserER {
 			} else if (prim() == '*') { // kleen
 				next();
 
-				// error al tener 2 * seguidos o no hay simbolo
-				if (prim() == '*' || pila.empty()) {
-					System.out.println("ER inválido");
-					System.exit(0);
-				}
-
+				comprobarSintasisError();
+				
 				// cierre del kleen a la cima de pila
 				ExpressionBase kleen = this.pila.pop();
 				kleen = new Kleen(kleen);
 				this.pila.push(kleen);
-			} else if (prim() == '+') { // Union
+			} else if (prim() == '+') { // cierre positivo
 				next();
 
-				// error al tener 2 + seguidos o seguido de una + o no hay simbolo
-				if (prim() == '+' || prim() == '*' || pila.empty()) {
-					System.out.println("ER inválido");
-					System.exit(0);
-				}
+				comprobarSintasisError();
+
+				// cierre del kleen a la cima de pila
+				ExpressionBase cPositivo = this.pila.pop();
+				cPositivo = new CierrePositivo(cPositivo);
+				this.pila.push(cPositivo);
+			} else if (prim() == '?') { // cierre positivo
+				next();
+
+				comprobarSintasisError();
+
+				// cierre del kleen a la cima de pila
+				ExpressionBase lamb = this.pila.pop();
+				lamb = new LambdaExp(lamb);
+				this.pila.push(lamb);
+			} else if (prim() == '|') { // Union
+				next();
+
+				comprobarSintasisError();
 
 				// concatenar todos los simbolos posteriores al puntero
 				concatenarAll(ptrPila);
@@ -153,6 +171,14 @@ public class ParserER {
 				}
 				System.out.println("error conjunto vacio");
 				System.exit(0);
+			} else if (prim() == '[') {
+				next();
+				String str = "";
+				while(prim() != ']')
+					str = str + ("" + next());
+				next();
+				ExpressionBase rSimbolo = new RangoSimbolos(str);
+				this.pila.push(rSimbolo);
 			} else {
 
 				/**
@@ -164,7 +190,7 @@ public class ParserER {
 					System.exit(0);
 				}
 				set.add(prim());
-				simbolo.set_sim(next());
+				simbolo.set_sim(""+ next());
 				this.pila.push(simbolo);
 			}
 		}

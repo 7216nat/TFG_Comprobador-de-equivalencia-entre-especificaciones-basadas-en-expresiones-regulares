@@ -18,13 +18,13 @@ public abstract class ExpressionBase {
 	 * setter de simbolo
 	 * @param sim
 	 */
-	public void set_sim(char sim) {
-		this._sim = ""+sim;
+	public void set_sim(String sim) {
+		this._sim = sim;
 	}
 
 	@Override
 	public String toString() {
-		return "" + _sim;
+		return _sim;
 	}
 	
 	/**

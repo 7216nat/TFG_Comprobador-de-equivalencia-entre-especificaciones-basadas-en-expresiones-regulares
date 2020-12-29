@@ -24,6 +24,7 @@ public class Lambdaa extends ExpressionBase {
 	 */
 	public Lambdaa() {
 		// TODO Auto-generated constructor stub
+		_sim = lambda;
 	}
 
 	@Override
@@ -50,10 +51,9 @@ public class Lambdaa extends ExpressionBase {
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
-		int ini = id.nextId(), acept;
-		acept = ini;
+		int ini = id.nextId(), acept = id.nextId();
 		AutomataTS aut = new AutomataTS(ini, acept);
-		// aut.addTransicion(ini, acept, _sim);
+		aut.addTransicion(ini, acept, _sim);
 		return aut;
 	}
 
