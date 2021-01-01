@@ -3,6 +3,7 @@ package objects;
 import automata.*;
 
 public abstract class ExpressionBase {
+	
 	protected String _sim;
 
 	public ExpressionBase() {}

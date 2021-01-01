@@ -1,7 +1,5 @@
 package objects;
 
-import java.util.ArrayList;
-
 import automata.AutomataTS;
 import automata.Estado;
 import automata.IdEstado;

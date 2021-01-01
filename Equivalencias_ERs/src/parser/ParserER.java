@@ -1,5 +1,6 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.Stack;
 
@@ -14,6 +15,7 @@ public class ParserER {
 	private String_ref exreg; // string a analizar
 	private Stack<ExpressionBase> pila; // pila para controlar parentesis, suma y cierre kleen
 	private Set<Character> set;
+	private ArrayList<UnionRangos> array;
 	private int parentesis; // controlar si los parentesis están bien cerrados
 
 	/**
@@ -21,11 +23,12 @@ public class ParserER {
 	 * @param exreg
 	 * @param set
 	 */
-	public ParserER(String_ref exreg, Set<Character> set) {
+	public ParserER(String_ref exreg, Set<Character> set, ArrayList<UnionRangos> array) {
 		this.exreg = exreg;
 		this.pila = new Stack<ExpressionBase>();
 		this.parentesis = 0;
 		this.set = set;
+		this.array = array;
 	}
 
 	/**
@@ -175,9 +178,10 @@ public class ParserER {
 				next();
 				String str = "";
 				while(prim() != ']')
-					str = str + ("" + next());
+					str += next();
 				next();
-				ExpressionBase rSimbolo = new RangoSimbolos(str);
+				ExpressionBase rSimbolo = new UnionRangos(str);
+				array.add((UnionRangos) rSimbolo);
 				this.pila.push(rSimbolo);
 			} else {
 

@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import automata.*;
 
 // Comentarios en ExpressionBase
-public class Simbolo extends ExpressionBase {
+public class Simbolo extends ExpressionBase implements Comparable<Simbolo> {
 
 	private static final String _regex = "\\w";
 	
@@ -26,7 +26,17 @@ public class Simbolo extends ExpressionBase {
 	public ExpressionBase cloneMe() {
 		return new Simbolo();
 	}
-
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof Simbolo)) {
+	            return false;
+	     }
+	     Simbolo sim = (Simbolo) o;
+	     return _sim.equals(sim._sim);
+	}
+	
 	@Override
 	public boolean match(String string) {
 		return Pattern.matches(_regex, string);
@@ -46,6 +56,12 @@ public class Simbolo extends ExpressionBase {
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
+	}
+
+	@Override
+	public int compareTo(Simbolo o) {
+		// TODO Auto-generated method stub
+		return _sim.compareTo(o._sim);
 	}
 
 }
