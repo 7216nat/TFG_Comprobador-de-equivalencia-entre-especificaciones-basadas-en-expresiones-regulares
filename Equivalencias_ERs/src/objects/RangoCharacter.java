@@ -1,9 +1,13 @@
 package objects;
 
+import java.util.regex.Pattern;
+
 import automata.AutomataTS;
 import automata.IdEstado;
 
 public class RangoCharacter extends ExpressionBase implements Comparable<RangoCharacter> {
+	
+	private static final String _regex = "\\w";
 	
 	private char _ini;
 	private char _fin;
@@ -12,7 +16,7 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	public RangoCharacter(char inifin) {	
 		_ini = inifin;
 		_fin = inifin;
-		_sim = "" + _ini;
+		actualizarSim();
 	}
 	
 	public RangoCharacter(char ini, char fin) {
@@ -24,6 +28,13 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	public char get_ini() { return _ini; }
 	public char get_fin() { return _fin; }
 	
+	@Override
+	public void set_sim(String str) {
+		_ini = str.charAt(0);
+		_fin = _ini;
+		actualizarSim();
+	}
+	
 	public void actualizarSim() {
 		if (_ini == _fin) _sim = _ini + "";
 		else _sim = _ini + "-" + _fin;
@@ -33,8 +44,12 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 		return (_ini > rc._ini && _fin < rc._fin);
 	}
 	
+	public boolean contiene(char c) {
+		return (_ini <= c && _fin >= c && _ini != _fin);
+	}
+	
 	public boolean contiene(RangoCharacter rc) {
-		return (_ini <= rc._ini && _fin >= rc._fin);
+		return (_ini <= rc._ini && _fin >= rc._fin && _ini != _fin);
 	}
 	
 	public boolean isIntersec(RangoCharacter rc) {
@@ -47,21 +62,15 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 		actualizarSim();
 	}
 	
-	public RangoCharacter interseccion(RangoCharacter rc) {
-		char tmp;
-		if (_ini >= rc._ini) {
-			tmp = _ini;
-			this._ini = (char) (rc._fin + 1);
-			actualizarSim();
-			return new RangoCharacter(tmp, rc._fin);
-		}
-		else if(_fin <= rc._fin) {
-			tmp = _fin;
-			this._fin = (char) (rc._ini - 1);
-			actualizarSim();
-			return new RangoCharacter(rc._ini, tmp);
-		}
-		return null;
+	public boolean mayorQue(char c) {
+		return _fin >= c;
+	}
+	
+	public RangoCharacter interseccion(char c) {
+		char tmp = _ini;
+		this._ini = (char) (c+1);
+		actualizarSim();
+		return new RangoCharacter(tmp, c);
 	}
 	
 	
@@ -110,7 +119,7 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	@Override
 	public boolean match(String string) {
 		// TODO Auto-generated method stub
-		return false;
+		return Pattern.matches(_regex, string);
 	}
 
 }

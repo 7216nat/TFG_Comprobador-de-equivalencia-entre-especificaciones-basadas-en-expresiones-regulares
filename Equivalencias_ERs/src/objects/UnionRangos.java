@@ -2,6 +2,9 @@ package objects;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import automata.*;
 
@@ -10,33 +13,42 @@ public class UnionRangos extends ExpressionBase {
 	private ExpressionBase _e1;
 	private String _str;
 	private ArrayList<RangoCharacter> _rangos;
+	private SortedSet<Character> _ss;
 
 	public UnionRangos() {}
 	
 	public UnionRangos(String str) {
 		_str = str;
 		_rangos = new ArrayList<RangoCharacter>();
-		parserRangos();
-		selfIntersec();
+		_ss = new TreeSet<Character>();
 	}
 	
-	public void parserRangos() {
+	public void parserRangos(SortedSet<Character> ss) {
 		
 		char c = _str.charAt(0);
 		int i = 0;
 		while (i < _str.length()) {
 			c = _str.charAt(i);
-			if (i==_str.length()-1 || _str.charAt(i+1) != '-')
+			if (i == _str.length()-1 || _str.charAt(i+1) != '-') {
 				_rangos.add(new RangoCharacter(c));
+				_ss.add(c);
+			}
 			else {
 				i +=2;
 				if (_str.charAt(i) < c) {
-					System.out.println("ER inválido");
+					System.out.println("ER inválido, Rango incorrecto");
 					System.exit(0);
 				}
 				_rangos.add(new RangoCharacter(c ,_str.charAt(i)));
 			}
 			i++;
+		}
+		selfIntersec();
+		for (RangoCharacter rc: _rangos) {
+			ss.add(rc.get_ini());
+			ss.add(rc.get_fin());
+			_ss.add(rc.get_ini());
+			_ss.add(rc.get_fin());
 		}
 	}
 	
@@ -53,25 +65,31 @@ public class UnionRangos extends ExpressionBase {
 		}
 	}
 	
-	public void intersec(UnionRangos ur) {
+	public void intersec(Set<String> set, SortedSet<Character> ss) {
 		ArrayList<RangoCharacter> tmp = new ArrayList<RangoCharacter>();
-		RangoCharacter rc, rctmp;
+		RangoCharacter rc;
 		
-		for(int i= 0; i < ur._rangos.size(); i++) {
-			rc = ur._rangos.get(i);
-			for(int j = 0; j < _rangos.size(); j++) {
-				rctmp = _rangos.get(j);
-				if (rc.contenida(rctmp)) {
-					tmp.add(rctmp.interseccion(rc));
-					tmp.add(rctmp.interseccion(rc));
+		Iterator<RangoCharacter> it = _rangos.iterator();
+		Iterator<Character> it_c;
+		char c;
+		
+		while (it.hasNext()) {
+			rc = it.next();
+			
+			it_c = ss.iterator();
+			do {
+				c = it_c.next();
+				if (rc.contiene(c)) {
+					tmp.add(rc.interseccion(c));
+					set.add(rc._sim);
 				}
-				else if (rc.isIntersec(rctmp)) {
-					tmp.add(rctmp.interseccion(rc));
-				}
-			}
-			_rangos.addAll(tmp);
-			tmp.clear();	
+			} while (it_c.hasNext() && rc.mayorQue(c));
+			tmp.add(rc);
+			set.add(rc._sim);
 		}
+		
+		_rangos = tmp;
+		unirRangos();
 	}
 	
 	private void selfIntersec() {

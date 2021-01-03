@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import algoritmo.Algoritmos;
 import automata.Automata;
@@ -23,37 +24,34 @@ public class main {
 		
 		String str = "(cb*c|cb*b)*";
 		String str2 = "(cc)*|(cc)*(cb)(b|c)*";
-		str = "c[a-l]";
-		str2 = "a[b-c]";
 		
-		Set<Character> set = new HashSet<Character> ();
+		Set<String> simblosSet = new HashSet<String> ();
 		ArrayList<UnionRangos> array = new ArrayList<UnionRangos>();
-		ParserER parser = new ParserER(new String_ref(str), set, array);
+		SortedSet<Character> ss = new TreeSet<Character>();
+		ParserER parser = new ParserER(new String_ref(str), simblosSet, array, ss);
 		ExpressionBase er = parser.parse();
 		
-		intersecUR(array);
+		Set<String> simblosSet2 = new HashSet<String> ();
+		ArrayList<UnionRangos> array2 = new ArrayList<UnionRangos>();
+		ParserER parser2 = new ParserER(new String_ref(str2), simblosSet2, array2, ss);
+		ExpressionBase er2 = parser2.parse();
+		
+		intersecUR(simblosSet, array, ss);
+		intersecUR(simblosSet2, array2, ss);
 		
 		//Automata aut = (Automata)er.ThomsonAFN(state);
 		Automata aut = (Automata)er.ThomsonSimplAFN(state);
-		System.out.println(set.toString());
 		System.out.println(er.toString());
 		aut.show();
-		
-		Set<Character> set2 = new HashSet<Character> ();
-		ArrayList<UnionRangos> array2 = new ArrayList<UnionRangos>();
-		ParserER parser2 = new ParserER(new String_ref(str2), set2, array2);
-		ExpressionBase er2 = parser2.parse();
-		intersecUR(array2);
 		//Automata aut2 = (Automata)er2.ThomsonAFN(state);
 		Automata aut2 = (Automata)er2.ThomsonSimplAFN(state);
-		System.out.println(set2.toString());
 		System.out.println(er2.toString());
 		aut2.show();
 		
 		ArrayList<String> simb = new ArrayList<String>();
-		Iterator<Character> it = set.iterator();
+		Iterator<String> it = simblosSet.iterator();
 		while(it.hasNext()) {
-			String c = "" + (char) it.next();
+			String c = it.next();
 			simb.add(c);
 		}
 		
@@ -67,49 +65,30 @@ public class main {
 		String str = "hola+mundo(hola*+m)*(u+ndo)+sad*";
 		//str = "((a+b)a)*";
 		str = "ab?b+[a-dxgc-h][c-lk-m][l-xks]";
-		Set<Character> set = new HashSet<Character> ();
+		Set<String> set = new HashSet<String> ();
 		ArrayList<UnionRangos> array = new ArrayList<UnionRangos>();
-		ParserER parser = new ParserER(new String_ref(str), set, array);
+		SortedSet<Character> ss = new TreeSet<Character>();
+		ParserER parser = new ParserER(new String_ref(str), set, array, ss);
 		ExpressionBase er = parser.parse();
 		
-		if (array.size() ==  1) {
-			array.get(0).unirRangos();
-		}
-		else if (array.size() > 1) {
-			UnionRangos tmp1, tmp2;
-			for (int i = 0; i < array.size(); i++) {
-				tmp1 = array.get(i);
-				for (int j = i+1; j < array.size(); j++) {
-					tmp2 = array.get(j);
-					tmp1.intersec(tmp2);
-					tmp2.intersec(tmp1);
-				}
-				tmp1.unirRangos();
-			}
-		}
+		intersecUR(set, array, ss);
 		
 		Automata aut = er.ThomsonSimplAFN(new IdEstado());
 		System.out.println(set.toString());
 		System.out.println(er.toString());
 		aut.show();
 		*/
+		
+		/*
+		RangoCharacter e1 = new RangoCharacter('a', 'h'), e2 = new RangoCharacter('a', 'h');
+		System.out.println(e1.equals(e2));
+		*/
 	}
 	
-	public static void intersecUR(ArrayList<UnionRangos> array){
-		if (array.size() ==  1) {
-			array.get(0).unirRangos();
-		}
-		else if (array.size() > 1) {
-			UnionRangos tmp1, tmp2;
-			for (int i = 0; i < array.size(); i++) {
-				tmp1 = array.get(i);
-				for (int j = i+1; j < array.size(); j++) {
-					tmp2 = array.get(j);
-					tmp1.intersec(tmp2);
-					tmp2.intersec(tmp1);
-				}
-				tmp1.unirRangos();
-			}
+	public static void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> ss){
+		
+		for (int i = 0; i < array.size(); i++) {
+			array.get(i).intersec(set, ss);
 		}
 	}
 

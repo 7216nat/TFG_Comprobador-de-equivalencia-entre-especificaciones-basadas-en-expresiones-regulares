@@ -2,6 +2,7 @@ package parser;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.Stack;
 
 import factories.FactoryER;
@@ -14,21 +15,24 @@ public class ParserER {
 
 	private String_ref exreg; // string a analizar
 	private Stack<ExpressionBase> pila; // pila para controlar parentesis, suma y cierre kleen
-	private Set<Character> set;
+	private Set<String> set;
 	private ArrayList<UnionRangos> array;
 	private int parentesis; // controlar si los parentesis están bien cerrados
+	private SortedSet<Character> _sort;
 
 	/**
 	 *  constructor
 	 * @param exreg
 	 * @param set
 	 */
-	public ParserER(String_ref exreg, Set<Character> set, ArrayList<UnionRangos> array) {
+	public ParserER(String_ref exreg, Set<String> set, ArrayList<UnionRangos> array
+			,SortedSet<Character> sort) {
 		this.exreg = exreg;
 		this.pila = new Stack<ExpressionBase>();
 		this.parentesis = 0;
 		this.set = set;
 		this.array = array;
+		this._sort = sort;
 	}
 
 	/**
@@ -163,7 +167,7 @@ public class ParserER {
 				// union las dos ERs primeras de la pila
 				ExpressionBase er1 = this.pila.pop();
 				ExpressionBase er2 = this.pila.pop();
-				ExpressionBase union = new Union(er2, er1);
+				Union union = new Union(er2, er1);
 				this.pila.push(union);
 				return; // union es considerado tambien con si fuera entre parentesis
 			} else if (prim() == '%') {
@@ -180,8 +184,9 @@ public class ParserER {
 				while(prim() != ']')
 					str += next();
 				next();
-				ExpressionBase rSimbolo = new UnionRangos(str);
-				array.add((UnionRangos) rSimbolo);
+				UnionRangos rSimbolo = new UnionRangos(str);
+				rSimbolo.parserRangos(_sort);
+				array.add(rSimbolo);
 				this.pila.push(rSimbolo);
 			} else {
 
@@ -193,7 +198,8 @@ public class ParserER {
 					System.out.println("Simbolo inválido");
 					System.exit(0);
 				}
-				set.add(prim());
+				set.add("" + prim());
+				_sort.add(prim());
 				simbolo.set_sim(""+ next());
 				this.pila.push(simbolo);
 			}
