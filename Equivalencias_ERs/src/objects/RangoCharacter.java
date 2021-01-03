@@ -5,6 +5,9 @@ import java.util.regex.Pattern;
 import automata.AutomataTS;
 import automata.IdEstado;
 
+/**
+ * Clase hoja
+ */
 public class RangoCharacter extends ExpressionBase implements Comparable<RangoCharacter> {
 	
 	private static final String _regex = "\\w";
@@ -12,60 +15,106 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	private char _ini;
 	private char _fin;
 	
+	/**
+	 * Constructora por defecto
+	 */
 	public RangoCharacter() {}
+	
+	/**
+	 * Constructora para simbolo unico
+	 * @param inifin: caracter ini y fin
+	 */
 	public RangoCharacter(char inifin) {	
 		_ini = inifin;
 		_fin = inifin;
 		actualizarSim();
 	}
 	
+	/**
+	 * Constructora para rangos
+	 * @param ini: caracter inicial
+	 * @param fin: caracter final
+	 */
 	public RangoCharacter(char ini, char fin) {
 		_ini = ini;
 		_fin = fin;
 		actualizarSim();
 	}
 	
+	/**
+	 * getter ini
+	 * @return
+	 */
 	public char get_ini() { return _ini; }
+	/**
+	 * getter fin
+	 * @return
+	 */
 	public char get_fin() { return _fin; }
 	
-	@Override
-	public void set_sim(String str) {
-		_ini = str.charAt(0);
-		_fin = _ini;
-		actualizarSim();
-	}
-	
+	/**
+	 * Actualizar toString()
+	 */
 	public void actualizarSim() {
 		if (_ini == _fin) _sim = _ini + "";
 		else _sim = _ini + "-" + _fin;
 	}
 	
+	/**
+	 * @param rc
+	 * @return el objeto de llamada contenido en rc
+	 */
 	public boolean contenida(RangoCharacter rc) {
 		return (_ini > rc._ini && _fin < rc._fin);
 	}
 	
+	/**
+	 * @param c: char
+	 * @return this contiene c
+	 */
 	public boolean contiene(char c) {
 		return (_ini <= c && _fin >= c && _ini != _fin);
 	}
 	
+	/**
+	 * @param rc: rango
+	 * @return this contiene rc
+	 */
 	public boolean contiene(RangoCharacter rc) {
 		return (_ini <= rc._ini && _fin >= rc._fin && _ini != _fin);
 	}
 	
+	/**
+	 * @param rc: rango
+	 * @return si this intersecciona con rc 
+	 */
 	public boolean isIntersec(RangoCharacter rc) {
 		return (rc._ini < _ini && _ini <= rc._fin && rc._fin <= _fin) || ( _fin >= rc._ini && rc._fin > _fin && rc._ini >= _ini);
 	}
 	
+	/**
+	 * union de this con rc y actualizar toString
+	 * @param rc: rango
+	 */
 	public void union(RangoCharacter rc) {
 		_ini = (_ini < rc._ini) ? _ini : rc._ini;
 		_fin = (_fin > rc._fin) ? _fin : rc._fin;
 		actualizarSim();
 	}
 	
+	/**
+	 * @param c: char
+	 * @return fin de rango de this mayor que c
+	 */
 	public boolean mayorQue(char c) {
 		return _fin >= c;
 	}
 	
+	/**
+	 * Interseccion con this hasta c incluido
+	 * @param c: char
+	 * @return RangoCharacter(this._ini, c)
+	 */
 	public RangoCharacter interseccion(char c) {
 		char tmp = _ini;
 		this._ini = (char) (c+1);

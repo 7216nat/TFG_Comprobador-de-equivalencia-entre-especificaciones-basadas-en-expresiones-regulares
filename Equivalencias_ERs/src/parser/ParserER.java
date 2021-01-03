@@ -21,9 +21,11 @@ public class ParserER {
 	private SortedSet<Character> _sort;
 
 	/**
-	 *  constructor
-	 * @param exreg
-	 * @param set
+	 * Parser
+	 * @param exreg: contador
+	 * @param set: set de simbolos para las transiciones
+	 * @param array: lista de rangos a rellenar
+	 * @param sort: lista de puntos de interseccion
 	 */
 	public ParserER(String_ref exreg, Set<String> set, ArrayList<UnionRangos> array
 			,SortedSet<Character> sort) {
@@ -64,6 +66,9 @@ public class ParserER {
 		return c;
 	}
 	
+	/**
+	 * casos exception
+	 */
 	private void comprobarSintasisError() {
 		// error al tener 2 * seguidos o no hay simbolo
 		if (prim() == '*' || prim() == '+' || prim() == '?' || pila.empty()) {
@@ -106,6 +111,7 @@ public class ParserER {
 	/**
 	 * La idea de union y parentesis es que cada vez que ocurran, al terminar formen
 	 * solo una ER
+	 * @param ptrPila: punto de llamada
 	 */
 	private void parseDeVerdad(int ptrPila) {
 

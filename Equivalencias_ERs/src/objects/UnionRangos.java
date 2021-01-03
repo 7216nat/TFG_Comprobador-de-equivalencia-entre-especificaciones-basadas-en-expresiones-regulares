@@ -4,34 +4,46 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import automata.*;
 
+/**
+ * Clase envoltoria para la union/o no de rangos
+ *
+ */
 public class UnionRangos extends ExpressionBase {
 
 	private ExpressionBase _e1;
 	private String _str;
 	private ArrayList<RangoCharacter> _rangos;
-	private SortedSet<Character> _ss;
-
+	
+	/**
+	 * Clase constructora por defecto
+	 */
 	public UnionRangos() {}
 	
+	/**
+	 * Clase constructora
+	 * @param str: string que contiene el rango 
+	 */
 	public UnionRangos(String str) {
 		_str = str;
 		_rangos = new ArrayList<RangoCharacter>();
-		_ss = new TreeSet<Character>();
 	}
 	
+	/**
+	 * parsear el string, se añaden los puntos de interseccion al set \
+	 * antes de eso se interseccionan internamente para evitar repeticiones 
+	 * @param ss
+	 */
 	public void parserRangos(SortedSet<Character> ss) {
 		
-		char c = _str.charAt(0);
+		char c;
 		int i = 0;
-		while (i < _str.length()) {
+		while (i < _str.length()) { // Procesado de String
 			c = _str.charAt(i);
 			if (i == _str.length()-1 || _str.charAt(i+1) != '-') {
 				_rangos.add(new RangoCharacter(c));
-				_ss.add(c);
 			}
 			else {
 				i +=2;
@@ -43,15 +55,17 @@ public class UnionRangos extends ExpressionBase {
 			}
 			i++;
 		}
-		selfIntersec();
-		for (RangoCharacter rc: _rangos) {
+		
+		selfIntersec(); 					// Intersecciones internas
+		for (RangoCharacter rc: _rangos) {  // Añadidos de puntos de interseccion
 			ss.add(rc.get_ini());
 			ss.add(rc.get_fin());
-			_ss.add(rc.get_ini());
-			_ss.add(rc.get_fin());
 		}
 	}
 	
+	/**
+	 * Convertir la lista de rangos en la union de ERs
+	 */
 	public void unirRangos() {
 		if (_rangos.size() == 1) {
 			_e1 = _rangos.get(0);
@@ -65,6 +79,12 @@ public class UnionRangos extends ExpressionBase {
 		}
 	}
 	
+	/**
+	 * Interseccion de todos los rangos con los puntos de intersecciones dadas \
+	 * y convertirlos en las uniones
+	 * @param set: se añaden los nuevos "simbolos" al set de simbolos
+	 * @param ss: lista de puntos de intersecciones dadas
+	 */
 	public void intersec(Set<String> set, SortedSet<Character> ss) {
 		ArrayList<RangoCharacter> tmp = new ArrayList<RangoCharacter>();
 		RangoCharacter rc;
@@ -92,6 +112,9 @@ public class UnionRangos extends ExpressionBase {
 		unirRangos();
 	}
 	
+	/**
+	 * Quitar repeticiones, unir en caso de intersecciones
+	 */
 	private void selfIntersec() {
 		ArrayList<RangoCharacter> tmp = new ArrayList<RangoCharacter>();
 		Iterator<RangoCharacter> it = _rangos.iterator(), ittmp;
