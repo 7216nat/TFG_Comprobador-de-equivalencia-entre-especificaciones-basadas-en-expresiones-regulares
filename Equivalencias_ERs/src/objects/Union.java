@@ -88,7 +88,7 @@ public class Union extends ExpressionBase {
 		if (iniPrev1.esFin() || iniPrev2.esFin()) a1.IniFinalEs(true);
 		
 		// añadir las transiciones del a2.estadoinicial a a1.estadoinicila y eliminar el primero
-		a1.unirSinEliminar(iniPrev1.getId(), iniPrev2.getId());
+		a1.unirSinEliminar(iniPrev1, iniPrev2);
 		a1.eliminarEstado(iniPrev2.getId());
 		
 		return a1;

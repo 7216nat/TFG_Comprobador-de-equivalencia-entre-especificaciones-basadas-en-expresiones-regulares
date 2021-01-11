@@ -150,6 +150,25 @@ public class Estado {
 	/*
 	 * end Funciones para Thomson Simplificado
 	 */
+	
+	/**
+	 * Funciones añadidas en algoritmo de seguidores
+	 */
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof Estado)) {
+	            return false;
+	     }
+	     Estado estado = (Estado) o;
+	     return id == estado.id;
+	}
+	
+	/**
+	 * END Funciones añadidas en algoritmo de seguidores
+	 */
+	
 	public String toString() {
 		String salida = "";
 		trans.forEach((k) -> System.out.print(k.getSymb() + " -> " + k.getEstadoDest() + "; "));

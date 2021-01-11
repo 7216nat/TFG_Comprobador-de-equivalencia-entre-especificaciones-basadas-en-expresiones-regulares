@@ -70,16 +70,16 @@ public class Kleen extends ExpressionBase {
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		AutomataTS a1 = _e1.ThomsonSimplAFN(id);
-		int ini = a1.getIni().getId();
+		Estado ini = a1.getIni();
 		
 		// Añado todas las transiciones del estado inicial a los estados finales
 		for (Estado e : a1.getFin()) {
-			a1.unirSinEliminar(e.getId(), ini);
+			a1.unirSinEliminar(e, ini);
 		}
 		
 		// añado una lambda-transicion de estado inicial a los estados finales
 		for (Estado e : a1.getFin()) {
-			a1.addTransicion(ini, e.getId(), "&");
+			a1.addTransicion(ini.getId(), e.getId(), "&");
 		}
 		// Convierto estado inicial a estado final
 		a1.IniFinalEs(true);

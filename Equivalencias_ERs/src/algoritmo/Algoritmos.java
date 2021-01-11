@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
 
 import automata.Automata;
 import automata.Estado;
@@ -45,10 +47,10 @@ public class Algoritmos {
 
 		// Acoplo el estado en los autómatas y les doy valor inicio.
 		afd1.addEstado(iniAFD1);
-		afd1.cambioIni(iniAFD1.getId());
+		afd1.cambioIni(iniAFD1);
 
 		afd2.addEstado(iniAFD2);
-		afd2.cambioIni(iniAFD2.getId());
+		afd2.cambioIni(iniAFD2);
 
 		if (iniAFD1.esFin() && !iniAFD2.esFin()) {
 			return "&, final aut1, nofinal aut2";
@@ -163,5 +165,21 @@ public class Algoritmos {
 				afd.addTransicion(viejo, yaExistente, simb);
 		}
 	
-
+	
+	/********************************* algoritmo de seguidores **********************/
+	
+//	public static void lambdaCierre(Automata aut) {
+//		Set<Estado> afd = new HashSet<Estado>();
+//		Stack<Estado> aExplorar = new Stack<Estado>();
+//		afd.add(aut.getIni());
+//		aExplorar.add(aut.getIni());
+//		
+//		Estado tmp;
+//		while(!aExplorar.empty()) {
+//			tmp = aExplorar.pop();
+//			
+//			
+//		}
+//		
+//	}
 }

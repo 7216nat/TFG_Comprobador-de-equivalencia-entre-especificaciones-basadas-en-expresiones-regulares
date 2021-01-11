@@ -49,11 +49,11 @@ public class CierrePositivo extends ExpressionBase {
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		AutomataTS a1 = _e1.ThomsonSimplAFN(id);
-		int ini = a1.getIni().getId();
+		Estado ini = a1.getIni();
 		
 		// Añado todas las transiciones del estado inicial a los estados finales
 		for (Estado e : a1.getFin()) {
-			a1.unirSinEliminar(e.getId(), ini);
+			a1.unirSinEliminar(e, ini);
 		}
 		
 		a1.IniFinalEs(false);

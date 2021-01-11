@@ -59,7 +59,7 @@ public class Automata {
 	public void addEstado(Estado estado) {
 		aut.put(estado.getId(), estado);
 		if (estado.esIni()) {
-			cambioIni(estado.getId());
+			cambioIni(estado);
 		}
 		if (estado.esFin()) {
 			this._acept.add(estado);
@@ -161,27 +161,26 @@ public class Automata {
 	/**
 	 * Cambia a inicial el estado con el id que le pasemos por parámetro
 	 */
-	public void cambioIni(int id) {
+	public void cambioIni(Estado id) {
 		if (this._ini != null)
 			this._ini.cambioIni(false);
-		this._ini = aut.get(id);
+		this._ini = id;
 		this._ini.cambioIni(true);
 	}
 
 	/**
 	 * Cambia si estado con identificador "es" es final o no
 	 */
-	public void cambioFin(int es, boolean fin) {
-		Estado tmp = this.aut.get(es);
-		tmp.cambioFin(fin);
+	public void cambioFin(Estado es, boolean fin) {
+		es.cambioFin(fin);
 		if (fin) {
-			if (!this._acept.contains(tmp)) {
-				_acept.add(tmp);
+			if (!this._acept.contains(es)) {
+				_acept.add(es);
 			}
 		}
 		if (!fin) {
-			if (this._acept.contains(tmp)) {
-				_acept.remove(tmp);
+			if (this._acept.contains(es)) {
+				_acept.remove(es);
 			}
 		}
 	}

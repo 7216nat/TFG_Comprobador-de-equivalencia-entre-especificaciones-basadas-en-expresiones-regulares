@@ -29,8 +29,12 @@ public class Transicion {
 	 * Comprueba si dos transiciones son iguales. Sobreescribe de la clase Object
 	 */
 	@Override
-	public boolean equals(Object trans) {
-		Transicion tr = (Transicion) trans;
+	public boolean equals(Object o) {
+		if (o == this) return true;
+	    if (!(o instanceof Estado)) {
+	           return false;
+	    }
+	    Transicion tr = (Transicion) o;
 		return (this.estadoF == tr.estadoF && this.symbol.equals(tr.symbol));
 	}
 	

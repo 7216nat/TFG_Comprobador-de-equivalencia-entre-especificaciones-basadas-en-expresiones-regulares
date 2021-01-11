@@ -19,7 +19,7 @@ public class main {
 	//Test paso de String a expresion regular
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub		
-		/*
+		///*
 		IdEstado state = new IdEstado();
 		
 		String str = "(cb*c|cb*b)*";
@@ -58,10 +58,10 @@ public class main {
 		System.out.println(simb.toString());
 		String resul = Algoritmos.detHopKarp(aut, aut2, state, simb);
 		System.out.println(resul);
-		*/
+		//*/
 		
 		
-		///*
+		/*
 		String str = "hola+mundo(hola*+m)*(u+ndo)+sad*";
 		//str = "((a+b)a)*";
 		str = "ab?b+[a-dxgc-h][c-lk-m][l-xks]";
@@ -77,7 +77,7 @@ public class main {
 		System.out.println(set.toString());
 		System.out.println(er.toString());
 		aut.show();
-		//*/
+		*/
 		
 		/*
 		RangoCharacter e1 = new RangoCharacter('a', 'h'), e2 = new RangoCharacter('a', 'h');

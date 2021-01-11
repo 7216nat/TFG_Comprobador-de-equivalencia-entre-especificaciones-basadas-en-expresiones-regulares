@@ -12,9 +12,9 @@ public class AutomataTS extends Automata {
 	 * Une los estados con id. es1 y es2, no elimina ninguno, aunque deja es2
 	 * inalcanzable
 	 */
-	public void unirSinEliminar(int es1, int es2) {
-		aut.get(es1).unir(aut.get(es2).getTrans());
-		aut.forEach((k, v) -> v.recolocarTransicionesSinBorrar(es2, es1));
+	public void unirSinEliminar(Estado es1, Estado es2) {
+		es1.unir(es2.getTrans());
+		aut.forEach((k, v) -> v.recolocarTransicionesSinBorrar(es2.getId(), es1.getId()));
 	}
 
 	/**

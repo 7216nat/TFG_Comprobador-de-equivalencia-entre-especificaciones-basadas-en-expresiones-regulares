@@ -72,7 +72,7 @@ public class Concat extends ExpressionBase {
 		
 		// añadir a los estados finales de a1 todos las transiciones de a2.estadoinicial
 		for (Estado e: aceptPrev1)
-			a1.unirSinEliminar(e.getId(), iniPrev.getId());
+			a1.unirSinEliminar(e, iniPrev);
 		
 		// si a2.estado inicial no es final, se elimina la lista de estado finales
 		if (!iniPrev.esFin()) {
