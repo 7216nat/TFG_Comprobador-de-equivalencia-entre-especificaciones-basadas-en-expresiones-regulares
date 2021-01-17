@@ -22,10 +22,12 @@ public class main {
 		///*
 		IdEstado state = new IdEstado();
 		
-		String str = "(cb*c|cb*b)*";
-		String str2 = "(cc)*|(cc)*(cb)(b|c)*";
+		//String str = "(cb*c|cb*b)*";
+		//String str2 = "(cc)*|(cc)*(cb)(b|c)*";
+		String str = "[a-b]";
+		String str2 = "[a-c]";
 		
-		Set<String> simblosSet = new HashSet<String> ();
+		/*Set<String> simblosSet = new HashSet<String> ();
 		ArrayList<UnionRangos> array = new ArrayList<UnionRangos>();
 		SortedSet<Character> ss = new TreeSet<Character>();
 		ParserER parser = new ParserER(new String_ref(str), simblosSet, array, ss);
@@ -49,6 +51,7 @@ public class main {
 		aut2.show();
 		
 		ArrayList<String> simb = new ArrayList<String>();
+		simblosSet.addAll(simblosSet2);
 		Iterator<String> it = simblosSet.iterator();
 		while(it.hasNext()) {
 			String c = it.next();
@@ -83,6 +86,37 @@ public class main {
 		RangoCharacter e1 = new RangoCharacter('a', 'h'), e2 = new RangoCharacter('a', 'h');
 		System.out.println(e1.equals(e2));
 		*/
+		
+		
+		//Comprobar lambda-cierre:
+		Automata at1 = new Automata();
+		at1.addEstado(new Estado(state.nextId(), true, false));//0
+		at1.addEstado(new Estado(state.nextId(), false, true));//1
+		at1.addEstado(new Estado(state.nextId(), false, false));//2
+		at1.addEstado(new Estado(state.nextId(), false, false));//3
+		at1.addEstado(new Estado(state.nextId(), false, false));//4
+		at1.addEstado(new Estado(state.nextId(), false, false));//5
+		at1.addEstado(new Estado(state.nextId(), false, true));//6
+		at1.addEstado(new Estado(state.nextId(), false, false));//7
+		at1.addEstado(new Estado(state.nextId(), false, false));//8
+		at1.addEstado(new Estado(state.nextId(), false, false));//9
+		
+		at1.addTransicion(0, 1, "&");
+		at1.addTransicion(1, 2, "a");
+		at1.addTransicion(2, 4, "&");
+		at1.addTransicion(4, 9, "a");
+		at1.addTransicion(2, 3, "b");
+		at1.addTransicion(3, 5, "a");
+		at1.addTransicion(5, 6, "&");
+		at1.addTransicion(5, 7, "&");
+		at1.addTransicion(5, 8, "&");
+		
+		at1.show();
+		
+		at1.lambdaCierreCompleto();
+		System.out.println("\n\n");
+		at1.show();
+		
 	}
 	
 	public static void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> ss){

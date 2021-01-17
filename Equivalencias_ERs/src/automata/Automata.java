@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import algoritmo.EstadoTh;
 
@@ -155,9 +157,9 @@ public class Automata {
 	public HashSet<Transicion> getTransEstado(int id) {
 		return aut.get(id).getTrans();
 	}
-	
-	// -----------------Funciones comunes sacadas de Thomson------------------ 
-	
+
+	// -----------------Funciones comunes sacadas de Thomson------------------
+
 	/**
 	 * Cambia a inicial el estado con el id que le pasemos por parámetro
 	 */
@@ -184,7 +186,7 @@ public class Automata {
 			}
 		}
 	}
-	
+
 	/**
 	 * devuelve estado inicial
 	 * 
@@ -202,7 +204,7 @@ public class Automata {
 	public ArrayList<Estado> getFin() {
 		return _acept;
 	}
-	
+
 	// ---------------END Funciones comunes sacadas de Thomson --------------------
 
 //	/* ---------------Funciones para Thompson simplificado------------------------- */
@@ -304,11 +306,11 @@ public class Automata {
 		EstadoTh nuevo = new EstadoTh(idst);
 		// Le añado a sí mismo
 		nuevo.addEquiv(es.getId());
-		
+
 		Queue<Estado> estados = new LinkedList<Estado>();
 		estados.add(es);
 		Estado estado;
-		
+
 		while (!estados.isEmpty()) {
 			estado = estados.poll();
 			// Recorro las transiciones del viejo estado buscando vacías
@@ -319,8 +321,9 @@ public class Automata {
 			while (it.hasNext()) {
 				Transicion aux = it.next();
 				if (aux.getSymb().equals("&")) {
-					//Solo lo añado como estado para explorar más lambdatransiciones si no lo he hecho ya.
-					if(!nuevo.getEq().contains(aux.getEstadoDest()))
+					// Solo lo añado como estado para explorar más lambdatransiciones si no lo he
+					// hecho ya.
+					if (!nuevo.getEq().contains(aux.getEstadoDest()))
 						estados.add(aut.get(aux.getEstadoDest()));
 					nuevo.addEquiv(aux.getEstadoDest());
 					if (aut.get(aux.getEstadoDest()).esFin())
@@ -331,4 +334,46 @@ public class Automata {
 		return nuevo;
 	}
 
+	/**
+	 * Hace el lambdaCierre de todo el autómata en una sola función
+	 */
+	public void lambdaCierreCompleto() {
+		Set<Integer> tragados = new HashSet<Integer>();
+		HashSet<Transicion> transiciones;
+		Queue<Estado> estados = new LinkedList<Estado>();
+		Transicion tr;
+		// Recorro todos los estados
+		for (Map.Entry<Integer, Estado> dato : aut.entrySet()) {
+			// Si el estado se lo ha atragado otro, ni lo miro
+			if (!tragados.contains(dato.getKey())) {
+				estados.add(dato.getValue());
+				while (!estados.isEmpty()) {
+					// Recorro las transiciones buscando vacías
+					Estado est = estados.poll();
+					transiciones = est.getTrans();
+					Iterator<Transicion> it = transiciones.iterator();
+					while (it.hasNext()) {
+						tr = it.next();
+						// Si es transicion vacia
+						if (tr.getSymb().equals("&")) {
+							Estado es2 = aut.get(tr.getEstadoDest());
+							est.unir(es2.getTrans());
+							if(es2.esFin())
+								est.cambioFin(true);
+							estados.add(es2);
+							tragados.add(es2.getId());
+						}
+					}
+				}
+			}
+
+		}
+		
+		Iterator<Integer> it2 = tragados.iterator();
+		int it2d;
+		while(it2.hasNext()) {
+			it2d = it2.next();
+			eliminarEstado(it2d);
+		}
+	}
 }
