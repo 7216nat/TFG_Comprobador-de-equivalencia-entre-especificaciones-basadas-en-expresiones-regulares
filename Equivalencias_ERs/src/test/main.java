@@ -24,10 +24,10 @@ public class main {
 		
 		//String str = "(cb*c|cb*b)*";
 		//String str2 = "(cc)*|(cc)*(cb)(b|c)*";
-		String str = "[a-b]";
-		String str2 = "[a-c]";
+		String str = "[a-d, e-t]";
+		String str2 = "[a-t]";
 		
-		/*Set<String> simblosSet = new HashSet<String> ();
+		Set<String> simblosSet = new HashSet<String> ();
 		ArrayList<UnionRangos> array = new ArrayList<UnionRangos>();
 		SortedSet<Character> ss = new TreeSet<Character>();
 		ParserER parser = new ParserER(new String_ref(str), simblosSet, array, ss);
@@ -89,7 +89,7 @@ public class main {
 		
 		
 		//Comprobar lambda-cierre:
-		Automata at1 = new Automata();
+		/*Automata at1 = new Automata();
 		at1.addEstado(new Estado(state.nextId(), true, false));//0
 		at1.addEstado(new Estado(state.nextId(), false, true));//1
 		at1.addEstado(new Estado(state.nextId(), false, false));//2
@@ -116,7 +116,7 @@ public class main {
 		at1.lambdaCierreCompleto();
 		System.out.println("\n\n");
 		at1.show();
-		
+	*/	
 	}
 	
 	public static void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> ss){

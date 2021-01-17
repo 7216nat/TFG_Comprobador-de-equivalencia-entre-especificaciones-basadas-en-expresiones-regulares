@@ -2,6 +2,6 @@ Encontrados por Raúl
 
 Con rangos del tipo [a-b] y [a-c] considera tres rangos distintos: a, b y c.
 	Al final, hace la unión de todo y ya.
-	
+Unión de rangos también hace cosas raras: he probado [a-d, d-t] y [a-t], también [a-d,e-t] y [a-t], ambas dan fallo. 
 	
 Encontrados por Chen
