@@ -20,26 +20,33 @@ public class main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub		
 		///*
-		IdEstado state = new IdEstado();
+		/*****************************************
+		***LOS RANGOS SON DEL TIPO [a-bk-lxksa]*** 
+		******************************************/
 		
 		//String str = "(cb*c|cb*b)*";
 		//String str2 = "(cc)*|(cc)*(cb)(b|c)*";
-		String str = "[a-d, e-t]";
-		String str2 = "[a-t]";
+		String str = "[a-c]";
+		String str2 = "[a-b]";
 		
-		Set<String> simblosSet = new HashSet<String> ();
-		ArrayList<UnionRangos> array = new ArrayList<UnionRangos>();
+		// variables globales en dos expresiones
+		IdEstado state = new IdEstado();
+		Set<String> simbolosSet = new HashSet<String> ();
 		SortedSet<Character> ss = new TreeSet<Character>();
-		ParserER parser = new ParserER(new String_ref(str), simblosSet, array, ss);
+		
+		// parse expresion 1
+		ArrayList<UnionRangos> array = new ArrayList<UnionRangos>();
+		ParserER parser = new ParserER(new String_ref(str), simbolosSet, array, ss);
 		ExpressionBase er = parser.parse();
 		
-		Set<String> simblosSet2 = new HashSet<String> ();
+		// parse expresion 2
 		ArrayList<UnionRangos> array2 = new ArrayList<UnionRangos>();
-		ParserER parser2 = new ParserER(new String_ref(str2), simblosSet2, array2, ss);
+		ParserER parser2 = new ParserER(new String_ref(str2), simbolosSet, array2, ss);
 		ExpressionBase er2 = parser2.parse();
 		
-		intersecUR(simblosSet, array, ss);
-		intersecUR(simblosSet2, array2, ss);
+		// interseccion y y obtener los nuevos simbolos
+		intersecUR(simbolosSet, array, ss);
+		intersecUR(simbolosSet, array2, ss);
 		
 		//Automata aut = (Automata)er.ThomsonAFN(state);
 		Automata aut = (Automata)er.ThomsonSimplAFN(state);
@@ -51,8 +58,8 @@ public class main {
 		aut2.show();
 		
 		ArrayList<String> simb = new ArrayList<String>();
-		simblosSet.addAll(simblosSet2);
-		Iterator<String> it = simblosSet.iterator();
+		// simblosSet.addAll(simblosSet2);
+		Iterator<String> it = simbolosSet.iterator();
 		while(it.hasNext()) {
 			String c = it.next();
 			simb.add(c);

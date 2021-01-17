@@ -89,7 +89,8 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	 * @return si this intersecciona con rc 
 	 */
 	public boolean isIntersec(RangoCharacter rc) {
-		return (rc._ini < _ini && _ini <= rc._fin && rc._fin <= _fin) || ( _fin >= rc._ini && rc._fin > _fin && rc._ini >= _ini);
+		return (rc._ini < _ini && _ini <= rc._fin && rc._fin <= _fin) || ( _fin >= rc._ini && rc._fin > _fin && rc._ini >= _ini)
+				|| (rc._ini == (char) (_fin+1)) || (rc._fin == (char) (_ini-1));
 	}
 	
 	/**
@@ -117,6 +118,11 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	 */
 	public RangoCharacter interseccion(char c) {
 		char tmp = _ini;
+		if (c == this._fin) {
+			_fin = (char)(_fin - 1);
+			actualizarSim();
+			return new RangoCharacter(c);
+		}
 		this._ini = (char) (c+1);
 		actualizarSim();
 		return new RangoCharacter(tmp, c);

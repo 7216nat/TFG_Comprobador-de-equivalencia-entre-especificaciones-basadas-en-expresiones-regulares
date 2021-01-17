@@ -87,7 +87,7 @@ public class UnionRangos extends ExpressionBase {
 	 */
 	public void intersec(Set<String> set, SortedSet<Character> ss) {
 		ArrayList<RangoCharacter> tmp = new ArrayList<RangoCharacter>();
-		RangoCharacter rc;
+		RangoCharacter rc, rctmp;
 		
 		Iterator<RangoCharacter> it = _rangos.iterator();
 		Iterator<Character> it_c;
@@ -100,8 +100,9 @@ public class UnionRangos extends ExpressionBase {
 			do {
 				c = it_c.next();
 				if (rc.contiene(c)) {
-					tmp.add(rc.interseccion(c));
-					set.add(rc._sim);
+					rctmp = rc.interseccion(c);
+					tmp.add(rctmp);
+					set.add(rctmp._sim);
 				}
 			} while (it_c.hasNext() && rc.mayorQue(c));
 			tmp.add(rc);
