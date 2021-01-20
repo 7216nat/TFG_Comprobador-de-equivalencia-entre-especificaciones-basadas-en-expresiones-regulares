@@ -24,29 +24,30 @@ public class main {
 		***LOS RANGOS SON DEL TIPO [a-bk-lxksa]*** 
 		******************************************/
 		
-		//String str = "(cb*c|cb*b)*";
-		//String str2 = "(cc)*|(cc)*(cb)(b|c)*";
-		String str = "[a-c]";
-		String str2 = "[a-b]";
+		String str = "(cb*c|cb*b)*";
+		String str2 = "(cc)*|(cc)*(cb)(b|c)*";
+		//String str = "[a-cde-tx]";
+		//String str2 = "[a-bcd-tx]";
 		
 		// variables globales en dos expresiones
 		IdEstado state = new IdEstado();
 		Set<String> simbolosSet = new HashSet<String> ();
 		SortedSet<Character> ss = new TreeSet<Character>();
+		SortedSet<Character> ssRango = new TreeSet<Character>();
 		
 		// parse expresion 1
-		ArrayList<UnionRangos> array = new ArrayList<UnionRangos>();
-		ParserER parser = new ParserER(new String_ref(str), simbolosSet, array, ss);
+		ArrayList<UnionRangos> rangos1 = new ArrayList<UnionRangos>();
+		ParserER parser = new ParserER(new String_ref(str), simbolosSet, rangos1, ss, ssRango);
 		ExpressionBase er = parser.parse();
 		
 		// parse expresion 2
-		ArrayList<UnionRangos> array2 = new ArrayList<UnionRangos>();
-		ParserER parser2 = new ParserER(new String_ref(str2), simbolosSet, array2, ss);
+		ArrayList<UnionRangos> rangos2 = new ArrayList<UnionRangos>();
+		ParserER parser2 = new ParserER(new String_ref(str2), simbolosSet, rangos2, ss, ssRango);
 		ExpressionBase er2 = parser2.parse();
 		
 		// interseccion y y obtener los nuevos simbolos
-		intersecUR(simbolosSet, array, ss);
-		intersecUR(simbolosSet, array2, ss);
+		intersecUR(simbolosSet, rangos1, ss, ssRango);
+		intersecUR(simbolosSet, rangos2, ss, ssRango);
 		
 		//Automata aut = (Automata)er.ThomsonAFN(state);
 		Automata aut = (Automata)er.ThomsonSimplAFN(state);
@@ -126,10 +127,17 @@ public class main {
 	*/	
 	}
 	
-	public static void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> ss){
-		
-		for (int i = 0; i < array.size(); i++) {
-			array.get(i).intersec(set, ss);
+	public static void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> ss
+			, SortedSet<Character> ssRango){
+		if (!ssRango.isEmpty()) {
+			for (int i = 0; i < array.size(); i++) {
+				array.get(i).intersec(set, ssRango, true);
+			}
+		}
+		if (!ss.isEmpty()) {
+			for (int i = 0; i < array.size(); i++) {
+				array.get(i).intersec(set, ss, false);
+			}
 		}
 	}
 

@@ -85,7 +85,7 @@ public class UnionRangos extends ExpressionBase {
 	 * @param set: se añaden los nuevos "simbolos" al set de simbolos
 	 * @param ss: lista de puntos de intersecciones dadas
 	 */
-	public void intersec(Set<String> set, SortedSet<Character> ss) {
+	public void intersec(Set<String> set, SortedSet<Character> ss, boolean rango) {
 		ArrayList<RangoCharacter> tmp = new ArrayList<RangoCharacter>();
 		RangoCharacter rc, rctmp;
 		
@@ -99,7 +99,11 @@ public class UnionRangos extends ExpressionBase {
 			it_c = ss.iterator();
 			do {
 				c = it_c.next();
-				if (rc.contiene(c)) {
+				if (rango && rc.contieneRango(c)) {
+					rctmp = rc.interseccion(c);
+					tmp.add(rctmp);
+					set.add(rctmp._sim);
+				} else if (!rango && rc.contiene(c)) {
 					rctmp = rc.interseccion(c);
 					tmp.add(rctmp);
 					set.add(rctmp._sim);

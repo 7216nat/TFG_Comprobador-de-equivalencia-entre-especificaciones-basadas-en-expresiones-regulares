@@ -77,6 +77,13 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	}
 	
 	/**
+	 * @param c: char
+	 * @return this contiene c
+	 */
+	public boolean contieneRango(char c) {
+		return (_ini < c && _fin > c && _ini != _fin);
+	}
+	/**
 	 * @param rc: rango
 	 * @return this contiene rc
 	 */

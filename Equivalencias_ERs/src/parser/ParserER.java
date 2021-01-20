@@ -9,7 +9,7 @@ import factories.FactoryER;
 import objects.*;
 
 /**
- *  Clase para parsear de string a un ·rbol de ERs
+ *  Clase para parsear de string a un √°rbol de ERs
  */
 public class ParserER {
 
@@ -17,8 +17,9 @@ public class ParserER {
 	private Stack<ExpressionBase> pila; // pila para controlar parentesis, suma y cierre kleen
 	private Set<String> set;
 	private ArrayList<UnionRangos> array;
-	private int parentesis; // controlar si los parentesis est·n bien cerrados
+	private int parentesis; // controlar si los parentesis est√°n bien cerrados
 	private SortedSet<Character> _sort;
+	private SortedSet<Character> _sortRango;
 
 	/**
 	 * Parser
@@ -28,17 +29,18 @@ public class ParserER {
 	 * @param sort: lista de puntos de interseccion
 	 */
 	public ParserER(String_ref exreg, Set<String> set, ArrayList<UnionRangos> array
-			,SortedSet<Character> sort) {
+			,SortedSet<Character> sort, SortedSet<Character> sortRango) {
 		this.exreg = exreg;
 		this.pila = new Stack<ExpressionBase>();
 		this.parentesis = 0;
 		this.set = set;
 		this.array = array;
 		this._sort = sort;
+		this._sortRango = sortRango;
 	}
 
 	/**
-	 *  si quedan m·s simbolos por procesar
+	 *  si quedan m√°s simbolos por procesar
 	 * @return
 	 */
 	private boolean terminado() {
@@ -72,14 +74,14 @@ public class ParserER {
 	private void comprobarSintasisError() {
 		// error al tener 2 * seguidos o no hay simbolo
 		if (prim() == '*' || prim() == '+' || prim() == '?' || pila.empty()) {
-			System.out.println("ER inv·lido");
+			System.out.println("ER inv√°lido");
 			System.exit(0);
 		}	
 	}
 
 	/**
 	 * dado un puntero, concatenar todas las instancias de ExpressionBase
-	 * posteriores la CONCATENACI”N est· implicta en esta funcion
+	 * posteriores la CONCATENACI√ìN est√° implicta en esta funcion
 	 */
 	private void concatenarAll(int ptrPila) {
 		while (this.pila.size() > ptrPila) {
@@ -101,7 +103,7 @@ public class ParserER {
 		concatenarAll(1);
 
 		if (this.parentesis != 0) {
-			System.out.println("ER inv·lido");
+			System.out.println("ER inv√°lido");
 			System.exit(0);
 		}
 
@@ -191,17 +193,17 @@ public class ParserER {
 					str += next();
 				next();
 				UnionRangos rSimbolo = new UnionRangos(str);
-				rSimbolo.parserRangos(_sort);
+				rSimbolo.parserRangos(_sortRango);
 				array.add(rSimbolo);
 				this.pila.push(rSimbolo);
 			} else {
 
 				/**
-				 * comprobar si es simbolo o lambda No est· restringido el vacio()
+				 * comprobar si es simbolo o lambda No est√° restringido el vacio()
 				 */
 				ExpressionBase simbolo = FactoryER.parseER("" + prim());
 				if (simbolo == null) {
-					System.out.println("Simbolo inv·lido");
+					System.out.println("Simbolo inv√°lido");
 					System.exit(0);
 				}
 				set.add("" + prim());
