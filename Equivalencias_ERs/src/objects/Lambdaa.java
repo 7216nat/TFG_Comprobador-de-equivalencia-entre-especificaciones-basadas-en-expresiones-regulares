@@ -15,6 +15,7 @@ public class Lambdaa extends ExpressionBase {
 	 * @param er
 	 */
 	public Lambdaa(String er) {
+		super(Tipo.LAMBDA);
 		_sim = lambda;
 		// TODO Auto-generated constructor stub
 	}
@@ -23,6 +24,7 @@ public class Lambdaa extends ExpressionBase {
 	 * construtora por defecto
 	 */
 	public Lambdaa() {
+		super(Tipo.LAMBDA);
 		// TODO Auto-generated constructor stub
 		_sim = lambda;
 	}

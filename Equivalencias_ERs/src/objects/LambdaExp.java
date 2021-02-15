@@ -7,10 +7,12 @@ public class LambdaExp extends ExpressionBase {
 	private ExpressionBase _e1;
 
 	public LambdaExp(ExpressionBase e1) {
+		super(Tipo.LAMBDAEXP);
 		_e1 = new Union(e1, new Lambdaa());
+		e1.setPadre(this);
 	}
 
-	public LambdaExp() {}
+	public LambdaExp() {super(Tipo.LAMBDAEXP);}
 
 	@Override
 	public String toString() {

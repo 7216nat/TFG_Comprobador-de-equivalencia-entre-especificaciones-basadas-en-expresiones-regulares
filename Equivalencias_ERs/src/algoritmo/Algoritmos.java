@@ -14,6 +14,14 @@ import automata.Automata;
 import automata.Estado;
 import automata.IdEstado;
 import automata.Transicion;
+import objects.Concat;
+import objects.ExpressionBase;
+import objects.Kleen;
+import objects.Lambdaa;
+import objects.Simbolo;
+import objects.Tipo;
+import objects.Union;
+import objects.Vacio;
 
 public class Algoritmos {
 	/**
@@ -164,6 +172,7 @@ public class Algoritmos {
 			} else if(!noEsta && !simb.equals("&"))
 				afd.addTransicion(viejo, yaExistente, simb);
 		}
+
 	
 	
 	/********************************* algoritmo de seguidores **********************/
@@ -182,4 +191,54 @@ public class Algoritmos {
 //		}
 //		
 //	}
+	
+	/***************************algoritmo de las derivadas***************************/
+	public static String derivadasHK(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, ArrayList<String> simb) {
+		return "Equivalentes";
+	}
+	
+	private ExpressionBase derivada(ExpressionBase ex, String sim) {
+		Tipo tipo = (Tipo) ex.getType();
+		//Casos base
+		if(tipo == Tipo.VACIO) {
+			return new Vacio();
+		}
+		else if (tipo == Tipo.LAMBDA)
+			return new Lambdaa();
+		else if (tipo == Tipo.SIMB && ex.get_sim() == sim)
+			return new Lambdaa();
+		else if (tipo == Tipo.SIMB && ex.get_sim() != sim)
+			return new Vacio();
+		//Casos recursivos
+		else if(tipo == Tipo.CONCAT) {
+			Concat exAux = (Concat) ex;
+			ExpressionBase newEx = new Concat(
+					derivada((Concat) exAux.getExpr1(), sim),
+					exAux.getExpr2());
+			if(newEx.produceVacio())
+				newEx = new Union(newEx,
+						derivada(exAux.getExpr2(), sim));
+			return newEx;
+		}
+		
+		else if(tipo == Tipo.UNION) {
+			Union exAux = (Union) ex;
+			ExpressionBase newEx = new Union(
+					derivada(exAux.getExpr1(), sim),
+					derivada(exAux.getExpr2(), sim));
+			return newEx;
+		}
+		
+		else if(tipo == Tipo.KLEEN) {
+			Kleen exAux = (Kleen) ex;
+			ExpressionBase newEx = new Concat(
+					derivada(exAux.getExpr(), sim),
+					ex); 
+			return newEx;
+		}
+		
+		return null;
+		
+	}
+	
 }

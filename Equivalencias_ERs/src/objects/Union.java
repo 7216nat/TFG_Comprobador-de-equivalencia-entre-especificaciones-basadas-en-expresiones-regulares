@@ -13,10 +13,13 @@ public class Union extends ExpressionBase {
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
 	
-	public Union() {}
+	public Union() {super(Tipo.UNION);}
 	public Union(ExpressionBase e1, ExpressionBase e2) {
+		super(Tipo.UNION);
 		_e1 = e1;
 		_e2 = e2;
+		e1.setPadre(this);
+		e2.setPadre(this);
 	}
 	
 	@Override
@@ -93,5 +96,10 @@ public class Union extends ExpressionBase {
 		
 		return a1;
 	}
-
+	public ExpressionBase getExpr1() {
+		return this._e1;
+	}
+	public ExpressionBase getExpr2() {
+		return this._e2;
+	}
 }

@@ -12,11 +12,15 @@ public class Concat extends ExpressionBase {
 	private ExpressionBase _e2;
 
 	public Concat() {
+		super(Tipo.CONCAT);
 	}
 
 	public Concat(ExpressionBase e1, ExpressionBase e2) {
+		super(Tipo.CONCAT);
 		_e1 = e1;
 		_e2 = e2;
+		e1.setPadre(this);
+		e2.setPadre(this);
 	}
 
 	@Override
@@ -86,6 +90,13 @@ public class Concat extends ExpressionBase {
 		a1.copyFinals(a2);
 		a1.eliminarEstado(iniPrev.getId());
 		return a1;
+	}
+	
+	public ExpressionBase getExpr1() {
+		return this._e1;
+	}
+	public ExpressionBase getExpr2() {
+		return this._e2;
 	}
 
 }

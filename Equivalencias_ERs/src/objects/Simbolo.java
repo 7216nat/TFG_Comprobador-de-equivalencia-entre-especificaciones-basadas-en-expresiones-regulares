@@ -12,13 +12,14 @@ public class Simbolo extends ExpressionBase implements Comparable<Simbolo> {
 	/**
 	 * construtora por defecto
 	 */
-	public Simbolo() {}
+	public Simbolo() {super(Tipo.SIMB);}
 	
 	/**
 	 * constructora
 	 * @param er
 	 */
 	public Simbolo(String er) {
+		super(Tipo.SIMB);
 		_sim = er;
 	}
 

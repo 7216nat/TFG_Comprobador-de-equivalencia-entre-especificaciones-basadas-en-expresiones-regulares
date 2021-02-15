@@ -18,13 +18,14 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	/**
 	 * Constructora por defecto
 	 */
-	public RangoCharacter() {}
+	public RangoCharacter() {super(Tipo.RANGO);}
 	
 	/**
 	 * Constructora para simbolo unico
 	 * @param inifin: caracter ini y fin
 	 */
-	public RangoCharacter(char inifin) {	
+	public RangoCharacter(char inifin) {
+		super(Tipo.RANGO);
 		_ini = inifin;
 		_fin = inifin;
 		actualizarSim();
@@ -36,6 +37,7 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	 * @param fin: caracter final
 	 */
 	public RangoCharacter(char ini, char fin) {
+		super(Tipo.RANGO);
 		_ini = ini;
 		_fin = fin;
 		actualizarSim();

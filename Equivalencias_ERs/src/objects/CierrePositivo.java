@@ -9,10 +9,13 @@ public class CierrePositivo extends ExpressionBase {
 	private ExpressionBase _e1;
 
 	public CierrePositivo(ExpressionBase e1) {
+		super(Tipo.KLEENPOS);
 		_e1 = e1;
+		e1.setPadre(this);
 	}
 
 	public CierrePositivo() {
+		super(Tipo.KLEENPOS);
 	}
 
 	@Override
@@ -59,5 +62,6 @@ public class CierrePositivo extends ExpressionBase {
 		a1.IniFinalEs(false);
 		return a1;
 	}
+
 
 }

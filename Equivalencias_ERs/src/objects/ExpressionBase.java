@@ -5,8 +5,12 @@ import automata.*;
 public abstract class ExpressionBase {
 	
 	protected String _sim;
+	private Tipo type;
+	private ExpressionBase padre;
 
-	public ExpressionBase() {}
+	public ExpressionBase(Tipo tipo) {
+		type = tipo;
+	}
 	
 	/**
 	 * @return simbolo
@@ -66,4 +70,17 @@ public abstract class ExpressionBase {
 			exp = cloneMe();
 		return exp;
 	}
+	
+	public Tipo getType() {
+		return this.type;
+	}
+	
+	public void setPadre(ExpressionBase ex) {
+		this.padre = ex;
+	}
+	
+	public boolean produceVacio() {
+		return true;
+	}
+	
 }

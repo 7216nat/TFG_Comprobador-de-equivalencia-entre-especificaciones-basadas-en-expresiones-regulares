@@ -13,10 +13,13 @@ public class Kleen extends ExpressionBase {
 	private ExpressionBase _e1;
 
 	public Kleen(ExpressionBase e1) {
+		super(Tipo.KLEEN);
 		_e1 = e1;
+		e1.setPadre(this);
 	}
 
 	public Kleen() {
+		super(Tipo.KLEEN);
 	}
 
 	@Override
@@ -84,6 +87,10 @@ public class Kleen extends ExpressionBase {
 		// Convierto estado inicial a estado final
 		a1.IniFinalEs(true);
 		return a1;
+	}
+	
+	public ExpressionBase getExpr() {
+		return this._e1;
 	}
 
 }

@@ -24,10 +24,12 @@ public class main {
 		***LOS RANGOS SON DEL TIPO [a-bk-lxksa]*** 
 		******************************************/
 		
-		String str = "(cb*c|cb*b)*";
-		String str2 = "(cc)*|(cc)*(cb)(b|c)*";
+		//String str = "(cb*c|cb*b)*";
+		//String str2 = "(cc)*|(cc)*(cb)(b|c)*";
 		//String str = "[a-cde-tx]";
 		//String str2 = "[a-bcd-tx]";
+		String str = "a|b";
+		String str2 = "a|[c-t]";
 		
 		// variables globales en dos expresiones
 		IdEstado state = new IdEstado();

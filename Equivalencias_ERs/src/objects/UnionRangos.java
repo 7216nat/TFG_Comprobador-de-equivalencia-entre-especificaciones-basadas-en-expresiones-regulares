@@ -20,13 +20,16 @@ public class UnionRangos extends ExpressionBase {
 	/**
 	 * Clase constructora por defecto
 	 */
-	public UnionRangos() {}
+	public UnionRangos() {
+		super(Tipo.UNIONRANGOS);
+	}
 	
 	/**
 	 * Clase constructora
 	 * @param str: string que contiene el rango 
 	 */
 	public UnionRangos(String str) {
+		super(Tipo.UNIONRANGOS);
 		_str = str;
 		_rangos = new ArrayList<RangoCharacter>();
 	}
