@@ -5,7 +5,7 @@ import objects.*;
 public class FactoryER {
 	
 	private static ExpressionBase[] availableERs = {
-			new RangoCharacter(),
+			new Simbolo(),
 			new Vacio(),
 			new Lambdaa()
 	};

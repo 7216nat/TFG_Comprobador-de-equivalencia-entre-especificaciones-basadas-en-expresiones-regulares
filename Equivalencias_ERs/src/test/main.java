@@ -13,6 +13,7 @@ import automata.Estado;
 import automata.IdEstado;
 import objects.*;
 import parser.ParserER;
+import parser.String_ref;
 
 public class main {
 
@@ -26,30 +27,37 @@ public class main {
 		
 		//String str = "(cb*c|cb*b)*";
 		//String str2 = "(cc)*|(cc)*(cb)(b|c)*";
-		//String str = "[a-cde-tx]";
-		//String str2 = "[a-bcd-tx]";
-		String str = "a|b";
-		String str2 = "a|[c-t]";
-		
+		//String str = "[a-cde-tx]*";
+		//String str2 = "[a-bcd-tx]*";
+		//String str = "[a-c]|[d-h]";
+		//String str2 = "a|b|[c-h]";
+		//String str = "%|gh";
+		//String str2 = "%abc|gh";
+		String str = "(a?|d)+";
+		String str2 = "(a|&|d)(a|&|d)*";
+	
 		// variables globales en dos expresiones
 		IdEstado state = new IdEstado();
 		Set<String> simbolosSet = new HashSet<String> ();
-		SortedSet<Character> ss = new TreeSet<Character>();
-		SortedSet<Character> ssRango = new TreeSet<Character>();
+		SortedSet<Character> inis = new TreeSet<Character>();
+		SortedSet<Character> fins = new TreeSet<Character>();
+		// SortedSet<Character> ssRango = new TreeSet<Character>();
 		
 		// parse expresion 1
 		ArrayList<UnionRangos> rangos1 = new ArrayList<UnionRangos>();
-		ParserER parser = new ParserER(new String_ref(str), simbolosSet, rangos1, ss, ssRango);
+		ParserER parser = new ParserER(new String_ref(str));
 		ExpressionBase er = parser.parse();
+		er.getSimbolosRangos(simbolosSet, rangos1, inis, fins);
 		
 		// parse expresion 2
 		ArrayList<UnionRangos> rangos2 = new ArrayList<UnionRangos>();
-		ParserER parser2 = new ParserER(new String_ref(str2), simbolosSet, rangos2, ss, ssRango);
+		ParserER parser2 = new ParserER(new String_ref(str2));
 		ExpressionBase er2 = parser2.parse();
+		er2.getSimbolosRangos(simbolosSet, rangos2, inis, fins);
 		
 		// interseccion y y obtener los nuevos simbolos
-		intersecUR(simbolosSet, rangos1, ss, ssRango);
-		intersecUR(simbolosSet, rangos2, ss, ssRango);
+		intersecUR(simbolosSet, rangos1, inis, fins);
+		intersecUR(simbolosSet, rangos2, inis, fins);
 		
 		//Automata aut = (Automata)er.ThomsonAFN(state);
 		Automata aut = (Automata)er.ThomsonSimplAFN(state);
@@ -61,7 +69,6 @@ public class main {
 		aut2.show();
 		
 		ArrayList<String> simb = new ArrayList<String>();
-		// simblosSet.addAll(simblosSet2);
 		Iterator<String> it = simbolosSet.iterator();
 		while(it.hasNext()) {
 			String c = it.next();
@@ -72,7 +79,6 @@ public class main {
 		String resul = Algoritmos.detHopKarp(aut, aut2, state, simb);
 		System.out.println(resul);
 		//*/
-		
 		
 		/*
 		String str = "hola+mundo(hola*+m)*(u+ndo)+sad*";
@@ -129,17 +135,10 @@ public class main {
 	*/	
 	}
 	
-	public static void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> ss
-			, SortedSet<Character> ssRango){
-		if (!ssRango.isEmpty()) {
-			for (int i = 0; i < array.size(); i++) {
-				array.get(i).intersec(set, ssRango, true);
-			}
-		}
-		if (!ss.isEmpty()) {
-			for (int i = 0; i < array.size(); i++) {
-				array.get(i).intersec(set, ss, false);
-			}
+	public static void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins){
+
+		for (int i = 0; i < array.size(); i++) {
+			array.get(i).intersec(set, inis, fins);
 		}
 	}
 

@@ -1,6 +1,8 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
 
 import automata.*;
 
@@ -10,21 +12,29 @@ public class Kleen extends ExpressionBase {
 	// private static final String _regex =
 	// "\\w\\*[\\w\\+\\*\\(\\)]+|\\)\\*[\\w\\+\\*\\(\\)]*";
 	// private static final String _regex = "\\w\\*.*";
+	private static final String _regex = "*";
+	private static final String Kleen = "*";
 	private ExpressionBase _e1;
 
+	public Kleen() {
+		super(Kleen, null, Tipo.KLEEN);
+	}
+
 	public Kleen(ExpressionBase e1) {
-		super(Tipo.KLEEN);
+		super(Kleen, null, Tipo.KLEEN);
+		_e1 = e1;
+		e1.setPadre(this);
+	}
+	
+	public Kleen(ExpressionBase padre, ExpressionBase e1) {
+		super(Kleen, padre, Tipo.KLEEN);
 		_e1 = e1;
 		e1.setPadre(this);
 	}
 
-	public Kleen() {
-		super(Tipo.KLEEN);
-	}
-
 	@Override
 	public String toString() {
-		return "[" + _e1.toString() + "]*";
+		return "[" + _e1.toString() + "]" + _sim;
 	}
 
 	@Override
@@ -89,6 +99,12 @@ public class Kleen extends ExpressionBase {
 		return a1;
 	}
 	
+	@Override
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		_e1.getSimbolosRangos(set, array, inis, fins);
+	}
+
 	public ExpressionBase getExpr() {
 		return this._e1;
 	}

@@ -12,7 +12,9 @@ import automata.*;
  *
  */
 public class UnionRangos extends ExpressionBase {
-
+	
+	private static final String _regex = "[";
+	private static final String unionRangos = "[";
 	private ExpressionBase _e1;
 	private String _str;
 	private ArrayList<RangoCharacter> _rangos;
@@ -21,7 +23,7 @@ public class UnionRangos extends ExpressionBase {
 	 * Clase constructora por defecto
 	 */
 	public UnionRangos() {
-		super(Tipo.UNIONRANGOS);
+		super(unionRangos, null, Tipo.UNIONRANGOS);
 	}
 	
 	/**
@@ -29,7 +31,13 @@ public class UnionRangos extends ExpressionBase {
 	 * @param str: string que contiene el rango 
 	 */
 	public UnionRangos(String str) {
-		super(Tipo.UNIONRANGOS);
+		super(unionRangos, null, Tipo.UNIONRANGOS);
+		_str = str;
+		_rangos = new ArrayList<RangoCharacter>();
+	}
+	
+	public UnionRangos(ExpressionBase padre , String str) {
+		super(unionRangos, padre, Tipo.UNIONRANGOS);
 		_str = str;
 		_rangos = new ArrayList<RangoCharacter>();
 	}
@@ -39,7 +47,7 @@ public class UnionRangos extends ExpressionBase {
 	 * antes de eso se interseccionan internamente para evitar repeticiones 
 	 * @param ss
 	 */
-	public void parserRangos(SortedSet<Character> ss) {
+	public void parserRangos(SortedSet<Character> inis, SortedSet<Character> fins) {
 		
 		char c;
 		int i = 0;
@@ -61,8 +69,8 @@ public class UnionRangos extends ExpressionBase {
 		
 		selfIntersec(); 					// Intersecciones internas
 		for (RangoCharacter rc: _rangos) {  // Añadidos de puntos de interseccion
-			ss.add(rc.get_ini());
-			ss.add(rc.get_fin());
+			inis.add(rc.get_ini());
+			fins.add(rc.get_fin());
 		}
 	}
 	
@@ -72,6 +80,7 @@ public class UnionRangos extends ExpressionBase {
 	public void unirRangos() {
 		if (_rangos.size() == 1) {
 			_e1 = _rangos.get(0);
+			_e1.setPadre(this);
 		}
 		else {
 			Iterator<RangoCharacter> it = _rangos.iterator();
@@ -79,6 +88,7 @@ public class UnionRangos extends ExpressionBase {
 			while (it.hasNext()) {
 				_e1 = new Union(_e1, it.next());
 			}
+			_e1.setPadre(this);
 		}
 	}
 	
@@ -88,7 +98,7 @@ public class UnionRangos extends ExpressionBase {
 	 * @param set: se añaden los nuevos "simbolos" al set de simbolos
 	 * @param ss: lista de puntos de intersecciones dadas
 	 */
-	public void intersec(Set<String> set, SortedSet<Character> ss, boolean rango) {
+	public void intersec(Set<String> set, SortedSet<Character> inis, SortedSet<Character> fins) {
 		ArrayList<RangoCharacter> tmp = new ArrayList<RangoCharacter>();
 		RangoCharacter rc, rctmp;
 		
@@ -99,19 +109,36 @@ public class UnionRangos extends ExpressionBase {
 		while (it.hasNext()) {
 			rc = it.next();
 			
-			it_c = ss.iterator();
-			do {
+			it_c = inis.iterator();
+			while (it_c.hasNext()) {
 				c = it_c.next();
-				if (rango && rc.contieneRango(c)) {
-					rctmp = rc.interseccion(c);
+				if (!rc.mayorQue(c))
+					break;
+				if (rc.contiene(c, true)) {
+					rctmp = rc.interseccion(c, true);
 					tmp.add(rctmp);
-					set.add(rctmp._sim);
-				} else if (!rango && rc.contiene(c)) {
-					rctmp = rc.interseccion(c);
+				}
+			}
+			tmp.add(rc);
+			
+		}
+		_rangos = tmp;
+		tmp = new ArrayList<RangoCharacter>();
+		it = _rangos.iterator();
+		while (it.hasNext()) {
+			rc = it.next();
+			
+			it_c = fins.iterator();
+			while (it_c.hasNext()) {
+				c = it_c.next();
+				if (!rc.mayorQue(c))
+					break;
+				if (rc.contiene(c, false)) {
+					rctmp = rc.interseccion(c, false);
 					tmp.add(rctmp);
 					set.add(rctmp._sim);
 				}
-			} while (it_c.hasNext() && rc.mayorQue(c));
+			}
 			tmp.add(rc);
 			set.add(rc._sim);
 		}
@@ -141,24 +168,12 @@ public class UnionRangos extends ExpressionBase {
 					existe = true;
 					break;
 				}
-				else if (rc.contiene(rctmp)) {
-					if (!existe) {
-						rctmp = rc;
-						existe = true;
-					} 
-					else 
-						ittmp.remove();
+				else if (rc.contiene(rctmp)) { 
+					ittmp.remove();
 				}
-				else if (rctmp.isIntersec(rc)) {
-					if (!existe) {
-						rctmp.union(rc);
-						rc = rctmp;
-						existe = true;
-					} 
-					else { 
-						rc.union(rctmp);
-						ittmp.remove();
-					}
+				else if (rc.isIntersec(rctmp)) {
+					rc.union(rctmp);
+					ittmp.remove();
 				}
 			}
 			
@@ -194,6 +209,13 @@ public class UnionRangos extends ExpressionBase {
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		return _e1.ThomsonSimplAFN(id);
+	}
+
+	@Override
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		parserRangos(inis, fins);
+		array.add(this);
 	}
 
 }

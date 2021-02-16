@@ -3,5 +3,4 @@ package objects;
 public enum Tipo {
 	KLEENPOS, CONCAT, KLEEN, LAMBDA, LAMBDAEXP,
 	RANGO, SIMB, UNION, UNIONRANGOS, VACIO; 
-
 }

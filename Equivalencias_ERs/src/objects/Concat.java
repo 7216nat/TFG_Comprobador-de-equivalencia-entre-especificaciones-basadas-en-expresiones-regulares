@@ -2,21 +2,33 @@ package objects;
 
 import java.util.ArrayList;
 // import java.util.regex.*;
+import java.util.Set;
+import java.util.SortedSet;
 
 import automata.*;
 
 public class Concat extends ExpressionBase {
 
 	// private static final String _regex = "\\w\\w[\\w\\+\\*\\(\\)]+";
+	private static final String _regex = "";
+	private static final String Concat = "";
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
 
 	public Concat() {
-		super(Tipo.CONCAT);
+		super(Concat, null, Tipo.CONCAT);
 	}
 
 	public Concat(ExpressionBase e1, ExpressionBase e2) {
-		super(Tipo.CONCAT);
+		super(Concat, null, Tipo.CONCAT);
+		_e1 = e1;
+		_e2 = e2;
+		e1.setPadre(this);
+		e2.setPadre(this);
+	}
+	
+	public Concat(ExpressionBase padre, ExpressionBase e1, ExpressionBase e2) {
+		super(Concat, padre, Tipo.CONCAT);
 		_e1 = e1;
 		_e2 = e2;
 		e1.setPadre(this);
@@ -90,6 +102,13 @@ public class Concat extends ExpressionBase {
 		a1.copyFinals(a2);
 		a1.eliminarEstado(iniPrev.getId());
 		return a1;
+	}
+	
+	@Override
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		_e1.getSimbolosRangos(set, array, inis, fins);
+		_e2.getSimbolosRangos(set, array, inis, fins);
 	}
 	
 	public ExpressionBase getExpr1() {

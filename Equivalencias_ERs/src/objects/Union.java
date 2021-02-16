@@ -1,6 +1,8 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
 
 import automata.*;
 
@@ -9,13 +11,23 @@ import automata.*;
 public class Union extends ExpressionBase {
 	
 	//private static final String _regex = "\\w+[+][\\w\\+\\*\\(\\)]+";
-	
+	private static final String _regex = "|";
+	private static final String union = "|";
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
 	
-	public Union() {super(Tipo.UNION);}
+	public Union() {
+		super(union, null, Tipo.UNION);
+	}
 	public Union(ExpressionBase e1, ExpressionBase e2) {
-		super(Tipo.UNION);
+		super(union, null, Tipo.UNION);
+		_e1 = e1;
+		_e2 = e2;
+		e1.setPadre(this);
+		e2.setPadre(this);
+	}
+	public Union(ExpressionBase padre, ExpressionBase e1, ExpressionBase e2) {
+		super(union, padre, Tipo.UNION);
 		_e1 = e1;
 		_e2 = e2;
 		e1.setPadre(this);
@@ -24,7 +36,7 @@ public class Union extends ExpressionBase {
 	
 	@Override
 	public String toString() {
-		return  "( " + _e1.toString() + "|" +  _e2.toString() + " )";
+		return  "( " + _e1.toString() + _sim +  _e2.toString() + " )";
 	}
 
 	@Override
@@ -101,5 +113,11 @@ public class Union extends ExpressionBase {
 	}
 	public ExpressionBase getExpr2() {
 		return this._e2;
+	}
+	@Override
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		_e1.getSimbolosRangos(set, array, inis, fins);
+		_e2.getSimbolosRangos(set, array, inis, fins);
 	}
 }

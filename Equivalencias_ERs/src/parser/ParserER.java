@@ -15,28 +15,16 @@ public class ParserER {
 
 	private String_ref exreg; // string a analizar
 	private Stack<ExpressionBase> pila; // pila para controlar parentesis, suma y cierre kleen
-	private Set<String> set;
-	private ArrayList<UnionRangos> array;
 	private int parentesis; // controlar si los parentesis están bien cerrados
-	private SortedSet<Character> _sort;
-	private SortedSet<Character> _sortRango;
 
 	/**
 	 * Parser
 	 * @param exreg: contador
-	 * @param set: set de simbolos para las transiciones
-	 * @param array: lista de rangos a rellenar
-	 * @param sort: lista de puntos de interseccion
 	 */
-	public ParserER(String_ref exreg, Set<String> set, ArrayList<UnionRangos> array
-			,SortedSet<Character> sort, SortedSet<Character> sortRango) {
+	public ParserER(String_ref exreg) {		
 		this.exreg = exreg;
 		this.pila = new Stack<ExpressionBase>();
 		this.parentesis = 0;
-		this.set = set;
-		this.array = array;
-		this._sort = sort;
-		this._sortRango = sortRango;
 	}
 
 	/**
@@ -87,8 +75,13 @@ public class ParserER {
 		while (this.pila.size() > ptrPila) {
 			ExpressionBase er1 = this.pila.pop();
 			ExpressionBase er2 = this.pila.pop();
-			ExpressionBase concat = new Concat(er2, er1);
-			this.pila.push(concat);
+			if (er1 instanceof Vacio || er2 instanceof Vacio) {
+				this.pila.push(new Vacio());
+			}
+			else {
+				ExpressionBase concat = new Concat(er2, er1);
+				this.pila.push(concat);
+			}
 		}
 	}
 
@@ -148,7 +141,7 @@ public class ParserER {
 
 				// cierre del kleen a la cima de pila
 				ExpressionBase cPositivo = this.pila.pop();
-				cPositivo = new CierrePositivo(cPositivo);
+				cPositivo = new KleenPos(cPositivo);
 				this.pila.push(cPositivo);
 			} else if (prim() == '?') { // cierre positivo
 				next();
@@ -175,17 +168,15 @@ public class ParserER {
 				// union las dos ERs primeras de la pila
 				ExpressionBase er1 = this.pila.pop();
 				ExpressionBase er2 = this.pila.pop();
-				Union union = new Union(er2, er1);
-				this.pila.push(union);
-				return; // union es considerado tambien con si fuera entre parentesis
-			} else if (prim() == '%') {
-				next();
-				if (pila.size() == 0 && terminado()) {
-					pila.push(new Vacio());
-					return;
+				if (er1 instanceof Vacio)
+					this.pila.push(er2);
+				else if	(er2 instanceof Vacio) 
+					this.pila.push(er1);
+				else {
+					this.pila.push(new Union(er2, er1));
 				}
-				System.out.println("error conjunto vacio");
-				System.exit(0);
+				return; // union es considerado tambien con si fuera entre parentesis
+				
 			} else if (prim() == '[') {
 				next();
 				String str = "";
@@ -193,8 +184,6 @@ public class ParserER {
 					str += next();
 				next();
 				UnionRangos rSimbolo = new UnionRangos(str);
-				rSimbolo.parserRangos(_sortRango);
-				array.add(rSimbolo);
 				this.pila.push(rSimbolo);
 			} else {
 
@@ -206,8 +195,6 @@ public class ParserER {
 					System.out.println("Simbolo inválido");
 					System.exit(0);
 				}
-				set.add("" + prim());
-				_sort.add(prim());
 				simbolo.set_sim(""+ next());
 				this.pila.push(simbolo);
 			}
