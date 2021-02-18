@@ -29,7 +29,7 @@ public class main {
 		//String str = "[a-cde-tx]";
 		//String str2 = "[a-bcd-tx]";
 		String str = "a|b";
-		String str2 = "a|[c-t]";
+		String str2 = "a";
 		
 		// variables globales en dos expresiones
 		IdEstado state = new IdEstado();
@@ -47,18 +47,20 @@ public class main {
 		ParserER parser2 = new ParserER(new String_ref(str2), simbolosSet, rangos2, ss, ssRango);
 		ExpressionBase er2 = parser2.parse();
 		
+		
 		// interseccion y y obtener los nuevos simbolos
 		intersecUR(simbolosSet, rangos1, ss, ssRango);
 		intersecUR(simbolosSet, rangos2, ss, ssRango);
 		
+		
 		//Automata aut = (Automata)er.ThomsonAFN(state);
 		Automata aut = (Automata)er.ThomsonSimplAFN(state);
 		System.out.println(er.toString());
-		aut.show();
+		//aut.show();
 		//Automata aut2 = (Automata)er2.ThomsonAFN(state);
 		Automata aut2 = (Automata)er2.ThomsonSimplAFN(state);
 		System.out.println(er2.toString());
-		aut2.show();
+		//aut2.show();
 		
 		ArrayList<String> simb = new ArrayList<String>();
 		// simblosSet.addAll(simblosSet2);
@@ -68,9 +70,26 @@ public class main {
 			simb.add(c);
 		}
 		
-		System.out.println(simb.toString());
 		String resul = Algoritmos.detHopKarp(aut, aut2, state, simb);
 		System.out.println(resul);
+		
+		
+		//Prueba equivalencia con lambda
+		if(er.eqLambda())
+			System.out.println("true");
+		else 
+			System.out.println("false");
+		if(er2.eqLambda())
+			System.out.println("true");
+		else 
+			System.out.println("false");		
+		//Prueba derivada
+		ExpressionBase a1 = Algoritmos.derivada(er, "a");
+		ExpressionBase a2 = Algoritmos.derivada(er2,  "a");
+		
+		//Prueba equivalencia con derivadas
+		String pruebaDerivadas = Algoritmos.derivadasHK(er, er2, state, simb);
+		System.out.println(pruebaDerivadas);
 		//*/
 		
 		

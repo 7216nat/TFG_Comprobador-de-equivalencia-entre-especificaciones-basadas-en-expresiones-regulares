@@ -92,5 +92,25 @@ public class Kleen extends ExpressionBase {
 	public ExpressionBase getExpr() {
 		return this._e1;
 	}
+	
+	@Override
+	public boolean eqLambda() {
+		return true;
+	}
+	
+	@Override
+	public void insertarVacio() {
+		this.getPadre().cambiarHijo(this,  new Lambdaa());
+	}
 
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof Kleen)) {
+	            return false;
+	     }
+	     Kleen t = (Kleen) o;
+	     return t._e1.equals(this._e1);
+	}
+	
 }

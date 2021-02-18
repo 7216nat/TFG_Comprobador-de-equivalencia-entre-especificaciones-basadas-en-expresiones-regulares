@@ -78,9 +78,22 @@ public abstract class ExpressionBase {
 	public void setPadre(ExpressionBase ex) {
 		this.padre = ex;
 	}
+	public ExpressionBase getPadre() {
+		return this.padre;
+	}
 	
-	public boolean produceVacio() {
-		return true;
+	public boolean eqLambda() {
+		return false;
+	}
+	
+	public void insertarVacio() {	}
+	public void cambiarHijo(ExpressionBase sust, ExpressionBase nueva) {}
+	
+	//@Override
+	//public abstract boolean equals(Object o);
+	@Override
+	public int hashCode() {
+		return this.type.getValor();
 	}
 	
 }

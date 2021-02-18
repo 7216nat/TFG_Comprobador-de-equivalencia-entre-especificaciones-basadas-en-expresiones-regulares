@@ -58,5 +58,19 @@ public class Lambdaa extends ExpressionBase {
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
 	}
+	
+	@Override
+	public boolean eqLambda() {
+		return true;
+	}
 
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof Lambdaa)) {
+	            return false;
+	     }
+	     return true;
+	}
+	
 }

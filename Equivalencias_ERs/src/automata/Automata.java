@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import algoritmo.EstadoTh;
+import algoritmo.EstadoDetHK;
 
 public class Automata {
 	protected HashMap<Integer, Estado> aut;
@@ -291,7 +291,7 @@ public class Automata {
 	 */
 	public int existsTransEq(int estado, String s) {
 		int exist = -1;
-		EstadoTh es = (EstadoTh) this.aut.get(estado);
+		EstadoDetHK es = (EstadoDetHK) this.aut.get(estado);
 		Iterator<Transicion> it = es.getTrans().iterator();
 		while (exist == -1 && it.hasNext()) {
 			Transicion tr = it.next();
@@ -301,9 +301,9 @@ public class Automata {
 		return exist;
 	}
 
-	public EstadoTh lambdaCierre(Estado es, int idst) {
+	public EstadoDetHK lambdaCierre(Estado es, int idst) {
 		// Creo el estado que entrará en el AFD
-		EstadoTh nuevo = new EstadoTh(idst);
+		EstadoDetHK nuevo = new EstadoDetHK(idst);
 		// Le añado a sí mismo
 		nuevo.addEquiv(es.getId());
 

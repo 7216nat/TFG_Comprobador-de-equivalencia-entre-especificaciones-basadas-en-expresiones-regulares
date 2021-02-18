@@ -4,6 +4,8 @@ import java.util.ArrayList;
 // import java.util.regex.*;
 
 import automata.*;
+import excepciones.LambdaException;
+import excepciones.VacioException;
 
 public class Concat extends ExpressionBase {
 
@@ -15,12 +17,19 @@ public class Concat extends ExpressionBase {
 		super(Tipo.CONCAT);
 	}
 
-	public Concat(ExpressionBase e1, ExpressionBase e2) {
+	public Concat (ExpressionBase e1, ExpressionBase e2) throws VacioException, LambdaException {
 		super(Tipo.CONCAT);
 		_e1 = e1;
 		_e2 = e2;
-		e1.setPadre(this);
-		e2.setPadre(this);
+		_e1.setPadre(this);
+		_e2.setPadre(this);
+		if(_e1.getType() == Tipo.VACIO || _e2.getType() == Tipo.VACIO)
+			throw new VacioException();
+		
+		if(_e1.getType() == Tipo.LAMBDA)
+			throw new LambdaException();
+		if(_e2.getType() == Tipo.LAMBDA)
+			throw new LambdaException();
 	}
 
 	@Override
@@ -97,6 +106,36 @@ public class Concat extends ExpressionBase {
 	}
 	public ExpressionBase getExpr2() {
 		return this._e2;
+	}
+	
+
+	public void insertarVacio() {
+		if (this.getPadre() != null) {
+			this.getPadre().cambiarHijo(this, null);
+		}
+		/////////////////////////////////////
+		else this.setPadre(new Vacio());
+	}
+
+	@Override
+	public void cambiarHijo(ExpressionBase sust, ExpressionBase nueva) {
+		if(nueva.getType() == Tipo.VACIO)
+			insertarVacio();
+		
+		else if(this._e1 == sust)
+			this._e1 = nueva;
+		else
+			this._e2 = nueva;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof Concat)) {
+	            return false;
+	     }
+	     Concat t = (Concat) o;
+	     return t._e1.equals(this._e1) && t._e2.equals(this._e2);
 	}
 
 }

@@ -62,6 +62,20 @@ public class CierrePositivo extends ExpressionBase {
 		a1.IniFinalEs(false);
 		return a1;
 	}
+	@Override
+	public void insertarVacio() {
+		this.getPadre().cambiarHijo(this, new Lambdaa());
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof CierrePositivo)) {
+	            return false;
+	     }
+	     CierrePositivo t = (CierrePositivo) o;
+	     return t._e1.equals(this._e1);
+	}
 
 
 }

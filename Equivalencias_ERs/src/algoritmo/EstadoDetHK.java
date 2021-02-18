@@ -4,10 +4,11 @@ import java.util.HashSet;
 
 import automata.Estado;
 
-public class EstadoTh extends Estado{
+public class EstadoDetHK extends Estado{
+	//equiv para la parte de determinación, igualA para la de HK
 	private HashSet<Integer> equiv;
 	private HashSet<Integer> igualA;
-	public EstadoTh(int id) {
+	public EstadoDetHK(int id) {
 		super(id);
 		this.equiv = new HashSet<Integer>();
 		this.igualA = new HashSet<Integer>();
@@ -20,7 +21,7 @@ public class EstadoTh extends Estado{
 	/**
 	 * Iguala las equiv de es2 y this
 	 */
-	public void unirEquiv(EstadoTh es2) {
+	public void unirEquiv(EstadoDetHK es2) {
 		this.equiv.addAll(es2.equiv);
 		es2.equiv.addAll(this.equiv);
 	}
@@ -30,14 +31,14 @@ public class EstadoTh extends Estado{
 	}
 	
 	
-	public boolean same(EstadoTh es) {
+	public boolean same(EstadoDetHK es) {
 		return (equiv.containsAll(es.equiv) && es.equiv.containsAll(this.equiv));
 	}
-	public boolean sameHKDet(EstadoTh es) {
+	public boolean sameHKDet(EstadoDetHK es) {
 		return (igualA.containsAll(es.igualA) && es.igualA.containsAll(this.igualA));
 	}
 
-	public void unirIgualA(EstadoTh es2) {
+	public void unirIgualA(EstadoDetHK es2) {
 		this.igualA.addAll(es2.igualA);
 		es2.igualA.addAll(this.igualA);
 	}

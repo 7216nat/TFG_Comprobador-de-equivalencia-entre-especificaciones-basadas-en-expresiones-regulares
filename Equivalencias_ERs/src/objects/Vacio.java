@@ -13,7 +13,9 @@ public class Vacio extends ExpressionBase {
 	public Vacio() {
 		super(Tipo.VACIO);
 		_sim = CojVacio;
-		// TODO Auto-generated constructor stub
+		if(this.getPadre() != null)
+			this.getPadre().insertarVacio();
+		
 	}
 
 	@Override
@@ -42,6 +44,17 @@ public class Vacio extends ExpressionBase {
 		int ini = id.nextId();
 		AutomataTS aut = new AutomataTS(ini);
 		return aut;
+	}
+	@Override
+	public void cambiarHijo(ExpressionBase sust, ExpressionBase nueva) {	}
+
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof CierrePositivo)) {
+	            return false;
+	     }
+	     return true;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.SortedSet;
 
 import automata.*;
+import excepciones.VacioException;
 
 /**
  * Clase envoltoria para la union/o no de rangos
@@ -77,7 +78,13 @@ public class UnionRangos extends ExpressionBase {
 			Iterator<RangoCharacter> it = _rangos.iterator();
 			_e1 = it.next();
 			while (it.hasNext()) {
+				try {
 				_e1 = new Union(_e1, it.next());
+				}
+				catch(VacioException e) {
+					
+				}
+				
 			}
 		}
 	}
@@ -194,6 +201,16 @@ public class UnionRangos extends ExpressionBase {
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
 		return _e1.ThomsonSimplAFN(id);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof UnionRangos)) {
+	            return false;
+	     }
+	     UnionRangos t = (UnionRangos) o;
+	     return t._e1.equals(this._e1);
 	}
 
 }
