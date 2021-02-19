@@ -182,6 +182,19 @@ public class UnionRangos extends ExpressionBase {
 		
 		_rangos = tmp;
 	}
+	
+	/**
+	 * Devuelve si esta union contiene el sim
+	 * @param sim
+	 * @return boolean
+	 */
+	public boolean contiene(String sim) {
+		for (RangoCharacter rc: _rangos) {
+			if (rc._sim.equals(sim))
+				return true;
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {
@@ -231,4 +244,5 @@ public class UnionRangos extends ExpressionBase {
 	public int hashCode() {
 		return Tipo.SIMB.getValor();
 	}
+	
 }
