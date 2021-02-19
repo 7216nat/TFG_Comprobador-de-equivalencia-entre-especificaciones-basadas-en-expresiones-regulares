@@ -117,5 +117,19 @@ public class Concat extends ExpressionBase {
 	public ExpressionBase getExpr2() {
 		return this._e2;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof Concat)) {
+	            return false;
+	     }
+	     Concat t = (Concat) o;
+	     return t._e1.equals(this._e1) && t._e2.equals(this._e2);
+	}
+	@Override
+	public boolean eqLambda() {
+		return (_e1.eqLambda() && _e2.eqLambda());
+	}
 
 }

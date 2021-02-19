@@ -120,4 +120,20 @@ public class Union extends ExpressionBase {
 		_e1.getSimbolosRangos(set, array, inis, fins);
 		_e2.getSimbolosRangos(set, array, inis, fins);
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof Union)) {
+	            return false;
+	     }
+	     Union t = (Union) o;
+	     return t._e1.equals(this._e1) && t._e2.equals(this._e2);
+	}
+	
+	@Override
+	public boolean eqLambda() {
+		return (_e1.eqLambda() || _e2.eqLambda());
+	}
+	
 }

@@ -60,4 +60,18 @@ public class LambdaExp extends ExpressionBase {
 		_e1.getSimbolosRangos(set, array, inis, fins);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof LambdaExp)) {
+	            return false;
+	     }
+	     LambdaExp t = (LambdaExp) o;
+	     return t._e1.equals(this._e1);
+	}
+	
+	@Override
+	public boolean eqLambda() {
+		return true;
+	}
 }

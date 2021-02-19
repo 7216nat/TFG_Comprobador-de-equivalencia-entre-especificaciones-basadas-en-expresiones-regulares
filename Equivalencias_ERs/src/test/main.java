@@ -33,8 +33,8 @@ public class main {
 		//String str2 = "a|b|[c-h]";
 		//String str = "%|gh";
 		//String str2 = "%abc|gh";
-		String str = "(a?)";
-		String str2 = "(a|&|d)(a|&|d)*";
+		String str = "[c-d, t]";
+		String str2 = "a";
 	
 		// variables globales en dos expresiones
 		IdEstado state = new IdEstado();
@@ -79,6 +79,9 @@ public class main {
 		String resul = Algoritmos.detHopKarp(aut, aut2, state, simb);
 		System.out.println(resul);
 		//*/
+		System.out.println("PRUEBAS DERIVADAS");
+		String p = Algoritmos.derivadasHK(er, er2, state, simb);
+		System.out.println(p);
 		
 		/*
 		String str = "hola+mundo(hola*+m)*(u+ndo)+sad*";

@@ -213,5 +213,8 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 		// TODO Auto-generated method stub
 		return;
 	}	
-	
+	@Override
+	public int hashCode() {
+		return Tipo.SIMB.getValor();
+	}
 }

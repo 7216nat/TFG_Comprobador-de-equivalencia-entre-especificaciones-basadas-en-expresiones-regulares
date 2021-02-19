@@ -82,4 +82,13 @@ public abstract class ExpressionBase {
 		return true;
 	}
 	
+	@Override
+	public int hashCode() {
+		return this.type.getValor();
+	}
+	
+	public boolean eqLambda() {
+		return false;
+	}
+	
 }

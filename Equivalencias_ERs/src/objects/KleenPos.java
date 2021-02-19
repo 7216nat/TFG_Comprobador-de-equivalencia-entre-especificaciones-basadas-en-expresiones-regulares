@@ -81,5 +81,15 @@ public class KleenPos extends ExpressionBase {
 		// TODO Auto-generated method stub
 		_e1.getSimbolosRangos(set, array, inis, fins);
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof KleenPos)) {
+	            return false;
+	     }
+	     KleenPos t = (KleenPos) o;
+	     return t._e1.equals(this._e1);
+	}
 
 }

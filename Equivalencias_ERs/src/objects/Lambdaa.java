@@ -56,5 +56,19 @@ public class Lambdaa extends ExpressionBase {
 		// TODO Auto-generated method stub
 		set.add(lambda);
 	}
+	
+	@Override
+	public boolean eqLambda() {
+		return true;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof Lambdaa)) {
+	            return false;
+	     }
+	     return true;
+	}
 
 }

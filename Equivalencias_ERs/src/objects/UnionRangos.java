@@ -217,5 +217,18 @@ public class UnionRangos extends ExpressionBase {
 		parserRangos(inis, fins);
 		array.add(this);
 	}
-
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof UnionRangos)) {
+	            return false;
+	     }
+	     UnionRangos t = (UnionRangos) o;
+	     return t._e1.equals(this._e1);
+	}
+	@Override
+	public int hashCode() {
+		return Tipo.SIMB.getValor();
+	}
 }

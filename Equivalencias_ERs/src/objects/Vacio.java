@@ -56,5 +56,15 @@ public class Vacio extends ExpressionBase {
 		set.add(_sim);
 		sort.add('&');
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (o == this) return true;
+	     if (!(o instanceof Vacio)) {
+	            return false;
+	     }
+	     return true;
+	}
 
+	
 }
