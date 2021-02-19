@@ -1,5 +1,8 @@
 package objects;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.regex.Pattern;
 
 import automata.AutomataTS;
@@ -18,14 +21,23 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	/**
 	 * Constructora por defecto
 	 */
-	public RangoCharacter() {super(Tipo.RANGO);}
+	public RangoCharacter() {
+		super(null, null, Tipo.RANGO);
+	}
 	
 	/**
 	 * Constructora para simbolo unico
 	 * @param inifin: caracter ini y fin
 	 */
 	public RangoCharacter(char inifin) {
-		super(Tipo.RANGO);
+		super(null, null, Tipo.RANGO);
+		_ini = inifin;
+		_fin = inifin;
+		actualizarSim();
+	}
+	
+	public RangoCharacter(ExpressionBase padre, char inifin) {
+		super(null, padre, Tipo.RANGO);
 		_ini = inifin;
 		_fin = inifin;
 		actualizarSim();
@@ -37,12 +49,18 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	 * @param fin: caracter final
 	 */
 	public RangoCharacter(char ini, char fin) {
-		super(Tipo.RANGO);
+		super(null, null, Tipo.RANGO);
 		_ini = ini;
 		_fin = fin;
 		actualizarSim();
 	}
 	
+	public RangoCharacter(ExpressionBase padre, char ini, char fin) {
+		super(null, padre, Tipo.RANGO);
+		_ini = ini;
+		_fin = fin;
+		actualizarSim();
+	}
 	/**
 	 * getter ini
 	 * @return
@@ -67,24 +85,17 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	 * @return el objeto de llamada contenido en rc
 	 */
 	public boolean contenida(RangoCharacter rc) {
-		return (_ini > rc._ini && _fin < rc._fin);
+		return (_ini >= rc._ini && _fin <= rc._fin);
 	}
 	
 	/**
 	 * @param c: char
 	 * @return this contiene c
 	 */
-	public boolean contiene(char c) {
-		return (_ini <= c && _fin >= c && _ini != _fin);
+	public boolean contiene(char c, boolean ini) {
+		return (_ini != _fin && ((_ini < c && _fin > c) || (_fin == c && ini) || (_ini == c && !ini)) );
 	}
 	
-	/**
-	 * @param c: char
-	 * @return this contiene c
-	 */
-	public boolean contieneRango(char c) {
-		return (_ini < c && _fin > c && _ini != _fin);
-	}
 	/**
 	 * @param rc: rango
 	 * @return this contiene rc
@@ -125,16 +136,27 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	 * @param c: char
 	 * @return RangoCharacter(this._ini, c)
 	 */
-	public RangoCharacter interseccion(char c) {
+	public RangoCharacter interseccion(char c, boolean ini) {
 		char tmp = _ini;
 		if (c == this._fin) {
-			_fin = (char)(_fin - 1);
+			_ini = _fin;
+			actualizarSim();
+			return new RangoCharacter(tmp, (char)(c-1));
+		}
+		if (c == this._ini) {
+			_ini = (char)(c+1);
 			actualizarSim();
 			return new RangoCharacter(c);
 		}
-		this._ini = (char) (c+1);
-		actualizarSim();
-		return new RangoCharacter(tmp, c);
+		if (ini) {
+			this._ini = c;
+			actualizarSim();
+			return new RangoCharacter(tmp, (char)(c-1)); 
+		} else {
+			this._ini = (char)(c+1);
+			actualizarSim();
+			return new RangoCharacter(tmp, c); 
+		}
 	}
 	
 	
@@ -185,5 +207,11 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 		// TODO Auto-generated method stub
 		return Pattern.matches(_regex, string);
 	}
+
+	@Override
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		return;
+	}	
 	
 }

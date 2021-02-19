@@ -1,32 +1,45 @@
 package objects;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
+
 import automata.AutomataTS;
 import automata.Estado;
 import automata.IdEstado;
 
-public class CierrePositivo extends ExpressionBase {
-
+public class KleenPos extends ExpressionBase {
+	
+	private static final String _regex = "+";
+	private static final String KleenPos = "+";
 	private ExpressionBase _e1;
 
-	public CierrePositivo(ExpressionBase e1) {
-		super(Tipo.KLEENPOS);
+	public KleenPos() {
+		super(KleenPos, null, Tipo.KLEENPOS);
+	}
+
+	public KleenPos(ExpressionBase e1) {
+		super(KleenPos, null, Tipo.KLEENPOS);
+		_e1 = e1;
+		e1.setPadre(this);
+	}
+	
+	public KleenPos(ExpressionBase padre, ExpressionBase e1) {
+		super(KleenPos, padre, Tipo.KLEENPOS);
 		_e1 = e1;
 		e1.setPadre(this);
 	}
 
-	public CierrePositivo() {
-		super(Tipo.KLEENPOS);
-	}
 
 	@Override
 	public String toString() {
-		return "[" + _e1.toString() + "]+";
+		return "[" + _e1.toString() + "]" + _sim;
 	}
 
 	@Override
 	public ExpressionBase cloneMe() {
 		// TODO Auto-generated method stub
-		return new Kleen();
+		return new KleenPos();
 	}
 
 	@Override
@@ -62,20 +75,11 @@ public class CierrePositivo extends ExpressionBase {
 		a1.IniFinalEs(false);
 		return a1;
 	}
+	
 	@Override
-	public void insertarVacio() {
-		this.getPadre().cambiarHijo(this, new Lambdaa());
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		_e1.getSimbolosRangos(set, array, inis, fins);
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		 if (o == this) return true;
-	     if (!(o instanceof CierrePositivo)) {
-	            return false;
-	     }
-	     CierrePositivo t = (CierrePositivo) o;
-	     return t._e1.equals(this._e1);
-	}
-
 
 }

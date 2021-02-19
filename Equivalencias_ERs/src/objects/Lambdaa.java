@@ -1,5 +1,8 @@
 package objects;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.regex.Pattern;
 
 import automata.*;
@@ -10,23 +13,12 @@ public class Lambdaa extends ExpressionBase {
 	//private static final String _regex = "\\w\\*.*";
 	private static final String lambda = "&";
 	
-	/**
-	 * constructora 
-	 * @param er
-	 */
-	public Lambdaa(String er) {
-		super(Tipo.LAMBDA);
-		_sim = lambda;
-		// TODO Auto-generated constructor stub
+	public Lambdaa() {
+		super(lambda, null, Tipo.LAMBDA);
 	}
 	
-	/**
-	 * construtora por defecto
-	 */
-	public Lambdaa() {
-		super(Tipo.LAMBDA);
-		// TODO Auto-generated constructor stub
-		_sim = lambda;
+	public Lambdaa(ExpressionBase padre) {
+		super(lambda, padre, Tipo.LAMBDA);
 	}
 
 	@Override
@@ -60,17 +52,9 @@ public class Lambdaa extends ExpressionBase {
 	}
 	
 	@Override
-	public boolean eqLambda() {
-		return true;
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		set.add(lambda);
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		 if (o == this) return true;
-	     if (!(o instanceof Lambdaa)) {
-	            return false;
-	     }
-	     return true;
-	}
-	
 }

@@ -1,5 +1,8 @@
 package objects;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.regex.Pattern;
 
 import automata.*;
@@ -7,15 +10,15 @@ import automata.*;
 public class Vacio extends ExpressionBase {
 
 	private static final String _regex = "%";
-
 	private static final String CojVacio = "%";
 	
 	public Vacio() {
-		super(Tipo.VACIO);
-		_sim = CojVacio;
-		if(this.getPadre() != null)
-			this.getPadre().insertarVacio();
-		
+		super(CojVacio, null, Tipo.VACIO);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Vacio(ExpressionBase padre) {
+		super(CojVacio, padre, Tipo.LAMBDA);
 	}
 
 	@Override
@@ -45,16 +48,13 @@ public class Vacio extends ExpressionBase {
 		AutomataTS aut = new AutomataTS(ini);
 		return aut;
 	}
-	@Override
-	public void cambiarHijo(ExpressionBase sust, ExpressionBase nueva) {	}
 
 	@Override
-	public boolean equals(Object o) {
-		 if (o == this) return true;
-	     if (!(o instanceof CierrePositivo)) {
-	            return false;
-	     }
-	     return true;
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> sort,
+			SortedSet<Character> sortRango) {
+		// TODO Auto-generated method stub
+		set.add(_sim);
+		sort.add('&');
 	}
 
 }

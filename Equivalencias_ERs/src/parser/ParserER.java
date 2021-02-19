@@ -5,46 +5,30 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.Stack;
 
-import excepciones.LambdaException;
-import excepciones.VacioException;
 import factories.FactoryER;
 import objects.*;
 
 /**
- * Clase para parsear de string a un árbol de ERs
+ *  Clase para parsear de string a un árbol de ERs
  */
 public class ParserER {
 
 	private String_ref exreg; // string a analizar
 	private Stack<ExpressionBase> pila; // pila para controlar parentesis, suma y cierre kleen
-	private Set<String> set;
-	private ArrayList<UnionRangos> array;
 	private int parentesis; // controlar si los parentesis están bien cerrados
-	private SortedSet<Character> _sort;
-	private SortedSet<Character> _sortRango;
 
 	/**
 	 * Parser
-	 * 
 	 * @param exreg: contador
-	 * @param set:   set de simbolos para las transiciones
-	 * @param array: lista de rangos a rellenar
-	 * @param sort:  lista de puntos de interseccion
 	 */
-	public ParserER(String_ref exreg, Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> sort,
-			SortedSet<Character> sortRango) {
+	public ParserER(String_ref exreg) {		
 		this.exreg = exreg;
 		this.pila = new Stack<ExpressionBase>();
 		this.parentesis = 0;
-		this.set = set;
-		this.array = array;
-		this._sort = sort;
-		this._sortRango = sortRango;
 	}
 
 	/**
-	 * si quedan más simbolos por procesar
-	 * 
+	 *  si quedan más simbolos por procesar
 	 * @return
 	 */
 	private boolean terminado() {
@@ -52,8 +36,7 @@ public class ParserER {
 	}
 
 	/**
-	 * el primer simbolo
-	 * 
+	 *  el primer simbolo
 	 * @return
 	 */
 	private char prim() {
@@ -64,8 +47,7 @@ public class ParserER {
 	}
 
 	/**
-	 * consume un simbolo y devuelve el consumido
-	 * 
+	 *  consume un simbolo y devuelve el consumido
 	 * @return
 	 */
 	private char next() {
@@ -73,7 +55,7 @@ public class ParserER {
 		this.exreg.sub(1);
 		return c;
 	}
-
+	
 	/**
 	 * casos exception
 	 */
@@ -82,49 +64,36 @@ public class ParserER {
 		if (prim() == '*' || prim() == '+' || prim() == '?' || pila.empty()) {
 			System.out.println("ER inválido");
 			System.exit(0);
-		}
+		}	
 	}
 
 	/**
 	 * dado un puntero, concatenar todas las instancias de ExpressionBase
 	 * posteriores la CONCATENACIÓN está implicta en esta funcion
 	 */
-	private void concatenarAll(int ptrPila) throws LambdaException {
+	private void concatenarAll(int ptrPila) {
 		while (this.pila.size() > ptrPila) {
 			ExpressionBase er1 = this.pila.pop();
 			ExpressionBase er2 = this.pila.pop();
-			ExpressionBase concat = null;
-			try {
-				concat = new Concat(er2, er1);
-			} catch (VacioException e) {
-				concat = new Vacio();
-			} catch (LambdaException e) {
-				if (er2.getType() == Tipo.LAMBDA)
-					concat = er1;
-				else
-					concat = er2;
-			} finally {
-
+			if (er1 instanceof Vacio || er2 instanceof Vacio) {
+				this.pila.push(new Vacio());
+			}
+			else {
+				ExpressionBase concat = new Concat(er2, er1);
 				this.pila.push(concat);
 			}
 		}
 	}
 
 	/**
-	 * Llamada inicial para el parse
-	 * 
+	 *  Llamada inicial para el parse
 	 * @return
 	 */
 	public ExpressionBase parse() {
 
 		parseDeVerdad(1);
 
-		try {
-			concatenarAll(1);
-		} catch (LambdaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		concatenarAll(1);
 
 		if (this.parentesis != 0) {
 			System.out.println("ER inválido");
@@ -137,7 +106,6 @@ public class ParserER {
 	/**
 	 * La idea de union y parentesis es que cada vez que ocurran, al terminar formen
 	 * solo una ER
-	 * 
 	 * @param ptrPila: punto de llamada
 	 */
 	private void parseDeVerdad(int ptrPila) {
@@ -152,12 +120,7 @@ public class ParserER {
 
 				parseDeVerdad(pila.size() + 1); // se procesa lo que hay entre parentesis
 
-				try {
-					concatenarAll(ptrTemp);
-				} catch (LambdaException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} // concatenar al terminar de procesar entre parentesis
+				concatenarAll(ptrTemp); // concatenar al terminar de procesar entre parentesis
 			} else if (prim() == ')') {
 				next();
 				this.parentesis--;
@@ -166,7 +129,7 @@ public class ParserER {
 				next();
 
 				comprobarSintasisError();
-
+				
 				// cierre del kleen a la cima de pila
 				ExpressionBase kleen = this.pila.pop();
 				kleen = new Kleen(kleen);
@@ -178,7 +141,7 @@ public class ParserER {
 
 				// cierre del kleen a la cima de pila
 				ExpressionBase cPositivo = this.pila.pop();
-				cPositivo = new CierrePositivo(cPositivo);
+				cPositivo = new KleenPos(cPositivo);
 				this.pila.push(cPositivo);
 			} else if (prim() == '?') { // cierre positivo
 				next();
@@ -195,56 +158,32 @@ public class ParserER {
 				comprobarSintasisError();
 
 				// concatenar todos los simbolos posteriores al puntero
-				
-				try {
-					concatenarAll(ptrPila);
-				} catch (LambdaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
+				concatenarAll(ptrPila);
 
 				ptrTemp = pila.size() + 1; // se guarda una copia del puntero de la pila
 				parseDeVerdad(pila.size() + 1); // se procesa el segundo operando de la union
 
-				try {
-					concatenarAll(ptrTemp);
-				} catch (LambdaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} // concatenar
+				concatenarAll(ptrTemp); // concatenar
 
 				// union las dos ERs primeras de la pila
 				ExpressionBase er1 = this.pila.pop();
 				ExpressionBase er2 = this.pila.pop();
-				ExpressionBase union = null;
-				try {
-					union = new Union(er2, er1);
-				} catch (VacioException e) {
-					if (er1.getType() == Tipo.VACIO) {
-						union = er2;
-					} else
-						union = er1;
+				if (er1 instanceof Vacio)
+					this.pila.push(er2);
+				else if	(er2 instanceof Vacio) 
+					this.pila.push(er1);
+				else {
+					this.pila.push(new Union(er2, er1));
 				}
-				this.pila.push(union);
 				return; // union es considerado tambien con si fuera entre parentesis
-			} else if (prim() == '%') {
-				next();
-				if (pila.size() == 0 && terminado()) {
-					pila.push(new Vacio());
-					return;
-				}
-				System.out.println("error conjunto vacio");
-				System.exit(0);
+				
 			} else if (prim() == '[') {
 				next();
 				String str = "";
-				while (prim() != ']')
+				while(prim() != ']')
 					str += next();
 				next();
 				UnionRangos rSimbolo = new UnionRangos(str);
-				rSimbolo.parserRangos(_sortRango);
-				array.add(rSimbolo);
 				this.pila.push(rSimbolo);
 			} else {
 
@@ -256,9 +195,7 @@ public class ParserER {
 					System.out.println("Simbolo inválido");
 					System.exit(0);
 				}
-				set.add("" + prim());
-				_sort.add(prim());
-				simbolo.set_sim("" + next());
+				simbolo.set_sim(""+ next());
 				this.pila.push(simbolo);
 			}
 		}

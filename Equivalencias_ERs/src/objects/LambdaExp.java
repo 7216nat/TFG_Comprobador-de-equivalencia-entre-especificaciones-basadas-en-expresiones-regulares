@@ -1,32 +1,35 @@
 package objects;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
+
 import automata.*;
-import excepciones.VacioException;
 
 public class LambdaExp extends ExpressionBase {
-
+	
+	private static final String _regex = "?";
+	private static final String lambdaExp = "?";
 	private ExpressionBase _e1;
 
-	public LambdaExp(ExpressionBase e1) {
-		super(Tipo.LAMBDAEXP);
-		try {
-		_e1 = new Union(e1, new Lambdaa());
-		}
-		catch(VacioException e) {
-			_e1 = new Lambdaa();
-		}
-		finally {
-		e1.setPadre(this);
-		}
+	public LambdaExp() {
+		super(lambdaExp, null, Tipo.LAMBDA);
 	}
 
-	public LambdaExp() {
-		super(Tipo.LAMBDAEXP);
+	public LambdaExp(ExpressionBase e1) {
+		super(lambdaExp, null, Tipo.LAMBDA);
+		_e1 = new Union(e1, new Lambdaa());
+		_e1.setPadre(this);
+	}
+	
+	public LambdaExp(ExpressionBase padre, ExpressionBase e1) {
+		super(lambdaExp, padre, Tipo.LAMBDA);
+		_e1 = new Union(e1, new Lambdaa());
 	}
 
 	@Override
 	public String toString() {
-		return _e1.toString();
+		return  _e1.toString();
 	}
 
 	@Override
@@ -52,30 +55,9 @@ public class LambdaExp extends ExpressionBase {
 	}
 
 	@Override
-	public boolean eqLambda() {
-		return true;
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		_e1.getSimbolosRangos(set, array, inis, fins);
 	}
-	@Override
-	public void insertarVacio() {
-		this.getPadre().cambiarHijo(this,  new Lambdaa());
-	}
-	
-	@Override
-	public void cambiarHijo(ExpressionBase sust, ExpressionBase nueva) {
-		if(nueva.getType() == Tipo.VACIO)
-			insertarVacio();
-		this._e1 = nueva;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		 if (o == this) return true;
-	     if (!(o instanceof LambdaExp)) {
-	            return false;
-	     }
-	     LambdaExp t = (LambdaExp) o;
-	     return t._e1.equals(this._e1);
-	}
-
 
 }

@@ -1,5 +1,9 @@
 package objects;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
+
 import automata.*;
 
 public abstract class ExpressionBase {
@@ -8,29 +12,18 @@ public abstract class ExpressionBase {
 	private Tipo type;
 	private ExpressionBase padre;
 
-	public ExpressionBase(Tipo tipo) {
+	public ExpressionBase(String sim, ExpressionBase padre, Tipo tipo) {
 		type = tipo;
+		this.padre = padre;
+		_sim = sim;
 	}
 	
-	/**
-	 * @return simbolo
-	 */
-	public String get_sim() {
-		return _sim;
-	}
+	public String get_sim() {return _sim;}
 	
-	/**
-	 * setter de simbolo
-	 * @param sim
-	 */
-	public void set_sim(String sim) {
-		this._sim = sim;
-	}
-
+	public void set_sim(String sim) { _sim = sim; }
+	
 	@Override
-	public String toString() {
-		return _sim;
-	}
+	public String toString() { return _sim; }
 	
 	/**
 	 * Thomson simplificado AFN
@@ -71,6 +64,8 @@ public abstract class ExpressionBase {
 		return exp;
 	}
 	
+	public abstract void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins);
+	
 	public Tipo getType() {
 		return this.type;
 	}
@@ -78,22 +73,13 @@ public abstract class ExpressionBase {
 	public void setPadre(ExpressionBase ex) {
 		this.padre = ex;
 	}
+	
 	public ExpressionBase getPadre() {
 		return this.padre;
 	}
 	
-	public boolean eqLambda() {
-		return false;
-	}
-	
-	public void insertarVacio() {	}
-	public void cambiarHijo(ExpressionBase sust, ExpressionBase nueva) {}
-	
-	//@Override
-	//public abstract boolean equals(Object o);
-	@Override
-	public int hashCode() {
-		return this.type.getValor();
+	public boolean produceVacio() {
+		return true;
 	}
 	
 }

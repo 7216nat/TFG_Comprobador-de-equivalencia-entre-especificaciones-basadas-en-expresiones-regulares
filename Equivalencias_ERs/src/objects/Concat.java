@@ -2,34 +2,37 @@ package objects;
 
 import java.util.ArrayList;
 // import java.util.regex.*;
+import java.util.Set;
+import java.util.SortedSet;
 
 import automata.*;
-import excepciones.LambdaException;
-import excepciones.VacioException;
 
 public class Concat extends ExpressionBase {
 
 	// private static final String _regex = "\\w\\w[\\w\\+\\*\\(\\)]+";
+	private static final String _regex = "";
+	private static final String Concat = "";
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
 
 	public Concat() {
-		super(Tipo.CONCAT);
+		super(Concat, null, Tipo.CONCAT);
 	}
 
-	public Concat (ExpressionBase e1, ExpressionBase e2) throws VacioException, LambdaException {
-		super(Tipo.CONCAT);
+	public Concat(ExpressionBase e1, ExpressionBase e2) {
+		super(Concat, null, Tipo.CONCAT);
 		_e1 = e1;
 		_e2 = e2;
-		_e1.setPadre(this);
-		_e2.setPadre(this);
-		if(_e1.getType() == Tipo.VACIO || _e2.getType() == Tipo.VACIO)
-			throw new VacioException();
-		
-		if(_e1.getType() == Tipo.LAMBDA)
-			throw new LambdaException();
-		if(_e2.getType() == Tipo.LAMBDA)
-			throw new LambdaException();
+		e1.setPadre(this);
+		e2.setPadre(this);
+	}
+	
+	public Concat(ExpressionBase padre, ExpressionBase e1, ExpressionBase e2) {
+		super(Concat, padre, Tipo.CONCAT);
+		_e1 = e1;
+		_e2 = e2;
+		e1.setPadre(this);
+		e2.setPadre(this);
 	}
 
 	@Override
@@ -101,41 +104,18 @@ public class Concat extends ExpressionBase {
 		return a1;
 	}
 	
+	@Override
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		_e1.getSimbolosRangos(set, array, inis, fins);
+		_e2.getSimbolosRangos(set, array, inis, fins);
+	}
+	
 	public ExpressionBase getExpr1() {
 		return this._e1;
 	}
 	public ExpressionBase getExpr2() {
 		return this._e2;
-	}
-	
-
-	public void insertarVacio() {
-		if (this.getPadre() != null) {
-			this.getPadre().cambiarHijo(this, null);
-		}
-		/////////////////////////////////////
-		else this.setPadre(new Vacio());
-	}
-
-	@Override
-	public void cambiarHijo(ExpressionBase sust, ExpressionBase nueva) {
-		if(nueva.getType() == Tipo.VACIO)
-			insertarVacio();
-		
-		else if(this._e1 == sust)
-			this._e1 = nueva;
-		else
-			this._e2 = nueva;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		 if (o == this) return true;
-	     if (!(o instanceof Concat)) {
-	            return false;
-	     }
-	     Concat t = (Concat) o;
-	     return t._e1.equals(this._e1) && t._e2.equals(this._e2);
 	}
 
 }

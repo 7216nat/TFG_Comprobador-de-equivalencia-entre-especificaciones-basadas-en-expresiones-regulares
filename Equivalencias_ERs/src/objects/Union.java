@@ -1,36 +1,42 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
 
 import automata.*;
-import excepciones.VacioException;
 
 //import java.util.regex.*; 
 
 public class Union extends ExpressionBase {
 	
 	//private static final String _regex = "\\w+[+][\\w\\+\\*\\(\\)]+";
-	
+	private static final String _regex = "|";
+	private static final String union = "|";
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
 	
-	public Union() {super(Tipo.UNION);}
-	public Union(ExpressionBase e1, ExpressionBase e2) throws VacioException{
-		super(Tipo.UNION);
+	public Union() {
+		super(union, null, Tipo.UNION);
+	}
+	public Union(ExpressionBase e1, ExpressionBase e2) {
+		super(union, null, Tipo.UNION);
 		_e1 = e1;
 		_e2 = e2;
-		_e1.setPadre(this);
-		_e2.setPadre(this);
-		if(_e1.getType() == Tipo.VACIO)
-			throw new VacioException();
-		if(_e2.getType() == Tipo.VACIO)
-			throw new VacioException();
-	
+		e1.setPadre(this);
+		e2.setPadre(this);
+	}
+	public Union(ExpressionBase padre, ExpressionBase e1, ExpressionBase e2) {
+		super(union, padre, Tipo.UNION);
+		_e1 = e1;
+		_e2 = e2;
+		e1.setPadre(this);
+		e2.setPadre(this);
 	}
 	
 	@Override
 	public String toString() {
-		return  "( " + _e1.toString() + "|" +  _e2.toString() + " )";
+		return  "( " + _e1.toString() + _sim +  _e2.toString() + " )";
 	}
 
 	@Override
@@ -108,34 +114,10 @@ public class Union extends ExpressionBase {
 	public ExpressionBase getExpr2() {
 		return this._e2;
 	}
-	
 	@Override
-	public boolean eqLambda() {
-		return (_e1.eqLambda() || _e2.eqLambda());
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		_e1.getSimbolosRangos(set, array, inis, fins);
+		_e2.getSimbolosRangos(set, array, inis, fins);
 	}
-	
-	@Override
-	public void cambiarHijo(ExpressionBase sust, ExpressionBase nueva) {
-		if(nueva.getType() == Tipo.VACIO) {
-			if(this._e1 == sust)
-				this.getPadre().cambiarHijo(this,  this._e1);
-			else
-				this.getPadre().cambiarHijo(this,  this._e2);
-		}
-		
-		else if(this._e1 == sust)
-			this._e1 = nueva;
-		else
-			this._e2 = nueva;
-	}
-	@Override
-	public boolean equals(Object o) {
-		 if (o == this) return true;
-	     if (!(o instanceof Union)) {
-	            return false;
-	     }
-	     Union t = (Union) o;
-	     return t._e1.equals(this._e1) && t._e2.equals(this._e2);
-	}
-	
 }

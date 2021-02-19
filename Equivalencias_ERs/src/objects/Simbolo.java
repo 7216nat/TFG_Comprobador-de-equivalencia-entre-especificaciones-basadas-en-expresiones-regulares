@@ -1,5 +1,8 @@
 package objects;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.regex.Pattern;
 
 import automata.*;
@@ -12,15 +15,20 @@ public class Simbolo extends ExpressionBase implements Comparable<Simbolo> {
 	/**
 	 * construtora por defecto
 	 */
-	public Simbolo() {super(Tipo.SIMB);}
+	public Simbolo() {
+		super(null, null, Tipo.SIMB);
+	}
 	
 	/**
 	 * constructora
 	 * @param er
 	 */
 	public Simbolo(String er) {
-		super(Tipo.SIMB);
-		_sim = er;
+		super(er, null, Tipo.SIMB);
+	}
+	
+	public Simbolo(ExpressionBase padre, String er) {
+		super(er, padre, Tipo.SIMB);
 	}
 
 	@Override
@@ -64,5 +72,13 @@ public class Simbolo extends ExpressionBase implements Comparable<Simbolo> {
 		// TODO Auto-generated method stub
 		return _sim.compareTo(o._sim);
 	}
-	
+
+	@Override
+	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+		// TODO Auto-generated method stub
+		set.add(_sim);
+		inis.add(_sim.charAt(0));
+		fins.add(_sim.charAt(0));
+	}
+
 }
