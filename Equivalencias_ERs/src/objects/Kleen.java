@@ -22,14 +22,20 @@ public class Kleen extends ExpressionBase {
 
 	public Kleen(ExpressionBase e1) {
 		super(Kleen, null, Tipo.KLEEN);
-		_e1 = e1;
-		e1.setPadre(this);
+		_e1 = e1;		
+		if(_e1 instanceof Kleen) {
+			_e1 = ((Kleen)e1).getExpr();
+		}
+		_e1.setPadre(this);
 	}
 	
 	public Kleen(ExpressionBase padre, ExpressionBase e1) {
 		super(Kleen, padre, Tipo.KLEEN);
 		_e1 = e1;
-		e1.setPadre(this);
+		if(_e1 instanceof Kleen) {
+			_e1 = ((Kleen)e1).getExpr();
+		}
+		_e1.setPadre(this);
 	}
 
 	@Override

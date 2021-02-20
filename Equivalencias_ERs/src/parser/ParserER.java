@@ -75,11 +75,18 @@ public class ParserER {
 		while (this.pila.size() > ptrPila) {
 			ExpressionBase er1 = this.pila.pop();
 			ExpressionBase er2 = this.pila.pop();
+			ExpressionBase concat;
 			if (er1 instanceof Vacio || er2 instanceof Vacio) {
 				this.pila.push(new Vacio());
 			}
+
 			else {
-				ExpressionBase concat = new Concat(er2, er1);
+				if(er1 instanceof Lambdaa)
+					concat = er2;
+				else if(er2 instanceof Lambdaa)
+						concat = er1;
+				else
+					concat = new Concat(er2, er1);
 				this.pila.push(concat);
 			}
 		}

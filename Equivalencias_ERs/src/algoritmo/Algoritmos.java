@@ -197,6 +197,15 @@ public class Algoritmos {
 	 * algoritmo de las derivadas
 	 ***************************/
 	public static String derivadasHK(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, ArrayList<String> simb) {
+		//Quita el símbolo & de la lista de símbolos
+		Iterator<String> col = simb.iterator();
+		while(col.hasNext()) {
+			String comp = col.next();
+			if (comp == "&") {
+				col.remove();
+			}	
+		}
+		
 		AutomataHK afd1 = new AutomataHK();
 		AutomataHK afd2 = new AutomataHK();
 
@@ -255,7 +264,7 @@ public class Algoritmos {
 					estadonuevo1 = set1.get(base1);
 				}
 				Transicion tr = new Transicion(estadonuevo1.getId(), s);
-				estadonuevo1.addTrans(tr);
+				es1.addTrans(tr);
 
 				EstadoHK es2 = (EstadoHK) afd2.getEstado(nodo.getEstado2());
 				ExpressionBase base2 = derivada(es2.getExp(), s);
@@ -269,7 +278,7 @@ public class Algoritmos {
 					estadonuevo2 = set2.get(base2);
 				}
 				Transicion tr2 = new Transicion(estadonuevo2.getId(), s);
-				estadonuevo2.addTrans(tr2);
+				es2.addTrans(tr2);
 
 				if (estadonuevo1.esFin() && !estadonuevo2.esFin())
 					return (nodo.getSimbolos() + s + ", final aut1, no final aut2");
@@ -294,7 +303,7 @@ public class Algoritmos {
 		if (tipo == Tipo.VACIO) {
 			return new Vacio();
 		} else if (tipo == Tipo.LAMBDA)
-			return new Lambdaa();
+			return new Vacio();
 		else if ((tipo == Tipo.SIMB || tipo == Tipo.UNIONRANGOS || tipo == Tipo.RANGO)) {
 			if(ex.get_sim().equals(sim))
 				return new Lambdaa();
@@ -328,7 +337,7 @@ public class Algoritmos {
 				else
 					newEx = t1;
 			}*/
-			if (t1.eqLambda()) {
+			if (exAux.getExpr1().eqLambda()) {
 				t2 = derivada(exAux.getExpr2(), sim);
 				if(!(t2 instanceof Vacio) && !(newEx instanceof Vacio))
 					newEx = new Union(newEx, t2);
@@ -369,15 +378,16 @@ public class Algoritmos {
 		else if (tipo == Tipo.KLEEN) {
 			Kleen exAux = (Kleen) ex;
 			ExpressionBase newEx = null;
-			ExpressionBase t1 = derivada(exAux.getExpr(), sim);
-			if(t1 instanceof Vacio || ex instanceof Vacio)
-				newEx = new Lambdaa();
+ 			ExpressionBase t1 = derivada(exAux.getExpr(), sim);
+			if(t1 instanceof Vacio)
+				newEx = new Vacio();
 			else if(t1 instanceof Lambdaa)
 				newEx = ex;
 			else if(ex instanceof Lambdaa)
 				newEx = t1;
+			
 			else
-				newEx = new Concat(t1,ex);
+				newEx = new Concat(t1,exAux);
 			
 			/*try {
 				newEx = new Concat(t1, ex);

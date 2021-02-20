@@ -21,6 +21,12 @@ public class KleenPos extends ExpressionBase {
 	public KleenPos(ExpressionBase e1) {
 		super(KleenPos, null, Tipo.KLEENPOS);
 		_e1 = e1;
+		if(_e1 instanceof Kleen) {
+			_e1 = ((Kleen) _e1).getExpr();
+		}
+		else if(_e1 instanceof KleenPos) {
+			_e1 = ((Kleen) _e1).getExpr();
+		}
 		e1.setPadre(this);
 	}
 	
