@@ -13,18 +13,19 @@ public class LambdaExp extends ExpressionBase {
 	private ExpressionBase _e1;
 
 	public LambdaExp() {
-		super(lambdaExp, null, Tipo.LAMBDA);
+		super(lambdaExp, null, Tipo.LAMBDAEXP);
 	}
 
 	public LambdaExp(ExpressionBase e1) {
-		super(lambdaExp, null, Tipo.LAMBDA);
+		super(lambdaExp, null, Tipo.LAMBDAEXP);
 		_e1 = new Union(e1, new Lambdaa());
 		_e1.setPadre(this);
 	}
 	
 	public LambdaExp(ExpressionBase padre, ExpressionBase e1) {
-		super(lambdaExp, padre, Tipo.LAMBDA);
+		super(lambdaExp, padre, Tipo.LAMBDAEXP);
 		_e1 = new Union(e1, new Lambdaa());
+		_e1.setPadre(this);
 	}
 
 	@Override
