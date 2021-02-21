@@ -1,6 +1,7 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -103,6 +104,27 @@ public class Kleen extends ExpressionBase {
 		// Convierto estado inicial a estado final
 		a1.IniFinalEs(true);
 		return a1;
+	}
+	
+	@Override
+	public BerrySethiNode createBerrySethiNode(IdEstado id) {
+		// TODO Auto-generated method stub
+		HashSet<Integer> tmp = new HashSet<Integer>();
+		BerrySethiNode ll = _e1.createBerrySethiNode(id);
+		BerrySethiNode bs = new BerrySethiNode(ll);
+		
+		bs.setEmpty(true);
+		bs.setSim(_sim);
+		bs.setTipo(getType());
+		
+		tmp.addAll(ll.first);
+		bs.setFirst(tmp);
+		
+		tmp = new HashSet<Integer>();
+		tmp.addAll(ll.last);
+		bs.setLast(tmp);
+		
+		return bs;
 	}
 	
 	@Override

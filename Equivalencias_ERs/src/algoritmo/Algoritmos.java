@@ -193,6 +193,27 @@ public class Algoritmos {
 //		}
 //		
 //	}
+	
+	/********************************* algoritmo de berrysethi **********************/
+	public static Automata buildBerrySethiAutomata(ArrayList<BerrySethiNode> list, BerrySethiNode root) {
+		int id = 1;
+		Automata aut = new Automata();
+		Estado state = new Estado(0, true, false);
+		aut.addEstado(state);
+		for (Integer i: root.getFirst()) 
+			state.addTrans(new Transicion(i, list.get(i-1).getSim()));
+		for (BerrySethiNode bsn: list) {
+			if (root.getLast().contains(id))
+				state = new Estado(id, false, true);
+			else 
+				state = new Estado(id);
+			aut.addEstado(state);
+			for (Integer i: bsn.getFollow())
+				state.addTrans(new Transicion(i, list.get(i-1).getSim()));
+			id++;
+		}
+		return aut;
+	}
 
 	/***************************
 	 * algoritmo de las derivadas

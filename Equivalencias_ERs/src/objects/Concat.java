@@ -1,6 +1,7 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 // import java.util.regex.*;
 import java.util.Set;
 import java.util.SortedSet;
@@ -102,6 +103,32 @@ public class Concat extends ExpressionBase {
 		a1.copyFinals(a2);
 		a1.eliminarEstado(iniPrev.getId());
 		return a1;
+	}
+	
+	@Override
+	public BerrySethiNode createBerrySethiNode(IdEstado id) {
+		// TODO Auto-generated method stub
+		HashSet<Integer> tmp = new HashSet<Integer>();
+		BerrySethiNode ll = _e1.createBerrySethiNode(id);
+		BerrySethiNode rl = _e2.createBerrySethiNode(id);
+		BerrySethiNode bs = new BerrySethiNode(ll, rl);
+		
+		bs.setEmpty(ll.empty && rl.empty);
+		bs.setSim(_sim);
+		bs.setTipo(getType());
+		
+		tmp.addAll(ll.first);
+		if (ll.empty)
+			tmp.addAll(rl.first);
+		bs.setFirst(tmp);
+		
+		tmp = new HashSet<Integer>();
+		tmp.addAll(rl.last);
+		if(rl.empty)
+			tmp.addAll(ll.last);
+		bs.setLast(tmp);
+
+		return bs;
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -108,6 +109,31 @@ public class Union extends ExpressionBase {
 		
 		return a1;
 	}
+	
+	@Override
+	public BerrySethiNode createBerrySethiNode(IdEstado id) {
+		// TODO Auto-generated method stub
+		HashSet<Integer> tmp = new HashSet<Integer>();
+		BerrySethiNode ll = _e1.createBerrySethiNode(id);
+		BerrySethiNode rl = _e2.createBerrySethiNode(id);
+		BerrySethiNode bs = new BerrySethiNode(ll, rl);
+		
+		bs.setEmpty(ll.empty || rl.empty);
+		bs.setSim(_sim);
+		bs.setTipo(getType());
+		
+		tmp.addAll(ll.first);
+		tmp.addAll(rl.first);
+		bs.setFirst(tmp);
+		
+		tmp = new HashSet<Integer>();
+		tmp.addAll(rl.last);	
+		tmp.addAll(ll.last);
+		bs.setLast(tmp);
+
+		return bs;
+	}
+	
 	public ExpressionBase getExpr1() {
 		return this._e1;
 	}

@@ -1,6 +1,7 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.regex.Pattern;
@@ -49,6 +50,27 @@ public class Lambdaa extends ExpressionBase {
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
+	}
+	
+	@Override
+	public BerrySethiNode createBerrySethiNode(IdEstado id) {
+		// TODO Auto-generated method stub
+		HashSet<Integer> tmp = new HashSet<Integer>();
+		BerrySethiNode bs = new BerrySethiNode();
+		
+		bs.setEmpty(true);
+		bs.setSim(_sim);
+		bs.setTipo(getType());
+		
+		int iD = id.nextId(); 
+		tmp.add(iD);
+		bs.setFirst(tmp);
+		
+		tmp = new HashSet<Integer>();
+		tmp.add(iD);
+		bs.setLast(tmp);
+		
+		return bs;
 	}
 	
 	@Override

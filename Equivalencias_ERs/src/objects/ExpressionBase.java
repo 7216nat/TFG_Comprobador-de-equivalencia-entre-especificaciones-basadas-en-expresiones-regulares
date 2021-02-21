@@ -6,7 +6,7 @@ import java.util.SortedSet;
 
 import automata.*;
 
-public abstract class ExpressionBase {
+public abstract class ExpressionBase implements BerrySethi, Thomson {
 	
 	protected String _sim;
 	private Tipo type;
@@ -24,20 +24,6 @@ public abstract class ExpressionBase {
 	
 	@Override
 	public String toString() { return _sim; }
-	
-	/**
-	 * Thomson simplificado AFN
-	 * @param id
-	 * @return
-	 */
-	public abstract AutomataTS ThomsonSimplAFN(IdEstado id);
-	
-	/**
-	 * Thomson AFN normal con más lambda-transiciones
-	 * @param id
-	 * @return
-	 */
-	public abstract AutomataTS ThomsonAFN(IdEstado id);
 
 	/**
 	 * devuelve una copia de la clase: funcion de la factoria

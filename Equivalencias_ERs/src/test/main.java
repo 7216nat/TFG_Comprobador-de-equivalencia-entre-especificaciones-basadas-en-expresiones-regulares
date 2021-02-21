@@ -137,6 +137,70 @@ public class main {
 		System.out.println("\n\n");
 		at1.show();
 	*/	
+		
+		/***************************************
+		 * **********PRUEBA BERRYSETHI**********
+		 * *************************************
+		 * ************************************/
+//		String str = "(cb*c|cb*b)*";
+//		String str2 = "(cc)*|(cc)*(cb)(b|c)*";
+////		String str = "[a-cde-tx]*";
+////		String str2 = "[a-bcd-tx]*";
+////		String str = "[a-c]|[d-h]";
+////		String str2 = "a|b|[c-h]";
+////		String str = "%|gh";
+////		String str2 = "%abc|gh";
+////		String str = "(a?|d)+";
+////		String str2 = "(a|&|d)(a|&|d)*";
+//	
+//		// variables globales en dos expresiones
+//		IdEstado state = new IdEstado();
+//		state.nextId();
+//		Set<String> simbolosSet = new HashSet<String> ();
+//		SortedSet<Character> inis = new TreeSet<Character>();
+//		SortedSet<Character> fins = new TreeSet<Character>();
+//		// SortedSet<Character> ssRango = new TreeSet<Character>();
+//		
+//		// parse expresion 1
+//		ArrayList<UnionRangos> rangos1 = new ArrayList<UnionRangos>();
+//		ParserER parser = new ParserER(new String_ref(str));
+//		ExpressionBase er = parser.parse();
+//		er.getSimbolosRangos(simbolosSet, rangos1, inis, fins);
+//		
+//		// parse expresion 2
+//		ArrayList<UnionRangos> rangos2 = new ArrayList<UnionRangos>();
+//		ParserER parser2 = new ParserER(new String_ref(str2));
+//		ExpressionBase er2 = parser2.parse();
+//		er2.getSimbolosRangos(simbolosSet, rangos2, inis, fins);
+//		
+//		// interseccion y y obtener los nuevos simbolos
+//		intersecUR(simbolosSet, rangos1, inis, fins);
+//		intersecUR(simbolosSet, rangos2, inis, fins);
+//		
+//		BerrySethiNode bsn = er.createBerrySethiNode(state);
+//		ArrayList<BerrySethiNode> states = new ArrayList<BerrySethiNode>();
+//		bsn.buildEstados(states, new HashSet<Integer>());
+//		Automata aut = Algoritmos.buildBerrySethiAutomata(states, bsn);
+//		aut.show();
+//		
+//		state = new IdEstado();
+//		state.nextId();
+//		bsn = er2.createBerrySethiNode(state);
+//		states = new ArrayList<BerrySethiNode>();
+//		bsn.buildEstados(states, new HashSet<Integer>());
+//		Automata aut2 = Algoritmos.buildBerrySethiAutomata(states, bsn);
+//		aut2.show();
+//		
+//		ArrayList<String> simb = new ArrayList<String>();
+//		Iterator<String> it = simbolosSet.iterator();
+//		while(it.hasNext()) {
+//			String c = it.next();
+//			simb.add(c);
+//		}
+//		
+//		System.out.println(simb.toString());
+//		String resul = Algoritmos.detHopKarp(aut, aut2, state, simb);
+//		System.out.println(resul);
 	}
 	
 	public static void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins){
