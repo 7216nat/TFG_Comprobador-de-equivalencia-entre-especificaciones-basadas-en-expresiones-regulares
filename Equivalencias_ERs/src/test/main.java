@@ -33,8 +33,8 @@ public class main {
 		//String str2 = "a|b|[c-h]";
 		//String str = "%|gh";
 		//String str2 = "%abc|gh";
-		String str = "(ab)*a";
-		String str2 = "a(ba)*";
+		String str = "&|a*a";
+		String str2 = "a*";
 	
 		// variables globales en dos expresiones
 		IdEstado state = new IdEstado();

@@ -22,6 +22,7 @@ import objects.Lambdaa;
 import objects.Simbolo;
 import objects.Tipo;
 import objects.Union;
+import objects.UnionRangos;
 import objects.Vacio;
 
 public class Algoritmos {
@@ -197,15 +198,15 @@ public class Algoritmos {
 	 * algoritmo de las derivadas
 	 ***************************/
 	public static String derivadasHK(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, ArrayList<String> simb) {
-		//Quita el símbolo & de la lista de símbolos
+		// Quita el símbolo & de la lista de símbolos
 		Iterator<String> col = simb.iterator();
-		while(col.hasNext()) {
+		while (col.hasNext()) {
 			String comp = col.next();
 			if (comp == "&") {
 				col.remove();
-			}	
+			}
 		}
-		
+
 		AutomataHK afd1 = new AutomataHK();
 		AutomataHK afd2 = new AutomataHK();
 
@@ -304,12 +305,21 @@ public class Algoritmos {
 			return new Vacio();
 		} else if (tipo == Tipo.LAMBDA)
 			return new Vacio();
-		else if ((tipo == Tipo.SIMB || tipo == Tipo.UNIONRANGOS || tipo == Tipo.RANGO)) {
-			if(ex.get_sim().equals(sim))
-				return new Lambdaa();
-			else
-				return new Vacio();
-			
+		else if ((tipo == Tipo.SIMB) || (tipo == Tipo.UNIONRANGOS)) {
+			if (tipo == Tipo.SIMB) {
+				if (((Simbolo) ex).contiene(sim))
+					return new Lambdaa();
+				else
+					return new Vacio();
+			}
+			else {
+				if (((UnionRangos) ex).contiene(sim))
+					return new Lambdaa();
+				else
+					return new Vacio();
+				
+			}
+
 		}
 		// Casos recursivos
 		else if (tipo == Tipo.CONCAT) {
@@ -317,36 +327,33 @@ public class Algoritmos {
 			ExpressionBase newEx;
 			ExpressionBase t1 = derivada(exAux.getExpr1(), sim);
 			ExpressionBase t2 = exAux.getExpr2();
-			if(t1 instanceof Vacio || t2 instanceof Vacio) {
+			if (t1 instanceof Vacio || t2 instanceof Vacio) {
 				newEx = new Vacio();
-			}
-			else if(t1 instanceof Lambdaa)
+			} else if (t1 instanceof Lambdaa)
 				newEx = t2;
-			else if(t2 instanceof Lambdaa)
+			else if (t2 instanceof Lambdaa)
 				newEx = t1;
 			else
-				newEx = new Concat(t1,t2);
+				newEx = new Concat(t1, t2);
 			/*
-			try {
-				newEx = new Concat(t1, exAux.getExpr2());
-			} catch (VacioException e) {
-				newEx = new Vacio();
-			} catch (LambdaException e) {
-				if (t1.getType() == Tipo.LAMBDA)
-					newEx = exAux.getExpr2();
-				else
-					newEx = t1;
-			}*/
+			 * try { newEx = new Concat(t1, exAux.getExpr2()); } catch (VacioException e) {
+			 * newEx = new Vacio(); } catch (LambdaException e) { if (t1.getType() ==
+			 * Tipo.LAMBDA) newEx = exAux.getExpr2(); else newEx = t1; }
+			 */
 			if (exAux.getExpr1().eqLambda()) {
 				t2 = derivada(exAux.getExpr2(), sim);
-				if(!(t2 instanceof Vacio) && !(newEx instanceof Vacio))
-					newEx = new Union(newEx, t2);
-				/*try {
-					newEx = new Union(newEx, derivada(exAux.getExpr2(), sim));
-				} catch (VacioException e) {
-					if (newEx.getType() == Tipo.VACIO)
-						newEx = new Vacio();
-				}*/
+				if (!(t2 instanceof Vacio) && !(newEx instanceof Vacio)) {
+					if(!newEx.equals(t2)) 
+						newEx = new Union(newEx, t2);
+				}
+				else if(t1 instanceof Vacio && !(t2 instanceof Vacio)){
+					newEx = t2;
+				}
+				/*
+				 * try { newEx = new Union(newEx, derivada(exAux.getExpr2(), sim)); } catch
+				 * (VacioException e) { if (newEx.getType() == Tipo.VACIO) newEx = new Vacio();
+				 * }
+				 */
 			}
 			return newEx;
 		}
@@ -356,49 +363,48 @@ public class Algoritmos {
 			ExpressionBase newEx;
 			ExpressionBase t1 = derivada(exAux.getExpr1(), sim);
 			ExpressionBase t2 = derivada(exAux.getExpr2(), sim);
-			
-			if(t1 instanceof Vacio)
-				newEx = t2;
-			else if(t2 instanceof Vacio)
-				newEx=t1;
-			else
-				newEx = new Union(t1,t2);
-			/*try {
-				newEx = new Union(derivada(exAux.getExpr1(), sim), derivada(exAux.getExpr2(), sim));
-			} catch (VacioException e) {
-				if (derivada(exAux.getExpr1(), sim).getType() == Tipo.VACIO)
-					newEx = derivada(exAux.getExpr2(), sim);
-				else
-					newEx = derivada(exAux.getExpr1(), sim);
 
-			}*/
+			if (t1 instanceof Vacio)
+				newEx = t2;
+			else if (t2 instanceof Vacio)
+				newEx = t1;
+			else {
+				if(!t1.equals(t2))
+					newEx = new Union(t1, t2);
+				else
+					newEx = t1;
+			}
+			/*
+			 * try { newEx = new Union(derivada(exAux.getExpr1(), sim),
+			 * derivada(exAux.getExpr2(), sim)); } catch (VacioException e) { if
+			 * (derivada(exAux.getExpr1(), sim).getType() == Tipo.VACIO) newEx =
+			 * derivada(exAux.getExpr2(), sim); else newEx = derivada(exAux.getExpr1(),
+			 * sim);
+			 * 
+			 * }
+			 */
 			return newEx;
 		}
 
 		else if (tipo == Tipo.KLEEN) {
 			Kleen exAux = (Kleen) ex;
 			ExpressionBase newEx = null;
- 			ExpressionBase t1 = derivada(exAux.getExpr(), sim);
-			if(t1 instanceof Vacio)
+			ExpressionBase t1 = derivada(exAux.getExpr(), sim);
+			if (t1 instanceof Vacio)
 				newEx = new Vacio();
-			else if(t1 instanceof Lambdaa)
+			else if (t1 instanceof Lambdaa)
 				newEx = ex;
-			else if(ex instanceof Lambdaa)
+			else if (ex instanceof Lambdaa)
 				newEx = t1;
-			
+
 			else
-				newEx = new Concat(t1,exAux);
-			
-			/*try {
-				newEx = new Concat(t1, ex);
-			} catch (VacioException e) {
-				newEx = new Lambdaa();
-			} catch (LambdaException e) {
-				if (t1.getType() == Tipo.LAMBDA)
-					newEx = ex;
-				else
-					newEx = t1;
-			}*/
+				newEx = new Concat(t1, exAux);
+
+			/*
+			 * try { newEx = new Concat(t1, ex); } catch (VacioException e) { newEx = new
+			 * Lambdaa(); } catch (LambdaException e) { if (t1.getType() == Tipo.LAMBDA)
+			 * newEx = ex; else newEx = t1; }
+			 */
 			return newEx;
 
 		}
