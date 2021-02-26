@@ -159,4 +159,9 @@ public class Kleen extends ExpressionBase {
 		return this;
 	}
 
+	@Override
+	public String getVal() {
+		return this._e1.getVal();
+	}
+
 }

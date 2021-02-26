@@ -168,5 +168,10 @@ public class Union extends ExpressionBase {
 		_e2 = _e2.buildTreeDefinitivo();
 		return this;
 	}
+	@Override
+	public String getVal() {
+		return this._e1.getVal();
+	}
+	
 	
 }

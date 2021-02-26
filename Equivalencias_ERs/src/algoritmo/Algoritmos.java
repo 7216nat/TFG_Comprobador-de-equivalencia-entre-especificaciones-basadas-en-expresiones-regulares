@@ -7,8 +7,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.Queue;
-import java.util.Set;
-import java.util.Stack;
 
 import automata.Automata;
 import automata.AutomataHK;
@@ -21,10 +19,8 @@ import objects.ExpressionBase;
 import objects.Kleen;
 import objects.Lambdaa;
 import objects.Lenguaje;
-import objects.Simbolo;
 import objects.Tipo;
 import objects.Union;
-import objects.UnionRangos;
 import objects.Vacio;
 
 public class Algoritmos {
@@ -376,7 +372,10 @@ public class Algoritmos {
 				t2 = derivada(exAux.getExpr2(), sim);
 				if (!(t2 instanceof Vacio) && !(newEx instanceof Vacio)) {
 					if(!newEx.equals(t2)) 
-						newEx = new Union(newEx, t2);
+						if(newEx.menorQue(t2))
+							newEx = new Union(newEx, t2);
+						else
+							newEx = new Union(t2, newEx);
 				}
 				else if(t1 instanceof Vacio && !(t2 instanceof Vacio)){
 					newEx = t2;
@@ -402,7 +401,10 @@ public class Algoritmos {
 				newEx = t1;
 			else {
 				if(!t1.equals(t2))
-					newEx = new Union(t1, t2);
+					if(t1.menorQue(t2))
+						newEx = new Union(t1, t2);
+					else
+						newEx = new Union(t2, t1);
 				else
 					newEx = t1;
 			}

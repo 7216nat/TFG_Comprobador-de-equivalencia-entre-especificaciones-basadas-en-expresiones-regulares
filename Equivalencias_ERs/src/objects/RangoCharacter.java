@@ -240,4 +240,9 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 		return Tipo.SIMB.getValor();
 	}
 
+	@Override
+	public String getVal() {
+		return this._sim;
+	}
+
 }

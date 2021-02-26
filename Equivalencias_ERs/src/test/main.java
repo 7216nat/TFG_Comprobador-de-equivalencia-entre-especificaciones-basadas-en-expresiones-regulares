@@ -33,7 +33,7 @@ public class main {
 		//String str2 = "a|b|[c-h]";
 		//String str = "%|gh";
 		//String str2 = "%abc|gh";
-		String str = "th";
+		String str = "a|b";
 		String str2 = "[a-b]";
 	
 		// variables globales en dos expresiones

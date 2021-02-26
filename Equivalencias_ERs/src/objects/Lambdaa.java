@@ -93,4 +93,9 @@ public class Lambdaa extends Lenguaje {
 	     return true;
 	}
 
+	@Override
+	public String getVal() {
+		return this._sim;
+	}
+
 }

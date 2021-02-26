@@ -70,4 +70,48 @@ public abstract class ExpressionBase implements BerrySethi, Thomson {
 		return false;
 	}
 	
+	public abstract String getVal();
+	
+	public boolean menorQue(ExpressionBase e) {
+		//Si this es símbolo o rango
+		if(this instanceof Lenguaje) {
+			if(!(e instanceof Lenguaje))
+				return false;
+			else
+				return (this.getVal().charAt(0) < e.getVal().charAt(0));  
+		}
+		//Si this es Union
+		else if(this instanceof Union) {
+			if(e instanceof Lenguaje) {
+				return false;
+			}
+			else if (e instanceof Union){
+				return (((Union)this).getVal().charAt(0) < ((Union)e).getVal().charAt(0));
+			}
+			else {//e instanceOf Concat or Kleen
+				return true;
+				
+			}
+		}
+		else if (this instanceof Concat) {
+			if((e instanceof Lenguaje) || (e instanceof Union))
+				return false;
+			else if(e instanceof Concat) {
+				return (((Concat)this).getVal().charAt(0) < ((Concat)e).getVal().charAt(0));
+			}
+			else { //e instanceof Kleen
+				return true;
+			}
+			
+		}
+		//this instanceof Kleen
+		else {
+			if(e instanceof Kleen) {
+				return (((Kleen)this).getVal().charAt(0) < ((Kleen)e).getVal().charAt(0));
+			}
+			else { //e instanceof Kleen
+				return true;
+			}
+		}
+	}
 }

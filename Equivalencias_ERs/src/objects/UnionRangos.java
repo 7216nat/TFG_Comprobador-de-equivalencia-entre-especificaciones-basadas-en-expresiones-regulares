@@ -272,4 +272,9 @@ public class UnionRangos extends ExpressionBase {
 		_e1 = _e1.buildTreeDefinitivo();
 		return _e1;
 	}
+
+	@Override
+	public String getVal() {
+		return "";
+	}
 }

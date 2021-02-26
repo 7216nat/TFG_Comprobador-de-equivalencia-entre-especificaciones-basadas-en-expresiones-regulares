@@ -113,5 +113,10 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 			return true;
 		return false;
 	}
+
+	@Override
+	public String getVal() {
+		return this._sim;
+	}
 	
 }

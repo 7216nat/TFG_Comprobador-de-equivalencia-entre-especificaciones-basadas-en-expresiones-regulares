@@ -86,5 +86,11 @@ public class Vacio extends Lenguaje {
 	     }
 	     return true;
 	}
+
+	@Override
+	public String getVal() {
+		// TODO Auto-generated method stub
+		return this._sim;
+	}
 		
 }
