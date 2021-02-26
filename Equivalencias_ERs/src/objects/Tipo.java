@@ -1,16 +1,14 @@
 package objects;
 
 public enum Tipo {
-	KLEENPOS(1),
-	CONCAT(2),
-	KLEEN(3),
-	LAMBDA(4),
-	LAMBDAEXP(5),
-	RANGO(6),
-	SIMB(7),
-	UNION(8),
-	UNIONRANGOS(9),
-	VACIO(10); 
+	CONCAT(1),
+	KLEEN(2),
+	LAMBDA(3),
+	RANGO(4),
+	SIMB(5),
+	UNION(6),
+	UNIONRANGOS(7),
+	VACIO(8); 
 	Tipo(int val) {
 		this.valor = val;
 	}

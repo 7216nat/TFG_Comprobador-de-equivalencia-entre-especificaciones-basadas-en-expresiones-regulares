@@ -20,6 +20,7 @@ import objects.Concat;
 import objects.ExpressionBase;
 import objects.Kleen;
 import objects.Lambdaa;
+import objects.Lenguaje;
 import objects.Simbolo;
 import objects.Tipo;
 import objects.Union;
@@ -331,8 +332,13 @@ public class Algoritmos {
 			return new Vacio();
 		} else if (tipo == Tipo.LAMBDA)
 			return new Vacio();
-		else if ((tipo == Tipo.SIMB) || (tipo == Tipo.UNIONRANGOS)) {
-			if (tipo == Tipo.SIMB) {
+		else if ((tipo == Tipo.SIMB) || (tipo == Tipo.RANGO)) {
+			if(((Lenguaje)ex).esSimb(sim))
+					return new Lambdaa();
+			else
+				return new Vacio();
+			
+			/*if (tipo == Tipo.SIMB) {
 				if (((Simbolo) ex).contiene(sim))
 					return new Lambdaa();
 				else
@@ -344,7 +350,7 @@ public class Algoritmos {
 				else
 					return new Vacio();
 				
-			}
+			}*/
 
 		}
 		// Casos recursivos
