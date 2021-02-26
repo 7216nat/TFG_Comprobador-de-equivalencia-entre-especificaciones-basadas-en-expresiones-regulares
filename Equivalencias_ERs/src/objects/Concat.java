@@ -17,11 +17,11 @@ public class Concat extends ExpressionBase {
 	private ExpressionBase _e2;
 
 	public Concat() {
-		super(Concat, null, Tipo.CONCAT);
+		super(null, Tipo.CONCAT);
 	}
 
 	public Concat(ExpressionBase e1, ExpressionBase e2) {
-		super(Concat, null, Tipo.CONCAT);
+		super(null, Tipo.CONCAT);
 		_e1 = e1;
 		_e2 = e2;
 		e1.setPadre(this);
@@ -29,7 +29,7 @@ public class Concat extends ExpressionBase {
 	}
 	
 	public Concat(ExpressionBase padre, ExpressionBase e1, ExpressionBase e2) {
-		super(Concat, padre, Tipo.CONCAT);
+		super(padre, Tipo.CONCAT);
 		_e1 = e1;
 		_e2 = e2;
 		e1.setPadre(this);
@@ -114,7 +114,7 @@ public class Concat extends ExpressionBase {
 		BerrySethiNode bs = new BerrySethiNode(ll, rl);
 		
 		bs.setEmpty(ll.empty && rl.empty);
-		bs.setSim(_sim);
+		bs.setSim(Concat);
 		bs.setTipo(getType());
 		
 		tmp.addAll(ll.first);
@@ -157,6 +157,14 @@ public class Concat extends ExpressionBase {
 	@Override
 	public boolean eqLambda() {
 		return (_e1.eqLambda() && _e2.eqLambda());
+	}
+
+	@Override
+	public ExpressionBase buildTreeDefinitivo() {
+		// TODO Auto-generated method stub
+		_e1 = _e1.buildTreeDefinitivo(); 
+		_e2 = _e2.buildTreeDefinitivo();
+		return this;
 	}
 
 }

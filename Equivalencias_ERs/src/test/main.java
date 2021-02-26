@@ -33,8 +33,8 @@ public class main {
 		//String str2 = "a|b|[c-h]";
 		//String str = "%|gh";
 		//String str2 = "%abc|gh";
-		String str = "&|a*a";
-		String str2 = "a*";
+		String str = "a+[a-n]";
+		String str2 = "a+[a-n]";
 	
 		// variables globales en dos expresiones
 		IdEstado state = new IdEstado();
@@ -58,6 +58,10 @@ public class main {
 		// interseccion y y obtener los nuevos simbolos
 		intersecUR(simbolosSet, rangos1, inis, fins);
 		intersecUR(simbolosSet, rangos2, inis, fins);
+		
+		// quitar unionRango del arbol
+		er = er.buildTreeDefinitivo();
+		er2 = er2.buildTreeDefinitivo();
 		
 		//Automata aut = (Automata)er.ThomsonAFN(state);
 		Automata aut = (Automata)er.ThomsonSimplAFN(state);
@@ -84,28 +88,6 @@ public class main {
 		String p = Algoritmos.derivadasHK(er, er2, state, simb);
 		System.out.println(p);
 		
-		/*
-		String str = "hola+mundo(hola*+m)*(u+ndo)+sad*";
-		//str = "((a+b)a)*";
-		str = "ab?b+[a-dxgc-h][c-lk-m][l-xks]";
-		Set<String> set = new HashSet<String> ();
-		ArrayList<UnionRangos> array = new ArrayList<UnionRangos>();
-		SortedSet<Character> ss = new TreeSet<Character>();
-		ParserER parser = new ParserER(new String_ref(str), set, array, ss);
-		ExpressionBase er = parser.parse();
-		
-		intersecUR(set, array, ss);
-		
-		Automata aut = er.ThomsonSimplAFN(new IdEstado());
-		System.out.println(set.toString());
-		System.out.println(er.toString());
-		aut.show();
-		*/
-		
-		/*
-		RangoCharacter e1 = new RangoCharacter('a', 'h'), e2 = new RangoCharacter('a', 'h');
-		System.out.println(e1.equals(e2));
-		*/
 		
 		
 		//Comprobar lambda-cierre:
@@ -142,16 +124,16 @@ public class main {
 		 * **********PRUEBA BERRYSETHI**********
 		 * *************************************
 		 * ************************************/
-//		String str = "(cb*c|cb*b)*";
-//		String str2 = "(cc)*|(cc)*(cb)(b|c)*";
-////		String str = "[a-cde-tx]*";
-////		String str2 = "[a-bcd-tx]*";
-////		String str = "[a-c]|[d-h]";
-////		String str2 = "a|b|[c-h]";
-////		String str = "%|gh";
-////		String str2 = "%abc|gh";
-////		String str = "(a?|d)+";
-////		String str2 = "(a|&|d)(a|&|d)*";
+		//String str = "(cb*c|cb*b)*";
+		//String str2 = "(cc)*|(cc)*(cb)(b|c)*";
+//		String str = "[a-cde-tx]*";
+//		String str2 = "[a-bcd-tx]*";
+//		String str = "[a-c]|[d-h]";
+//		String str2 = "a|b|[c-h]";
+//		String str = "%|gh";
+//		String str2 = "%abc|gh";
+//		String str = "(a?|d)+b";
+//		String str2 = "(a|&|b)(a|&|d)*b";
 //	
 //		// variables globales en dos expresiones
 //		IdEstado state = new IdEstado();
@@ -176,6 +158,11 @@ public class main {
 //		// interseccion y y obtener los nuevos simbolos
 //		intersecUR(simbolosSet, rangos1, inis, fins);
 //		intersecUR(simbolosSet, rangos2, inis, fins);
+//		
+//		er = er.buildTreeDefinitivo();
+//		er2 = er2.buildTreeDefinitivo();
+//		System.out.println(er.toString());
+//		System.out.println(er2.toString());
 //		
 //		BerrySethiNode bsn = er.createBerrySethiNode(state);
 //		ArrayList<BerrySethiNode> states = new ArrayList<BerrySethiNode>();

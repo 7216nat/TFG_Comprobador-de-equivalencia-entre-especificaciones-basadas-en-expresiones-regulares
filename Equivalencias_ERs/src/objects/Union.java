@@ -18,17 +18,17 @@ public class Union extends ExpressionBase {
 	private ExpressionBase _e2;
 	
 	public Union() {
-		super(union, null, Tipo.UNION);
+		super(null, Tipo.UNION);
 	}
 	public Union(ExpressionBase e1, ExpressionBase e2) {
-		super(union, null, Tipo.UNION);
+		super(null, Tipo.UNION);
 		_e1 = e1;
 		_e2 = e2;
 		e1.setPadre(this);
 		e2.setPadre(this);
 	}
 	public Union(ExpressionBase padre, ExpressionBase e1, ExpressionBase e2) {
-		super(union, padre, Tipo.UNION);
+		super(padre, Tipo.UNION);
 		_e1 = e1;
 		_e2 = e2;
 		e1.setPadre(this);
@@ -37,7 +37,7 @@ public class Union extends ExpressionBase {
 	
 	@Override
 	public String toString() {
-		return  "( " + _e1.toString() + _sim +  _e2.toString() + " )";
+		return  "( " + _e1.toString() + union +  _e2.toString() + " )";
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class Union extends ExpressionBase {
 		BerrySethiNode bs = new BerrySethiNode(ll, rl);
 		
 		bs.setEmpty(ll.empty || rl.empty);
-		bs.setSim(_sim);
+		bs.setSim(union);
 		bs.setTipo(getType());
 		
 		tmp.addAll(ll.first);
@@ -160,6 +160,13 @@ public class Union extends ExpressionBase {
 	@Override
 	public boolean eqLambda() {
 		return (_e1.eqLambda() || _e2.eqLambda());
+	}
+	@Override
+	public ExpressionBase buildTreeDefinitivo() {
+		// TODO Auto-generated method stub
+		_e1 = _e1.buildTreeDefinitivo();
+		_e2 = _e2.buildTreeDefinitivo();
+		return this;
 	}
 	
 }

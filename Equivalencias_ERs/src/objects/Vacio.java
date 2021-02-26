@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 import automata.*;
 
-public class Vacio extends ExpressionBase {
+public class Vacio extends Lenguaje {
 
 	private static final String _regex = "%";
 	private static final String CojVacio = "%";
@@ -19,7 +19,7 @@ public class Vacio extends ExpressionBase {
 	}
 	
 	public Vacio(ExpressionBase padre) {
-		super(CojVacio, padre, Tipo.LAMBDA);
+		super(CojVacio, padre, Tipo.VACIO);
 	}
 
 	@Override
@@ -76,7 +76,6 @@ public class Vacio extends ExpressionBase {
 			SortedSet<Character> sortRango) {
 		// TODO Auto-generated method stub
 		set.add(_sim);
-		sort.add('&');
 	}
 	
 	@Override
@@ -87,6 +86,5 @@ public class Vacio extends ExpressionBase {
 	     }
 	     return true;
 	}
-
-	
+		
 }

@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 import automata.*;
 
-public class Lambdaa extends ExpressionBase {
+public class Lambdaa extends Lenguaje {
 
 	private static final String _regex = "&";
 	//private static final String _regex = "\\w\\*.*";
@@ -62,12 +62,12 @@ public class Lambdaa extends ExpressionBase {
 		bs.setSim(_sim);
 		bs.setTipo(getType());
 		
-		int iD = id.nextId(); 
-		tmp.add(iD);
+//		int iD = id.nextId(); 
+//		tmp.add(iD);
 		bs.setFirst(tmp);
 		
 		tmp = new HashSet<Integer>();
-		tmp.add(iD);
+//		tmp.add(iD);
 		bs.setLast(tmp);
 		
 		return bs;

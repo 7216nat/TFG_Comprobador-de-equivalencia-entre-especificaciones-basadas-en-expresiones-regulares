@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import automata.*;
 
 // Comentarios en ExpressionBase
-public class Simbolo extends ExpressionBase implements Comparable<Simbolo> {
+public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 
 	private static final String _regex = "\\w";
 
@@ -113,4 +113,5 @@ public class Simbolo extends ExpressionBase implements Comparable<Simbolo> {
 			return true;
 		return false;
 	}
+	
 }

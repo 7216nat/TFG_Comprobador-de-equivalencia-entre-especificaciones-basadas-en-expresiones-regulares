@@ -91,10 +91,10 @@ public class BerrySethiNode {
 					list.add(this);
 				}
 				break;
-			case UNIONRANGOS:
-				fol.addAll(follow);
-				left.buildEstados(list, follow);
-				break;
+//			case UNIONRANGOS:
+//				fol.addAll(follow);
+//				left.buildEstados(list, follow);
+//				break;
 			case UNION:
 				this.fol.addAll(follow);
 				left.buildEstados(list, follow);
@@ -107,21 +107,21 @@ public class BerrySethiNode {
 				follow.addAll(left.first);
 				left.buildEstados(list, follow);
 				break;
-			case KLEENPOS:
-				this.fol.addAll(follow);
-				follow.addAll(left.first);
-				left.buildEstados(list, follow);
-				break;
+//			case KLEENPOS:
+//				this.fol.addAll(follow);
+//				follow.addAll(left.first);
+//				left.buildEstados(list, follow);
+//				break;
 			case LAMBDA:
 				if (this.esHoja()) {
 					this.fol.addAll(follow);
-					list.add(this);
+					//list.add(this);
 				}
 				break;
-			case LAMBDAEXP:
-				this.fol.addAll(follow);
-				left.buildEstados(list, follow);
-				break;
+//			case LAMBDAEXP:
+//				this.fol.addAll(follow);
+//				left.buildEstados(list, follow);
+//				break;
 			case VACIO:
 				if (this.esHoja()) {
 					this.fol.addAll(follow);

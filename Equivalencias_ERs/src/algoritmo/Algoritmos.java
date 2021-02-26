@@ -15,6 +15,7 @@ import automata.AutomataHK;
 import automata.Estado;
 import automata.IdEstado;
 import automata.Transicion;
+import objects.BerrySethiNode;
 import objects.Concat;
 import objects.ExpressionBase;
 import objects.Kleen;
@@ -198,7 +199,11 @@ public class Algoritmos {
 	public static Automata buildBerrySethiAutomata(ArrayList<BerrySethiNode> list, BerrySethiNode root) {
 		int id = 1;
 		Automata aut = new Automata();
-		Estado state = new Estado(0, true, false);
+		Estado state;
+		if (root.getEmpty())
+			state = new Estado(0, true, true);
+		else 
+			state = new Estado(0, true, false);
 		aut.addEstado(state);
 		for (Integer i: root.getFirst()) 
 			state.addTrans(new Transicion(i, list.get(i-1).getSim()));

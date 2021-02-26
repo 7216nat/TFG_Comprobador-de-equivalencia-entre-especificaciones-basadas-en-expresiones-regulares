@@ -81,7 +81,7 @@ public class ParserER {
 				if(er1 instanceof Lambdaa)
 					concat = er2;
 				else if(er2 instanceof Lambdaa)
-						concat = er1;
+					concat = er1;
 				else
 					concat = new Concat(er2, er1);
 				this.pila.push(concat);
@@ -145,7 +145,7 @@ public class ParserER {
 
 				// cierre del kleen a la cima de pila
 				ExpressionBase cPositivo = this.pila.pop();
-				cPositivo = new KleenPos(cPositivo);
+				cPositivo = new Concat(cPositivo, new Kleen(cPositivo));
 				this.pila.push(cPositivo);
 			} else if (prim() == '?') { // cierre positivo
 				next();
@@ -154,7 +154,7 @@ public class ParserER {
 
 				// cierre del kleen a la cima de pila
 				ExpressionBase lamb = this.pila.pop();
-				lamb = new LambdaExp(lamb);
+				lamb = new Union(lamb, new Lambdaa());
 				this.pila.push(lamb);
 			} else if (prim() == '|') { // Union
 				next();
@@ -192,9 +192,9 @@ public class ParserER {
 			} else {
 
 				/**
-				 * comprobar si es simbolo o lambda No está restringido el vacio()
+				 * comprobar si es simbolo o lambda
 				 */
-				ExpressionBase simbolo = FactoryER.parseER("" + prim());
+				Lenguaje simbolo = FactoryER.parseER("" + prim());
 				if (simbolo == null) {
 					System.out.println("Simbolo inválido");
 					System.exit(0);

@@ -24,7 +24,7 @@ public class UnionRangos extends ExpressionBase {
 	 * Clase constructora por defecto
 	 */
 	public UnionRangos() {
-		super(unionRangos, null, Tipo.UNIONRANGOS);
+		super(null, Tipo.UNIONRANGOS);
 	}
 	
 	/**
@@ -32,13 +32,13 @@ public class UnionRangos extends ExpressionBase {
 	 * @param str: string que contiene el rango 
 	 */
 	public UnionRangos(String str) {
-		super(unionRangos, null, Tipo.UNIONRANGOS);
+		super(null, Tipo.UNIONRANGOS);
 		_str = str;
 		_rangos = new ArrayList<RangoCharacter>();
 	}
 	
 	public UnionRangos(ExpressionBase padre , String str) {
-		super(unionRangos, padre, Tipo.UNIONRANGOS);
+		super(padre, Tipo.UNIONRANGOS);
 		_str = str;
 		_rangos = new ArrayList<RangoCharacter>();
 	}
@@ -199,7 +199,7 @@ public class UnionRangos extends ExpressionBase {
 
 	@Override
 	public String toString() {
-		return "[" + _e1.toString() + "]";
+		return "{" + _e1.toString() + "}";
 	}
 
 	@Override
@@ -233,7 +233,7 @@ public class UnionRangos extends ExpressionBase {
 		BerrySethiNode bs = new BerrySethiNode(ll);
 		
 		bs.setEmpty(ll.empty);
-		bs.setSim(_sim);
+		bs.setSim(unionRangos);
 		bs.setTipo(getType());
 		tmp.addAll(ll.first);
 		bs.setFirst(tmp);
@@ -265,5 +265,11 @@ public class UnionRangos extends ExpressionBase {
 	public int hashCode() {
 		return Tipo.SIMB.getValor();
 	}
-	
+
+	@Override
+	public ExpressionBase buildTreeDefinitivo() {
+		// TODO Auto-generated method stub
+		_e1 = _e1.buildTreeDefinitivo();
+		return _e1;
+	}
 }

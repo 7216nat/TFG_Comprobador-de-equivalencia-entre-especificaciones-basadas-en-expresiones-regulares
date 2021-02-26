@@ -18,11 +18,11 @@ public class Kleen extends ExpressionBase {
 	private ExpressionBase _e1;
 
 	public Kleen() {
-		super(Kleen, null, Tipo.KLEEN);
+		super(null, Tipo.KLEEN);
 	}
 
 	public Kleen(ExpressionBase e1) {
-		super(Kleen, null, Tipo.KLEEN);
+		super(null, Tipo.KLEEN);
 		_e1 = e1;		
 		if(_e1 instanceof Kleen) {
 			_e1 = ((Kleen)e1).getExpr();
@@ -31,7 +31,7 @@ public class Kleen extends ExpressionBase {
 	}
 	
 	public Kleen(ExpressionBase padre, ExpressionBase e1) {
-		super(Kleen, padre, Tipo.KLEEN);
+		super(padre, Tipo.KLEEN);
 		_e1 = e1;
 		if(_e1 instanceof Kleen) {
 			_e1 = ((Kleen)e1).getExpr();
@@ -41,7 +41,7 @@ public class Kleen extends ExpressionBase {
 
 	@Override
 	public String toString() {
-		return "[" + _e1.toString() + "]" + _sim;
+		return "[" + _e1.toString() + "]" + Kleen;
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class Kleen extends ExpressionBase {
 		BerrySethiNode bs = new BerrySethiNode(ll);
 		
 		bs.setEmpty(true);
-		bs.setSim(_sim);
+		bs.setSim(Kleen);
 		bs.setTipo(getType());
 		
 		tmp.addAll(ll.first);
@@ -150,6 +150,13 @@ public class Kleen extends ExpressionBase {
 	@Override
 	public boolean eqLambda() {
 		return true;
+	}
+
+	@Override
+	public ExpressionBase buildTreeDefinitivo() {
+		// TODO Auto-generated method stub
+		_e1 = _e1.buildTreeDefinitivo();
+		return this;
 	}
 
 }

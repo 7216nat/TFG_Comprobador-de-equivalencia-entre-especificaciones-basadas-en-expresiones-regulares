@@ -8,22 +8,13 @@ import automata.*;
 
 public abstract class ExpressionBase implements BerrySethi, Thomson {
 	
-	protected String _sim;
 	private Tipo type;
 	private ExpressionBase padre;
 
-	public ExpressionBase(String sim, ExpressionBase padre, Tipo tipo) {
+	public ExpressionBase(ExpressionBase padre, Tipo tipo) {
 		type = tipo;
 		this.padre = padre;
-		_sim = sim;
 	}
-	
-	public String get_sim() {return _sim;}
-	
-	public void set_sim(String sim) { _sim = sim; }
-	
-	@Override
-	public String toString() { return _sim; }
 
 	/**
 	 * devuelve una copia de la clase: funcion de la factoria
@@ -51,6 +42,8 @@ public abstract class ExpressionBase implements BerrySethi, Thomson {
 	}
 	
 	public abstract void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins);
+	
+	public abstract ExpressionBase buildTreeDefinitivo();
 	
 	public Tipo getType() {
 		return this.type;

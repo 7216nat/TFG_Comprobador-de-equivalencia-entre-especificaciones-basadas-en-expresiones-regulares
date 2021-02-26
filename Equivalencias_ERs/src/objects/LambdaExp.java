@@ -7,6 +7,10 @@ import java.util.SortedSet;
 
 import automata.*;
 
+/********************** 
+ * ******EN DESUSO ****
+ * ********************
+ */
 public class LambdaExp extends ExpressionBase {
 	
 	private static final String _regex = "?";
@@ -14,17 +18,17 @@ public class LambdaExp extends ExpressionBase {
 	private ExpressionBase _e1;
 
 	public LambdaExp() {
-		super(lambdaExp, null, Tipo.LAMBDAEXP);
+		super(null, Tipo.LAMBDAEXP);
 	}
 
 	public LambdaExp(ExpressionBase e1) {
-		super(lambdaExp, null, Tipo.LAMBDAEXP);
+		super(null, Tipo.LAMBDAEXP);
 		_e1 = new Union(e1, new Lambdaa());
 		_e1.setPadre(this);
 	}
 	
 	public LambdaExp(ExpressionBase padre, ExpressionBase e1) {
-		super(lambdaExp, padre, Tipo.LAMBDAEXP);
+		super(padre, Tipo.LAMBDAEXP);
 		_e1 = new Union(e1, new Lambdaa());
 		_e1.setPadre(this);
 	}
@@ -64,7 +68,7 @@ public class LambdaExp extends ExpressionBase {
 		BerrySethiNode bs = new BerrySethiNode(ll);
 		
 		bs.setEmpty(true);
-		bs.setSim(_sim);
+		bs.setSim(lambdaExp);
 		bs.setTipo(getType());
 		
 		tmp.addAll(ll.first);
@@ -96,5 +100,12 @@ public class LambdaExp extends ExpressionBase {
 	@Override
 	public boolean eqLambda() {
 		return true;
+	}
+
+	@Override
+	public ExpressionBase buildTreeDefinitivo() {
+		// TODO Auto-generated method stub
+		_e1 = _e1.buildTreeDefinitivo();
+		return _e1;
 	}
 }

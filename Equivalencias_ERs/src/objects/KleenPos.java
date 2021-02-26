@@ -9,6 +9,11 @@ import automata.AutomataTS;
 import automata.Estado;
 import automata.IdEstado;
 
+
+/********************** 
+ * ******EN DESUSO ****
+ * ********************
+ */
 public class KleenPos extends ExpressionBase {
 	
 	private static final String _regex = "+";
@@ -16,30 +21,24 @@ public class KleenPos extends ExpressionBase {
 	private ExpressionBase _e1;
 
 	public KleenPos() {
-		super(KleenPos, null, Tipo.KLEENPOS);
+		super(null, Tipo.KLEENPOS);
 	}
 
 	public KleenPos(ExpressionBase e1) {
-		super(KleenPos, null, Tipo.KLEENPOS);
+		super(null, Tipo.KLEENPOS);
 		_e1 = e1;
-		if(_e1 instanceof Kleen) {
-			_e1 = ((Kleen) _e1).getExpr();
-		}
-		else if(_e1 instanceof KleenPos) {
-			_e1 = ((Kleen) _e1).getExpr();
-		}
 		e1.setPadre(this);
 	}
 	
 	public KleenPos(ExpressionBase padre, ExpressionBase e1) {
-		super(KleenPos, padre, Tipo.KLEENPOS);
+		super(padre, Tipo.KLEENPOS);
 		_e1 = e1;
 		e1.setPadre(this);
 	}
 
 	@Override
 	public String toString() {
-		return "[" + _e1.toString() + "]" + _sim;
+		return "[" + _e1.toString() + "]" + KleenPos;
 	}
 
 	@Override
@@ -90,7 +89,7 @@ public class KleenPos extends ExpressionBase {
 		BerrySethiNode bs = new BerrySethiNode(ll);
 		
 		bs.setEmpty(false);
-		bs.setSim(_sim);
+		bs.setSim(KleenPos);
 		bs.setTipo(getType());
 		
 		tmp.addAll(ll.first);
@@ -117,6 +116,13 @@ public class KleenPos extends ExpressionBase {
 	     }
 	     KleenPos t = (KleenPos) o;
 	     return t._e1.equals(this._e1);
+	}
+
+	@Override
+	public ExpressionBase buildTreeDefinitivo() {
+		// TODO Auto-generated method stub
+		_e1 = _e1.buildTreeDefinitivo();
+		return new Concat(_e1, new Kleen(_e1));
 	}
 
 }

@@ -12,9 +12,9 @@ import automata.IdEstado;
 /**
  * Clase hoja
  */
-public class RangoCharacter extends ExpressionBase implements Comparable<RangoCharacter> {
+public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacter> {
 	
-	private static final String _regex = "\\w";
+	private static final String _regex = "[\\w-\\w]";
 	
 	private char _ini;
 	private char _fin;
@@ -239,4 +239,5 @@ public class RangoCharacter extends ExpressionBase implements Comparable<RangoCh
 	public int hashCode() {
 		return Tipo.SIMB.getValor();
 	}
+
 }

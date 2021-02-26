@@ -4,7 +4,7 @@ import objects.*;
 
 public class FactoryER {
 	
-	private static ExpressionBase[] availableERs = {
+	private static Lenguaje[] availableERs = {
 			new Simbolo(),
 			new Vacio(),
 			new Lambdaa()
@@ -15,10 +15,10 @@ public class FactoryER {
 	 * @param er
 	 * @return
 	 */
-	public static ExpressionBase parseER(String er) {
-		ExpressionBase _er = null;
-		for (ExpressionBase eb: availableERs) {
-			_er = (ExpressionBase) eb.parse(er);
+	public static Lenguaje parseER(String er) {
+		Lenguaje _er = null;
+		for (Lenguaje eb: availableERs) {
+			_er = (Lenguaje) eb.parse(er);
 			if (_er != null) {
 				break;
 			}
