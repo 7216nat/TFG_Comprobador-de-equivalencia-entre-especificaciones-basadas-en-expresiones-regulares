@@ -25,8 +25,8 @@ public class main {
 		***LOS RANGOS SON DEL TIPO [a-bk-lxksa]*** 
 		******************************************/
 		//Estos son equivalentes
-//		String str = "a|(b|c)";
-//		String str2 = "(a|b)|c";
+		String str = "a|(b|c)";
+		String str2 = "(a|b)|c";
 //		String str = "a|b";
 //		String str2 = "b|a";
 //		String str = "a|%";
@@ -74,6 +74,23 @@ public class main {
 //		String str = "b*";
 //		String str2 = "b*|&";
 		
+		//Ejercicios FLI
+//		String str = "(0|1)*";
+//		String str2= "0*|1*";
+//		String str = "0(120)*12";
+//		String str2= "01(201)*2";
+//		String str = "(0*1*)*";
+//		String str2= "(0*1)*";
+//		String str = "(01|0)*0";
+//		String str2= "0(10|0)*";
+//		String str = "(a|b)*";
+//		String str2= "a*(ba*)*";
+//		String str = "b*a*|a*b*";
+//		String str2= "a*|b*";
+//		String str = "(cb*c|cb*b)*";
+//		String str2= "(cc)*|(cc)*(cb)(b|c)*";
+		
+		
 		//String str = "(cb*c|cb*b)*";
 		//String str2 = "(cc)*|(cc)*(cb)(b|c)*";
 		//String str = "[a-cde-tx]*";
@@ -113,12 +130,12 @@ public class main {
 		System.out.println("PRUEBA THOMPSON");
 		//Automata aut = (Automata)er.ThomsonAFN(state);
 		Automata aut = (Automata)er.ThomsonSimplAFN(state);
-		System.out.println(er.toString());
-		aut.show();
+//		System.out.println(er.toString());
+		//aut.show();
 		//Automata aut2 = (Automata)er2.ThomsonAFN(state);
 		Automata aut2 = (Automata)er2.ThomsonSimplAFN(state);
-		System.out.println(er2.toString());
-		aut2.show();
+//		System.out.println(er2.toString());
+		//aut2.show();
 		
 		ArrayList<String> simb = new ArrayList<String>();
 		Iterator<String> it = simbolosSet.iterator();
@@ -127,7 +144,7 @@ public class main {
 			simb.add(c);
 		}
 		
-		System.out.println(simb.toString());
+//		System.out.println(simb.toString());
 		String resul = Algoritmos.detHopKarp(aut, aut2, state, simb);
 		System.out.println(resul);
 		//*/
@@ -156,13 +173,6 @@ public class main {
 		bsn.buildEstados(states, new HashSet<Integer>());
 		Automata aut4 = Algoritmos.buildBerrySethiAutomata(states, bsn);
 		//aut4.show();
-		
-//		ArrayList<String> simb = new ArrayList<String>();
-//		Iterator<String> it = simbolosSet.iterator();
-//		while(it.hasNext()) {
-//			String c = it.next();
-//			simb.add(c);
-//		}
 		
 		//System.out.println(simb.toString());
 		String resulBS = Algoritmos.detHopKarp(aut3, aut4, state, simb);

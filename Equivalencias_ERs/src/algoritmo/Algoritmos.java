@@ -571,10 +571,8 @@ public class Algoritmos {
 			ExpressionBase t1 = derivada(exAux.getExpr1(), sim);
 			ExpressionBase t2 = derivada(exAux.getExpr2(), sim);
 
-			if (!(t1 instanceof Vacio))
-				ret.add(t1);
-			else if (!(t2 instanceof Vacio))
-				ret.add(t2);
+			ret.add(t1);
+			ret.add(t2);
 
 			return ret;
 		}
