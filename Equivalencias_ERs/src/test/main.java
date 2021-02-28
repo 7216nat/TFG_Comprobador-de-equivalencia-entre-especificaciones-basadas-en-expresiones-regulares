@@ -24,6 +24,55 @@ public class main {
 		/*****************************************
 		***LOS RANGOS SON DEL TIPO [a-bk-lxksa]*** 
 		******************************************/
+		//Estos son equivalentes
+//		String str = "a|(b|c)";
+//		String str2 = "(a|b)|c";
+//		String str = "a|b";
+//		String str2 = "b|a";
+//		String str = "a|%";
+//		String str2 = "%|a";
+//		String str = "a|a";
+//		String str2 = "a";
+//		String str = "a(bc)";
+//		String str2 = "(ab)c";
+//		String str = "&a";
+//		String str2 = "a";
+//		String str = "&a";
+//		String str2 = "a&";
+//		String str = "a(b|c)";
+//		String str2 = "ab|ac";
+//		String str = "(a|b)c";
+//		String str2 = "ac|bc";
+//		String str = "%";
+//		String str2 = "%a";
+//		String str = "a%";
+//		String str2 = "%a";
+//		String str = "&|aa*";
+//		String str2 = "a*";
+//		String str = "&|a*a";
+//		String str2 = "a*";
+//		String str = "(ab)*a";
+//		String str2 = "a(ba)*";
+//		String str = "(a*b)*a*";
+//		String str2 = "(a|b)*";
+//		String str = "a*(ba*)*";
+//		String str2 = "(a|b)*";
+//		String str = "(&|a)*";
+//		String str2 = "a*";
+//		String str = "aa*";
+//		String str2 = "a*a";
+//		String str = "%*";
+//		String str2 = "&";
+//		String str = "(a*)*";
+//		String str2 = "a*";
+//		String str = "&*";
+//		String str2 = "&";
+//		String str = "(a*b*)*";
+//		String str2 = "(a|b)*";
+//		String str = "(ab|a)*a";
+//		String str2 = "a(ba|a)*";
+//		String str = "b*";
+//		String str2 = "b*|&";
 		
 		//String str = "(cb*c|cb*b)*";
 		//String str2 = "(cc)*|(cc)*(cb)(b|c)*";
@@ -33,8 +82,6 @@ public class main {
 		//String str2 = "a|b|[c-h]";
 		//String str = "%|gh";
 		//String str2 = "%abc|gh";
-		String str = "a|b";
-		String str2 = "[a-b]";
 	
 		// variables globales en dos expresiones
 		IdEstado state = new IdEstado();
@@ -63,6 +110,7 @@ public class main {
 		er = er.buildTreeDefinitivo();
 		er2 = er2.buildTreeDefinitivo();
 		
+		System.out.println("PRUEBA THOMPSON");
 		//Automata aut = (Automata)er.ThomsonAFN(state);
 		Automata aut = (Automata)er.ThomsonSimplAFN(state);
 		System.out.println(er.toString());
@@ -85,10 +133,40 @@ public class main {
 		//*/
 
 		System.out.println("PRUEBAS DERIVADAS");
-		String p = Algoritmos.derivadasHK(er, er2, state, simb);
-		System.out.println(p);
+		String d = Algoritmos.equivalenciaDer(er, er2, state, simb);
+		System.out.println(d);
 		
+		System.out.println("PRUEBAS DERIVADAS PARCIALES");
+		String dp = Algoritmos.equivalenciaDerPar(er, er2, state, simb);
+		System.out.println(dp);
 		
+		System.out.println("PRUEBAS BERRY-SETHI");
+		state = new IdEstado();
+		state.nextId();
+		BerrySethiNode bsn = er.createBerrySethiNode(state);
+		ArrayList<BerrySethiNode> states = new ArrayList<BerrySethiNode>();
+		bsn.buildEstados(states, new HashSet<Integer>());
+		Automata aut3 = Algoritmos.buildBerrySethiAutomata(states, bsn);
+		//aut3.show();
+		
+		state = new IdEstado();
+		state.nextId();
+		bsn = er2.createBerrySethiNode(state);
+		states = new ArrayList<BerrySethiNode>();
+		bsn.buildEstados(states, new HashSet<Integer>());
+		Automata aut4 = Algoritmos.buildBerrySethiAutomata(states, bsn);
+		//aut4.show();
+		
+//		ArrayList<String> simb = new ArrayList<String>();
+//		Iterator<String> it = simbolosSet.iterator();
+//		while(it.hasNext()) {
+//			String c = it.next();
+//			simb.add(c);
+//		}
+		
+		//System.out.println(simb.toString());
+		String resulBS = Algoritmos.detHopKarp(aut3, aut4, state, simb);
+		System.out.println(resulBS);
 		
 		//Comprobar lambda-cierre:
 		/*Automata at1 = new Automata();

@@ -22,10 +22,6 @@ public class EstadoHK extends Estado {
 		equiv.add(id);
 		this.ex = _ex;
 	}
-	
-	public boolean sameHKDet(EstadoHK es) {
-		return (equiv.containsAll(es.equiv) && es.equiv.containsAll(this.equiv));
-	}
 
 	public void unirIgualA(EstadoHK es2) {
 		this.equiv.addAll(es2.equiv);

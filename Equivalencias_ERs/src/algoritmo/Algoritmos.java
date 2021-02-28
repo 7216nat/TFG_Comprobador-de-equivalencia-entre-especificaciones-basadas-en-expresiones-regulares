@@ -44,10 +44,9 @@ public class Algoritmos {
 		Automata afd2 = new Automata();
 
 		// Creo el primer estado del autómata
-		EstadoTh iniAFD1 = at1.lambdaCierre(inicial, idst.getId());
+		EstadoTh iniAFD1 = at1.lambdaCierre(inicial, idst.nextId());
 		if (inicial.esFin())
 			iniAFD1.cambioFin(true);
-		idst.nextId();
 		EstadoTh iniAFD2 = at2.lambdaCierre(inicial2, idst.getId());
 		if (inicial2.esFin())
 			iniAFD2.cambioFin(true);
@@ -123,14 +122,21 @@ public class Algoritmos {
 
 		return "Equivalentes";
 	}
-
+/**
+ * 
+ * @param viejo: identificador del estado a expandir
+ * @param afd: automata determinista
+ * @param simb: simbolo con el que se explora
+ * @param idst
+ * @param at: afnd
+ * @param aExplorar: nodos que quedan sin explorar
+ */
 	private static void determinarEstado(int viejo, Automata afd, String simb, IdEstado idst, Automata at,
 			HashMap<Integer, EstadoTh> aExplorar) {
 
-		EstadoTh nuevoEstado = new EstadoTh(idst.getId());
-		idst.nextId();
+		EstadoTh nuevoEstado = new EstadoTh(idst.nextId());
 
-		// Para el cada uno de los estados a comparar, saco su trozo del AFD
+		// Para cada uno de los estados a comparar, saco su trozo del AFD
 		EstadoTh estado = (EstadoTh) afd.getEstado(viejo);
 		Iterator<Integer> eqIt = estado.getEq().iterator();
 		while (eqIt.hasNext()) {
@@ -176,42 +182,44 @@ public class Algoritmos {
 	/*********************************
 	 * algoritmo de seguidores
 	 **********************/
-
-//	public static void lambdaCierre(Automata aut) {
-//		Set<Estado> afd = new HashSet<Estado>();
-//		Stack<Estado> aExplorar = new Stack<Estado>();
-//		afd.add(aut.getIni());
-//		aExplorar.add(aut.getIni());
-//		
-//		Estado tmp;
-//		while(!aExplorar.empty()) {
-//			tmp = aExplorar.pop();
-//			
-//			
-//		}
-//		
-//	}
-	
-	/********************************* algoritmo de berrysethi **********************/
+/**
+	public static void lambdaCierre(Automata aut) {
+		Set<Estado> afd = new HashSet<Estado>();
+		Stack<Estado> aExplorar = new Stack<Estado>();
+		afd.add(aut.getIni());
+		aExplorar.add(aut.getIni());
+		
+		Estado tmp;
+		while(!aExplorar.empty()) {
+			tmp = aExplorar.pop();
+			
+			
+		}
+		
+	}
+*/
+	/*********************************
+	 * algoritmo de berrysethi
+	 **********************/
 	public static Automata buildBerrySethiAutomata(ArrayList<BerrySethiNode> list, BerrySethiNode root) {
 		int id = 1;
 		Automata aut = new Automata();
 		Estado state;
 		if (root.getEmpty())
 			state = new Estado(0, true, true);
-		else 
+		else
 			state = new Estado(0, true, false);
 		aut.addEstado(state);
-		for (Integer i: root.getFirst()) 
-			state.addTrans(new Transicion(i, list.get(i-1).getSim()));
-		for (BerrySethiNode bsn: list) {
+		for (Integer i : root.getFirst())
+			state.addTrans(new Transicion(i, list.get(i - 1).getSim()));
+		for (BerrySethiNode bsn : list) {
 			if (root.getLast().contains(id))
 				state = new Estado(id, false, true);
-			else 
+			else
 				state = new Estado(id);
 			aut.addEstado(state);
-			for (Integer i: bsn.getFollow())
-				state.addTrans(new Transicion(i, list.get(i-1).getSim()));
+			for (Integer i : bsn.getFollow())
+				state.addTrans(new Transicion(i, list.get(i - 1).getSim()));
 			id++;
 		}
 		return aut;
@@ -220,15 +228,10 @@ public class Algoritmos {
 	/***************************
 	 * algoritmo de las derivadas
 	 ***************************/
-	public static String derivadasHK(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, ArrayList<String> simb) {
+	public static String equivalenciaDer(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, ArrayList<String> simb) {
 		// Quita el símbolo & de la lista de símbolos
-		Iterator<String> col = simb.iterator();
-		while (col.hasNext()) {
-			String comp = col.next();
-			if (comp == "&") {
-				col.remove();
-			}
-		}
+		quitarLambda(simb);
+
 
 		AutomataHK afd1 = new AutomataHK();
 		AutomataHK afd2 = new AutomataHK();
@@ -329,24 +332,10 @@ public class Algoritmos {
 		} else if (tipo == Tipo.LAMBDA)
 			return new Vacio();
 		else if ((tipo == Tipo.SIMB) || (tipo == Tipo.RANGO)) {
-			if(((Lenguaje)ex).esSimb(sim))
-					return new Lambdaa();
+			if (((Lenguaje) ex).esSimb(sim))
+				return new Lambdaa();
 			else
 				return new Vacio();
-			
-			/*if (tipo == Tipo.SIMB) {
-				if (((Simbolo) ex).contiene(sim))
-					return new Lambdaa();
-				else
-					return new Vacio();
-			}
-			else {
-				if (((UnionRangos) ex).contiene(sim))
-					return new Lambdaa();
-				else
-					return new Vacio();
-				
-			}*/
 
 		}
 		// Casos recursivos
@@ -363,28 +352,19 @@ public class Algoritmos {
 				newEx = t1;
 			else
 				newEx = new Concat(t1, t2);
-			/*
-			 * try { newEx = new Concat(t1, exAux.getExpr2()); } catch (VacioException e) {
-			 * newEx = new Vacio(); } catch (LambdaException e) { if (t1.getType() ==
-			 * Tipo.LAMBDA) newEx = exAux.getExpr2(); else newEx = t1; }
-			 */
+
 			if (exAux.getExpr1().eqLambda()) {
 				t2 = derivada(exAux.getExpr2(), sim);
 				if (!(t2 instanceof Vacio) && !(newEx instanceof Vacio)) {
-					if(!newEx.equals(t2)) 
-						if(newEx.menorQue(t2))
+					if (!newEx.equals(t2))
+						if (newEx.menorQue(t2))
 							newEx = new Union(newEx, t2);
 						else
 							newEx = new Union(t2, newEx);
-				}
-				else if(t1 instanceof Vacio && !(t2 instanceof Vacio)){
+				} else if (t1 instanceof Vacio && !(t2 instanceof Vacio)) {
 					newEx = t2;
 				}
-				/*
-				 * try { newEx = new Union(newEx, derivada(exAux.getExpr2(), sim)); } catch
-				 * (VacioException e) { if (newEx.getType() == Tipo.VACIO) newEx = new Vacio();
-				 * }
-				 */
+
 			}
 			return newEx;
 		}
@@ -400,23 +380,15 @@ public class Algoritmos {
 			else if (t2 instanceof Vacio)
 				newEx = t1;
 			else {
-				if(!t1.equals(t2))
-					if(t1.menorQue(t2))
+				if (!t1.equals(t2))
+					if (t1.menorQue(t2))
 						newEx = new Union(t1, t2);
 					else
 						newEx = new Union(t2, t1);
 				else
 					newEx = t1;
 			}
-			/*
-			 * try { newEx = new Union(derivada(exAux.getExpr1(), sim),
-			 * derivada(exAux.getExpr2(), sim)); } catch (VacioException e) { if
-			 * (derivada(exAux.getExpr1(), sim).getType() == Tipo.VACIO) newEx =
-			 * derivada(exAux.getExpr2(), sim); else newEx = derivada(exAux.getExpr1(),
-			 * sim);
-			 * 
-			 * }
-			 */
+
 			return newEx;
 		}
 
@@ -446,4 +418,217 @@ public class Algoritmos {
 		return null;
 	}
 
+	public static String equivalenciaDerPar(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, ArrayList<String> simb) {
+		//Quitar vacíos de la lista
+		quitarLambda(simb);
+		
+		AutomataHK afd1 = new AutomataHK();
+		AutomataHK afd2 = new AutomataHK();
+		
+		EstadoHKSubconj s1;
+		HashSet<ExpressionBase> e1 = new HashSet<ExpressionBase>();
+		e1.add(ex1);
+		if(ex1.eqLambda())
+			s1 = new EstadoHKSubconj(idst.nextId(), e1, true, true);
+		else
+			s1 = new EstadoHKSubconj(idst.nextId(), e1, true, false);
+		afd1.addEstado(s1);
+		
+		EstadoHKSubconj s2;
+		HashSet<ExpressionBase> e2 = new HashSet<ExpressionBase>();
+		e2.add(ex2);
+		if(ex2.eqLambda())
+			s2 = new EstadoHKSubconj(idst.nextId(), e2, true, true);
+		else
+			s2 = new EstadoHKSubconj(idst.nextId(), e2, true, false);
+		afd2.addEstado(s2);
+		
+		Queue<SimEsEs> aComparar = new LinkedList<SimEsEs>();
+		
+		if(afd1.getIni().esFin() && !afd2.getIni().esFin())
+			return ("&, final aut1, no final aut2");
+		else if (!afd1.getIni().esFin() && afd2.getIni().esFin())
+			return ("&, no final aut1, final aut2");
+
+		aComparar.add(new SimEsEs(afd1.getIni().getId(), afd2.getIni().getId(), ""));
+		
+		HashMap<HashSet<ExpressionBase>, EstadoHKSubconj> set1 = new HashMap<HashSet<ExpressionBase>, EstadoHKSubconj>();
+		HashMap<HashSet<ExpressionBase>, EstadoHKSubconj> set2 = new HashMap<HashSet<ExpressionBase>, EstadoHKSubconj>();
+		HashSet<ExpressionBase> aux1 = new HashSet<ExpressionBase>();
+		aux1.add(ex1);
+		set1.put(aux1, s1);
+		HashSet<ExpressionBase> aux2 = new HashSet<ExpressionBase>();
+		aux2.add(ex2);
+		set2.put(aux2, s2);
+		
+		while(!aComparar.isEmpty()) {
+			SimEsEs nodo = aComparar.poll();
+			Iterator<String> itSimb = simb.iterator();
+			
+			while(itSimb.hasNext()){
+				String s = itSimb.next();
+				
+				EstadoHKSubconj es1 = (EstadoHKSubconj) afd1.getEstado(nodo.getEstado1());
+				HashSet<ExpressionBase> base1 = multiplesDerPar(es1.getExp(), s);
+				EstadoHKSubconj estadoNuevo1 = new EstadoHKSubconj(idst.nextId(), base1, false, false);
+				if(estadoNuevo1.eqLambda())
+					estadoNuevo1.cambioFin(true);
+				if(!set1.containsKey(base1)) {
+					set1.put(base1,  estadoNuevo1);
+					afd1.addEstado(estadoNuevo1);
+				}
+				else
+					estadoNuevo1 = set1.get(base1);
+				Transicion tr = new Transicion(estadoNuevo1.getId(), s);
+				es1.addTrans(tr);
+				
+				EstadoHKSubconj es2 = (EstadoHKSubconj) afd2.getEstado(nodo.getEstado2());
+				HashSet<ExpressionBase> base2 = multiplesDerPar(es2.getExp(), s);
+				EstadoHKSubconj estadoNuevo2 = new EstadoHKSubconj(idst.nextId(), base2, false, false);
+				if(estadoNuevo2.eqLambda())
+					estadoNuevo2.cambioFin(true);
+				if(!set2.containsKey(base2)) {
+					set2.put(base2,  estadoNuevo2);
+					afd2.addEstado(estadoNuevo2);
+				}
+				else
+					estadoNuevo2 = set2.get(base2);
+				Transicion tr2= new Transicion(estadoNuevo2.getId(), s);
+				es2.addTrans(tr2);
+				
+				if (estadoNuevo1.esFin() && !estadoNuevo2.esFin())
+					return (nodo.getSimbolos() + s + ", final aut1, no final aut2");
+				if (!estadoNuevo1.esFin() && estadoNuevo2.esFin())
+					return (nodo.getSimbolos() + s + ", no final aut1, final aut2");
+
+				if (!estadoNuevo1.same(estadoNuevo2)) {
+					SimEsEs c = new SimEsEs(estadoNuevo1.getId(), estadoNuevo2.getId(), nodo.getSimbolos() + s);
+					aComparar.add(c);
+					estadoNuevo1.unirIgualA(estadoNuevo2);
+				}
+				
+				
+			}
+			
+			
+		}
+		
+		return "Equivalentes";
+	}
+	
+	private static HashSet<ExpressionBase> multiplesDerPar(HashSet<ExpressionBase> cEx, String sim){
+		Iterator<ExpressionBase> it = cEx.iterator();
+		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		while(it.hasNext()) {
+			ret.addAll(derivadaParcial(it.next(), sim));
+		}
+		return ret;
+	}
+	
+	private static HashSet<ExpressionBase> derivadaParcial(ExpressionBase ex, String sim) {
+		Tipo tipo = (Tipo) ex.getType();
+		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		// Casos base
+		if (tipo == Tipo.VACIO) {
+			ret.add(new Vacio());
+			return ret;
+		} else if (tipo == Tipo.LAMBDA) {
+			ret.add(new Vacio());
+			return ret;
+		} else if ((tipo == Tipo.SIMB) || (tipo == Tipo.RANGO)) {
+			if (((Lenguaje) ex).esSimb(sim))
+				ret.add(new Lambdaa());
+			else
+				ret.add(new Vacio());
+			return ret;
+		}
+		// Casos recursivos
+		else if (tipo == Tipo.CONCAT) {
+			Concat exAux = (Concat) ex;
+			ExpressionBase newEx;
+			ExpressionBase t1 = derivada(exAux.getExpr1(), sim);
+			ExpressionBase t2 = exAux.getExpr2();
+			if (t1 instanceof Vacio || t2 instanceof Vacio) {
+				newEx = new Vacio();
+			} else if (t1 instanceof Lambdaa)
+				newEx = t2;
+			else if (t2 instanceof Lambdaa)
+				newEx = t1;
+			else
+				newEx = new Concat(t1, t2);
+			ret.add(newEx);
+			if (exAux.getExpr1().eqLambda()) {
+				t2 = derivada(exAux.getExpr2(), sim);
+				ret.add(t2);
+
+			}
+			return ret;
+		}
+
+		else if (tipo == Tipo.UNION) {
+			Union exAux = (Union) ex;
+			ExpressionBase newEx;
+			ExpressionBase t1 = derivada(exAux.getExpr1(), sim);
+			ExpressionBase t2 = derivada(exAux.getExpr2(), sim);
+
+			if (!(t1 instanceof Vacio))
+				ret.add(t1);
+			else if (!(t2 instanceof Vacio))
+				ret.add(t2);
+
+			return ret;
+		}
+
+		else if (tipo == Tipo.KLEEN) {
+			Kleen exAux = (Kleen) ex;
+			ExpressionBase newEx = null;
+			ExpressionBase t1 = derivada(exAux.getExpr(), sim);
+			if (t1 instanceof Vacio)
+				newEx = new Vacio();
+			else if (t1 instanceof Lambdaa)
+				newEx = ex;
+			else if (ex instanceof Lambdaa)
+				newEx = t1;
+
+			else
+				newEx = new Concat(t1, exAux);
+			ret.add(newEx);
+			return ret;
+
+		}
+
+		return null;
+	}
+
+	private static void quitarLambda(ArrayList<String> simb) {
+		Iterator<String> col = simb.iterator();
+		while (col.hasNext()) {
+			String comp = col.next();
+			if (comp == "&") {
+				col.remove();
+				return;
+			}
+		}
+	}
+/*
+	private void expandirEstadoDerPar(Automata at, int id, ArrayList<String> simb, IdEstado idst,
+			ExpressionBase ex, HashSet<ExpressionBase> existeAfn) {
+		Iterator<String> sIt = simb.iterator();
+		while(sIt.hasNext()) {
+			String s = sIt.next();
+			HashSet<ExpressionBase> nuevos = derivadaParcial(ex, s);
+			
+			Iterator<ExpressionBase> nuevosIterator = nuevos.iterator();
+			while(nuevosIterator.hasNext()) {
+				ExpressionBase n = nuevosIterator.next();
+				if(nuevos.contains(n)) {
+					
+				}
+				
+			}
+			
+			
+		}
+		
+	}*/
 }
