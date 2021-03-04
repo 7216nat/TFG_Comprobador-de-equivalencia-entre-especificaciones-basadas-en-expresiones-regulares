@@ -97,10 +97,6 @@ public class Kleen extends ExpressionBase {
 			a1.unirSinEliminar(e, ini);
 		}
 		
-		// añado una lambda-transicion de estado inicial a los estados finales
-		for (Estado e : a1.getFin()) {
-			a1.addTransicion(ini.getId(), e.getId(), "&");
-		}
 		// Convierto estado inicial a estado final
 		a1.IniFinalEs(true);
 		return a1;

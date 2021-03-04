@@ -347,20 +347,26 @@ public class Automata {
 			// Si el estado se lo ha atragado otro, ni lo miro
 			if (!tragados.contains(dato.getKey())) {
 				estados.add(dato.getValue());
+				Estado ini = dato.getValue();
+				Set<Integer> visitados = new HashSet<Integer>();
 				while (!estados.isEmpty()) {
 					// Recorro las transiciones buscando vacías
 					Estado est = estados.poll();
-					transiciones = est.getTrans();
+					transiciones = new HashSet<Transicion>();
+					transiciones.addAll(est.getTrans());
 					Iterator<Transicion> it = transiciones.iterator();
 					while (it.hasNext()) {
 						tr = it.next();
 						// Si es transicion vacia
 						if (tr.getSymb().equals("&")) {
 							Estado es2 = aut.get(tr.getEstadoDest());
-							est.unir(es2.getTrans());
+							ini.unir(es2.getTrans());
 							if(es2.esFin())
-								est.cambioFin(true);
-							estados.add(es2);
+								ini.cambioFin(true);
+							if (!visitados.contains(es2.getId())) {
+								estados.add(es2);
+								visitados.add(es2.getId());
+							}
 							tragados.add(es2.getId());
 						}
 					}

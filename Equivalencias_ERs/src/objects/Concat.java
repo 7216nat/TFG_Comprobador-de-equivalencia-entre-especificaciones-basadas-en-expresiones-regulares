@@ -95,11 +95,8 @@ public class Concat extends ExpressionBase {
 		// si a2.estado inicial no es final, se elimina la lista de estado finales
 		if (!iniPrev.esFin()) {
 			a1.quitarTodosFin();
+			a1.finClear();
 		}
-		
-		// estado inicial deja de ser final, y borrar los estados finales anteriories
-		a1.IniFinalEs(false);
-		a1.finClear();
 		
 		a1.copyFinals(a2);
 		a1.eliminarEstado(iniPrev.getId());

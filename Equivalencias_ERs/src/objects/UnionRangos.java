@@ -24,7 +24,7 @@ public class UnionRangos extends ExpressionBase {
 	 * Clase constructora por defecto
 	 */
 	public UnionRangos() {
-		super(null, Tipo.UNIONRANGOS);
+		this(null);
 	}
 	
 	/**

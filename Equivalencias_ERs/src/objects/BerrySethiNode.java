@@ -113,20 +113,20 @@ public class BerrySethiNode {
 //				left.buildEstados(list, follow);
 //				break;
 			case LAMBDA:
-				if (this.esHoja()) {
-					this.fol.addAll(follow);
-					//list.add(this);
-				}
+//				if (this.esHoja()) {
+//					this.fol.addAll(follow);
+//					//list.add(this);
+//				}
 				break;
 //			case LAMBDAEXP:
 //				this.fol.addAll(follow);
 //				left.buildEstados(list, follow);
 //				break;
 			case VACIO:
-				if (this.esHoja()) {
-					this.fol.addAll(follow);
-					list.add(this);
-				}
+//				if (this.esHoja()) {
+//					this.fol.addAll(follow);
+//					list.add(this);
+//				}
 				break;
 			default:
 				break;

@@ -38,6 +38,10 @@ public class AutomataTS extends Automata {
 	 */
 	public void IniFinalEs(boolean es) {
 		_ini.cambioFin(es);
+		if (es)
+			_acept.add(_ini);
+		else 
+			_acept.remove(_ini);
 	}
 
 	/**

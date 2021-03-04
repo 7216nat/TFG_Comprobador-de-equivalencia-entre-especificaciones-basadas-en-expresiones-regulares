@@ -46,29 +46,23 @@ public class Lambdaa extends Lenguaje {
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		// TODO Auto-generated method stub
-		int ini = id.nextId(), acept = id.nextId();
-		AutomataTS aut = new AutomataTS(ini, acept);
-		aut.addTransicion(ini, acept, _sim);
+		int ini = id.nextId();
+		AutomataTS aut = new AutomataTS(ini, ini);
 		return aut;
 	}
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
 		// TODO Auto-generated method stub
-		HashSet<Integer> tmp = new HashSet<Integer>();
 		BerrySethiNode bs = new BerrySethiNode();
 		
 		bs.setEmpty(true);
 		bs.setSim(_sim);
 		bs.setTipo(getType());
 		
-//		int iD = id.nextId(); 
-//		tmp.add(iD);
-		bs.setFirst(tmp);
+		bs.setFirst(new HashSet<Integer>());
 		
-		tmp = new HashSet<Integer>();
-//		tmp.add(iD);
-		bs.setLast(tmp);
+		bs.setLast(new HashSet<Integer>());
 		
 		return bs;
 	}
@@ -76,7 +70,7 @@ public class Lambdaa extends Lenguaje {
 	@Override
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
 		// TODO Auto-generated method stub
-		set.add(lambda);
+		return;
 	}
 	
 	@Override

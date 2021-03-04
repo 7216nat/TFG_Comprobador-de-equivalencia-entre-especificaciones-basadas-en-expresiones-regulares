@@ -160,6 +160,13 @@ public class main {
 			String resul = Algoritmos.detHopKarp(aut, aut2, state, simb);
 			System.out.println(resul);
 			// */
+			
+			System.out.println("PRUEBA THOMPSON");
+			Automata aut5 = (Automata) er.ThomsonSimplAFN(state);
+			Automata aut6 = (Automata) er2.ThomsonSimplAFN(state);
+
+			String resul2 = Algoritmos.detHopKarpSinLambda(aut5, aut6, state, simb);
+			System.out.println(resul2);
 
 			System.out.println("PRUEBAS DERIVADAS");
 			String d = Algoritmos.equivalenciaDer(er, er2, state, simb);
@@ -171,7 +178,6 @@ public class main {
 
 			System.out.println("PRUEBAS BERRY-SETHI");
 			state = new IdEstado();
-			state.nextId();
 			BerrySethiNode bsn = er.createBerrySethiNode(state);
 			ArrayList<BerrySethiNode> states = new ArrayList<BerrySethiNode>();
 			bsn.buildEstados(states, new HashSet<Integer>());
@@ -179,7 +185,6 @@ public class main {
 			// aut3.show();
 
 			state = new IdEstado();
-			state.nextId();
 			bsn = er2.createBerrySethiNode(state);
 			states = new ArrayList<BerrySethiNode>();
 			bsn.buildEstados(states, new HashSet<Integer>());

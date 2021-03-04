@@ -7,6 +7,11 @@ import automata.Estado;
 public class EstadoTh extends Estado{
 	private HashSet<Integer> equiv;
 	private HashSet<Integer> igualA;
+	
+	public EstadoTh(int id, Estado e) {
+		super(e);
+			
+	}
 	public EstadoTh(int id) {
 		super(id);
 		this.equiv = new HashSet<Integer>();

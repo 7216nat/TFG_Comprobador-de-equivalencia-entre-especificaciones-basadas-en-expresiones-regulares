@@ -18,7 +18,18 @@ public class Estado {
 		fin = false;
 		trans = new HashSet<Transicion>();
 	}
-
+	
+	/**
+	 * Constructora copia
+	 */
+	public Estado(Estado e) {
+		id = e.id;
+		inicial = e.inicial;
+		fin = e.fin;
+		trans = new HashSet<Transicion>();
+		trans.addAll(e.trans);
+	}
+	
 	/**
 	 * Constructora si el estado es inicial y/o final
 	 */

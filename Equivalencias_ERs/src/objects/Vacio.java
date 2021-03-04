@@ -53,20 +53,15 @@ public class Vacio extends Lenguaje {
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
 		// TODO Auto-generated method stub
-		HashSet<Integer> tmp = new HashSet<Integer>();
 		BerrySethiNode bs = new BerrySethiNode();
 		
 		bs.setEmpty(false);
 		bs.setSim(_sim);
 		bs.setTipo(getType());
 		
-		int iD = id.nextId(); 
-		tmp.add(iD);
-		bs.setFirst(tmp);
+		bs.setFirst(new HashSet<Integer>());
 		
-		tmp = new HashSet<Integer>();
-		tmp.add(iD);
-		bs.setLast(tmp);
+		bs.setLast(new HashSet<Integer>());
 		
 		return bs;
 	}
@@ -75,7 +70,7 @@ public class Vacio extends Lenguaje {
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> sort,
 			SortedSet<Character> sortRango) {
 		// TODO Auto-generated method stub
-		set.add(_sim);
+		return;
 	}
 	
 	@Override
