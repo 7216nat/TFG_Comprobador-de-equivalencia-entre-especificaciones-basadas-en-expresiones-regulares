@@ -119,4 +119,19 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 		return this._sim;
 	}
 	
+	@Override
+	public ExpressionBase derivada(String sim) {
+		if(sim.equals(this._sim))
+			return new Lambdaa();
+		else
+			return new Vacio();
+	}
+	@Override
+	public HashSet<ExpressionBase> derivadaParcial(String sim) {
+		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		if(this._sim.equals(sim))
+				ret.add(new Lambdaa());
+		else ret.add(new Vacio());
+		return ret;
+	}
 }

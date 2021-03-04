@@ -280,7 +280,7 @@ public class Algoritmos {
 				String s = itSimb.next();
 
 				EstadoHK es1 = (EstadoHK) afd1.getEstado(nodo.getEstado1());
-				ExpressionBase base1 = derivada(es1.getExp(), s);
+				ExpressionBase base1 = es1.getExp().derivada(s);
 				EstadoHK estadonuevo1 = new EstadoHK(idst.nextId(), base1, false, false);
 				if (base1.eqLambda())
 					estadonuevo1.cambioFin(true);
@@ -294,7 +294,7 @@ public class Algoritmos {
 				es1.addTrans(tr);
 
 				EstadoHK es2 = (EstadoHK) afd2.getEstado(nodo.getEstado2());
-				ExpressionBase base2 = derivada(es2.getExp(), s);
+				ExpressionBase base2 = es2.getExp().derivada(s);
 				EstadoHK estadonuevo2 = new EstadoHK(idst.nextId(), base2, false, false);
 				if (base2.eqLambda())
 					estadonuevo2.cambioFin(true);
@@ -322,100 +322,6 @@ public class Algoritmos {
 		}
 
 		return "Equivalentes";
-	}
-
-	private static ExpressionBase derivada(ExpressionBase ex, String sim) {
-		Tipo tipo = (Tipo) ex.getType();
-		// Casos base
-		if (tipo == Tipo.VACIO) {
-			return new Vacio();
-		} else if (tipo == Tipo.LAMBDA)
-			return new Vacio();
-		else if ((tipo == Tipo.SIMB) || (tipo == Tipo.RANGO)) {
-			if (((Lenguaje) ex).esSimb(sim))
-				return new Lambdaa();
-			else
-				return new Vacio();
-
-		}
-		// Casos recursivos
-		else if (tipo == Tipo.CONCAT) {
-			Concat exAux = (Concat) ex;
-			ExpressionBase newEx;
-			ExpressionBase t1 = derivada(exAux.getExpr1(), sim);
-			ExpressionBase t2 = exAux.getExpr2();
-			if (t1 instanceof Vacio || t2 instanceof Vacio) {
-				newEx = new Vacio();
-			} else if (t1 instanceof Lambdaa)
-				newEx = t2;
-			else if (t2 instanceof Lambdaa)
-				newEx = t1;
-			else
-				newEx = new Concat(t1, t2);
-
-			if (exAux.getExpr1().eqLambda()) {
-				t2 = derivada(exAux.getExpr2(), sim);
-				if (!(t2 instanceof Vacio) && !(newEx instanceof Vacio)) {
-					if (!newEx.equals(t2))
-						if (newEx.menorQue(t2))
-							newEx = new Union(newEx, t2);
-						else
-							newEx = new Union(t2, newEx);
-				} else if (t1 instanceof Vacio && !(t2 instanceof Vacio)) {
-					newEx = t2;
-				}
-
-			}
-			return newEx;
-		}
-
-		else if (tipo == Tipo.UNION) {
-			Union exAux = (Union) ex;
-			ExpressionBase newEx;
-			ExpressionBase t1 = derivada(exAux.getExpr1(), sim);
-			ExpressionBase t2 = derivada(exAux.getExpr2(), sim);
-
-			if (t1 instanceof Vacio)
-				newEx = t2;
-			else if (t2 instanceof Vacio)
-				newEx = t1;
-			else {
-				if (!t1.equals(t2))
-					if (t1.menorQue(t2))
-						newEx = new Union(t1, t2);
-					else
-						newEx = new Union(t2, t1);
-				else
-					newEx = t1;
-			}
-
-			return newEx;
-		}
-
-		else if (tipo == Tipo.KLEEN) {
-			Kleen exAux = (Kleen) ex;
-			ExpressionBase newEx = null;
-			ExpressionBase t1 = derivada(exAux.getExpr(), sim);
-			if (t1 instanceof Vacio)
-				newEx = new Vacio();
-			else if (t1 instanceof Lambdaa)
-				newEx = ex;
-			else if (ex instanceof Lambdaa)
-				newEx = t1;
-
-			else
-				newEx = new Concat(t1, exAux);
-
-			/*
-			 * try { newEx = new Concat(t1, ex); } catch (VacioException e) { newEx = new
-			 * Lambdaa(); } catch (LambdaException e) { if (t1.getType() == Tipo.LAMBDA)
-			 * newEx = ex; else newEx = t1; }
-			 */
-			return newEx;
-
-		}
-
-		return null;
 	}
 
 	public static String equivalenciaDerPar(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, ArrayList<String> simb) {
@@ -520,84 +426,11 @@ public class Algoritmos {
 		Iterator<ExpressionBase> it = cEx.iterator();
 		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
 		while(it.hasNext()) {
-			ret.addAll(derivadaParcial(it.next(), sim));
+			ret.addAll(it.next().derivadaParcial(sim));
 		}
 		return ret;
 	}
 	
-	private static HashSet<ExpressionBase> derivadaParcial(ExpressionBase ex, String sim) {
-		Tipo tipo = (Tipo) ex.getType();
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
-		// Casos base
-		if (tipo == Tipo.VACIO) {
-			ret.add(new Vacio());
-			return ret;
-		} else if (tipo == Tipo.LAMBDA) {
-			ret.add(new Vacio());
-			return ret;
-		} else if ((tipo == Tipo.SIMB) || (tipo == Tipo.RANGO)) {
-			if (((Lenguaje) ex).esSimb(sim))
-				ret.add(new Lambdaa());
-			else
-				ret.add(new Vacio());
-			return ret;
-		}
-		// Casos recursivos
-		else if (tipo == Tipo.CONCAT) {
-			Concat exAux = (Concat) ex;
-			ExpressionBase newEx;
-			ExpressionBase t1 = derivada(exAux.getExpr1(), sim);
-			ExpressionBase t2 = exAux.getExpr2();
-			if (t1 instanceof Vacio || t2 instanceof Vacio) {
-				newEx = new Vacio();
-			} else if (t1 instanceof Lambdaa)
-				newEx = t2;
-			else if (t2 instanceof Lambdaa)
-				newEx = t1;
-			else
-				newEx = new Concat(t1, t2);
-			ret.add(newEx);
-			if (exAux.getExpr1().eqLambda()) {
-				t2 = derivada(exAux.getExpr2(), sim);
-				ret.add(t2);
-
-			}
-			return ret;
-		}
-
-		else if (tipo == Tipo.UNION) {
-			Union exAux = (Union) ex;
-			ExpressionBase newEx;
-			ExpressionBase t1 = derivada(exAux.getExpr1(), sim);
-			ExpressionBase t2 = derivada(exAux.getExpr2(), sim);
-
-			ret.add(t1);
-			ret.add(t2);
-
-			return ret;
-		}
-
-		else if (tipo == Tipo.KLEEN) {
-			Kleen exAux = (Kleen) ex;
-			ExpressionBase newEx = null;
-			ExpressionBase t1 = derivada(exAux.getExpr(), sim);
-			if (t1 instanceof Vacio)
-				newEx = new Vacio();
-			else if (t1 instanceof Lambdaa)
-				newEx = ex;
-			else if (ex instanceof Lambdaa)
-				newEx = t1;
-
-			else
-				newEx = new Concat(t1, exAux);
-			ret.add(newEx);
-			return ret;
-
-		}
-
-		return null;
-	}
-
 	private static void quitarLambda(ArrayList<String> simb) {
 		Iterator<String> col = simb.iterator();
 		while (col.hasNext()) {
@@ -608,25 +441,4 @@ public class Algoritmos {
 			}
 		}
 	}
-/*
-	private void expandirEstadoDerPar(Automata at, int id, ArrayList<String> simb, IdEstado idst,
-			ExpressionBase ex, HashSet<ExpressionBase> existeAfn) {
-		Iterator<String> sIt = simb.iterator();
-		while(sIt.hasNext()) {
-			String s = sIt.next();
-			HashSet<ExpressionBase> nuevos = derivadaParcial(ex, s);
-			
-			Iterator<ExpressionBase> nuevosIterator = nuevos.iterator();
-			while(nuevosIterator.hasNext()) {
-				ExpressionBase n = nuevosIterator.next();
-				if(nuevos.contains(n)) {
-					
-				}
-				
-			}
-			
-			
-		}
-		
-	}*/
 }

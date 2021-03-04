@@ -164,4 +164,27 @@ public class Kleen extends ExpressionBase {
 		return this._e1.getVal();
 	}
 
+	@Override
+	public ExpressionBase derivada(String sim) {
+		ExpressionBase newEx = null;
+		ExpressionBase t1 = this._e1.derivada(sim);
+		if (t1 instanceof Vacio)
+			newEx = new Vacio();
+		else if (t1 instanceof Lambdaa)
+			newEx = this;
+		else if (this._e1 instanceof Lambdaa)
+			newEx = t1;
+		else
+			newEx = new Concat(t1, this);
+
+		return newEx;
+	}
+
+	@Override
+	public HashSet<ExpressionBase> derivadaParcial(String sim) {
+		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
+		ret.addAll(concatAll(t1, this));
+		return ret;
+	}
 }

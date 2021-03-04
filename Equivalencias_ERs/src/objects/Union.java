@@ -172,6 +172,38 @@ public class Union extends ExpressionBase {
 	public String getVal() {
 		return this._e1.getVal();
 	}
+	@Override
+	public ExpressionBase derivada(String sim) {
+		ExpressionBase newEx;
+		ExpressionBase t1 = this._e1.derivada(sim);
+		ExpressionBase t2 = this._e2.derivada(sim);
+
+		if (t1 instanceof Vacio)
+			newEx = t2;
+		else if (t2 instanceof Vacio)
+			newEx = t1;
+		else {
+			if (!t1.equals(t2))
+				if (t1.menorQue(t2))
+					newEx = new Union(t1, t2);
+				else
+					newEx = new Union(t2, t1);
+			else
+				newEx = t1;
+		}
+
+		return newEx;
+	}
+	@Override
+	public HashSet<ExpressionBase> derivadaParcial(String sim) {
+		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		ExpressionBase newEx;
+		HashSet<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
+		HashSet<ExpressionBase> t2 = this._e2.derivadaParcial(sim);
+		ret.addAll(t1);
+		ret.addAll(t2);
+		return ret;
+	}
 	
 	
 }

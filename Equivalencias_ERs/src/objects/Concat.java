@@ -2,6 +2,7 @@ package objects;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 // import java.util.regex.*;
 import java.util.Set;
 import java.util.SortedSet;
@@ -171,5 +172,60 @@ public class Concat extends ExpressionBase {
 	public String getVal() {
 		return this._e1.getVal();
 	}
+
+	@Override
+	public ExpressionBase derivada(String sim) {
+		ExpressionBase newEx;
+		ExpressionBase t1 = this._e1.derivada(sim);
+		ExpressionBase t2 = this._e2;
+		if (t1 instanceof Vacio || t2 instanceof Vacio) {
+			newEx = new Vacio();
+		} else if (t1 instanceof Lambdaa)
+			newEx = t2;
+		else if (t2 instanceof Lambdaa)
+			newEx = t1;
+		else
+			newEx = new Concat(t1, t2);
+
+		if (this._e1.eqLambda()) {
+			t2 = this._e2.derivada(sim);
+			if (!(t2 instanceof Vacio) && !(newEx instanceof Vacio)) {
+				if (!newEx.equals(t2))
+					if (newEx.menorQue(t2))
+						newEx = new Union(newEx, t2);
+					else
+						newEx = new Union(t2, newEx);
+			} else if (t1 instanceof Vacio && !(t2 instanceof Vacio)) {
+				newEx = t2;
+			}
+
+		}
+		return newEx;
+	}
+
+	@Override
+	public HashSet<ExpressionBase> derivadaParcial(String sim) {
+		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
+		ExpressionBase t2 = this._e2;
+		if(t2 instanceof Lambdaa)
+			ret.addAll(t1);
+		else if(t2 instanceof Vacio)
+			ret.add(new Vacio());
+		else {
+			HashSet<ExpressionBase> aux = concatAll(t1, t2);
+			ret.addAll(aux);
+		}
+		
+		//Si la primera parte puede dar el vacío
+		if(this._e1.eqLambda()) {
+			HashSet<ExpressionBase> anexo = new HashSet<ExpressionBase>();
+			anexo = this._e2.derivadaParcial(sim);
+			ret.addAll(anexo);
+		}
+			
+		return ret;
+	}
+
 
 }

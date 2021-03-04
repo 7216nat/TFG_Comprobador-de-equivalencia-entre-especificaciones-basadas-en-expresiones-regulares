@@ -277,4 +277,14 @@ public class UnionRangos extends ExpressionBase {
 	public String getVal() {
 		return "";
 	}
+
+	@Override
+	public ExpressionBase derivada(String sim) {
+		return null;
+	}
+
+	@Override
+	public HashSet<ExpressionBase> derivadaParcial(String sim) {
+		return null;
+	}
 }

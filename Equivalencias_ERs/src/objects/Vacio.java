@@ -92,5 +92,17 @@ public class Vacio extends Lenguaje {
 		// TODO Auto-generated method stub
 		return this._sim;
 	}
+
+	@Override
+	public ExpressionBase derivada(String sim) {
+		return new Vacio();
+	}
+
+	@Override
+	public HashSet<ExpressionBase> derivadaParcial(String sim) {
+		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		ret.add(new Vacio());
+		return ret;
+	}
 		
 }

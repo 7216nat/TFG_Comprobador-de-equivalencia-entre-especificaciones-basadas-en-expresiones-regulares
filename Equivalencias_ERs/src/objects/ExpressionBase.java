@@ -1,12 +1,14 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 
 import automata.*;
 
-public abstract class ExpressionBase implements BerrySethi, Thomson {
+public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, DerivadaParcial {
 	
 	private Tipo type;
 	private ExpressionBase padre;
@@ -113,5 +115,20 @@ public abstract class ExpressionBase implements BerrySethi, Thomson {
 				return true;
 			}
 		}
+	}
+	
+	protected HashSet<ExpressionBase> concatAll(HashSet<ExpressionBase> e, ExpressionBase e2) {
+		Iterator<ExpressionBase> it = e.iterator();
+		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		while(it.hasNext()) {
+			ExpressionBase aux = it.next();
+			if(!(aux instanceof Lambdaa) && !(aux instanceof Vacio))
+				ret.add(new Concat(aux, e2));
+			else if (aux instanceof Lambdaa)
+				ret.add(e2);
+			else
+				ret.add(new Vacio());
+		}
+		return ret;
 	}
 }
