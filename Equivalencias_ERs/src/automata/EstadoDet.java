@@ -1,6 +1,4 @@
-package algoritmo;
-
-import automata.Estado;
+package automata;
 
 public class EstadoDet extends Estado {
 

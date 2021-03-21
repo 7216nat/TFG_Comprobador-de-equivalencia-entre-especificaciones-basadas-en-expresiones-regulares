@@ -56,8 +56,8 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		// TODO Auto-generated method stub
-		int ini = id.nextId(), acept = id.nextId();
+		int ini = id.nextId(); 
+		int acept = id.nextId();
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
@@ -65,8 +65,8 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		// TODO Auto-generated method stub
-		int ini = id.nextId(), acept = id.nextId();
+		int ini = id.nextId(); 
+		int acept = id.nextId();
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
@@ -74,8 +74,7 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		// TODO Auto-generated method stub
-		HashSet<Integer> tmp = new HashSet<Integer>();
+		HashSet<Integer> tmp = new HashSet<>();
 		BerrySethiNode bs = new BerrySethiNode();
 		
 		bs.setEmpty(false);
@@ -86,7 +85,7 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 		tmp.add(iD);
 		bs.setFirst(tmp);
 		
-		tmp = new HashSet<Integer>();
+		tmp = new HashSet<>();
 		tmp.add(iD);
 		bs.setLast(tmp);
 		
@@ -95,23 +94,19 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 
 	@Override
 	public int compareTo(Simbolo o) {
-		// TODO Auto-generated method stub
 		return _sim.compareTo(o._sim);
 	}
 
 	@Override
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis,
 			SortedSet<Character> fins) {
-		// TODO Auto-generated method stub
 		set.add(_sim);
 		inis.add(_sim.charAt(0));
 		fins.add(_sim.charAt(0));
 	}
 
 	public boolean contiene(String sim) {
-		if (sim.equals(this._sim))
-			return true;
-		return false;
+		return (sim.equals(this._sim));
 	}
 
 	@Override
@@ -128,7 +123,7 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 	}
 	@Override
 	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> ret = new HashSet<>();
 		if(this._sim.equals(sim))
 				ret.add(new Lambdaa());
 		else ret.add(new Vacio());

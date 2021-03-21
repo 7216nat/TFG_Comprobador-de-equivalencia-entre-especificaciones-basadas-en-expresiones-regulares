@@ -14,7 +14,7 @@ public class Kleen extends ExpressionBase {
 	// "\\w\\*[\\w\\+\\*\\(\\)]+|\\)\\*[\\w\\+\\*\\(\\)]*";
 	// private static final String _regex = "\\w\\*.*";
 	private static final String _regex = "*";
-	private static final String Kleen = "*";
+	private static final String KLEENS = "*";
 	private ExpressionBase _e1;
 
 	public Kleen() {
@@ -41,25 +41,23 @@ public class Kleen extends ExpressionBase {
 
 	@Override
 	public String toString() {
-		return "[" + _e1.toString() + "]" + Kleen;
+		return "[" + _e1.toString() + "]" + KLEENS;
 	}
 
 	@Override
 	public ExpressionBase cloneMe() {
-		// TODO Auto-generated method stub
 		return new Kleen();
 	}
 
 	@Override
 	public boolean match(String string) {
-		// TODO Auto-generated method stub
 		return false; // Pattern.matches(_regex, string);
 	}
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		// TODO Auto-generated method stub
-		int ini = id.nextId(), acept;
+		int ini = id.nextId();
+		int acept;
 		Estado iniPrev;
 		ArrayList<Estado> aceptPrev;
 		AutomataTS a1 = _e1.ThomsonAFN(id);
@@ -88,7 +86,6 @@ public class Kleen extends ExpressionBase {
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		AutomataTS a1 = _e1.ThomsonSimplAFN(id);
 		Estado ini = a1.getIni();
 		
@@ -104,19 +101,18 @@ public class Kleen extends ExpressionBase {
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		// TODO Auto-generated method stub
-		HashSet<Integer> tmp = new HashSet<Integer>();
+		HashSet<Integer> tmp = new HashSet<>();
 		BerrySethiNode ll = _e1.createBerrySethiNode(id);
 		BerrySethiNode bs = new BerrySethiNode(ll);
 		
 		bs.setEmpty(true);
-		bs.setSim(Kleen);
+		bs.setSim(KLEENS);
 		bs.setTipo(getType());
 		
 		tmp.addAll(ll.first);
 		bs.setFirst(tmp);
 		
-		tmp = new HashSet<Integer>();
+		tmp = new HashSet<>();
 		tmp.addAll(ll.last);
 		bs.setLast(tmp);
 		
@@ -125,7 +121,6 @@ public class Kleen extends ExpressionBase {
 	
 	@Override
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
-		// TODO Auto-generated method stub
 		_e1.getSimbolosRangos(set, array, inis, fins);
 	}
 
@@ -135,7 +130,9 @@ public class Kleen extends ExpressionBase {
 	
 	@Override
 	public boolean equals(Object o) {
-		 if (o == this) return true;
+		 if (o == this) {
+			 return true;
+		 }
 	     if (!(o instanceof Kleen)) {
 	            return false;
 	     }
@@ -150,7 +147,6 @@ public class Kleen extends ExpressionBase {
 
 	@Override
 	public ExpressionBase buildTreeDefinitivo() {
-		// TODO Auto-generated method stub
 		_e1 = _e1.buildTreeDefinitivo();
 		return this;
 	}
@@ -178,7 +174,7 @@ public class Kleen extends ExpressionBase {
 
 	@Override
 	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> ret = new HashSet<>();
 		HashSet<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
 		ret.addAll(concatAll(t1, this));
 		return ret;

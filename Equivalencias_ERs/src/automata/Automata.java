@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import algoritmo.EstadoTh;
-
 public class Automata {
 	protected HashMap<Integer, Estado> aut;
 	// referencias al estado inicial y final
@@ -22,9 +20,9 @@ public class Automata {
 	 * Constructora por defecto
 	 */
 	public Automata() {
-		aut = new HashMap<Integer, Estado>();
+		aut = new HashMap<>();
 		_ini = null;
-		_acept = new ArrayList<Estado>();
+		_acept = new ArrayList<>();
 	}
 
 	/**
@@ -32,8 +30,8 @@ public class Automata {
 	 */
 	public Automata(int ini) {
 		_ini = new Estado(ini, true, false);
-		_acept = new ArrayList<Estado>();
-		aut = new HashMap<Integer, Estado>();
+		_acept = new ArrayList<>();
+		aut = new HashMap<>();
 		addEstado(_ini);
 	}
 
@@ -41,8 +39,8 @@ public class Automata {
 	 * Constructora para automata cualquiera
 	 */
 	public Automata(int ini, int acept) {
-		_acept = new ArrayList<Estado>();
-		aut = new HashMap<Integer, Estado>();
+		_acept = new ArrayList<>();
+		aut = new HashMap<>();
 		if (ini != acept) {
 			_ini = new Estado(ini, true, false);
 			Estado tmp = new Estado(acept, false, true);
@@ -307,7 +305,7 @@ public class Automata {
 		// Le añado a sí mismo
 		nuevo.addEquiv(es.getId());
 
-		Queue<Estado> estados = new LinkedList<Estado>();
+		Queue<Estado> estados = new LinkedList<>();
 		estados.add(es);
 		Estado estado;
 
@@ -335,12 +333,13 @@ public class Automata {
 	}
 
 	/**
-	 * Hace el lambdaCierre de todo el autómata en una sola función
+	 *hHace el lambdaCierre de todo el autómata en una sola función
+	 * 
 	 */
 	public void lambdaCierreCompleto() {
-		Set<Integer> tragados = new HashSet<Integer>();
+		Set<Integer> tragados = new HashSet<>();
 		HashSet<Transicion> transiciones;
-		Queue<Estado> estados = new LinkedList<Estado>();
+		Queue<Estado> estados = new LinkedList<>();
 		Transicion tr;
 		// Recorro todos los estados
 		for (Map.Entry<Integer, Estado> dato : aut.entrySet()) {
@@ -348,11 +347,11 @@ public class Automata {
 			if (!tragados.contains(dato.getKey())) {
 				estados.add(dato.getValue());
 				Estado ini = dato.getValue();
-				Set<Integer> visitados = new HashSet<Integer>();
+				Set<Integer> visitados = new HashSet<>();
 				while (!estados.isEmpty()) {
 					// Recorro las transiciones buscando vacías
 					Estado est = estados.poll();
-					transiciones = new HashSet<Transicion>();
+					transiciones = new HashSet<>();
 					transiciones.addAll(est.getTrans());
 					Iterator<Transicion> it = transiciones.iterator();
 					while (it.hasNext()) {

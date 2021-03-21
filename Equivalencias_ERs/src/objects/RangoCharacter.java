@@ -163,7 +163,9 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	
 	@Override
 	public boolean equals(Object o) {
-		 if (o == this) return true;
+		 if (o == this) {
+			 return true;
+		 }
 	     if (!(o instanceof RangoCharacter)) {
 	            return false;
 	     }
@@ -173,7 +175,6 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 
 	@Override
 	public int compareTo(RangoCharacter o) {
-		// TODO Auto-generated method stub
 		if (_ini > o._ini) return 1;
 		else if (_ini < o._ini) return -1;
 		return 0;
@@ -181,7 +182,6 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		int ini = id.nextId(), acept = id.nextId();
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
@@ -190,7 +190,6 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		int ini = id.nextId(), acept = id.nextId();
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
@@ -199,8 +198,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		// TODO Auto-generated method stub
-		HashSet<Integer> tmp = new HashSet<Integer>();
+		HashSet<Integer> tmp = new HashSet<>();
 		BerrySethiNode bs = new BerrySethiNode();
 		
 		bs.setEmpty(false);
@@ -211,7 +209,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 		tmp.add(iD);
 		bs.setFirst(tmp);
 		
-		tmp = new HashSet<Integer>();
+		tmp = new HashSet<>();
 		tmp.add(iD);
 		bs.setLast(tmp);
 		
@@ -220,25 +218,18 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 
 	@Override
 	public ExpressionBase cloneMe() {
-		// TODO Auto-generated method stub
 		return new RangoCharacter();
 	}
 
 	@Override
 	public boolean match(String string) {
-		// TODO Auto-generated method stub
 		return Pattern.matches(_regex, string);
 	}
 
 	@Override
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
-		// TODO Auto-generated method stub
-		return;
+		// no needed, no included at beginning
 	}	
-	@Override
-	public int hashCode() {
-		return Tipo.SIMB.getValor();
-	}
 
 	@Override
 	public String getVal() {
@@ -254,7 +245,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	}
 	@Override
 	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> ret = new HashSet<>();
 		if(this._sim.equals(sim))
 				ret.add(new Lambdaa());
 		else ret.add(new Vacio());

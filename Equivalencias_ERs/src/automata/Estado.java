@@ -16,18 +16,7 @@ public class Estado {
 		id = _id;
 		inicial = false;
 		fin = false;
-		trans = new HashSet<Transicion>();
-	}
-	
-	/**
-	 * Constructora copia
-	 */
-	public Estado(Estado e) {
-		id = e.id;
-		inicial = e.inicial;
-		fin = e.fin;
-		trans = new HashSet<Transicion>();
-		trans.addAll(e.trans);
+		trans = new HashSet<>();
 	}
 	
 	/**
@@ -37,7 +26,7 @@ public class Estado {
 		id = _id;
 		inicial = ini;
 		this.fin = fin;
-		trans = new HashSet<Transicion>();
+		trans = new HashSet<>();
 	}
 	
 	public int getId() {
@@ -98,7 +87,7 @@ public class Estado {
 	public void eliminarTransicionesA(int estado) {
 		Iterator<Transicion> it = trans.iterator();
 		while (it.hasNext()) {
-			Transicion t = (Transicion) it.next();
+			Transicion t = it.next();
 			if (t.getEstadoDest() == estado) {
 				it.remove();
 			}
@@ -110,9 +99,9 @@ public class Estado {
 	 */
 	public void recolocarTransiciones(int es2, int es1) {
 		Iterator<Transicion> it = trans.iterator();
-		HashSet<Transicion> aux = new HashSet<Transicion>();
+		HashSet<Transicion> aux = new HashSet<>();
 		while (it.hasNext()) {
-			Transicion t = (Transicion) it.next();
+			Transicion t = it.next();
 			if (t.getEstadoDest() == es2) {
 				aux.add(new Transicion(es1, t.getSymb()));
 				it.remove();
@@ -148,9 +137,9 @@ public class Estado {
 	 */
 	public void recolocarTransicionesSinBorrar(int es2, int es1) {
 		Iterator<Transicion> it = trans.iterator();
-		HashSet<Transicion> aux = new HashSet<Transicion>();
+		HashSet<Transicion> aux = new HashSet<>();
 		while (it.hasNext()) {
-			Transicion t = (Transicion) it.next();
+			Transicion t = it.next();
 			if (t.getEstadoDest() == es2) {
 				aux.add(new Transicion(es1, t.getSymb()));
 			}
@@ -168,7 +157,9 @@ public class Estado {
 	
 	@Override
 	public boolean equals(Object o) {
-		 if (o == this) return true;
+		 if (o == this) {
+			 return true;
+		 }
 	     if (!(o instanceof Estado)) {
 	            return false;
 	     }
@@ -182,7 +173,7 @@ public class Estado {
 	
 	public String toString() {
 		String salida = "";
-		trans.forEach((k) -> System.out.print(k.getSymb() + " -> " + k.getEstadoDest() + "; "));
+		trans.forEach(k -> System.out.print(k.getSymb() + " -> " + k.getEstadoDest() + "; "));
 		return salida;
 
 	}

@@ -15,7 +15,7 @@ import automata.*;
 public class UnionRangos extends ExpressionBase {
 	
 	private static final String _regex = "[";
-	private static final String unionRangos = "[";
+	private static final String unionRangosS = "[";
 	private ExpressionBase _e1;
 	private String _str;
 	private ArrayList<RangoCharacter> _rangos;
@@ -34,13 +34,13 @@ public class UnionRangos extends ExpressionBase {
 	public UnionRangos(String str) {
 		super(null, Tipo.UNIONRANGOS);
 		_str = str;
-		_rangos = new ArrayList<RangoCharacter>();
+		_rangos = new ArrayList<>();
 	}
 	
 	public UnionRangos(ExpressionBase padre , String str) {
 		super(padre, Tipo.UNIONRANGOS);
 		_str = str;
-		_rangos = new ArrayList<RangoCharacter>();
+		_rangos = new ArrayList<>();
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class UnionRangos extends ExpressionBase {
 				i +=2;
 				if (_str.charAt(i) < c) {
 					System.out.println("ER inválido, Rango incorrecto");
-					System.exit(0);
+					System.exit(1);
 				}
 				_rangos.add(new RangoCharacter(c ,_str.charAt(i)));
 			}
@@ -100,7 +100,7 @@ public class UnionRangos extends ExpressionBase {
 	 * @param ss: lista de puntos de intersecciones dadas
 	 */
 	public void intersec(Set<String> set, SortedSet<Character> inis, SortedSet<Character> fins) {
-		ArrayList<RangoCharacter> tmp = new ArrayList<RangoCharacter>();
+		ArrayList<RangoCharacter> tmp = new ArrayList<>();
 		RangoCharacter rc, rctmp;
 		
 		Iterator<RangoCharacter> it = _rangos.iterator();
@@ -124,7 +124,7 @@ public class UnionRangos extends ExpressionBase {
 			
 		}
 		_rangos = tmp;
-		tmp = new ArrayList<RangoCharacter>();
+		tmp = new ArrayList<>();
 		it = _rangos.iterator();
 		while (it.hasNext()) {
 			rc = it.next();
@@ -152,7 +152,7 @@ public class UnionRangos extends ExpressionBase {
 	 * Quitar repeticiones, unir en caso de intersecciones
 	 */
 	private void selfIntersec() {
-		ArrayList<RangoCharacter> tmp = new ArrayList<RangoCharacter>();
+		ArrayList<RangoCharacter> tmp = new ArrayList<>();
 		Iterator<RangoCharacter> it = _rangos.iterator(), ittmp;
 		RangoCharacter rc, rctmp;
 		boolean existe;
@@ -204,13 +204,11 @@ public class UnionRangos extends ExpressionBase {
 
 	@Override
 	public ExpressionBase cloneMe() {
-		// TODO Auto-generated method stub
 		return new UnionRangos();
 	}
 
 	@Override
 	public boolean match(String string) {
-		// TODO Auto-generated method stub
 		return false; // Pattern.matches(_regex, string);
 	}
 
@@ -221,24 +219,22 @@ public class UnionRangos extends ExpressionBase {
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		return _e1.ThomsonSimplAFN(id);
 	}
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		// TODO Auto-generated method stub
-		HashSet<Integer> tmp = new HashSet<Integer>();
+		HashSet<Integer> tmp = new HashSet<>();
 		BerrySethiNode ll = _e1.createBerrySethiNode(id);
 		BerrySethiNode bs = new BerrySethiNode(ll);
 		
 		bs.setEmpty(ll.empty);
-		bs.setSim(unionRangos);
+		bs.setSim(unionRangosS);
 		bs.setTipo(getType());
 		tmp.addAll(ll.first);
 		bs.setFirst(tmp);
 		
-		tmp = new HashSet<Integer>();
+		tmp = new HashSet<>();
 		tmp.addAll(ll.last);
 		bs.setLast(tmp);
 		
@@ -247,28 +243,24 @@ public class UnionRangos extends ExpressionBase {
 
 	@Override
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
-		// TODO Auto-generated method stub
 		parserRangos(inis, fins);
 		array.add(this);
 	}
 	
 	@Override
 	public boolean equals(Object o) {
-		 if (o == this) return true;
+		 if (o == this) {
+			 return true;
+		 }
 	     if (!(o instanceof UnionRangos)) {
 	            return false;
 	     }
 	     UnionRangos t = (UnionRangos) o;
 	     return t._e1.equals(this._e1);
 	}
-	@Override
-	public int hashCode() {
-		return Tipo.SIMB.getValor();
-	}
 
 	@Override
 	public ExpressionBase buildTreeDefinitivo() {
-		// TODO Auto-generated method stub
 		_e1 = _e1.buildTreeDefinitivo();
 		return _e1;
 	}

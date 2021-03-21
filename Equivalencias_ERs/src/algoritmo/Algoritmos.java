@@ -11,19 +11,17 @@ import java.util.Queue;
 import automata.Automata;
 import automata.AutomataHK;
 import automata.Estado;
+import automata.EstadoHK;
+import automata.EstadoHKSubconj;
+import automata.EstadoTh;
 import automata.IdEstado;
 import automata.Transicion;
 import objects.BerrySethiNode;
-import objects.Concat;
 import objects.ExpressionBase;
-import objects.Kleen;
-import objects.Lambdaa;
-import objects.Lenguaje;
-import objects.Tipo;
-import objects.Union;
-import objects.Vacio;
 
 public class Algoritmos {
+	
+	static final String EQ = "Equivalentes";
 	/**
 	 * 
 	 * @param at1:  el autómata 1 a comparar
@@ -34,8 +32,8 @@ public class Algoritmos {
 	 * @return
 	 */
 	public static String detHopKarp(Automata at1, Automata at2, IdEstado idst, ArrayList<String> simb) {
-		HashMap<Integer, EstadoTh> aExplorar = new HashMap<Integer, EstadoTh>();
-		Queue<SimEsEs> aComparar = new LinkedList<SimEsEs>();
+		HashMap<Integer, EstadoTh> aExplorar = new HashMap<>();
+		Queue<SimEsEs> aComparar = new LinkedList<>();
 		Estado inicial = at1.getIni();
 		Estado inicial2 = at2.getIni();
 
@@ -119,7 +117,7 @@ public class Algoritmos {
 
 		}
 
-		return "Equivalentes";
+		return EQ;
 	}
 /**
  * 
@@ -150,7 +148,7 @@ public class Algoritmos {
 				// Si la transición es con el símbolo que estoy evaluando:
 				if (tAux.getSymb().equals(simb)) {
 					EstadoTh aux = at.lambdaCierre(at.getEstado(tAux.getEstadoDest()), -1);
-					aux.getEq().forEach((k) -> nuevoEstado.addEquiv(k));
+					aux.getEq().forEach(k -> nuevoEstado.addEquiv(k));
 					if (aux.esFin() || at.getEstado(tAux.getEstadoDest()).esFin())
 						nuevoEstado.cambioFin(true);
 				}
@@ -162,7 +160,7 @@ public class Algoritmos {
 		boolean noEsta = true;
 		int yaExistente = -1;
 		while (noEsta && itAut.hasNext()) {
-			Entry<Integer, Estado> par = (Entry<Integer, Estado>) itAut.next();
+			Entry<Integer, Estado> par = itAut.next();
 			EstadoTh comp = (EstadoTh) par.getValue();
 			if (comp.same(nuevoEstado)) {
 				noEsta = false;
@@ -174,7 +172,7 @@ public class Algoritmos {
 			afd.addEstado(nuevoEstado);
 			aExplorar.put(nuevoEstado.getId(), nuevoEstado);
 			afd.addTransicion(viejo, nuevoEstado.getId(), simb);
-		} else if (!noEsta && !simb.equals("&"))
+		} else if (!simb.equals("&"))
 			afd.addTransicion(viejo, yaExistente, simb);
 	}
 
@@ -237,7 +235,7 @@ public class Algoritmos {
 			afd2.addEstado(s2);
 		}
 
-		Queue<SimEsEs> aComparar = new LinkedList<SimEsEs>();
+		Queue<SimEsEs> aComparar = new LinkedList<>();
 
 		if (afd1.getIni().esFin() && !afd2.getIni().esFin())
 			return ("&, final aut1, no final aut2");
@@ -247,8 +245,8 @@ public class Algoritmos {
 		aComparar.add(new SimEsEs(afd1.getIni().getId(), afd2.getIni().getId(), ""));
 
 		// set1 y set2 llevan las expresiones que ya están en algún estado
-		HashMap<ExpressionBase, EstadoHK> set1 = new HashMap<ExpressionBase, EstadoHK>();
-		HashMap<ExpressionBase, EstadoHK> set2 = new HashMap<ExpressionBase, EstadoHK>();
+		HashMap<ExpressionBase, EstadoHK> set1 = new HashMap<>();
+		HashMap<ExpressionBase, EstadoHK> set2 = new HashMap<>();
 		set1.put(ex1, s1);
 		set2.put(ex2, s2);
 		/*
@@ -304,7 +302,7 @@ public class Algoritmos {
 			}
 		}
 
-		return "Equivalentes";
+		return EQ;
 	}
 
 	public static String equivalenciaDerPar(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, ArrayList<String> simb) {
@@ -315,7 +313,7 @@ public class Algoritmos {
 		AutomataHK afd2 = new AutomataHK();
 		
 		EstadoHKSubconj s1;
-		HashSet<ExpressionBase> e1 = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> e1 = new HashSet<>();
 		e1.add(ex1);
 		if(ex1.eqLambda())
 			s1 = new EstadoHKSubconj(idst.nextId(), e1, true, true);
@@ -324,7 +322,7 @@ public class Algoritmos {
 		afd1.addEstado(s1);
 		
 		EstadoHKSubconj s2;
-		HashSet<ExpressionBase> e2 = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> e2 = new HashSet<>();
 		e2.add(ex2);
 		if(ex2.eqLambda())
 			s2 = new EstadoHKSubconj(idst.nextId(), e2, true, true);
@@ -332,7 +330,7 @@ public class Algoritmos {
 			s2 = new EstadoHKSubconj(idst.nextId(), e2, true, false);
 		afd2.addEstado(s2);
 		
-		Queue<SimEsEs> aComparar = new LinkedList<SimEsEs>();
+		Queue<SimEsEs> aComparar = new LinkedList<>();
 		
 		if(afd1.getIni().esFin() && !afd2.getIni().esFin())
 			return ("&, final aut1, no final aut2");
@@ -341,12 +339,12 @@ public class Algoritmos {
 
 		aComparar.add(new SimEsEs(afd1.getIni().getId(), afd2.getIni().getId(), ""));
 		
-		HashMap<HashSet<ExpressionBase>, EstadoHKSubconj> set1 = new HashMap<HashSet<ExpressionBase>, EstadoHKSubconj>();
-		HashMap<HashSet<ExpressionBase>, EstadoHKSubconj> set2 = new HashMap<HashSet<ExpressionBase>, EstadoHKSubconj>();
-		HashSet<ExpressionBase> aux1 = new HashSet<ExpressionBase>();
+		HashMap<HashSet<ExpressionBase>, EstadoHKSubconj> set1 = new HashMap<>();
+		HashMap<HashSet<ExpressionBase>, EstadoHKSubconj> set2 = new HashMap<>();
+		HashSet<ExpressionBase> aux1 = new HashSet<>();
 		aux1.add(ex1);
 		set1.put(aux1, s1);
-		HashSet<ExpressionBase> aux2 = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> aux2 = new HashSet<>();
 		aux2.add(ex2);
 		set2.put(aux2, s2);
 		
@@ -394,20 +392,15 @@ public class Algoritmos {
 					SimEsEs c = new SimEsEs(estadoNuevo1.getId(), estadoNuevo2.getId(), nodo.getSimbolos() + s);
 					aComparar.add(c);
 					estadoNuevo1.unirIgualA(estadoNuevo2);
-				}
-				
-				
-			}
-			
-			
+				}				
+			}	
 		}
-		
-		return "Equivalentes";
+		return EQ;
 	}
 	
 	private static HashSet<ExpressionBase> multiplesDerPar(HashSet<ExpressionBase> cEx, String sim){
 		Iterator<ExpressionBase> it = cEx.iterator();
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> ret = new HashSet<>();
 		while(it.hasNext()) {
 			ret.addAll(it.next().derivadaParcial(sim));
 		}
@@ -418,7 +411,7 @@ public class Algoritmos {
 		Iterator<String> col = simb.iterator();
 		while (col.hasNext()) {
 			String comp = col.next();
-			if (comp == "&") {
+			if (comp.equals("&")) {
 				col.remove();
 				return;
 			}
@@ -440,8 +433,8 @@ public class Algoritmos {
 	 * @return
 	 */
 	public static String detHopKarpSinLambda(Automata at1, Automata at2, IdEstado idst, ArrayList<String> simb) {
-		HashMap<Integer, EstadoTh> aExplorar = new HashMap<Integer, EstadoTh>();
-		Queue<SimEsEs> aComparar = new LinkedList<SimEsEs>();
+		HashMap<Integer, EstadoTh> aExplorar = new HashMap<>();
+		Queue<SimEsEs> aComparar = new LinkedList<>();
 		Estado inicial = at1.getIni();
 		Estado inicial2 = at2.getIni();
 
@@ -527,7 +520,7 @@ public class Algoritmos {
 
 		}
 
-		return "Equivalentes";
+		return EQ;
 	}
 /**
  * 
@@ -559,7 +552,7 @@ public class Algoritmos {
 				if (tAux.getSymb().equals(simb)) {
 					EstadoTh aux = new EstadoTh(-1);
 					aux.addEquiv(at.getEstado(tAux.getEstadoDest()).getId());
-					aux.getEq().forEach((k) -> nuevoEstado.addEquiv(k));
+					aux.getEq().forEach(k -> nuevoEstado.addEquiv(k));
 					if (aux.esFin() || at.getEstado(tAux.getEstadoDest()).esFin())
 						nuevoEstado.cambioFin(true);
 				}
@@ -571,7 +564,7 @@ public class Algoritmos {
 		boolean noEsta = true;
 		int yaExistente = -1;
 		while (noEsta && itAut.hasNext()) {
-			Entry<Integer, Estado> par = (Entry<Integer, Estado>) itAut.next();
+			Entry<Integer, Estado> par = itAut.next();
 			EstadoTh comp = (EstadoTh) par.getValue();
 			if (comp.same(nuevoEstado)) {
 				noEsta = false;
@@ -583,7 +576,7 @@ public class Algoritmos {
 			afd.addEstado(nuevoEstado);
 			aExplorar.put(nuevoEstado.getId(), nuevoEstado);
 			afd.addTransicion(viejo, nuevoEstado.getId(), simb);
-		} else if (!noEsta && !simb.equals("&"))
+		} else if (!simb.equals("&"))
 			afd.addTransicion(viejo, yaExistente, simb);
 	}
 

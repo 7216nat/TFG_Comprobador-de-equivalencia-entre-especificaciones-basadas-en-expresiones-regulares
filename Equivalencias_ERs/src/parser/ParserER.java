@@ -20,7 +20,7 @@ public class ParserER {
 	 */
 	public ParserER(String_ref exreg) {		
 		this.exreg = exreg;
-		this.pila = new Stack<ExpressionBase>();
+		this.pila = new Stack<>();
 		this.parentesis = 0;
 	}
 

@@ -1,6 +1,6 @@
-package objects;
+package algoritmo;
 
-import java.util.HashSet;
+import objects.ExpressionBase;
 
 public interface Derivada {
 	public ExpressionBase derivada(String sim);

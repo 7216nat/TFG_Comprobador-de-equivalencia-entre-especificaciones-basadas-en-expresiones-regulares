@@ -5,32 +5,30 @@ import java.util.HashSet;
 
 public class BerrySethiNode {
 	
-	String sim;
-	boolean empty;
-	Tipo tipo;
-	HashSet<Integer> first;
-	HashSet<Integer> last;
-	HashSet<Integer> fol;
+	protected String sim;
+	protected boolean empty;
+	protected Tipo tipo;
+	protected HashSet<Integer> first;
+	protected HashSet<Integer> last;
+	protected HashSet<Integer> fol;
 	
-	BerrySethiNode left;
-	BerrySethiNode right;
+	protected BerrySethiNode left;
+	protected BerrySethiNode right;
 	
 	public BerrySethiNode() {
-		// TODO Auto-generated constructor stub
 		this(null);
 	}
 	
 	public BerrySethiNode(BerrySethiNode left) {
-		// TODO Auto-generated constructor stub
 		this.left = left;
 		this.right = null;
-		this.fol = new HashSet<Integer>();
+		this.fol = new HashSet<>();
 	}
 	
 	public BerrySethiNode(BerrySethiNode left, BerrySethiNode right) {
 		this.left = left;
 		this.right = right;
-		this.fol = new HashSet<Integer>();
+		this.fol = new HashSet<>();
 	}
 	
 	public boolean getEmpty(){return empty;}
@@ -62,7 +60,6 @@ public class BerrySethiNode {
 
 	
 	public void buildEstados(ArrayList<BerrySethiNode> list, HashSet<Integer> follow){
-		
 		switch(this.tipo) {
 			case CONCAT:
 				this.fol.addAll(follow);

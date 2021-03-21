@@ -2,7 +2,6 @@ package objects;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 // import java.util.regex.*;
 import java.util.Set;
 import java.util.SortedSet;
@@ -13,7 +12,7 @@ public class Concat extends ExpressionBase {
 
 	// private static final String _regex = "\\w\\w[\\w\\+\\*\\(\\)]+";
 	private static final String _regex = "";
-	private static final String Concat = "";
+	private static final String Conc = "";
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
 
@@ -44,19 +43,16 @@ public class Concat extends ExpressionBase {
 
 	@Override
 	public ExpressionBase cloneMe() {
-		// TODO Auto-generated method stub
 		return new Concat();
 	}
 
 	@Override
 	public boolean match(String string) {
-		// TODO Auto-generated method stub
 		return false; // Pattern.matches(_regex, string);
 	}
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		Estado iniPrev;
 		ArrayList<Estado> aceptPrev;
 		AutomataTS a1 = _e1.ThomsonAFN(id);
@@ -78,7 +74,6 @@ public class Concat extends ExpressionBase {
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		Estado iniPrev;
 		ArrayList<Estado> aceptPrev1;
 		AutomataTS a1 = _e1.ThomsonSimplAFN(id);
@@ -105,14 +100,14 @@ public class Concat extends ExpressionBase {
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		// TODO Auto-generated method stub
-		HashSet<Integer> tmp = new HashSet<Integer>();
+		//  Auto-generated method stub
+		HashSet<Integer> tmp = new HashSet<>();
 		BerrySethiNode ll = _e1.createBerrySethiNode(id);
 		BerrySethiNode rl = _e2.createBerrySethiNode(id);
 		BerrySethiNode bs = new BerrySethiNode(ll, rl);
 		
 		bs.setEmpty(ll.empty && rl.empty);
-		bs.setSim(Concat);
+		bs.setSim(Conc);
 		bs.setTipo(getType());
 		
 		tmp.addAll(ll.first);
@@ -120,7 +115,7 @@ public class Concat extends ExpressionBase {
 			tmp.addAll(rl.first);
 		bs.setFirst(tmp);
 		
-		tmp = new HashSet<Integer>();
+		tmp = new HashSet<>();
 		tmp.addAll(rl.last);
 		if(rl.empty)
 			tmp.addAll(ll.last);
@@ -131,7 +126,6 @@ public class Concat extends ExpressionBase {
 	
 	@Override
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
-		// TODO Auto-generated method stub
 		_e1.getSimbolosRangos(set, array, inis, fins);
 		_e2.getSimbolosRangos(set, array, inis, fins);
 	}
@@ -145,7 +139,9 @@ public class Concat extends ExpressionBase {
 	
 	@Override
 	public boolean equals(Object o) {
-		 if (o == this) return true;
+		 if (o == this) {
+			 return true;
+		 }
 	     if (!(o instanceof Concat)) {
 	            return false;
 	     }
@@ -159,7 +155,6 @@ public class Concat extends ExpressionBase {
 
 	@Override
 	public ExpressionBase buildTreeDefinitivo() {
-		// TODO Auto-generated method stub
 		_e1 = _e1.buildTreeDefinitivo(); 
 		_e2 = _e2.buildTreeDefinitivo();
 		return this;
@@ -187,11 +182,13 @@ public class Concat extends ExpressionBase {
 		if (this._e1.eqLambda()) {
 			t2 = this._e2.derivada(sim);
 			if (!(t2 instanceof Vacio) && !(newEx instanceof Vacio)) {
-				if (!newEx.equals(t2))
-					if (newEx.menorQue(t2))
+				if (!newEx.equals(t2)) {
+					if (newEx.menorQue(t2)) {
 						newEx = new Union(newEx, t2);
+					} 
 					else
 						newEx = new Union(t2, newEx);
+				}
 			} else if (t1 instanceof Vacio && !(t2 instanceof Vacio)) {
 				newEx = t2;
 			}
@@ -202,7 +199,7 @@ public class Concat extends ExpressionBase {
 
 	@Override
 	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> ret = new HashSet<>();
 		HashSet<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
 		ExpressionBase t2 = this._e2;
 		if(t2 instanceof Lambdaa)
@@ -216,7 +213,7 @@ public class Concat extends ExpressionBase {
 		
 		//Si la primera parte puede dar el vacío
 		if(this._e1.eqLambda()) {
-			HashSet<ExpressionBase> anexo = new HashSet<ExpressionBase>();
+			HashSet<ExpressionBase> anexo;
 			anexo = this._e2.derivadaParcial(sim);
 			ret.addAll(anexo);
 		}

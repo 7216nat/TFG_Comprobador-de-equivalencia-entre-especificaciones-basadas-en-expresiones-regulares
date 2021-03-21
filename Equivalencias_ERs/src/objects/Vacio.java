@@ -15,7 +15,6 @@ public class Vacio extends Lenguaje {
 	
 	public Vacio() {
 		super(CojVacio, null, Tipo.VACIO);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Vacio(ExpressionBase padre) {
@@ -24,44 +23,37 @@ public class Vacio extends Lenguaje {
 
 	@Override
 	public ExpressionBase cloneMe() {
-		// TODO Auto-generated method stub
 		return new Vacio();
 	}
 
 	@Override
 	public boolean match(String string) {
-		// TODO Auto-generated method stub
 		return Pattern.matches(_regex, string);
 	}
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		int ini = id.nextId();
-		AutomataTS aut = new AutomataTS(ini);
-		return aut;
+		return new AutomataTS(ini);
 	}
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		int ini = id.nextId();
-		AutomataTS aut = new AutomataTS(ini);
-		return aut;
+		return new AutomataTS(ini);
 	}
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		// TODO Auto-generated method stub
 		BerrySethiNode bs = new BerrySethiNode();
 		
 		bs.setEmpty(false);
 		bs.setSim(_sim);
 		bs.setTipo(getType());
 		
-		bs.setFirst(new HashSet<Integer>());
+		bs.setFirst(new HashSet<>());
 		
-		bs.setLast(new HashSet<Integer>());
+		bs.setLast(new HashSet<>());
 		
 		return bs;
 	}
@@ -69,13 +61,14 @@ public class Vacio extends Lenguaje {
 	@Override
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> sort,
 			SortedSet<Character> sortRango) {
-		// TODO Auto-generated method stub
-		return;
+		// no needed
 	}
 	
 	@Override
 	public boolean equals(Object o) {
-		 if (o == this) return true;
+		 if (o == this) {
+			 return true;
+		 }
 	     if (!(o instanceof Vacio)) {
 	            return false;
 	     }
@@ -84,7 +77,6 @@ public class Vacio extends Lenguaje {
 
 	@Override
 	public String getVal() {
-		// TODO Auto-generated method stub
 		return this._sim;
 	}
 
@@ -95,7 +87,7 @@ public class Vacio extends Lenguaje {
 
 	@Override
 	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> ret = new HashSet<>();
 		ret.add(new Vacio());
 		return ret;
 	}

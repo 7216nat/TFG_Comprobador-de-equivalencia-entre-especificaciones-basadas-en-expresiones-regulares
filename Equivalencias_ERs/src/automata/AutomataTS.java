@@ -19,6 +19,7 @@ public class AutomataTS extends Automata {
 
 	/**
 	 * Hace una copia de todo el automata sin las refenrencias
+	 * 
 	 */
 	public void copyAll(Automata aut) {
 		this.aut.putAll(aut.aut);

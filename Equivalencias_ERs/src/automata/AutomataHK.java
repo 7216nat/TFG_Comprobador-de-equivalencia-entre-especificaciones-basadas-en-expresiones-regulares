@@ -1,6 +1,5 @@
 package automata;
 
-import algoritmo.EstadoHK;
 import objects.ExpressionBase;
 
 public class AutomataHK extends Automata {
@@ -12,7 +11,7 @@ public class AutomataHK extends Automata {
 	public EstadoHK getByEx(ExpressionBase ex) {
 		for (Integer k : aut.keySet()) {
 			EstadoHK aux = (EstadoHK) aut.get(k);
-			if(aux.equals(ex))
+			if(aux.getExp().equals(ex))
 				return aux;
 			
 		}

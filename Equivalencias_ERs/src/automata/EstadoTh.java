@@ -1,21 +1,15 @@
-package algoritmo;
+package automata;
 
 import java.util.HashSet;
-
-import automata.Estado;
 
 public class EstadoTh extends Estado{
 	private HashSet<Integer> equiv;
 	private HashSet<Integer> igualA;
 	
-	public EstadoTh(int id, Estado e) {
-		super(e);
-			
-	}
 	public EstadoTh(int id) {
 		super(id);
-		this.equiv = new HashSet<Integer>();
-		this.igualA = new HashSet<Integer>();
+		this.equiv = new HashSet<>();
+		this.igualA = new HashSet<>();
 		igualA.add(id);
 	}
 	

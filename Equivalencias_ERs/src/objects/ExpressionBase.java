@@ -6,14 +6,17 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 
-import automata.*;
+import algoritmo.BerrySethi;
+import algoritmo.Derivada;
+import algoritmo.DerivadaParcial;
+import algoritmo.Thomson;
 
 public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, DerivadaParcial {
 	
 	private Tipo type;
 	private ExpressionBase padre;
 
-	public ExpressionBase(ExpressionBase padre, Tipo tipo) {
+	protected ExpressionBase(ExpressionBase padre, Tipo tipo) {
 		type = tipo;
 		this.padre = padre;
 	}
@@ -119,7 +122,7 @@ public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, D
 	
 	protected HashSet<ExpressionBase> concatAll(HashSet<ExpressionBase> e, ExpressionBase e2) {
 		Iterator<ExpressionBase> it = e.iterator();
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> ret = new HashSet<>();
 		while(it.hasNext()) {
 			ExpressionBase aux = it.next();
 			if(!(aux instanceof Lambdaa) && !(aux instanceof Vacio))

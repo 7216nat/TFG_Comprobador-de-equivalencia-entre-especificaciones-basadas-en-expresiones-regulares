@@ -1,4 +1,4 @@
-package objects;
+package algoritmo;
 
 import automata.AutomataTS;
 import automata.IdEstado;

@@ -1,6 +1,7 @@
-package objects;
+package algoritmo;
 
 import automata.IdEstado;
+import objects.BerrySethiNode;
 
 public interface BerrySethi {
 	

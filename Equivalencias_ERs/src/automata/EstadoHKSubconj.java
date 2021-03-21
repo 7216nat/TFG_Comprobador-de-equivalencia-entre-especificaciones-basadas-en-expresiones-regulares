@@ -1,9 +1,8 @@
-package algoritmo;
+package automata;
 
 import java.util.HashSet;
 import java.util.Iterator;
 
-import automata.Estado;
 import objects.ExpressionBase;
 
 public class EstadoHKSubconj extends Estado{
@@ -13,14 +12,14 @@ public class EstadoHKSubconj extends Estado{
 	
 	public EstadoHKSubconj(int _id, HashSet<ExpressionBase> _ex) {
 		super(_id);
-		this.equiv = new HashSet<Integer>();
+		this.equiv = new HashSet<>();
 		this.ex = _ex;
 		equiv.add(_id);
 	}
 	
 	public EstadoHKSubconj(int id, HashSet<ExpressionBase> _ex, boolean ini, boolean fin) {
 		super(id, ini, fin);
-		this.equiv = new HashSet<Integer>();
+		this.equiv = new HashSet<>();
 		equiv.add(id);
 		this.ex = _ex;
 	}

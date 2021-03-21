@@ -1,8 +1,7 @@
-package algoritmo;
+package automata;
 
 import java.util.HashSet;
 
-import automata.Estado;
 import objects.ExpressionBase;
 
 public class EstadoHK extends Estado {
@@ -11,14 +10,14 @@ public class EstadoHK extends Estado {
 	
 	public EstadoHK(int _id, ExpressionBase _ex) {
 		super(_id);
-		this.equiv = new HashSet<Integer>();
+		this.equiv = new HashSet<>();
 		this.ex = _ex;
 		equiv.add(_id);
 	}
 	
 	public EstadoHK(int id, ExpressionBase _ex, boolean ini, boolean fin) {
 		super(id, ini, fin);
-		this.equiv = new HashSet<Integer>();
+		this.equiv = new HashSet<>();
 		equiv.add(id);
 		this.ex = _ex;
 	}

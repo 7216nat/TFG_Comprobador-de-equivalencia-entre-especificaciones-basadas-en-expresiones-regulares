@@ -24,19 +24,16 @@ public class Lambdaa extends Lenguaje {
 
 	@Override
 	public ExpressionBase cloneMe() {
-		// TODO Auto-generated method stub
 		return new Lambdaa();
 	}
 
 	@Override
 	public boolean match(String string) {
-		// TODO Auto-generated method stub
 		return Pattern.matches(_regex, string);
 	}
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		int ini = id.nextId(), acept = id.nextId();
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
@@ -45,32 +42,28 @@ public class Lambdaa extends Lenguaje {
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		int ini = id.nextId();
-		AutomataTS aut = new AutomataTS(ini, ini);
-		return aut;
+		return new AutomataTS(ini, ini);
 	}
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		// TODO Auto-generated method stub
 		BerrySethiNode bs = new BerrySethiNode();
 		
 		bs.setEmpty(true);
 		bs.setSim(_sim);
 		bs.setTipo(getType());
 		
-		bs.setFirst(new HashSet<Integer>());
+		bs.setFirst(new HashSet<>());
 		
-		bs.setLast(new HashSet<Integer>());
+		bs.setLast(new HashSet<>());
 		
 		return bs;
 	}
 	
 	@Override
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
-		// TODO Auto-generated method stub
-		return;
+		// nothing to add
 	}
 	
 	@Override
@@ -80,13 +73,15 @@ public class Lambdaa extends Lenguaje {
 
 	@Override
 	public boolean equals(Object o) {
-		 if (o == this) return true;
+		 if (o == this) {
+			 return true;
+		 }
 	     if (!(o instanceof Lambdaa)) {
 	            return false;
 	     }
 	     return true;
 	}
-
+	
 	@Override
 	public String getVal() {
 		return this._sim;
@@ -98,7 +93,7 @@ public class Lambdaa extends Lenguaje {
 	}
 	@Override
 	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
+		HashSet<ExpressionBase> ret = new HashSet<>();
 		ret.add(new Vacio());
 		return ret;
 	}

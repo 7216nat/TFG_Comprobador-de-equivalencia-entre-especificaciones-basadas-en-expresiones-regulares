@@ -13,7 +13,7 @@ public class Union extends ExpressionBase {
 	
 	//private static final String _regex = "\\w+[+][\\w\\+\\*\\(\\)]+";
 	private static final String _regex = "|";
-	private static final String union = "|";
+	private static final String unionS = "|";
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
 	
@@ -37,23 +37,20 @@ public class Union extends ExpressionBase {
 	
 	@Override
 	public String toString() {
-		return  "( " + _e1.toString() + union +  _e2.toString() + " )";
+		return  "( " + _e1.toString() + unionS +  _e2.toString() + " )";
 	}
 
 	@Override
 	public ExpressionBase cloneMe() {
-		// TODO Auto-generated method stub
 		return new Union();
 	}
 
 	@Override
 	public boolean match(String string) {
-		// TODO Auto-generated method stub
 		return false; //Pattern.matches(_regex, string);
 	}
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		int ini = id.nextId(), acept, iniPrev1, iniPrev2;
 		ArrayList<Estado> aceptPrev1, aceptPrev2;
 		AutomataTS a1 = _e1.ThomsonAFN(id);
@@ -88,7 +85,6 @@ public class Union extends ExpressionBase {
 	}
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		// TODO Auto-generated method stub
 		Estado iniPrev1, iniPrev2;
 		AutomataTS a1 = _e1.ThomsonSimplAFN(id);
 		AutomataTS a2 = _e2.ThomsonSimplAFN(id);
@@ -112,21 +108,20 @@ public class Union extends ExpressionBase {
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		// TODO Auto-generated method stub
-		HashSet<Integer> tmp = new HashSet<Integer>();
+		HashSet<Integer> tmp = new HashSet<>();
 		BerrySethiNode ll = _e1.createBerrySethiNode(id);
 		BerrySethiNode rl = _e2.createBerrySethiNode(id);
 		BerrySethiNode bs = new BerrySethiNode(ll, rl);
 		
 		bs.setEmpty(ll.empty || rl.empty);
-		bs.setSim(union);
+		bs.setSim(unionS);
 		bs.setTipo(getType());
 		
 		tmp.addAll(ll.first);
 		tmp.addAll(rl.first);
 		bs.setFirst(tmp);
 		
-		tmp = new HashSet<Integer>();
+		tmp = new HashSet<>();
 		tmp.addAll(rl.last);	
 		tmp.addAll(ll.last);
 		bs.setLast(tmp);
@@ -142,14 +137,16 @@ public class Union extends ExpressionBase {
 	}
 	@Override
 	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		_e1.getSimbolosRangos(set, array, inis, fins);
 		_e2.getSimbolosRangos(set, array, inis, fins);
 	}
 	
 	@Override
 	public boolean equals(Object o) {
-		 if (o == this) return true;
+		 if (o == this) {
+			 return true;
+		 }
 	     if (!(o instanceof Union)) {
 	            return false;
 	     }
@@ -163,7 +160,6 @@ public class Union extends ExpressionBase {
 	}
 	@Override
 	public ExpressionBase buildTreeDefinitivo() {
-		// TODO Auto-generated method stub
 		_e1 = _e1.buildTreeDefinitivo();
 		_e2 = _e2.buildTreeDefinitivo();
 		return this;
@@ -183,12 +179,12 @@ public class Union extends ExpressionBase {
 		else if (t2 instanceof Vacio)
 			newEx = t1;
 		else {
-			if (!t1.equals(t2))
+			if (!t1.equals(t2)) {
 				if (t1.menorQue(t2))
 					newEx = new Union(t1, t2);
 				else
 					newEx = new Union(t2, t1);
-			else
+			} else
 				newEx = t1;
 		}
 
@@ -196,8 +192,7 @@ public class Union extends ExpressionBase {
 	}
 	@Override
 	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<ExpressionBase>();
-		ExpressionBase newEx;
+		HashSet<ExpressionBase> ret = new HashSet<>();
 		HashSet<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
 		HashSet<ExpressionBase> t2 = this._e2.derivadaParcial(sim);
 		ret.addAll(t1);
