@@ -1,14 +1,16 @@
 package test;
 
+import java.awt.EventQueue;
 import java.util.ArrayList;
 import objects.*;
-import control.Controller;;
+import control.Controller;
+import gui.Principal;;
 
 public class Main {
 
 	// Test paso de String a expresion regular
 	public static void main(String[] args) {
-		
+		/*
 		// Estos son equivalentes
 		ArrayList<String> strList = new ArrayList<>();
 		ArrayList<String> strList2 = new ArrayList<>();
@@ -89,6 +91,18 @@ public class Main {
 		ctl.setERs(strList, strList2);
 		ctl.setAlgoritmo("berrysethi");
 		ctl.run();
+*/
+		Controller ctrl = new Controller();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Principal ventana = new Principal(ctrl);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 	}
 	

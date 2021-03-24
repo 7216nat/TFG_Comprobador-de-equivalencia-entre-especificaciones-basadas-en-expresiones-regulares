@@ -57,9 +57,15 @@ public class Algoritmos {
 		afd2.cambioIni(iniAFD2);
 
 		if (iniAFD1.esFin() && !iniAFD2.esFin()) {
-			return "&, final aut1, nofinal aut2";
+			return ("Cadena &\n"
+					+ "Aceptada por lenguaje1\n"
+					+ "Rechazada por lenguaje2");
+//			return "&, final aut1, nofinal aut2";
 		} else if (!iniAFD1.esFin() && iniAFD2.esFin()) {
-			return "&, nofinal aut1, final aut2";
+			return ("Cadena &\n"
+					+ "Rechazada por lenguaje1\n"
+					+ "Aceptada por lenguaje2");
+//			return "&, nofinal aut1, final aut2";
 		}
 
 		aExplorar.put(iniAFD1.getId(), iniAFD1);
@@ -88,20 +94,38 @@ public class Algoritmos {
 				// Si hay diferencias, muestro un error
 				if (tr1 && !tr2) {
 					if (afd1.esFinal(dest1))
-						return (comparo.getSimbolos() + s + ", final TP, error");
+						return ("Cadena "+comparo.getSimbolos()+s+"\n"
+								+ "Aceptada por lenguaje1\n"
+								+ "Rechazada por lenguaje2");
+//						return (comparo.getSimbolos() + s + ", final TP, error");
 					else
-						return (comparo.getSimbolos() + s + ", no final TP, error");
+						return ("Cadena "+comparo.getSimbolos()+s+"\n"
+								+ "Rechazada por lenguaje1\n"
+								+ "Aceptada por lenguaje2");
+//						return (comparo.getSimbolos() + s + ", no final TP, error");
 				}
 
 				else if (!tr1 && tr2) {
 					if (afd2.esFinal(dest2))
-						return (comparo.getSimbolos() + s + ", final TP2, error");
+						return ("Cadena "+comparo.getSimbolos()+s+"\n"
+								+ "Aceptada por lenguaje2\n"
+								+ "Error");
+//						return (comparo.getSimbolos() + s + ", final TP2, error");
 					else
-						return (comparo.getSimbolos() + s + ", no final TP2, error");
+						return ("Cadena "+comparo.getSimbolos()+s+"\n"
+								+ "Rechazada por lenguaje2\n"
+								+ "Error");
+//						return (comparo.getSimbolos() + s + ", no final TP2, error");
 				} else if (tr1 && tr2 && afd1.esFinal(dest1) && !afd2.esFinal(dest2)) {
-					return (comparo.getSimbolos() + s + ", final TP, no final TP2");
+					return ("Cadena "+comparo.getSimbolos()+s+"\n"
+							+ "Aceptada por lenguaje1\n"
+							+ "Rechazada por lenguaje2");
+//					return (comparo.getSimbolos() + s + ", final TP, no final TP2");
 				} else if (tr1 && tr2 && !afd1.esFinal(dest1) && afd2.esFinal(dest2)) {
-					return (comparo.getSimbolos() + s + ", no final TP, final TP2");
+					return ("Cadena "+comparo.getSimbolos()+s+"\n"
+							+ "Rechazada por lenguaje1\n"
+							+ "Aceptada por lenguaje2");
+//					return (comparo.getSimbolos() + s + ", no final TP, final TP2");
 				}
 				if (tr1 && tr2) {
 					EstadoTh estado1 = (EstadoTh) afd1.getEstado(dest1);
@@ -238,9 +262,13 @@ public class Algoritmos {
 		Queue<SimEsEs> aComparar = new LinkedList<>();
 
 		if (afd1.getIni().esFin() && !afd2.getIni().esFin())
-			return ("&, final aut1, no final aut2");
+			return ("Cadena &\n"
+					+ "Aceptada por lenguaje1\n"
+					+ "Rechazada por lenguaje2");
 		else if (!afd1.getIni().esFin() && afd2.getIni().esFin())
-			return ("&, no final aut1, final aut2");
+			return ("Cadena &\n"
+					+ "Rechazada por lenguaje1\n"
+					+ "Aceptada por lenguaje2");
 
 		aComparar.add(new SimEsEs(afd1.getIni().getId(), afd2.getIni().getId(), ""));
 
@@ -289,9 +317,15 @@ public class Algoritmos {
 				es2.addTrans(tr2);
 
 				if (estadonuevo1.esFin() && !estadonuevo2.esFin())
-					return (nodo.getSimbolos() + s + ", final aut1, no final aut2");
+					return ("Cadena " + nodo.getSimbolos()+s+"\n"
+							+ "Aceptada por lenguaje1\n"
+							+ "Rechazada por lenguaje2");
+//					return (nodo.getSimbolos() + s + ", final aut1, no final aut2");
 				if (!estadonuevo1.esFin() && estadonuevo2.esFin())
-					return (nodo.getSimbolos() + s + ", no final aut1, final aut2");
+					return ("Cadena "+nodo.getSimbolos()+s+"\n"
+							+ "Rechazada por lenguaje1\n"
+							+ "Aceptada por lenguaje2");
+//					return (nodo.getSimbolos() + s + ", no final aut1, final aut2");
 
 				if (!estadonuevo1.same(estadonuevo2)) {
 					SimEsEs c = new SimEsEs(estadonuevo1.getId(), estadonuevo2.getId(), nodo.getSimbolos() + s);
@@ -333,9 +367,15 @@ public class Algoritmos {
 		Queue<SimEsEs> aComparar = new LinkedList<>();
 		
 		if(afd1.getIni().esFin() && !afd2.getIni().esFin())
-			return ("&, final aut1, no final aut2");
+			return ("Cadena &\n"
+					+ "Aceptada por lenguaje1\n"
+					+ "Rechazada por lenguaje2");
+//			return ("&, final aut1, no final aut2");
 		else if (!afd1.getIni().esFin() && afd2.getIni().esFin())
-			return ("&, no final aut1, final aut2");
+			return ("Cadena &\n"
+					+ "Rechazada por lenguaje1\n"
+					+ "Aceptada por lenguaje2");
+//			return ("&, no final aut1, final aut2");
 
 		aComparar.add(new SimEsEs(afd1.getIni().getId(), afd2.getIni().getId(), ""));
 		
@@ -384,9 +424,15 @@ public class Algoritmos {
 				es2.addTrans(tr2);
 				
 				if (estadoNuevo1.esFin() && !estadoNuevo2.esFin())
-					return (nodo.getSimbolos() + s + ", final aut1, no final aut2");
+					return ("Cadena "+nodo.getSimbolos()+s+"\n"
+							+ "Aceptada por lenguaje1\n"
+							+ "Rechazada por lenguaje2");
+//					return (nodo.getSimbolos() + s + ", final aut1, no final aut2");
 				if (!estadoNuevo1.esFin() && estadoNuevo2.esFin())
-					return (nodo.getSimbolos() + s + ", no final aut1, final aut2");
+					return ("Cadena "+nodo.getSimbolos()+s+"\n"
+							+ "Rechazada por lenguaje1\n"
+							+ "Aceptada por lenguaje2");
+//					return (nodo.getSimbolos() + s + ", no final aut1, final aut2");
 
 				if (!estadoNuevo1.same(estadoNuevo2)) {
 					SimEsEs c = new SimEsEs(estadoNuevo1.getId(), estadoNuevo2.getId(), nodo.getSimbolos() + s);
@@ -460,9 +506,15 @@ public class Algoritmos {
 		afd2.cambioIni(iniAFD2);
 
 		if (iniAFD1.esFin() && !iniAFD2.esFin()) {
-			return "&, final aut1, nofinal aut2";
+			return ("Cadena &\n"
+					+ "Aceptada por lenguaje1\n"
+					+ "Rechazada por lenguaje2");
+//			return "&, final aut1, nofinal aut2";
 		} else if (!iniAFD1.esFin() && iniAFD2.esFin()) {
-			return "&, nofinal aut1, final aut2";
+			return ("Cadena &\n"
+					+ "Rechazada por lenguaje1\n"
+					+ "Aceptada por lenguaje2");
+//			return "&, nofinal aut1, final aut2";
 		}
 
 		aExplorar.put(iniAFD1.getId(), iniAFD1);
@@ -491,20 +543,38 @@ public class Algoritmos {
 				// Si hay diferencias, muestro un error
 				if (tr1 && !tr2) {
 					if (afd1.esFinal(dest1))
-						return (comparo.getSimbolos() + s + ", final TP, error");
+						return ("Cadena "+comparo.getSimbolos()+s+"\n"
+								+ "Aceptada por lenguaje1\n"
+								+ "Error");
+//						return (comparo.getSimbolos() + s + ", final TP, error");
 					else
-						return (comparo.getSimbolos() + s + ", no final TP, error");
+						return ("Cadena "+comparo.getSimbolos()+s+"\n"
+								+ "Rechazada por lenguaje1\n"
+								+ "Error");
+//						return (comparo.getSimbolos() + s + ", no final TP, error");
 				}
 
 				else if (!tr1 && tr2) {
 					if (afd2.esFinal(dest2))
-						return (comparo.getSimbolos() + s + ", final TP2, error");
+						return ("Cadena "+comparo.getSimbolos()+s+"\n"
+								+ "Aceptada por lenguaje2\n"
+								+ "Error");
+//						return (comparo.getSimbolos() + s + ", final TP2, error");
 					else
-						return (comparo.getSimbolos() + s + ", no final TP2, error");
+						return ("Cadena "+comparo.getSimbolos()+s+"\n"
+								+ "Rechazada por lenguaje2\n"
+								+ "Error");
+//						return (comparo.getSimbolos() + s + ", no final TP2, error");
 				} else if (tr1 && tr2 && afd1.esFinal(dest1) && !afd2.esFinal(dest2)) {
-					return (comparo.getSimbolos() + s + ", final TP, no final TP2");
+					return ("Cadena "+comparo.getSimbolos()+s+"\n"
+							+ "Aceptada por lenguaje1\n"
+							+ "Rechazada por lenguaje2");
+//					return (comparo.getSimbolos() + s + ", final TP, no final TP2");
 				} else if (tr1 && tr2 && !afd1.esFinal(dest1) && afd2.esFinal(dest2)) {
-					return (comparo.getSimbolos() + s + ", no final TP, final TP2");
+					return ("Cadena "+comparo.getSimbolos()+s+"\n"
+							+ "Rechazada por lenguaje1\n"
+							+ "Aceptada por lenguaje2");
+//					return (comparo.getSimbolos() + s + ", no final TP, final TP2");
 				}
 				if (tr1 && tr2) {
 					EstadoTh estado1 = (EstadoTh) afd1.getEstado(dest1);

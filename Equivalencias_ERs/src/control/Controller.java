@@ -21,7 +21,7 @@ import parser.String_ref;
 
 public class Controller {
 	
-	private static String _defaultAlgoritmo = "thomson";
+	private static String _defaultAlgoritmo = "Thompson";
 	
 	private AlgoritmoExec _algoritmo = null;
 	private ModeExecution _mode = null;
@@ -35,11 +35,12 @@ public class Controller {
 	public Controller() {	
 		setAlgoritmo(_defaultAlgoritmo);
 	}
+
 	
 	private enum AlgoritmoExec {
-		THOMSON("thomson", "Algoritmo Thomson"), SEGUIDOR("seguidor", "Algoritmo seguidores"),
-		BERRYSETHI("berrysethi", "Algoritmo Berry-Sethi"), DERIVADAS("derivadas", "Algoritmo derivadas"),
-		DERIVADASPARCIALES("derivadaspar", "Algritmo derivadas parciales");
+		THOMSON("Thompson", "Algoritmo Thomson"), SEGUIDOR("Seguidores", "Algoritmo seguidores"),
+		BERRYSETHI("Berry-Sethi", "Algoritmo Berry-Sethi"), DERIVADAS("Derivadas", "Algoritmo derivadas"),
+		DERIVADASPARCIALES("Derivadas parciales", "Algritmo derivadas parciales");
 
 		private String runAlgoritmo;
 		private String descMode;
@@ -60,7 +61,7 @@ public class Controller {
 	
 	private enum ModeExecution {
 		ALLALL("allall", "Allall Mode"), PARCIAL("parcial", "Parcial Mode"),
-		SELECTED("selected", "Selected Mode");
+		SELECTED("Seleccionados", "Selected Mode");
 
 		private String runMode;
 		private String descMode;
@@ -130,31 +131,31 @@ public class Controller {
 		}
 	}
 	
-	private void thomsonExec() {
-		String resul = Algoritmos.detHopKarp(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
-		System.out.println(resul);
+	private String thomsonExec() {
+		return Algoritmos.detHopKarp(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
+//		System.out.println(resul);
 	}
 	
-	private void seguidoresExec() {
-		System.out.println("PRUEBA SEGUIDORES");
-		String resul = Algoritmos.detHopKarpSinLambda(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
-		System.out.println(resul);
+	private String seguidoresExec() {
+//		System.out.println("PRUEBA SEGUIDORES");
+		return Algoritmos.detHopKarpSinLambda(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
+//		System.out.println(resul);
 	}
 	
-	private void derivadaExec() {
-		System.out.println("PRUEBAS DERIVADAS");
-		String resul = Algoritmos.equivalenciaDer(_e1, _e2, _state, _simList);
-		System.out.println(resul);
+	private String derivadaExec() {
+//		System.out.println("PRUEBAS DERIVADAS");
+		return  Algoritmos.equivalenciaDer(_e1, _e2, _state, _simList);
+//		System.out.println(resul);
 	}
 	
-	private void derivadasParExec() {
-		System.out.println("PRUEBAS DERIVADAS PARCIALES");
-		String resul = Algoritmos.equivalenciaDerPar(_e1, _e2, _state, _simList);
-		System.out.println(resul);
+	private String derivadasParExec() {
+//		System.out.println("PRUEBAS DERIVADAS PARCIALES");
+		return Algoritmos.equivalenciaDerPar(_e1, _e2, _state, _simList);
+//		System.out.println(resul);
 	}
 	
-	private void berrySethiExec() {
-		System.out.println("PRUEBAS BERRY-SETHI");
+	private String berrySethiExec() {
+//		System.out.println("PRUEBAS BERRY-SETHI");
 		
 		_state = new IdEstado();
 		ArrayList<BerrySethiNode> states = new ArrayList<>();
@@ -170,8 +171,8 @@ public class Controller {
 		bsn.buildEstados(states, new HashSet<>());
 		Automata a2 = Algoritmos.buildBerrySethiAutomata(states, bsn);
 		
-		String resul = Algoritmos.detHopKarp(a1, a2, _state, _simList);
-		System.out.println(resul);
+		return Algoritmos.detHopKarp(a1, a2, _state, _simList);
+		
 	}
 	
 	private void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis,
@@ -199,27 +200,39 @@ public class Controller {
 		}
 	}
 	
-	public void run() {
+	public void setMode(String m) {
+		String modo = m == null ? _defaultAlgoritmo: m;
+		for (ModeExecution ae : ModeExecution.values()) {
+			if (modo.equalsIgnoreCase(ae.getMode())) {
+				_mode = ae;
+				break;
+			}
+		}
+	}
+	
+	public String run() {
 		switch(_algoritmo) {
 		case THOMSON:
-			thomsonExec();
-			break;
+			return thomsonExec();
 		case SEGUIDOR:
-			seguidoresExec();
-			break;
+			return seguidoresExec();
 		case DERIVADAS:
-			derivadaExec();
-			break;
+			return derivadaExec();
 		case DERIVADASPARCIALES:
-			derivadasParExec();
-			break;
+			return derivadasParExec();
 		case BERRYSETHI:
-			berrySethiExec();
-			break;
+			return berrySethiExec();
 		default:
-			thomsonExec();
-			break;
+			return thomsonExec();
 		}
+	}
+	
+	public String compEquiv(ArrayList<String> s1, ArrayList<String> s2,
+			String algor, String mode) {
+		setERs(s1, s2);
+		setAlgoritmo(algor);
+		setMode(mode);
+		return run();
 	}
 
 }
