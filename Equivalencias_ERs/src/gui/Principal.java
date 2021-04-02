@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 
@@ -12,14 +10,9 @@ import javax.swing.JComboBox;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JLabel;
-import java.awt.Choice;
 import javax.swing.JList;
-import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
-import javax.swing.JScrollBar;
-import java.awt.Window.Type;
 import javax.swing.UIManager;
 
 import control.Controller;

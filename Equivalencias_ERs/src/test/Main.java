@@ -79,10 +79,12 @@ public class Main {
 //		strList.add("(cb*c|cb*b)*");
 //		strList2.add("(cc)*|(cc)*(cb)(b|c)*");
 //		strList.add("[a-cde-tx]*");
-//		strList2.add("[a-bcd-tx]*");
+		strList2.add("[a-bcd-tx]*");
 		strList.add("[a-c]|[d-h]");
 		strList2.add("a|b|[c-h]");
 		strList.add("%|gh");
+		strList2.add("%abc|gh");
+		strList2.add("%abc|gh");
 		strList2.add("%abc|gh");
 
 		// recibe como parametros o entradas dos listas de ER y el algritmo a aplicarles+
@@ -90,8 +92,9 @@ public class Main {
 		Controller ctl = new Controller();
 		ctl.setERs(strList, strList2);
 		ctl.setAlgoritmo("berrysethi");
-		ctl.run();
-*/
+		ctl.setMode("parcial");
+		System.out.println(ctl.run());
+		*/
 		Controller ctrl = new Controller();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

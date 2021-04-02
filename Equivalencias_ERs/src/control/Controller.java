@@ -10,10 +10,12 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import algoritmo.Algoritmos;
+import algoritmo.Equivalencia;
 import automata.Automata;
 import automata.IdEstado;
 import objects.BerrySethiNode;
 import objects.ExpressionBase;
+import objects.RangoCharacter;
 import objects.Union;
 import objects.UnionRangos;
 import parser.ParserER;
@@ -21,10 +23,14 @@ import parser.String_ref;
 
 public class Controller {
 	
-	private static String _defaultAlgoritmo = "Thompson";
+	private static String _defaultAlgoritmo = "thompson";
+	private static String _defaultMode = "todos";
 	
 	private AlgoritmoExec _algoritmo = null;
 	private ModeExecution _mode = null;
+	
+	private ArrayList<ExpressionBase> _elist1 = null;
+	private ArrayList<ExpressionBase> _elist2 = null;
 	
 	private ExpressionBase _e1 = null;
 	private ExpressionBase _e2 = null;
@@ -32,15 +38,16 @@ public class Controller {
 	private IdEstado _state = null;
 	private ArrayList<String> _simList = null;
 	
-	public Controller() {	
+	public Controller() {
 		setAlgoritmo(_defaultAlgoritmo);
+		setMode(_defaultMode);
 	}
 
 	
 	private enum AlgoritmoExec {
-		THOMSON("Thompson", "Algoritmo Thomson"), SEGUIDOR("Seguidores", "Algoritmo seguidores"),
-		BERRYSETHI("Berry-Sethi", "Algoritmo Berry-Sethi"), DERIVADAS("Derivadas", "Algoritmo derivadas"),
-		DERIVADASPARCIALES("Derivadas parciales", "Algritmo derivadas parciales");
+		THOMSON("thompson", "Algoritmo Thomson"), SEGUIDOR("seguidores", "Algoritmo seguidores"),
+		BERRYSETHI("berry-sethi", "Algoritmo Berry-Sethi"), DERIVADAS("derivadas", "Algoritmo derivadas"),
+		DERIVADASPARCIALES("derivadas parciales", "Algritmo derivadas parciales");
 
 		private String runAlgoritmo;
 		private String descMode;
@@ -60,8 +67,8 @@ public class Controller {
 	}
 	
 	private enum ModeExecution {
-		ALLALL("allall", "Allall Mode"), PARCIAL("parcial", "Parcial Mode"),
-		SELECTED("Seleccionados", "Selected Mode");
+		TODOS("todos", "Allall Mode"), UNOAUNO("uno a uno", "UnoAUno Mode"),
+		SELECTED("seleccionados", "Selected Mode");
 
 		private String runMode;
 		private String descMode;
@@ -83,45 +90,32 @@ public class Controller {
 	private void parser(ArrayList<String> listReg1, ArrayList<String> listReg2) {
 		// variables globales en dos expresiones
 		_state = new IdEstado();
+		_elist1 = new ArrayList<>();
+		_elist2 = new ArrayList<>();
 		Set<String> simbolosSet = new HashSet<>();
 		SortedSet<Character> inis = new TreeSet<>();
 		SortedSet<Character> fins = new TreeSet<>();
 		ArrayList<UnionRangos> rangos = new ArrayList<>();
 		ExpressionBase er;
-		Deque<ExpressionBase> ers;
-		// parse expresion 1
-		ExpressionBase er1;
-		ers = new LinkedList<>();
+		// parse lista de expresiones 1
 		for (String str: listReg1) {
 			ParserER parser = new ParserER(new String_ref(str));
 			er = parser.parse();
 			er.getSimbolosRangos(simbolosSet, rangos, inis, fins);
-			ers.add(er);
-		}
-		er1 = ers.pop();
-		while(!ers.isEmpty()) {
-			er1 = new Union(ers.pop(), er1);
+			_elist1.add(er);
 		}
 
-		// parse expresion 2
-		ExpressionBase er2;
-		ers = new LinkedList<>();
+		// parse lista de expresiones 2
 		for (String str: listReg2) {
 			ParserER parser = new ParserER(new String_ref(str));
 			er = parser.parse();
 			er.getSimbolosRangos(simbolosSet, rangos, inis, fins);
-			ers.add(er);
+			_elist2.add(er);
 		}
-		er2 = ers.pop();
-		while(!ers.isEmpty()) {
-			er2 = new Union(ers.pop(), er2);
-		}
+
 		// interseccion y y obtener los nuevos simbolos
 		intersecUR(simbolosSet, rangos, inis, fins);
 
-		// quitar unionRango del arbol
-		_e1 = er1.buildTreeDefinitivo();
-		_e2 = er2.buildTreeDefinitivo();
 		
 		_simList = new ArrayList<>();
 		Iterator<String> it = simbolosSet.iterator();
@@ -131,30 +125,39 @@ public class Controller {
 		}
 	}
 	
-	private String thomsonExec() {
+	private ExpressionBase unionListaERs(ArrayList<ExpressionBase> elist) {
+		Iterator<ExpressionBase> it = elist.iterator();
+		ExpressionBase er = it.next();
+		while (it.hasNext()) {
+			er = new Union(er, it.next());
+		}
+		er = er.buildTreeDefinitivo();
+		return er;
+	}
+	private Equivalencia thomsonExec() {
 		return Algoritmos.detHopKarp(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
 //		System.out.println(resul);
 	}
 	
-	private String seguidoresExec() {
+	private Equivalencia seguidoresExec() {
 //		System.out.println("PRUEBA SEGUIDORES");
 		return Algoritmos.detHopKarpSinLambda(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
 //		System.out.println(resul);
 	}
 	
-	private String derivadaExec() {
+	private Equivalencia derivadaExec() {
 //		System.out.println("PRUEBAS DERIVADAS");
 		return  Algoritmos.equivalenciaDer(_e1, _e2, _state, _simList);
 //		System.out.println(resul);
 	}
 	
-	private String derivadasParExec() {
+	private Equivalencia derivadasParExec() {
 //		System.out.println("PRUEBAS DERIVADAS PARCIALES");
 		return Algoritmos.equivalenciaDerPar(_e1, _e2, _state, _simList);
 //		System.out.println(resul);
 	}
 	
-	private String berrySethiExec() {
+	private Equivalencia berrySethiExec() {
 //		System.out.println("PRUEBAS BERRY-SETHI");
 		
 		_state = new IdEstado();
@@ -201,16 +204,16 @@ public class Controller {
 	}
 	
 	public void setMode(String m) {
-		String modo = m == null ? _defaultAlgoritmo: m;
-		for (ModeExecution ae : ModeExecution.values()) {
-			if (modo.equalsIgnoreCase(ae.getMode())) {
-				_mode = ae;
+		String modo = m == null ? _defaultMode: m;
+		for (ModeExecution me : ModeExecution.values()) {
+			if (modo.equalsIgnoreCase(me.getMode())) {
+				_mode = me;
 				break;
 			}
 		}
 	}
 	
-	public String run() {
+	private Equivalencia compare() {
 		switch(_algoritmo) {
 		case THOMSON:
 			return thomsonExec();
@@ -227,11 +230,51 @@ public class Controller {
 		}
 	}
 	
+	private String emparejar() {
+		String ret = "";
+		Iterator<ExpressionBase> it1 = _elist1.iterator();
+		while (it1.hasNext()) {
+			_e1 = it1.next();
+			Iterator<ExpressionBase> it2 = _elist2.iterator();
+			while (it2.hasNext()) {
+				_e2 = it2.next(); 
+				if (compare().isEq()) {
+					ret += _e1.toString() + " equivalente a " + _e2.toString() + "\n"; 
+					it2.remove();
+					it1.remove();
+					break;
+				}
+			}
+		}
+		
+		String unpair1 = "\nSin emparejar de la lista 1:\n";
+		String unpair2 = "\nSin emparejar de la lista 2:\n"; 
+		for (ExpressionBase er: _elist1) unpair1 += er.toString() + "\n";
+		for (ExpressionBase er: _elist2) unpair2 += er.toString() + "\n";
+		if (!_elist1.isEmpty()) ret += unpair1;
+		if (!_elist2.isEmpty()) ret += unpair2;
+		return ret;
+	}
+	public String run() {
+		switch(_mode) {
+		case TODOS:
+		case SELECTED:
+			_e1 = unionListaERs(_elist1);
+			_e2 = unionListaERs(_elist2);
+			return compare().getMsg();
+		case UNOAUNO:
+			return emparejar();
+		default:
+			break;
+		}
+		return "Something went wrong";
+	}
+	
 	public String compEquiv(ArrayList<String> s1, ArrayList<String> s2,
 			String algor, String mode) {
-		setERs(s1, s2);
 		setAlgoritmo(algor);
 		setMode(mode);
+		setERs(s1, s2);
 		return run();
 	}
 
