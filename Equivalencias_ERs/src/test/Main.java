@@ -1,8 +1,6 @@
 package test;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
-import objects.*;
 import control.Controller;
 import gui.Principal;;
 
@@ -97,6 +95,7 @@ public class Main {
 		*/
 		Controller ctrl = new Controller();
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Principal ventana = new Principal(ctrl);

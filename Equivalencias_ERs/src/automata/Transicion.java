@@ -17,6 +17,7 @@ public class Transicion {
 		return symbol;
 	}
 
+	@Override
 	public String toString() {
 		return ("Viaja a " + estadoF + " por " + symbol);
 	}

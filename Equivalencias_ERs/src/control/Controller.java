@@ -1,10 +1,8 @@
 package control;
 
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -15,7 +13,6 @@ import automata.Automata;
 import automata.IdEstado;
 import objects.BerrySethiNode;
 import objects.ExpressionBase;
-import objects.RangoCharacter;
 import objects.Union;
 import objects.UnionRangos;
 import parser.ParserER;
@@ -89,7 +86,6 @@ public class Controller {
 	
 	private void parser(ArrayList<String> listReg1, ArrayList<String> listReg2) {
 		// variables globales en dos expresiones
-		_state = new IdEstado();
 		_elist1 = new ArrayList<>();
 		_elist2 = new ArrayList<>();
 		Set<String> simbolosSet = new HashSet<>();
@@ -136,29 +132,21 @@ public class Controller {
 	}
 	private Equivalencia thomsonExec() {
 		return Algoritmos.detHopKarp(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
-//		System.out.println(resul);
 	}
 	
 	private Equivalencia seguidoresExec() {
-//		System.out.println("PRUEBA SEGUIDORES");
 		return Algoritmos.detHopKarpSinLambda(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
-//		System.out.println(resul);
 	}
 	
 	private Equivalencia derivadaExec() {
-//		System.out.println("PRUEBAS DERIVADAS");
 		return  Algoritmos.equivalenciaDer(_e1, _e2, _state, _simList);
-//		System.out.println(resul);
 	}
 	
 	private Equivalencia derivadasParExec() {
-//		System.out.println("PRUEBAS DERIVADAS PARCIALES");
 		return Algoritmos.equivalenciaDerPar(_e1, _e2, _state, _simList);
-//		System.out.println(resul);
 	}
 	
 	private Equivalencia berrySethiExec() {
-//		System.out.println("PRUEBAS BERRY-SETHI");
 		
 		_state = new IdEstado();
 		ArrayList<BerrySethiNode> states = new ArrayList<>();
@@ -214,6 +202,7 @@ public class Controller {
 	}
 	
 	private Equivalencia compare() {
+		_state = new IdEstado();
 		switch(_algoritmo) {
 		case THOMSON:
 			return thomsonExec();

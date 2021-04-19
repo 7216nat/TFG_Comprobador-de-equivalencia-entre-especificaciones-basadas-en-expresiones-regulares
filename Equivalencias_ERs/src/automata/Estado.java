@@ -171,6 +171,7 @@ public class Estado {
 	 * END Funciones añadidas en algoritmo de seguidores
 	 */
 	
+	@Override
 	public String toString() {
 		String salida = "";
 		trans.forEach(k -> System.out.print(k.getSymb() + " -> " + k.getEstadoDest() + "; "));
