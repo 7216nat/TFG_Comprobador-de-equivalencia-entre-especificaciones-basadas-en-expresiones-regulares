@@ -1,9 +1,8 @@
 package objects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.regex.Pattern;
 
 import automata.*;
@@ -14,11 +13,7 @@ public class Vacio extends Lenguaje {
 	private static final String CojVacio = "%";
 	
 	public Vacio() {
-		super(CojVacio, null, Tipo.VACIO);
-	}
-	
-	public Vacio(ExpressionBase padre) {
-		super(CojVacio, padre, Tipo.VACIO);
+		super(CojVacio, Tipo.VACIO);
 	}
 
 	@Override
@@ -59,8 +54,7 @@ public class Vacio extends Lenguaje {
 	}
 
 	@Override
-	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> sort,
-			SortedSet<Character> sortRango) {
+	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> sort, Set<Character> sortRango) {
 		// no needed
 	}
 	
@@ -86,8 +80,8 @@ public class Vacio extends Lenguaje {
 	}
 
 	@Override
-	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<>();
+	public Set<ExpressionBase> derivadaParcial(String sim) {
+		Set<ExpressionBase> ret = new HashSet<>();
 		ret.add(new Vacio());
 		return ret;
 	}

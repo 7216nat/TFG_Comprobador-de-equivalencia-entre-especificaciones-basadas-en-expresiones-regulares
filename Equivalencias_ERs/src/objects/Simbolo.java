@@ -1,9 +1,8 @@
 package objects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.regex.Pattern;
 
 import automata.*;
@@ -17,20 +16,16 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 	 * construtora por defecto
 	 */
 	public Simbolo() {
-		super(null, null, Tipo.SIMB);
+		super(null, Tipo.SIMB);
 	}
 
 	/**
 	 * constructora
 	 * 
-	 * @param er
+	 * @param er: simbolo
 	 */
 	public Simbolo(String er) {
-		super(er, null, Tipo.SIMB);
-	}
-
-	public Simbolo(ExpressionBase padre, String er) {
-		super(er, padre, Tipo.SIMB);
+		super(er, Tipo.SIMB);
 	}
 
 	@Override
@@ -74,7 +69,7 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		HashSet<Integer> tmp = new HashSet<>();
+		Set<Integer> tmp = new HashSet<>();
 		BerrySethiNode bs = new BerrySethiNode();
 		
 		bs.setEmpty(false);
@@ -98,8 +93,7 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 	}
 
 	@Override
-	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis,
-			SortedSet<Character> fins) {
+	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
 		set.add(_sim);
 		inis.add(_sim.charAt(0));
 		fins.add(_sim.charAt(0));
@@ -122,8 +116,8 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 			return new Vacio();
 	}
 	@Override
-	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<>();
+	public Set<ExpressionBase> derivadaParcial(String sim) {
+		Set<ExpressionBase> ret = new HashSet<>();
 		if(this._sim.equals(sim))
 				ret.add(new Lambdaa());
 		else ret.add(new Vacio());

@@ -29,6 +29,10 @@ public class Estado {
 		trans = new HashSet<>();
 	}
 	
+	/**
+	 * get id del estado
+	 * @return: id
+	 */
 	public int getId() {
 		return id;
 	}

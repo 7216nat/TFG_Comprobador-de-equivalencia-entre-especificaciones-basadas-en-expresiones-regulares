@@ -1,10 +1,9 @@
 package objects;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.SortedSet;
 
 import algoritmo.BerrySethi;
 import algoritmo.Derivada;
@@ -14,11 +13,9 @@ import algoritmo.Thomson;
 public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, DerivadaParcial {
 	
 	private Tipo type;
-	private ExpressionBase padre;
 
-	protected ExpressionBase(ExpressionBase padre, Tipo tipo) {
+	protected ExpressionBase(Tipo tipo) {
 		type = tipo;
-		this.padre = padre;
 	}
 
 	/**
@@ -46,20 +43,27 @@ public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, D
 		return exp;
 	}
 	
-	public abstract void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins);
+	/**
+	 * conseguir de la expresion siguiendo el orden de los parametros: 
+	 * 	1. set de simbolos
+	 *  2. lista de posiciones de URangos
+	 *  3. iniciales de los rangos
+	 *  4. finales de los rangos 
+	 * @param set: set de simbolos
+	 * @param array: lista de rangos
+	 * @param inis: inciales de rangos
+	 * @param fins: finales de rangos
+	 */
+	public abstract void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins);
 	
+	/**
+	 * deshacer los unionRangos
+	 * @return ExpressionBase final
+	 */
 	public abstract ExpressionBase buildTreeDefinitivo();
 	
 	public Tipo getType() {
 		return this.type;
-	}
-	
-	public void setPadre(ExpressionBase ex) {
-		this.padre = ex;
-	}
-	
-	public ExpressionBase getPadre() {
-		return this.padre;
 	}
 	
 	public boolean produceVacio() {
@@ -120,9 +124,9 @@ public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, D
 		}
 	}
 	
-	protected HashSet<ExpressionBase> concatAll(HashSet<ExpressionBase> e, ExpressionBase e2) {
+	protected Set<ExpressionBase> concatAll(Set<ExpressionBase> e, ExpressionBase e2) {
 		Iterator<ExpressionBase> it = e.iterator();
-		HashSet<ExpressionBase> ret = new HashSet<>();
+		Set<ExpressionBase> ret = new HashSet<>();
 		while(it.hasNext()) {
 			ExpressionBase aux = it.next();
 			if(!(aux instanceof Lambdaa) && !(aux instanceof Vacio))

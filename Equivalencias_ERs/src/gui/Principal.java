@@ -20,6 +20,7 @@ import control.Controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Principal {
 	private Controller ctrl;
@@ -84,18 +85,20 @@ public class Principal {
 		gbc_algLabel.gridy = 1;
 		frmComprobadorEquivalencia.getContentPane().add(algLabel, gbc_algLabel);
 
-		JList list1 = new JList();
+		JList<String> list1 = new JList<String>();
 		list1.setVisibleRowCount(5);
-		DefaultListModel leng1 = new DefaultListModel();
-		leng1.add(0, "abc");
-		leng1.add(1, "ab");
-		leng1.add(2, "cd");
-		leng1.add(3, "a|b");
-		leng1.add(4, "a*");
-		leng1.add(5, "a*b");
-		leng1.add(6, "bc");
-		leng1.add(7, "ab");
-		list1.setModel(leng1);
+		DefaultListModel<String> strList = new DefaultListModel<String>();
+		strList.add(0,"(0|1)*");
+		strList.add(1,"0(120)*12");
+		strList.add(2,"(0*1*)*");
+		strList.add(3,"(01|0)*0");
+		strList.add(4,"(a|b)*");
+		strList.add(5,"b*a*|a*b*");
+		strList.add(6,"(cb*c|cb*b)*");
+		strList.add(7,"[a-cde-tx]*");
+		strList.add(8,"[a-c]|[d-h]");
+		strList.add(9,"%|gh");
+		list1.setModel(strList);
 
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -107,15 +110,20 @@ public class Principal {
 		scrollPane.setViewportView(list1);
 		frmComprobadorEquivalencia.getContentPane().add(scrollPane, gbc_scrollPane);
 
-		JList list2 = new JList();
+		JList<String> list2 = new JList<String>();
 		list2.setVisibleRowCount(5);
-		DefaultListModel leng2 = new DefaultListModel();
-		leng2.add(0, "ab");
-		leng2.add(1, "bc");
-		leng2.add(2, "cd");
-		leng2.add(3, "a*");
-		leng2.add(4, "a?");
-		list2.setModel(leng2);
+		DefaultListModel<String> strList2 = new DefaultListModel<String>();
+		strList2.add(0,"01(201)*2");
+		strList2.add(1,"0*|1*");
+		strList2.add(2,"(0*1)*");
+		strList2.add(3,"0(10|0)*");
+		strList2.add(4,"a*(ba*)*");
+		strList2.add(5,"a*|b*");
+		strList2.add(6,"(cc)*|(cc)*(cb)(b|c)*");
+		strList2.add(7,"[a-bcd-tx]*");
+		strList2.add(8,"a|b|[c-h]");
+		strList2.add(9,"%abc|gh");
+		list2.setModel(strList2);
 
 		JScrollPane scrollPane2 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane2 = new GridBagConstraints();
@@ -127,7 +135,7 @@ public class Principal {
 		scrollPane2.setViewportView(list2);
 		frmComprobadorEquivalencia.getContentPane().add(scrollPane2, gbc_scrollPane2);
 
-		JComboBox algChoice = new JComboBox();
+		JComboBox<String> algChoice = new JComboBox<String>();
 		GridBagConstraints gbc_algChoice = new GridBagConstraints();
 		gbc_algChoice.anchor = GridBagConstraints.WEST;
 		gbc_algChoice.fill = GridBagConstraints.HORIZONTAL;
@@ -149,7 +157,7 @@ public class Principal {
 		gbc_metLabel.gridy = 3;
 		frmComprobadorEquivalencia.getContentPane().add(metLabel, gbc_metLabel);
 
-		JComboBox metChoice = new JComboBox();
+		JComboBox<String> metChoice = new JComboBox<String>();
 		GridBagConstraints gbc_metChoice = new GridBagConstraints();
 		gbc_metChoice.fill = GridBagConstraints.HORIZONTAL;
 		gbc_metChoice.anchor = GridBagConstraints.WEST;
@@ -198,16 +206,16 @@ public class Principal {
 				String algoritmo = (String) algChoice.getSelectedItem();
 				System.out.println(algoritmo);
 				int[] selInd1 = list1.getSelectedIndices();
-				ArrayList<String> expr1 = new ArrayList<String>();
+				List<String> expr1 = new ArrayList<>();
 				for (int i : selInd1) {
-					String aux = list1.getModel().getElementAt(i).toString();
+					String aux = list1.getModel().getElementAt(i);
 					expr1.add(aux);
 					System.out.println(aux);
 				}
 				int[] selInd2 = list2.getSelectedIndices();
-				ArrayList<String> expr2 = new ArrayList<String>();
+				List<String> expr2 = new ArrayList<>();
 				for (int i : selInd2) {
-					String aux = list2.getModel().getElementAt(i).toString();
+					String aux = list2.getModel().getElementAt(i);
 					expr2.add(aux);
 					System.out.println(aux);
 				}

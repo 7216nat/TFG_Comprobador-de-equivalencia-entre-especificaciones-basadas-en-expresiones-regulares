@@ -1,9 +1,8 @@
 package objects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 
 import automata.*;
 
@@ -18,25 +17,23 @@ public class Kleen extends ExpressionBase {
 	private ExpressionBase _e1;
 
 	public Kleen() {
-		super(null, Tipo.KLEEN);
+		super(Tipo.KLEEN);
 	}
 
 	public Kleen(ExpressionBase e1) {
-		super(null, Tipo.KLEEN);
+		super(Tipo.KLEEN);
 		_e1 = e1;		
 		if(_e1 instanceof Kleen) {
 			_e1 = ((Kleen)e1).getExpr();
 		}
-		_e1.setPadre(this);
 	}
 	
 	public Kleen(ExpressionBase padre, ExpressionBase e1) {
-		super(padre, Tipo.KLEEN);
+		super(Tipo.KLEEN);
 		_e1 = e1;
 		if(_e1 instanceof Kleen) {
 			_e1 = ((Kleen)e1).getExpr();
 		}
-		_e1.setPadre(this);
 	}
 
 	@Override
@@ -59,7 +56,7 @@ public class Kleen extends ExpressionBase {
 		int ini = id.nextId();
 		int acept;
 		Estado iniPrev;
-		ArrayList<Estado> aceptPrev;
+		List<Estado> aceptPrev;
 		AutomataTS a1 = _e1.ThomsonAFN(id);
 		
 		// deshago todos los estados iniciales y finales 
@@ -101,7 +98,7 @@ public class Kleen extends ExpressionBase {
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		HashSet<Integer> tmp = new HashSet<>();
+		Set<Integer> tmp = new HashSet<>();
 		BerrySethiNode ll = _e1.createBerrySethiNode(id);
 		BerrySethiNode bs = new BerrySethiNode(ll);
 		
@@ -120,7 +117,7 @@ public class Kleen extends ExpressionBase {
 	}
 	
 	@Override
-	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
 		_e1.getSimbolosRangos(set, array, inis, fins);
 	}
 
@@ -173,9 +170,9 @@ public class Kleen extends ExpressionBase {
 	}
 
 	@Override
-	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<>();
-		HashSet<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
+	public Set<ExpressionBase> derivadaParcial(String sim) {
+		Set<ExpressionBase> ret = new HashSet<>();
+		Set<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
 		ret.addAll(concatAll(t1, this));
 		return ret;
 	}

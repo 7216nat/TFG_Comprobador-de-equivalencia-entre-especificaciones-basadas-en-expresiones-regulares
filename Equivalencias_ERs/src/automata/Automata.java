@@ -5,15 +5,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
 public class Automata {
-	protected HashMap<Integer, Estado> aut;
+	protected Map<Integer, Estado> aut;
 	// referencias al estado inicial y final
 	protected Estado _ini;
-	protected ArrayList<Estado> _acept;
+	protected List<Estado> _acept;
 	// problemente necesitemos ArrayList para los estados de aceptacion
 
 	/**
@@ -77,7 +78,7 @@ public class Automata {
 	/**
 	 * Devuelve el mapa de estados del autómata
 	 */
-	public HashMap<Integer, Estado> getAutomata() {
+	public Map<Integer, Estado> getAutomata() {
 		return this.aut;
 	}
 
@@ -124,7 +125,7 @@ public class Automata {
 	 * Devuelve el id del destino de la transición que sale de estado con simbolo s
 	 */
 	public int getDestTrans(int estado, String s) {
-		HashSet<Transicion> tr = this.aut.get(estado).getTrans();
+		Set<Transicion> tr = this.aut.get(estado).getTrans();
 		Iterator<Transicion> trIt = tr.iterator();
 		boolean encontrado = false;
 		int destino = -1;
@@ -148,11 +149,10 @@ public class Automata {
 
 	/**
 	 * devuelve el conjunto de transiciones de estado id
-	 * 
-	 * @param id
-	 * @return
+	 * @param id: identificador
+	 * @return: set de transiciones
 	 */
-	public HashSet<Transicion> getTransEstado(int id) {
+	public Set<Transicion> getTransEstado(int id) {
 		return aut.get(id).getTrans();
 	}
 
@@ -187,8 +187,7 @@ public class Automata {
 
 	/**
 	 * devuelve estado inicial
-	 * 
-	 * @return
+	 * @return Int identificador
 	 */
 	public Estado getIni() {
 		return _ini;
@@ -196,10 +195,9 @@ public class Automata {
 
 	/**
 	 * devuelve lista de estados finales
-	 * 
-	 * @return
+	 * @return List<Estado>
 	 */
-	public ArrayList<Estado> getFin() {
+	public List<Estado> getFin() {
 		return _acept;
 	}
 
@@ -266,7 +264,10 @@ public class Automata {
 //	/*
 //	 * ----------------------End Funciones para Thomson Simplificado--------------------
 //	 */
-
+	
+	/**
+	 * mostrar todos los estados con sus transiciones
+	 */
 	public void show() {
 		// aut.forEach((k, v) -> + ));
 		for (Integer k : aut.keySet()) {
@@ -298,7 +299,13 @@ public class Automata {
 		}
 		return exist;
 	}
-
+	
+	/**
+	 * lambda cierre de un estado concreto
+	 * @param es: estado a aplicar
+	 * @param idst: id del nuevo estado que entrara en AFD
+	 * @return: estado nuevo
+	 */
 	public EstadoTh lambdaCierre(Estado es, int idst) {
 		// Creo el estado que entrará en el AFD
 		EstadoTh nuevo = new EstadoTh(idst);
@@ -333,12 +340,11 @@ public class Automata {
 	}
 
 	/**
-	 *hHace el lambdaCierre de todo el autómata en una sola función
-	 * 
+	 * Hace el lambdaCierre de todo el autómata en una sola función
 	 */
 	public void lambdaCierreCompleto() {
 		Set<Integer> tragados = new HashSet<>();
-		HashSet<Transicion> transiciones;
+		Set<Transicion> transiciones;
 		Queue<Estado> estados = new LinkedList<>();
 		Transicion tr;
 		// Recorro todos los estados

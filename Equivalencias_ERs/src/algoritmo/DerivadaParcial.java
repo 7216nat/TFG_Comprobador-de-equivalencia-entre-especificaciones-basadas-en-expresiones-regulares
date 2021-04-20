@@ -1,9 +1,9 @@
 package algoritmo;
 
-import java.util.HashSet;
+import java.util.Set;
 
 import objects.ExpressionBase;
 
 public interface DerivadaParcial {
-	public HashSet<ExpressionBase> derivadaParcial(String sim);
+	public Set<ExpressionBase> derivadaParcial(String sim);
 }

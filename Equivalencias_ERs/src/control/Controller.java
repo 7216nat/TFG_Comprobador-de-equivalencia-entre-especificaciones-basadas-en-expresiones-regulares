@@ -3,8 +3,8 @@ package control;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import algoritmo.Algoritmos;
@@ -26,14 +26,14 @@ public class Controller {
 	private AlgoritmoExec _algoritmo = null;
 	private ModeExecution _mode = null;
 	
-	private ArrayList<ExpressionBase> _elist1 = null;
-	private ArrayList<ExpressionBase> _elist2 = null;
+	private List<ExpressionBase> _elist1 = null;
+	private List<ExpressionBase> _elist2 = null;
 	
 	private ExpressionBase _e1 = null;
 	private ExpressionBase _e2 = null;
 	
 	private IdEstado _state = null;
-	private ArrayList<String> _simList = null;
+	private List<String> _simList = null;
 	
 	public Controller() {
 		setAlgoritmo(_defaultAlgoritmo);
@@ -84,14 +84,20 @@ public class Controller {
 		}
 	}
 	
-	private void parser(ArrayList<String> listReg1, ArrayList<String> listReg2) {
+	/**
+	 * A ser sustituido;
+	 * parsear los strings a ExpressionBase 
+	 * @param listReg1: list1
+	 * @param listReg2: list2
+	 */
+	private void parser(List<String> listReg1, List<String> listReg2) {
 		// variables globales en dos expresiones
 		_elist1 = new ArrayList<>();
 		_elist2 = new ArrayList<>();
 		Set<String> simbolosSet = new HashSet<>();
-		SortedSet<Character> inis = new TreeSet<>();
-		SortedSet<Character> fins = new TreeSet<>();
-		ArrayList<UnionRangos> rangos = new ArrayList<>();
+		Set<Character> inis = new TreeSet<>();
+		Set<Character> fins = new TreeSet<>();
+		List<UnionRangos> rangos = new ArrayList<>();
 		ExpressionBase er;
 		// parse lista de expresiones 1
 		for (String str: listReg1) {
@@ -113,74 +119,105 @@ public class Controller {
 		intersecUR(simbolosSet, rangos, inis, fins);
 
 		
+		// conseguir todos los simbolos incluidos los rangos
 		_simList = new ArrayList<>();
 		Iterator<String> it = simbolosSet.iterator();
 		while (it.hasNext()) {
 			String c = it.next();
 			_simList.add(c);
 		}
+		
+		// deshacer los Unionrangos
+		for(ExpressionBase e: _elist1) {
+			e.buildTreeDefinitivo();
+		}
+		for(ExpressionBase e: _elist2) {
+			e.buildTreeDefinitivo();
+		}
+			
 	}
 	
-	private ExpressionBase unionListaERs(ArrayList<ExpressionBase> elist) {
+	/**
+	 * OR de los elementos de la lista 
+	 * @param elist: lista a OR
+	 * @return Expresion resultante
+	 */
+	private ExpressionBase unionListaERs(List<ExpressionBase> elist) {
 		Iterator<ExpressionBase> it = elist.iterator();
 		ExpressionBase er = it.next();
 		while (it.hasNext()) {
 			er = new Union(er, it.next());
 		}
-		er = er.buildTreeDefinitivo();
 		return er;
 	}
+	
+	/**
+	 * Ejecucion thomson
+	 * @return mensaje de equivalencia
+	 */
 	private Equivalencia thomsonExec() {
 		return Algoritmos.detHopKarp(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
 	}
 	
+	/**
+	 * Ejecucion seguidores
+	 * @return mensaje de equivalencia
+	 */
 	private Equivalencia seguidoresExec() {
 		return Algoritmos.detHopKarpSinLambda(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
 	}
 	
+	/**
+	 * Ejecucion derivada
+	 * @return mensaje de equivalencia
+	 */
 	private Equivalencia derivadaExec() {
 		return  Algoritmos.equivalenciaDer(_e1, _e2, _state, _simList);
 	}
 	
+	/**
+	 * Ejecucion derivada parcial
+	 * @return mensaje de equivalencia
+	 */
 	private Equivalencia derivadasParExec() {
 		return Algoritmos.equivalenciaDerPar(_e1, _e2, _state, _simList);
 	}
 	
+	/**
+	 * Ejecucion berry-sethi
+	 * @return mensaje de equivalencia
+	 */
 	private Equivalencia berrySethiExec() {
-		
-		_state = new IdEstado();
-		ArrayList<BerrySethiNode> states = new ArrayList<>();
-		BerrySethiNode bsn;
-		
-		bsn = _e1.createBerrySethiNode(_state);
-		bsn.buildEstados(states, new HashSet<>());
-		Automata a1 = Algoritmos.buildBerrySethiAutomata(states, bsn);
-		
-		_state = new IdEstado();
-		bsn = _e2.createBerrySethiNode(_state);
-		states = new ArrayList<>();
-		bsn.buildEstados(states, new HashSet<>());
-		Automata a2 = Algoritmos.buildBerrySethiAutomata(states, bsn);
-		
-		return Algoritmos.detHopKarp(a1, a2, _state, _simList);
-		
+		return Algoritmos.equivalenciaBerrySethi(_e1, _e2, _simList);
 	}
 	
-	private void intersecUR(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis,
-			SortedSet<Character> fins) {
+	/**
+	 * interseccionar las UnionRangos
+	 * @param set: lista simbolos
+	 * @param array: lista de UnionRangos
+	 * @param inis: lista de iniciales de los elementos de <array>
+	 * @param fins: lista de finales de los elementos de <array>
+	 */
+	private void intersecUR(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
 
 		for (int i = 0; i < array.size(); i++) {
 			array.get(i).intersec(set, inis, fins);
 		}
 	}
 	
-	/*
-	 *  
-	 **/
-	public void setERs(ArrayList<String> listER1, ArrayList<String> listER2) {
+	/**
+	 * set las dos listas de ERs
+	 * @param listER1: list 1
+	 * @param listER2: list 2
+	 */
+	public void setERs(List<String> listER1, List<String> listER2) {
 		parser(listER1, listER2);
 	}
 	
+	/**
+	 * set algoritmo
+	 * @param algoritmoUsuario: algoritmo a aplicar
+	 */
 	public void setAlgoritmo(String algoritmoUsuario) {
 		String algoritmo = algoritmoUsuario == null ? _defaultAlgoritmo: algoritmoUsuario;
 		for (AlgoritmoExec ae : AlgoritmoExec.values()) {
@@ -191,6 +228,10 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * set mode
+	 * @param m: modo a aplicar
+	 */
 	public void setMode(String m) {
 		String modo = m == null ? _defaultMode: m;
 		for (ModeExecution me : ModeExecution.values()) {
@@ -201,6 +242,10 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * ejecutar eligiendo el algoritmo adecuado
+	 * @return: String resultado de equivalencia
+	 */
 	private Equivalencia compare() {
 		_state = new IdEstado();
 		switch(_algoritmo) {
@@ -219,6 +264,10 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * para el modo uno a uno
+	 * @return: string resul
+	 */
 	private String emparejar() {
 		String ret = "";
 		Iterator<ExpressionBase> it1 = _elist1.iterator();
@@ -244,6 +293,11 @@ public class Controller {
 		if (!_elist2.isEmpty()) ret += unpair2;
 		return ret;
 	}
+	
+	/**
+	 * ejecucion
+	 * @return: String result
+	 */
 	public String run() {
 		switch(_mode) {
 		case TODOS:
@@ -259,7 +313,15 @@ public class Controller {
 		return "Something went wrong";
 	}
 	
-	public String compEquiv(ArrayList<String> s1, ArrayList<String> s2,
+	/**
+	 * settings
+	 * @param s1: lista de ers
+	 * @param s2: lista de ers
+	 * @param algor: algoritmo usuario
+	 * @param mode: modo seleccionado
+	 * @return: String result
+	 */
+	public String compEquiv(List<String> s1, List<String> s2,
 			String algor, String mode) {
 		setAlgoritmo(algor);
 		setMode(mode);

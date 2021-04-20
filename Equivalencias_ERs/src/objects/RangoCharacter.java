@@ -1,9 +1,8 @@
 package objects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.regex.Pattern;
 
 import automata.AutomataTS;
@@ -23,7 +22,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	 * Constructora por defecto
 	 */
 	public RangoCharacter() {
-		super(null, null, Tipo.RANGO);
+		super(null, Tipo.RANGO);
 	}
 	
 	/**
@@ -31,14 +30,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	 * @param inifin: caracter ini y fin
 	 */
 	public RangoCharacter(char inifin) {
-		super(null, null, Tipo.RANGO);
-		_ini = inifin;
-		_fin = inifin;
-		actualizarSim();
-	}
-	
-	public RangoCharacter(ExpressionBase padre, char inifin) {
-		super(null, padre, Tipo.RANGO);
+		super(null, Tipo.RANGO);
 		_ini = inifin;
 		_fin = inifin;
 		actualizarSim();
@@ -50,18 +42,12 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	 * @param fin: caracter final
 	 */
 	public RangoCharacter(char ini, char fin) {
-		super(null, null, Tipo.RANGO);
+		super(null, Tipo.RANGO);
 		_ini = ini;
 		_fin = fin;
 		actualizarSim();
 	}
-	
-	public RangoCharacter(ExpressionBase padre, char ini, char fin) {
-		super(null, padre, Tipo.RANGO);
-		_ini = ini;
-		_fin = fin;
-		actualizarSim();
-	}
+
 	/**
 	 * getter ini
 	 * @return
@@ -182,7 +168,8 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		int ini = id.nextId(), acept = id.nextId();
+		int ini = id.nextId();
+		int acept = id.nextId();
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
@@ -190,7 +177,8 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		int ini = id.nextId(), acept = id.nextId();
+		int ini = id.nextId();
+		int acept = id.nextId();
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
@@ -198,7 +186,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		HashSet<Integer> tmp = new HashSet<>();
+		Set<Integer> tmp = new HashSet<>();
 		BerrySethiNode bs = new BerrySethiNode();
 		
 		bs.setEmpty(false);
@@ -227,7 +215,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	}
 
 	@Override
-	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
 		// no needed, no included at beginning
 	}	
 
@@ -244,8 +232,8 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 			return new Vacio();
 	}
 	@Override
-	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<>();
+	public Set<ExpressionBase> derivadaParcial(String sim) {
+		Set<ExpressionBase> ret = new HashSet<>();
 		if(this._sim.equals(sim))
 				ret.add(new Lambdaa());
 		else ret.add(new Vacio());

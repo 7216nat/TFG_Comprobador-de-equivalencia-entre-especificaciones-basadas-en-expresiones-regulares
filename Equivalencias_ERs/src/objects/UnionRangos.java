@@ -3,8 +3,8 @@ package objects;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 
 import automata.*;
 
@@ -18,7 +18,7 @@ public class UnionRangos extends ExpressionBase {
 	private static final String unionRangosS = "[";
 	private ExpressionBase _e1;
 	private String _str;
-	private ArrayList<RangoCharacter> _rangos;
+	private List<RangoCharacter> _rangos;
 	
 	/**
 	 * Clase constructora por defecto
@@ -32,13 +32,7 @@ public class UnionRangos extends ExpressionBase {
 	 * @param str: string que contiene el rango 
 	 */
 	public UnionRangos(String str) {
-		super(null, Tipo.UNIONRANGOS);
-		_str = str;
-		_rangos = new ArrayList<>();
-	}
-	
-	public UnionRangos(ExpressionBase padre , String str) {
-		super(padre, Tipo.UNIONRANGOS);
+		super(Tipo.UNIONRANGOS);
 		_str = str;
 		_rangos = new ArrayList<>();
 	}
@@ -48,7 +42,7 @@ public class UnionRangos extends ExpressionBase {
 	 * antes de eso se interseccionan internamente para evitar repeticiones 
 	 * @param ss
 	 */
-	public void parserRangos(SortedSet<Character> inis, SortedSet<Character> fins) {
+	public void parserRangos(Set<Character> inis, Set<Character> fins) {
 		
 		char c;
 		int i = 0;
@@ -81,7 +75,6 @@ public class UnionRangos extends ExpressionBase {
 	public void unirRangos() {
 		if (_rangos.size() == 1) {
 			_e1 = _rangos.get(0);
-			_e1.setPadre(this);
 		}
 		else {
 			Iterator<RangoCharacter> it = _rangos.iterator();
@@ -89,7 +82,6 @@ public class UnionRangos extends ExpressionBase {
 			while (it.hasNext()) {
 				_e1 = new Union(_e1, it.next());
 			}
-			_e1.setPadre(this);
 		}
 	}
 	
@@ -99,8 +91,8 @@ public class UnionRangos extends ExpressionBase {
 	 * @param set: se añaden los nuevos "simbolos" al set de simbolos
 	 * @param ss: lista de puntos de intersecciones dadas
 	 */
-	public void intersec(Set<String> set, SortedSet<Character> inis, SortedSet<Character> fins) {
-		ArrayList<RangoCharacter> tmp = new ArrayList<>();
+	public void intersec(Set<String> set, Set<Character> inis, Set<Character> fins) {
+		List<RangoCharacter> tmp = new ArrayList<>();
 		RangoCharacter rc, rctmp;
 		
 		Iterator<RangoCharacter> it = _rangos.iterator();
@@ -152,7 +144,7 @@ public class UnionRangos extends ExpressionBase {
 	 * Quitar repeticiones, unir en caso de intersecciones
 	 */
 	private void selfIntersec() {
-		ArrayList<RangoCharacter> tmp = new ArrayList<>();
+		List<RangoCharacter> tmp = new ArrayList<>();
 		Iterator<RangoCharacter> it = _rangos.iterator(), ittmp;
 		RangoCharacter rc, rctmp;
 		boolean existe;
@@ -224,7 +216,7 @@ public class UnionRangos extends ExpressionBase {
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		HashSet<Integer> tmp = new HashSet<>();
+		Set<Integer> tmp = new HashSet<>();
 		BerrySethiNode ll = _e1.createBerrySethiNode(id);
 		BerrySethiNode bs = new BerrySethiNode(ll);
 		
@@ -242,7 +234,7 @@ public class UnionRangos extends ExpressionBase {
 	}
 
 	@Override
-	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
 		parserRangos(inis, fins);
 		array.add(this);
 	}
@@ -276,7 +268,7 @@ public class UnionRangos extends ExpressionBase {
 	}
 
 	@Override
-	public HashSet<ExpressionBase> derivadaParcial(String sim) {
+	public Set<ExpressionBase> derivadaParcial(String sim) {
 		return null;
 	}
 }

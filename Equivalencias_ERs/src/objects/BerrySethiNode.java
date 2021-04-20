@@ -1,48 +1,112 @@
 package objects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class BerrySethiNode {
 	
 	protected String sim;
 	protected boolean empty;
 	protected Tipo tipo;
-	protected HashSet<Integer> first;
-	protected HashSet<Integer> last;
-	protected HashSet<Integer> fol;
+	protected Set<Integer> first;
+	protected Set<Integer> last;
+	protected Set<Integer> fol;
 	
 	protected BerrySethiNode left;
 	protected BerrySethiNode right;
 	
+	/**
+	 * constructora por defecto
+	 */
 	public BerrySethiNode() {
 		this(null);
 	}
 	
+	/**
+	 * construtora para un nodo unario
+	 * @param left: hijo
+	 */
 	public BerrySethiNode(BerrySethiNode left) {
 		this.left = left;
 		this.right = null;
 		this.fol = new HashSet<>();
 	}
 	
+	/**
+	 * constructora para un nodo binario
+	 * @param left: hijo izq
+	 * @param right: hijo dch
+	 */
 	public BerrySethiNode(BerrySethiNode left, BerrySethiNode right) {
 		this.left = left;
 		this.right = right;
 		this.fol = new HashSet<>();
 	}
 	
+	/**
+	 * get empty
+	 * @return: es empty?
+	 */
 	public boolean getEmpty(){return empty;}
+	/**
+	 * set empty
+	 * @param empty = empty
+	 */
 	public void setEmpty(boolean empty){this.empty = empty;}
-	public HashSet<Integer> getFirst(){return first;}
-	public void setFirst(HashSet<Integer> first){this.first = first;}
-	public HashSet<Integer> getLast(){return last;}	
-	public void setLast(HashSet<Integer> last){this.last = last;}
-	public HashSet<Integer> getFollow(){return fol;}	
-	public void setFollow(HashSet<Integer> follow){this.fol = follow;}
+	/*
+	 * get set de first
+	 */
+	public Set<Integer> getFirst(){return first;}
+	/**
+	 * set set de first
+	 * @param first = first
+	 */
+	public void setFirst(Set<Integer> first){this.first = first;}
+	/*
+	 * get set de last
+	 */
+	public Set<Integer> getLast(){return last;}	
+	/**
+	 * set set last
+	 * @param last = last
+	 */
+	public void setLast(Set<Integer> last){this.last = last;}
+	/**
+	 * get set de follow
+	 * @return set de follow
+	 */
+	public Set<Integer> getFollow(){return fol;}
+	/**
+	 * set set de follow
+	 * @param follow = follow
+	 */
+	public void setFollow(Set<Integer> follow){this.fol = follow;}
+	/**
+	 * get sim
+	 * @return sim
+	 */
 	public String getSim() { return sim; }
+	/**
+	 * set sim
+	 * @param sim = sim
+	 */
 	public void setSim(String sim) { this.sim = sim; }
+	/**
+	 * set tipo
+	 * @param tipo = tipo
+	 */
 	public void setTipo(Tipo tipo) { this.tipo = tipo; }
+	/**
+	 * get tipo
+	 * @return Tipo tipo
+	 */
+	public Tipo getTipo() { return this.tipo; }
 	
+	/**
+	 * es hoja?
+	 * @return nodo == hoja
+	 */
 	public boolean esHoja() {
 		return left == null && right == null;
 	}
@@ -58,8 +122,12 @@ public class BerrySethiNode {
 	}
 	
 
-	
-	public void buildEstados(ArrayList<BerrySethiNode> list, HashSet<Integer> follow){
+	/**
+	 * construye los estados propagando e rellenando el set de follow
+	 * @param list: lista de estados a rellenar
+	 * @param follow: set de follow a propagar
+	 */
+	public void buildEstados(List<BerrySethiNode> list, Set<Integer> follow){
 		switch(this.tipo) {
 			case CONCAT:
 				this.fol.addAll(follow);

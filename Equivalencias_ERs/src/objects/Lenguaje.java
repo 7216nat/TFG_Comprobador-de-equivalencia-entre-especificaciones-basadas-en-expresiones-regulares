@@ -5,8 +5,8 @@ public abstract class Lenguaje extends ExpressionBase {
 	
 	protected String _sim;
 	
-	protected Lenguaje(String sim, ExpressionBase padre, Tipo tipo) {
-		super(padre, tipo);
+	protected Lenguaje(String sim, Tipo tipo) {
+		super(tipo);
 		_sim = sim;
 		// Auto-generated constructor stub
 	}

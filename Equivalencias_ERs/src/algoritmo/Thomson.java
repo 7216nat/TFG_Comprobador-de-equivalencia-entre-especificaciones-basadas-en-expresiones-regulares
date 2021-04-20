@@ -7,15 +7,15 @@ public interface Thomson {
 	
 	/**
 	 * Thomson simplificado AFN
-	 * @param id
-	 * @return
+	 * @param id: identificador de los estados 
+	 * @return AutomataTS
 	 */
 	public AutomataTS ThomsonSimplAFN(IdEstado id);
 	
 	/**
 	 * Thomson AFN normal con lambdatransiciones
-	 * @param id
-	 * @return
+	 * @param id: identificador de los estados 
+	 * @return AutomataTS
 	 */
 	public AutomataTS ThomsonAFN(IdEstado id);
 }

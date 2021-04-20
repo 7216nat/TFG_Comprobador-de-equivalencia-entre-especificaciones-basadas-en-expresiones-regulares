@@ -1,9 +1,8 @@
 package objects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.regex.Pattern;
 
 import automata.*;
@@ -15,11 +14,11 @@ public class Lambdaa extends Lenguaje {
 	private static final String lambda = "&";
 	
 	public Lambdaa() {
-		super(lambda, null, Tipo.LAMBDA);
+		super(lambda, Tipo.LAMBDA);
 	}
 	
 	public Lambdaa(ExpressionBase padre) {
-		super(lambda, padre, Tipo.LAMBDA);
+		super(lambda, Tipo.LAMBDA);
 	}
 
 	@Override
@@ -34,7 +33,8 @@ public class Lambdaa extends Lenguaje {
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		int ini = id.nextId(), acept = id.nextId();
+		int ini = id.nextId(); 
+		int acept = id.nextId();
 		AutomataTS aut = new AutomataTS(ini, acept);
 		aut.addTransicion(ini, acept, _sim);
 		return aut;
@@ -62,7 +62,7 @@ public class Lambdaa extends Lenguaje {
 	}
 	
 	@Override
-	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
 		// nothing to add
 	}
 	
@@ -92,8 +92,8 @@ public class Lambdaa extends Lenguaje {
 		return new Vacio();
 	}
 	@Override
-	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<>();
+	public Set<ExpressionBase> derivadaParcial(String sim) {
+		Set<ExpressionBase> ret = new HashSet<>();
 		ret.add(new Vacio());
 		return ret;
 	}

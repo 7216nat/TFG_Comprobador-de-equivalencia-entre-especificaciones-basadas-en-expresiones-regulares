@@ -1,10 +1,8 @@
 package objects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-// import java.util.regex.*;
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 
 import automata.*;
 
@@ -17,23 +15,19 @@ public class Concat extends ExpressionBase {
 	private ExpressionBase _e2;
 
 	public Concat() {
-		super(null, Tipo.CONCAT);
+		super(Tipo.CONCAT);
 	}
 
 	public Concat(ExpressionBase e1, ExpressionBase e2) {
-		super(null, Tipo.CONCAT);
+		super(Tipo.CONCAT);
 		_e1 = e1;
 		_e2 = e2;
-		e1.setPadre(this);
-		e2.setPadre(this);
 	}
 	
 	public Concat(ExpressionBase padre, ExpressionBase e1, ExpressionBase e2) {
-		super(padre, Tipo.CONCAT);
+		super(Tipo.CONCAT);
 		_e1 = e1;
 		_e2 = e2;
-		e1.setPadre(this);
-		e2.setPadre(this);
 	}
 
 	@Override
@@ -54,7 +48,7 @@ public class Concat extends ExpressionBase {
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
 		Estado iniPrev;
-		ArrayList<Estado> aceptPrev;
+		List<Estado> aceptPrev;
 		AutomataTS a1 = _e1.ThomsonAFN(id);
 		AutomataTS a2 = _e2.ThomsonAFN(id);
 		
@@ -75,7 +69,7 @@ public class Concat extends ExpressionBase {
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		Estado iniPrev;
-		ArrayList<Estado> aceptPrev1;
+		List<Estado> aceptPrev1;
 		AutomataTS a1 = _e1.ThomsonSimplAFN(id);
 		AutomataTS a2 = _e2.ThomsonSimplAFN(id);
 
@@ -101,7 +95,7 @@ public class Concat extends ExpressionBase {
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
 		//  Auto-generated method stub
-		HashSet<Integer> tmp = new HashSet<>();
+		Set<Integer> tmp = new HashSet<>();
 		BerrySethiNode ll = _e1.createBerrySethiNode(id);
 		BerrySethiNode rl = _e2.createBerrySethiNode(id);
 		BerrySethiNode bs = new BerrySethiNode(ll, rl);
@@ -125,7 +119,7 @@ public class Concat extends ExpressionBase {
 	}
 	
 	@Override
-	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
+	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
 		_e1.getSimbolosRangos(set, array, inis, fins);
 		_e2.getSimbolosRangos(set, array, inis, fins);
 	}
@@ -198,22 +192,22 @@ public class Concat extends ExpressionBase {
 	}
 
 	@Override
-	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<>();
-		HashSet<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
+	public Set<ExpressionBase> derivadaParcial(String sim) {
+		Set<ExpressionBase> ret = new HashSet<>();
+		Set<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
 		ExpressionBase t2 = this._e2;
 		if(t2 instanceof Lambdaa)
 			ret.addAll(t1);
 		else if(t2 instanceof Vacio)
 			ret.add(new Vacio());
 		else {
-			HashSet<ExpressionBase> aux = concatAll(t1, t2);
+			Set<ExpressionBase> aux = concatAll(t1, t2);
 			ret.addAll(aux);
 		}
 		
 		//Si la primera parte puede dar el vacío
 		if(this._e1.eqLambda()) {
-			HashSet<ExpressionBase> anexo;
+			Set<ExpressionBase> anexo;
 			anexo = this._e2.derivadaParcial(sim);
 			ret.addAll(anexo);
 		}

@@ -2,22 +2,23 @@ package automata;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import objects.ExpressionBase;
 
 public class EstadoHKSubconj extends Estado{
 	
-	private HashSet<Integer> equiv;
-	private HashSet<ExpressionBase> ex;
+	private Set<Integer> equiv;
+	private Set<ExpressionBase> ex;
 	
-	public EstadoHKSubconj(int _id, HashSet<ExpressionBase> _ex) {
+	public EstadoHKSubconj(int _id, Set<ExpressionBase> _ex) {
 		super(_id);
 		this.equiv = new HashSet<>();
 		this.ex = _ex;
 		equiv.add(_id);
 	}
 	
-	public EstadoHKSubconj(int id, HashSet<ExpressionBase> _ex, boolean ini, boolean fin) {
+	public EstadoHKSubconj(int id, Set<ExpressionBase> _ex, boolean ini, boolean fin) {
 		super(id, ini, fin);
 		this.equiv = new HashSet<>();
 		equiv.add(id);
@@ -29,7 +30,7 @@ public class EstadoHKSubconj extends Estado{
 		es2.equiv.addAll(this.equiv);
 	}
 	
-	public HashSet<ExpressionBase> getExp() {
+	public Set<ExpressionBase> getExp() {
 		return this.ex;
 	}
 	

@@ -1,9 +1,8 @@
 package objects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 
 import automata.*;
 
@@ -17,22 +16,22 @@ public class Union extends ExpressionBase {
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
 	
+	/**
+	 * Constructora por defecto
+	 */
 	public Union() {
-		super(null, Tipo.UNION);
+		super(Tipo.UNION);
 	}
+	
+	/**
+	 * Construcora
+	 * @param e1: expresion 1
+	 * @param e2: expresion 2
+	 */
 	public Union(ExpressionBase e1, ExpressionBase e2) {
-		super(null, Tipo.UNION);
+		super(Tipo.UNION);
 		_e1 = e1;
 		_e2 = e2;
-		e1.setPadre(this);
-		e2.setPadre(this);
-	}
-	public Union(ExpressionBase padre, ExpressionBase e1, ExpressionBase e2) {
-		super(padre, Tipo.UNION);
-		_e1 = e1;
-		_e2 = e2;
-		e1.setPadre(this);
-		e2.setPadre(this);
 	}
 	
 	@Override
@@ -52,7 +51,7 @@ public class Union extends ExpressionBase {
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
 		int ini = id.nextId(), acept, iniPrev1, iniPrev2;
-		ArrayList<Estado> aceptPrev1, aceptPrev2;
+		List<Estado> aceptPrev1, aceptPrev2;
 		AutomataTS a1 = _e1.ThomsonAFN(id);
 		AutomataTS a2 = _e2.ThomsonAFN(id);
 		
@@ -83,6 +82,7 @@ public class Union extends ExpressionBase {
 			aut.addTransicion(e.getId(), acept, "&");
 		return aut;
 	}
+	
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
 		Estado iniPrev1, iniPrev2;
@@ -108,7 +108,7 @@ public class Union extends ExpressionBase {
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		HashSet<Integer> tmp = new HashSet<>();
+		Set<Integer> tmp = new HashSet<>();
 		BerrySethiNode ll = _e1.createBerrySethiNode(id);
 		BerrySethiNode rl = _e2.createBerrySethiNode(id);
 		BerrySethiNode bs = new BerrySethiNode(ll, rl);
@@ -132,12 +132,13 @@ public class Union extends ExpressionBase {
 	public ExpressionBase getExpr1() {
 		return this._e1;
 	}
+	
 	public ExpressionBase getExpr2() {
 		return this._e2;
 	}
+	
 	@Override
-	public void getSimbolosRangos(Set<String> set, ArrayList<UnionRangos> array, SortedSet<Character> inis, SortedSet<Character> fins) {
-		// Auto-generated method stub
+	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
 		_e1.getSimbolosRangos(set, array, inis, fins);
 		_e2.getSimbolosRangos(set, array, inis, fins);
 	}
@@ -191,10 +192,10 @@ public class Union extends ExpressionBase {
 		return newEx;
 	}
 	@Override
-	public HashSet<ExpressionBase> derivadaParcial(String sim) {
-		HashSet<ExpressionBase> ret = new HashSet<>();
-		HashSet<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
-		HashSet<ExpressionBase> t2 = this._e2.derivadaParcial(sim);
+	public Set<ExpressionBase> derivadaParcial(String sim) {
+		Set<ExpressionBase> ret = new HashSet<>();
+		Set<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
+		Set<ExpressionBase> t2 = this._e2.derivadaParcial(sim);
 		ret.addAll(t1);
 		ret.addAll(t2);
 		return ret;

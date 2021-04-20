@@ -62,21 +62,21 @@ public class Main {
 //		strList2.add("b*|&");
 
 		// Ejercicios FLI
-//		strList.add("(0|1)*");
-//		strList2.add("0*|1*");
-//		strList.add("0(120)*12");
-//		strList2.add("01(201)*2");
-//		strList.add("(0*1*)*");
-//		strList2.add("(0*1)*");
-//		strList.add("(01|0)*0");
-//		strList2.add("0(10|0)*");
-//		strList.add("(a|b)*");
-//		strList2.add("a*(ba*)*");
-//		strList.add("b*a*|a*b*");
-//		strList2.add("a*|b*");
-//		strList.add("(cb*c|cb*b)*");
-//		strList2.add("(cc)*|(cc)*(cb)(b|c)*");
-//		strList.add("[a-cde-tx]*");
+		strList.add("(0|1)*");
+		strList2.add("0*|1*");
+		strList.add("0(120)*12");
+		strList2.add("01(201)*2");
+		strList.add("(0*1*)*");
+		strList2.add("(0*1)*");
+		strList.add("(01|0)*0");
+		strList2.add("0(10|0)*");
+		strList.add("(a|b)*");
+		strList2.add("a*(ba*)*");
+		strList.add("b*a*|a*b*");
+		strList2.add("a*|b*");
+		strList.add("(cb*c|cb*b)*");
+		strList2.add("(cc)*|(cc)*(cb)(b|c)*");
+		strList.add("[a-cde-tx]*");
 		strList2.add("[a-bcd-tx]*");
 		strList.add("[a-c]|[d-h]");
 		strList2.add("a|b|[c-h]");
