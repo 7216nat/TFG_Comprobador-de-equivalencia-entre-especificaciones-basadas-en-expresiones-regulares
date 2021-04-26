@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -14,9 +15,12 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import control.Controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -88,16 +92,16 @@ public class Principal {
 		JList<String> list1 = new JList<String>();
 		list1.setVisibleRowCount(5);
 		DefaultListModel<String> strList = new DefaultListModel<String>();
-		strList.add(0,"(0|1)*");
-		strList.add(1,"0(120)*12");
-		strList.add(2,"(0*1*)*");
-		strList.add(3,"(01|0)*0");
-		strList.add(4,"(a|b)*");
-		strList.add(5,"b*a*|a*b*");
-		strList.add(6,"(cb*c|cb*b)*");
-		strList.add(7,"[a-cde-tx]*");
-		strList.add(8,"[a-c]|[d-h]");
-		strList.add(9,"%|gh");
+		strList.add(0, "(0|1)*");
+		strList.add(1, "0(120)*12");
+		strList.add(2, "(0*1*)*");
+		strList.add(3, "(01|0)*0");
+		strList.add(4, "(a|b)*");
+		strList.add(5, "b*a*|a*b*");
+		strList.add(6, "(cb*c|cb*b)*");
+		strList.add(7, "[a-cde-tx]*");
+		strList.add(8, "[a-c]|[d-h]");
+		strList.add(9, "%|gh");
 		list1.setModel(strList);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -113,16 +117,16 @@ public class Principal {
 		JList<String> list2 = new JList<String>();
 		list2.setVisibleRowCount(5);
 		DefaultListModel<String> strList2 = new DefaultListModel<String>();
-		strList2.add(0,"01(201)*2");
-		strList2.add(1,"0*|1*");
-		strList2.add(2,"(0*1)*");
-		strList2.add(3,"0(10|0)*");
-		strList2.add(4,"a*(ba*)*");
-		strList2.add(5,"a*|b*");
-		strList2.add(6,"(cc)*|(cc)*(cb)(b|c)*");
-		strList2.add(7,"[a-bcd-tx]*");
-		strList2.add(8,"a|b|[c-h]");
-		strList2.add(9,"%abc|gh");
+		strList2.add(0, "01(201)*2");
+		strList2.add(1, "0*|1*");
+		strList2.add(2, "(0*1)*");
+		strList2.add(3, "0(10|0)*");
+		strList2.add(4, "a*(ba*)*");
+		strList2.add(5, "a*|b*");
+		strList2.add(6, "(cc)*|(cc)*(cb)(b|c)*");
+		strList2.add(7, "[a-bcd-tx]*");
+		strList2.add(8, "a|b|[c-h]");
+		strList2.add(9, "%abc|gh");
 		list2.setModel(strList2);
 
 		JScrollPane scrollPane2 = new JScrollPane();
@@ -188,6 +192,7 @@ public class Principal {
 		frmComprobadorEquivalencia.getContentPane().add(resulLabel, gbc_resulLabel);
 
 		JTextPane res = new JTextPane();
+		res.setEditable(false);
 
 		JScrollPane scrollPane3 = new JScrollPane(res);
 		GridBagConstraints gbc_scrollPane3 = new GridBagConstraints();
@@ -198,31 +203,114 @@ public class Principal {
 		gbc_scrollPane3.gridy = 8;
 		frmComprobadorEquivalencia.getContentPane().add(scrollPane3, gbc_scrollPane3);
 
-		EqButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		EqButton.addActionListener(new ActionListener() {
+			public void actionPerformed (ActionEvent e) {				
+
+				
 				String metodo = (String) metChoice.getSelectedItem();
 				System.out.println(metodo);
 				String algoritmo = (String) algChoice.getSelectedItem();
 				System.out.println(algoritmo);
-				int[] selInd1 = list1.getSelectedIndices();
+				
 				List<String> expr1 = new ArrayList<>();
-				for (int i : selInd1) {
-					String aux = list1.getModel().getElementAt(i);
-					expr1.add(aux);
-					System.out.println(aux);
-				}
-				int[] selInd2 = list2.getSelectedIndices();
 				List<String> expr2 = new ArrayList<>();
-				for (int i : selInd2) {
-					String aux = list2.getModel().getElementAt(i);
-					expr2.add(aux);
-					System.out.println(aux);
+				
+				if (!metodo.equalsIgnoreCase("Todos")) {
+					int[] selInd1 = list1.getSelectedIndices();
+					int[] selInd2 = list2.getSelectedIndices();
+					
+					if (selInd1.length == 0)
+						res.setText("Selecciona el método \"Todos\" o alguna expresión en el lenguaje 1");
+					else if (selInd2.length == 0)
+						res.setText("Selecciona el método \"Todos\" o alguna expresión en el lenguaje 2");
+					else {
+						for (int i : selInd1) {
+							String aux = list1.getModel().getElementAt(i);
+							expr1.add(aux);
+							System.out.println(aux);
+						}
+						for (int i : selInd2) {
+							String aux = list2.getModel().getElementAt(i);
+							expr2.add(aux);
+							System.out.println(aux);
+						}
+						String info = mensaje(algoritmo, metodo);
+						String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
+						res.setText(resul + "\n" + info);
+					}
+				} else {
+					for (int i = 0; i < list1.getModel().getSize(); i++)
+						expr1.add(list1.getModel().getElementAt(i));
+					for (int i = 0; i < list2.getModel().getSize(); i++)
+						expr2.add(list2.getModel().getElementAt(i));
+					String info = mensaje(algoritmo, metodo);
+					String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
+					res.setText(resul + "\n" + info);
 				}
-				String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
-				res.setText(resul);
-
 			}
+			
+			private String mensaje(String algoritmo, String metodo) {
+				String resul = "Se ha comprobado la unión ";
+				if (metodo.equalsIgnoreCase("todos"))
+					resul += "de todas las expresiones ";
+				else if (metodo.equalsIgnoreCase("seleccionados"))
+					resul += "de las expresiones seleccionadas ";
+				else
+					resul = "Se han comprobado todas las expresiones una a una ";
+				
+				resul += "con autómatas creados siguiendo el algoritmo de ";
+				
+				if (algoritmo.equalsIgnoreCase("Thompson"))
+					resul += "Thompson";
+				else if (algoritmo.equalsIgnoreCase("Seguidores"))
+					resul += "los seguidores";
+				else if (algoritmo.equalsIgnoreCase("derivadas"))
+					resul += "las derivadas";
+				else if (algoritmo.equalsIgnoreCase("derivadas parciales"))
+					resul += "las derivadas parciales";
+				else if (algoritmo.equalsIgnoreCase("berry-sethi"))
+					resul += "Berry-Sethi";
+				return resul;
+			
+			}
+			
+		});
+		
+		
+
+
+		cargar1.addActionListener(new ActionListener() {
+			public void actionPerformed (ActionEvent e) {				
+				JFileChooser elegir = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt only", "txt");
+				elegir.setFileFilter(filter);
+				int returnVal = elegir.showOpenDialog(frmComprobadorEquivalencia);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					System.out.println("You choose" + elegir.getSelectedFile().getName());
+				}
+			}
+			
+		});
+		
+		cargar2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				JFileChooser elegir = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt only", "txt");
+				elegir.setFileFilter(filter);
+				int returnVal = elegir.showOpenDialog(frmComprobadorEquivalencia);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					System.out.println("You choose" + elegir.getSelectedFile().getName());
+				}
+			}
+
+		});
+		helpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Ayuda help = new Ayuda();
+				help.setVisible(true);
+			}
+
 		});
 
 	}

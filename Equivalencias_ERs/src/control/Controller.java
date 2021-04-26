@@ -301,16 +301,23 @@ public class Controller {
 	public String run() {
 		switch(_mode) {
 		case TODOS:
+			_e1 = unionListaERs(_elist1);
+			_e2 = unionListaERs(_elist2);
+			System.out.println(_e1.toString());
+			System.out.println(_e2.toString());
+			return compare().getMsg();
 		case SELECTED:
 			_e1 = unionListaERs(_elist1);
 			_e2 = unionListaERs(_elist2);
+			System.out.println(_e1.toString());
+			System.out.println(_e2.toString());
 			return compare().getMsg();
 		case UNOAUNO:
 			return emparejar();
 		default:
 			break;
 		}
-		return "Something went wrong";
+		return "Algo ha ido mal";
 	}
 	
 	/**

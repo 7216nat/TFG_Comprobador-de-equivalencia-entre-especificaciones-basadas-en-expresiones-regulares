@@ -1,0 +1,102 @@
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.GridBagLayout;
+import javax.swing.JComboBox;
+import java.awt.GridBagConstraints;
+import javax.swing.JTextPane;
+import java.awt.Insets;
+import javax.swing.JTabbedPane;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+
+public class Ayuda extends JFrame {
+
+	private JPanel contentPane;
+	private String infLenguaje;
+	private String infPrograma;
+	private String info;
+
+	/**
+	 * Create the frame.
+	 */
+	public Ayuda() {
+		setTextos();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0};
+		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
+		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
+		gbc_tabbedPane.gridx = 0;
+		gbc_tabbedPane.gridy = 0;
+		contentPane.add(tabbedPane, gbc_tabbedPane);
+		
+		JScrollPane LengPanel = new JScrollPane();
+		LengPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		tabbedPane.addTab("Lenguaje", null, LengPanel, null);
+		
+		JTextPane LengText = new JTextPane();
+		LengText.setText(infLenguaje);
+		LengText.setEditable(false);
+		LengPanel.setViewportView(LengText);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		tabbedPane.addTab("Programa", null, scrollPane_1, null);
+		
+		JTextPane ProgText = new JTextPane();
+		ProgText.setText(infPrograma);
+		ProgText.setEditable(false);
+		scrollPane_1.setViewportView(ProgText);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		tabbedPane.addTab("Info", null, scrollPane_2, null);
+		
+		JTextPane infoText = new JTextPane();
+		infoText.setText(info);
+		infoText.setEditable(false);
+		scrollPane_2.setViewportView(infoText);
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+	}
+	
+	private void setTextos() {
+		infLenguaje = "El lenguaje se abrirá a partir de un archivo de texto con extensión \".txt\".\n"
+				+ "Más información en próximas entregas.";
+		infPrograma = "Los lenguajes se cargarán utilizando los botones \"cargar lenguaje\" sobre las listas. \n"
+				+ "Para seleccionar varias expresiones regulares simultáneamente, se deben seleccionar pulsando el botón control.\n"
+				+ "Para seleccionar varias expresiones en un intervalo, se puede pulsar el botón shift.\n"
+				+ "En algoritmo se seleccionará el algoritmo con el que se hará la comprobación de equivalencia.\n"
+				+ "En método se seleccionará el método de selección de las expresiones regulares (más en la pestaña info de ayuda).\n"
+				+ "Pulsar equivalencia para que se haga la comprobación y ver el resultado en el cuadro inferior.";
+		info = "Algoritmos utilizados para crear los autómatas:\n"
+				+ " · Thompson: se sigue un algoritmo de Thompson + determinación con lambda-transiciones.\n"
+				+ " · Seguidores: se siguen el algoritmo de Thompson, se eliminan las lambda-transiciones y luego se sigue el proceso de determinación.\n"
+				+ " · Derivadas: se sigue el algoritmo de derivadas.\n"
+				+ " · Derivadas parciales: se siguen los algoritmos de derivadas parciales y determinación simultáneamente."
+				+ " · Berry-Sethi: se sigue el algoritmo de Berry-Sethi y luego se hace la determinación.\n\n"
+				
+				+ "Métodos de entrada:\n"
+				+ " · Todos: se hace la unión de todas las expresiones regulares de cada lenguaje.\nNota: si se elige esta opción, se ignoran qué expresiones regulares se hayan marcado o no.\n"
+				+ " · Seleccionados: se hace la unión de todas las expresiones regulares marcadas en cada lenguaje.\n"
+				+ " · Uno a uno: se compara cada expresión del lenguaje 1 con las del lenguaje 2, emparejando las que sean equivalentes. Como resultado, se muestran las parejas desemparejadas si ha quedado alguna.\n\n"
+				
+				+ "Método para la comprobación de equivalencia: Hopcroft-Karp siguiendo independientemente del algoritmo y método de entrada\n";
+	}
+
+}
