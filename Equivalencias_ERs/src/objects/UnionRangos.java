@@ -1,9 +1,9 @@
 package objects;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import automata.*;
@@ -215,22 +215,9 @@ public class UnionRangos extends ExpressionBase {
 	}
 	
 	@Override
-	public BerrySethiNode createBerrySethiNode(IdEstado id) {
-		Set<Integer> tmp = new HashSet<>();
-		BerrySethiNode ll = _e1.createBerrySethiNode(id);
-		BerrySethiNode bs = new BerrySethiNode(ll);
-		
-		bs.setEmpty(ll.empty);
-		bs.setSim(unionRangosS);
-		bs.setTipo(getType());
-		tmp.addAll(ll.first);
-		bs.setFirst(tmp);
-		
-		tmp = new HashSet<>();
-		tmp.addAll(ll.last);
-		bs.setLast(tmp);
-		
-		return bs;
+	public BerrySethiNode createBerrySethiNode(Map<Integer, BerrySethiNode> map, IdEstado id) {
+		// exception
+		return null;
 	}
 
 	@Override

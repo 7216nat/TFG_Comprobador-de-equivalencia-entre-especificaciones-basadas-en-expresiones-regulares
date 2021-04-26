@@ -2,6 +2,7 @@ package objects;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -68,7 +69,7 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 	}
 	
 	@Override
-	public BerrySethiNode createBerrySethiNode(IdEstado id) {
+	public BerrySethiNode createBerrySethiNode(Map<Integer, BerrySethiNode> map, IdEstado id) {
 		Set<Integer> tmp = new HashSet<>();
 		BerrySethiNode bs = new BerrySethiNode();
 		
@@ -84,6 +85,7 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 		tmp.add(iD);
 		bs.setLast(tmp);
 		
+		map.put(iD, bs);
 		return bs;
 	}
 

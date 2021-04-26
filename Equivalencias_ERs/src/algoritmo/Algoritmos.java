@@ -208,45 +208,43 @@ public class Algoritmos {
 	}
 
 	
-	public static Equivalencia equivalenciaBerrySethi(ExpressionBase e1, ExpressionBase e2, List<String> simb) {
-		IdEstado state = new IdEstado();
-		List<BerrySethiNode> states = new ArrayList<>();
+	public static Equivalencia equivalenciaBerrySethi(ExpressionBase e1, ExpressionBase e2, IdEstado idst, List<String> simb) {
+		Map<Integer, BerrySethiNode> states = new HashMap<>();
 		BerrySethiNode bsn;
 		
-		bsn = e1.createBerrySethiNode(state);
-		bsn.buildEstados(states, new HashSet<>());
-		Automata a1 = Algoritmos.buildBerrySethiAutomata(states, bsn);
+		bsn = e1.createBerrySethiNode(states, idst);
+		bsn.buildEstados(new HashSet<>());
+		Automata a1 = Algoritmos.buildBerrySethiAutomata(states, bsn, idst);
 		
-		state = new IdEstado();
-		bsn = e2.createBerrySethiNode(state);
-		states = new ArrayList<>();
-		bsn.buildEstados(states, new HashSet<>());
-		Automata a2 = Algoritmos.buildBerrySethiAutomata(states, bsn);
+		states = new HashMap<>();
+		bsn = e2.createBerrySethiNode(states, idst);
+		bsn.buildEstados(new HashSet<>());
+		Automata a2 = Algoritmos.buildBerrySethiAutomata(states, bsn, idst);
 		
-		return Algoritmos.detHopKarp(a1, a2, state, simb);
+		return Algoritmos.detHopKarp(a1, a2, idst, simb);
 	}
 	/*********************************
 	 *****algoritmo de berrysethi*****
 	 *********************************/
-	public static Automata buildBerrySethiAutomata(List<BerrySethiNode> list, BerrySethiNode root) {
-		int id = 0;
+	public static Automata buildBerrySethiAutomata(Map<Integer, BerrySethiNode> list, BerrySethiNode root, IdEstado idst) {
 		Automata aut = new Automata();
 		Estado state;
-		for (BerrySethiNode bsn : list) {
+		for (Entry<Integer, BerrySethiNode> entry : list.entrySet()) {
+			int id = entry.getKey();
+			BerrySethiNode bsn = entry.getValue();
 			if (root.getLast().contains(id))
 				state = new Estado(id, false, true);
 			else
 				state = new Estado(id);
 			aut.addEstado(state);
 			for (Integer i : bsn.getFollow())
-				state.addTrans(new Transicion(i, list.get(i).getSim()));
-			id++;
+				state.addTrans(new Transicion(i, bsn.getSim()));
 		}
 		
 		if (root.getEmpty())
-			state = new Estado(id, true, true);
+			state = new Estado(idst.nextId(), true, true);
 		else
-			state = new Estado(id, true, false);
+			state = new Estado(idst.nextId(), true, false);
 		aut.addEstado(state);
 		for (Integer i : root.getFirst())
 			state.addTrans(new Transicion(i, list.get(i).getSim()));
@@ -259,7 +257,6 @@ public class Algoritmos {
 	public static Equivalencia equivalenciaDer(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, List<String> simb) {
 		// Quita el símbolo & de la lista de símbolos
 		quitarLambda(simb);
-
 
 		AutomataHK afd1 = new AutomataHK();
 		AutomataHK afd2 = new AutomataHK();

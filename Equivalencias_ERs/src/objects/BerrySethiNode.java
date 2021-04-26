@@ -2,7 +2,10 @@ package objects;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import automata.IdEstado;
 
 public class BerrySethiNode {
 	
@@ -127,33 +130,33 @@ public class BerrySethiNode {
 	 * @param list: lista de estados a rellenar
 	 * @param follow: set de follow a propagar
 	 */
-	public void buildEstados(List<BerrySethiNode> list, Set<Integer> follow){
+	public void buildEstados(Set<Integer> follow){
 		switch(this.tipo) {
 			case CONCAT:
 				this.fol.addAll(follow);
 				if (right.empty) {
 					follow.addAll(right.first);
-					left.buildEstados(list, follow);
+					left.buildEstados(follow);
 				}
 				else {
 					follow.clear();
 					follow.addAll(right.first);
-					left.buildEstados(list, follow);
+					left.buildEstados(follow);
 				}
 				follow.clear();
 				follow.addAll(fol);
-				right.buildEstados(list, follow);
+				right.buildEstados(follow);
 				break;
 			case SIMB:
 				if (this.esHoja()) {
 					this.fol.addAll(follow);
-					list.add(this);
+					//list.put(id.nextId(), this);
 				}
 				break;
 			case RANGO:
 				if (this.esHoja()) {
 					this.fol.addAll(follow);
-					list.add(this);
+					// list.put(id.nextId(), this);
 				}
 				break;
 //			case UNIONRANGOS:
@@ -162,15 +165,15 @@ public class BerrySethiNode {
 //				break;
 			case UNION:
 				this.fol.addAll(follow);
-				left.buildEstados(list, follow);
+				left.buildEstados(follow);
 				follow.clear();
 				follow.addAll(fol);
-				right.buildEstados(list, follow);
+				right.buildEstados(follow);
 				break;
 			case KLEEN:
 				this.fol.addAll(follow);
 				follow.addAll(left.first);
-				left.buildEstados(list, follow);
+				left.buildEstados(follow);
 				break;
 //			case KLEENPOS:
 //				this.fol.addAll(follow);

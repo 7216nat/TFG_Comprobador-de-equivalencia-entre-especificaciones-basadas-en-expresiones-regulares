@@ -188,7 +188,7 @@ public class Controller {
 	 * @return mensaje de equivalencia
 	 */
 	private Equivalencia berrySethiExec() {
-		return Algoritmos.equivalenciaBerrySethi(_e1, _e2, _simList);
+		return Algoritmos.equivalenciaBerrySethi(_e1, _e2, _state, _simList);
 	}
 	
 	/**

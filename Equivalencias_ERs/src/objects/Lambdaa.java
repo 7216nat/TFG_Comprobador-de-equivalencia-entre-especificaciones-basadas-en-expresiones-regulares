@@ -2,6 +2,7 @@ package objects;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -47,7 +48,7 @@ public class Lambdaa extends Lenguaje {
 	}
 	
 	@Override
-	public BerrySethiNode createBerrySethiNode(IdEstado id) {
+	public BerrySethiNode createBerrySethiNode(Map<Integer, BerrySethiNode> map, IdEstado id) {
 		BerrySethiNode bs = new BerrySethiNode();
 		
 		bs.setEmpty(true);

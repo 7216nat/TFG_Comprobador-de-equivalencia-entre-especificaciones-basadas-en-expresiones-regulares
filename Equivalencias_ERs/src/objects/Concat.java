@@ -2,6 +2,7 @@ package objects;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import automata.*;
@@ -93,11 +94,11 @@ public class Concat extends ExpressionBase {
 	}
 	
 	@Override
-	public BerrySethiNode createBerrySethiNode(IdEstado id) {
+	public BerrySethiNode createBerrySethiNode(Map<Integer, BerrySethiNode> map, IdEstado id) {
 		//  Auto-generated method stub
 		Set<Integer> tmp = new HashSet<>();
-		BerrySethiNode ll = _e1.createBerrySethiNode(id);
-		BerrySethiNode rl = _e2.createBerrySethiNode(id);
+		BerrySethiNode ll = _e1.createBerrySethiNode(map, id);
+		BerrySethiNode rl = _e2.createBerrySethiNode(map, id);
 		BerrySethiNode bs = new BerrySethiNode(ll, rl);
 		
 		bs.setEmpty(ll.empty && rl.empty);

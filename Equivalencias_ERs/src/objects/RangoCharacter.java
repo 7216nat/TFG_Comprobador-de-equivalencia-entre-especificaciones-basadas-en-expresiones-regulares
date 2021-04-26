@@ -2,6 +2,7 @@ package objects;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -185,7 +186,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	}
 	
 	@Override
-	public BerrySethiNode createBerrySethiNode(IdEstado id) {
+	public BerrySethiNode createBerrySethiNode(Map<Integer, BerrySethiNode> map, IdEstado id) {
 		Set<Integer> tmp = new HashSet<>();
 		BerrySethiNode bs = new BerrySethiNode();
 		
@@ -201,6 +202,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 		tmp.add(iD);
 		bs.setLast(tmp);
 		
+		map.put(iD, bs);
 		return bs;
 	}
 
