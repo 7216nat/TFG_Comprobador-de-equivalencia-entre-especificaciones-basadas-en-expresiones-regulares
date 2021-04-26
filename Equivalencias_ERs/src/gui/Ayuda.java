@@ -81,6 +81,7 @@ public class Ayuda extends JFrame {
 		infPrograma = "Los lenguajes se cargarán utilizando los botones \"cargar lenguaje\" sobre las listas. \n"
 				+ "Para seleccionar varias expresiones regulares simultáneamente, se deben seleccionar pulsando el botón control.\n"
 				+ "Para seleccionar varias expresiones en un intervalo, se puede pulsar el botón shift.\n"
+				+ "El botón Expresiones varía la vista de la lista entre nombres y expresiones regulares.\n"
 				+ "En algoritmo se seleccionará el algoritmo con el que se hará la comprobación de equivalencia.\n"
 				+ "En método se seleccionará el método de selección de las expresiones regulares (más en la pestaña info de ayuda).\n"
 				+ "Pulsar equivalencia para que se haga la comprobación y ver el resultado en el cuadro inferior.";
