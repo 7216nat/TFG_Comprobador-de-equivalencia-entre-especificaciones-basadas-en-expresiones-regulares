@@ -156,7 +156,7 @@ public class Controller {
 	 * @return mensaje de equivalencia
 	 */
 	private Equivalencia thomsonExec() {
-		return Algoritmos.detHopKarp(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
+		return Algoritmos.detHopKarp(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList, false);
 	}
 	
 	/**
@@ -164,7 +164,7 @@ public class Controller {
 	 * @return mensaje de equivalencia
 	 */
 	private Equivalencia seguidoresExec() {
-		return Algoritmos.detHopKarpSinLambda(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList);
+		return Algoritmos.detHopKarp(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList, true);
 	}
 	
 	/**
