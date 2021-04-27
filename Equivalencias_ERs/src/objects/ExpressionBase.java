@@ -129,9 +129,9 @@ public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, D
 		Set<ExpressionBase> ret = new HashSet<>();
 		while(it.hasNext()) {
 			ExpressionBase aux = it.next();
-			if(!(aux instanceof Lambdaa) && !(aux instanceof Vacio))
+			if(aux.getType() != Tipo.LAMBDA && aux.getType() != Tipo.VACIO)
 				ret.add(new Concat(aux, e2));
-			else if (aux instanceof Lambdaa)
+			else if (aux.getType() == Tipo.LAMBDA)
 				ret.add(e2);
 			else
 				ret.add(new Vacio());

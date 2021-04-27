@@ -165,18 +165,18 @@ public class Concat extends ExpressionBase {
 		ExpressionBase newEx;
 		ExpressionBase t1 = this._e1.derivada(sim);
 		ExpressionBase t2 = this._e2;
-		if (t1 instanceof Vacio || t2 instanceof Vacio) {
+		if (t1.getType() == Tipo.VACIO || t2.getType() == Tipo.VACIO) {
 			newEx = new Vacio();
-		} else if (t1 instanceof Lambdaa)
+		} else if (t1.getType() == Tipo.LAMBDA)
 			newEx = t2;
-		else if (t2 instanceof Lambdaa)
+		else if (t2.getType() == Tipo.LAMBDA)
 			newEx = t1;
 		else
 			newEx = new Concat(t1, t2);
 
 		if (this._e1.eqLambda()) {
 			t2 = this._e2.derivada(sim);
-			if (!(t2 instanceof Vacio) && !(newEx instanceof Vacio)) {
+			if (t2.getType() != Tipo.VACIO && newEx.getType() != Tipo.VACIO) {
 				if (!newEx.equals(t2)) {
 					if (newEx.menorQue(t2)) {
 						newEx = new Union(newEx, t2);
@@ -184,7 +184,7 @@ public class Concat extends ExpressionBase {
 					else
 						newEx = new Union(t2, newEx);
 				}
-			} else if (t1 instanceof Vacio && !(t2 instanceof Vacio)) {
+			} else if (t1.getType() == Tipo.VACIO && t2.getType() != Tipo.VACIO) {
 				newEx = t2;
 			}
 
@@ -197,9 +197,9 @@ public class Concat extends ExpressionBase {
 		Set<ExpressionBase> ret = new HashSet<>();
 		Set<ExpressionBase> t1 = this._e1.derivadaParcial(sim);
 		ExpressionBase t2 = this._e2;
-		if(t2 instanceof Lambdaa)
+		if(t2.getType() == Tipo.LAMBDA)
 			ret.addAll(t1);
-		else if(t2 instanceof Vacio)
+		else if(t2.getType() == Tipo.VACIO)
 			ret.add(new Vacio());
 		else {
 			Set<ExpressionBase> aux = concatAll(t1, t2);

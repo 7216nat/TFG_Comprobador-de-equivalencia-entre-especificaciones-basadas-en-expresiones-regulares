@@ -158,11 +158,11 @@ public class Kleen extends ExpressionBase {
 	public ExpressionBase derivada(String sim) {
 		ExpressionBase newEx = null;
 		ExpressionBase t1 = this._e1.derivada(sim);
-		if (t1 instanceof Vacio)
+		if (t1.getType() == Tipo.VACIO)
 			newEx = new Vacio();
-		else if (t1 instanceof Lambdaa)
+		else if (t1.getType() == Tipo.LAMBDA)
 			newEx = this;
-		else if (this._e1 instanceof Lambdaa)
+		else if (this._e1.getType() == Tipo.LAMBDA)
 			newEx = t1;
 		else
 			newEx = new Concat(t1, this);
