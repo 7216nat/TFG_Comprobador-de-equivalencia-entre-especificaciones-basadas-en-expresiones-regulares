@@ -143,6 +143,12 @@ public class Concat extends ExpressionBase {
 	     Concat t = (Concat) o;
 	     return t._e1.equals(this._e1) && t._e2.equals(this._e2);
 	}
+	
+	@Override
+	  public int hashCode() {
+	    return _e1.hashCode() + _e2.hashCode() + this.getType().getValor();
+	  }
+
 	@Override
 	public boolean eqLambda() {
 		return (_e1.eqLambda() && _e2.eqLambda());

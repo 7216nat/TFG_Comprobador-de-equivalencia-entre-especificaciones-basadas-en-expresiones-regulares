@@ -157,6 +157,12 @@ public class Union extends ExpressionBase {
 	}
 	
 	@Override
+	public int hashCode() {
+	    return _e1.hashCode() + _e2.hashCode() + this.getType().getValor();
+	}
+	
+	
+	@Override
 	public boolean eqLambda() {
 		return (_e1.eqLambda() || _e2.eqLambda());
 	}

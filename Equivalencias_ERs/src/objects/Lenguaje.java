@@ -20,11 +20,6 @@ public abstract class Lenguaje extends ExpressionBase {
 	public void set_sim(String sim) { _sim = sim; }
 	
 	@Override
-	public int hashCode() {
-		return _sim.hashCode();
-	}
-	
-	@Override
 	public String toString() { return _sim; }
 	
 	@Override

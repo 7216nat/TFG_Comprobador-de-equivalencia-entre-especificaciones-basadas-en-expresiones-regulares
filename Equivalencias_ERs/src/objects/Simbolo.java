@@ -44,6 +44,12 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 		Simbolo sim = (Simbolo) o;
 		return _sim.equals(sim._sim);
 	}
+	
+	@Override
+	public int hashCode() {
+		return _sim.hashCode();
+	}
+
 
 	@Override
 	public boolean match(String string) {

@@ -139,6 +139,11 @@ public class Kleen extends ExpressionBase {
 	}
 	
 	@Override
+	  public int hashCode() {
+		 return _e1.hashCode() + this.getType().getValor();
+	  }
+	
+	@Override
 	public boolean eqLambda() {
 		return true;
 	}

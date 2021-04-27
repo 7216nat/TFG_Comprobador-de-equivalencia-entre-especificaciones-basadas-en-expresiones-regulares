@@ -70,11 +70,6 @@ public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, D
 		return true;
 	}
 	
-	@Override
-	public int hashCode() {
-		return this.type.getValor();
-	}
-	
 	public boolean eqLambda() {
 		return false;
 	}
