@@ -69,7 +69,12 @@ public class Vacio extends Lenguaje {
 	     }
 	     return true;
 	}
-
+	
+	@Override
+	public int hashCode() {
+		 return _sim.hashCode();
+	}
+	
 	@Override
 	public String getVal() {
 		return this._sim;

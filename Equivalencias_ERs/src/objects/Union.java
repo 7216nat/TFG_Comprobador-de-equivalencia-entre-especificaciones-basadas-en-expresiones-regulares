@@ -157,6 +157,12 @@ public class Union extends ExpressionBase {
 	}
 	
 	@Override
+	public int hashCode() {
+	    return _e1.hashCode() + _e2.hashCode() + this.getType().getValor();
+	}
+	
+	
+	@Override
 	public boolean eqLambda() {
 		return (_e1.eqLambda() || _e2.eqLambda());
 	}
@@ -176,9 +182,9 @@ public class Union extends ExpressionBase {
 		ExpressionBase t1 = this._e1.derivada(sim);
 		ExpressionBase t2 = this._e2.derivada(sim);
 
-		if (t1 instanceof Vacio)
+		if (t1.getType() == Tipo.VACIO)
 			newEx = t2;
-		else if (t2 instanceof Vacio)
+		else if (t2.getType() == Tipo.VACIO)
 			newEx = t1;
 		else {
 			if (!t1.equals(t2)) {

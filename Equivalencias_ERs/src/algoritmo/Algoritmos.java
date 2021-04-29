@@ -154,8 +154,6 @@ public class Algoritmos {
 			}
 
 		}
-		afd1.show();
-		afd2.show();
 		return new Equivalencia(true, EQ);
 	}
 /**

@@ -159,6 +159,12 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	     RangoCharacter rc = (RangoCharacter) o;
 	     return _ini == rc._ini && _fin == rc._fin;
 	}
+	
+	@Override
+	public int hashCode() {
+		return _sim.hashCode();
+	}
+
 
 	@Override
 	public int compareTo(RangoCharacter o) {

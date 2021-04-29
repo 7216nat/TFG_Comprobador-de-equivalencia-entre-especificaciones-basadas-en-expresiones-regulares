@@ -237,7 +237,12 @@ public class UnionRangos extends ExpressionBase {
 	     UnionRangos t = (UnionRangos) o;
 	     return t._e1.equals(this._e1);
 	}
-
+	
+	@Override
+	public int hashCode() {
+		return _e1.hashCode() + this.getType().getValor();
+	}
+	
 	@Override
 	public ExpressionBase buildTreeDefinitivo() {
 		_e1 = _e1.buildTreeDefinitivo();

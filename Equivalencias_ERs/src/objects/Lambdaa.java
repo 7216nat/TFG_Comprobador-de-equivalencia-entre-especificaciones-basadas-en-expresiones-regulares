@@ -84,6 +84,11 @@ public class Lambdaa extends Lenguaje {
 	}
 	
 	@Override
+	public int hashCode() {
+		 return _sim.hashCode();
+	}
+	
+	@Override
 	public String getVal() {
 		return this._sim;
 	}
