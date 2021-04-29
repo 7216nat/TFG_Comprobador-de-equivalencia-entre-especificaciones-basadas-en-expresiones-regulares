@@ -1,0 +1,50 @@
+package sintactico;
+
+import java_cup.runtime.*;
+import lexico.AnalizadorLexico;
+import lexico.UnidadLexica;
+import errores.ErrorAnalizador;
+
+scan with {: return getScanner().next_token(); :};
+parser code {: 
+   private ErrorAnalizador errores;
+   public void syntax_error(Symbol unidadLexica){
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+init with {: 
+   errores = new ErrorAnalizador();
+   AnalizadorLexico alex = (AnalizadorLexico)getScanner();
+   alex.fijaGestionErrores(errores);
+:};
+
+
+terminal        AUX, IGUAL, VAR, DEF, ALTER,  ASTERISCO, MAS, INTERR,
+                PAP, PCIE, CORAP, CORCIE, GUION, ESCAPESIM, SIM;
+
+non terminal    Pre, Auxs, Aux, Defs, Def, E0, RestE0, E1, RestE1, op1A, 
+                E2, E3, E4, E5, E12, RestE12;
+                
+
+Pre ::= Auxs Defs ;
+Auxs ::= Aux Auxs | ;
+Aux ::= AUX VAR IGUAL E0 ;
+Defs ::= Def Defs | ;
+Def ::= DEF VAR IGUAL E0 ;
+
+E0 ::= E12 RestE0;
+RestE0 ::= ALTER E12 RestE0 | ;
+
+E12 ::= E1 RestE12 ;
+RestE12 ::= E1 RestE12 | ;
+
+E1 ::= E2 RestE1;
+RestE1 ::= op1A RestE1 | ;
+op1A ::= ASTERISCO | MAS | INTERR ;
+
+E2 ::= PAP E0 PCIE | E3 ;
+
+E3 ::= CORAP E4 CORCIE | E5;
+
+E4 ::= E5 GUION E5 | E5 ;
+E5 ::= ESCAPESIM | SIM | VAR;
