@@ -156,7 +156,7 @@ public class Controller {
 	 * @return mensaje de equivalencia
 	 */
 	private Equivalencia thomsonExec() {
-		return Algoritmos.detHopKarp(_e1.ThomsonSimplAFN(_state), _e2.ThomsonSimplAFN(_state), _state, _simList, false);
+		return Algoritmos.detHopKarp(_e1.ThomsonAFN(_state), _e2.ThomsonAFN(_state), _state, _simList, false);
 	}
 	
 	/**
@@ -275,7 +275,7 @@ public class Controller {
 			_e1 = it1.next();
 			Iterator<ExpressionBase> it2 = _elist2.iterator();
 			while (it2.hasNext()) {
-				_e2 = it2.next(); 
+				_e2 = it2.next();
 				if (compare().isEq()) {
 					ret += _e1.toString() + " equivalente a " + _e2.toString() + "\n"; 
 					it2.remove();
@@ -300,13 +300,7 @@ public class Controller {
 	 */
 	public String run() {
 		switch(_mode) {
-		case TODOS:
-			_e1 = unionListaERs(_elist1);
-			_e2 = unionListaERs(_elist2);
-			System.out.println(_e1.toString());
-			System.out.println(_e2.toString());
-			return compare().getMsg();
-		case SELECTED:
+		case TODOS: case SELECTED:
 			_e1 = unionListaERs(_elist1);
 			_e2 = unionListaERs(_elist2);
 			System.out.println(_e1.toString());

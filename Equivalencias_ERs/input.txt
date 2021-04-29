@@ -1,0 +1,3 @@
+aux <dad> = (ajdhad;
+aux <mao> = adasfa
+def <adsa> = <dad> | ad\def\)\)(\*\\[a-z,o-z]

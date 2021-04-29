@@ -14,9 +14,8 @@ public class AnOperations {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.CORCIE, "]");
 	}
 	public UnidadLexica unidadEof() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.EOF, "<EOF>");
+		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.EOF, "EOF");
 	}
-
 	public UnidadLexica unidadPAP() {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PAP, "(");
 	}
@@ -39,35 +38,7 @@ public class AnOperations {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.VAR, alex.lexema());
 	}
 	public UnidadLexica unidadSimEscape() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, alex.lexema());
-	}
-	public UnidadLexica unidadPApSim() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\(" );
-	}
-	public UnidadLexica unidadPCieSim() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\)" );
-	}
-	public UnidadLexica unidadAsterisco() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\*" );
-	}
-	public UnidadLexica unidadMas() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\+" );
-	}
-	public UnidadLexica unidadAnApSim() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\<" );
-	}
-	public UnidadLexica unidadAnCieSim() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\>" );
-	}
-	public UnidadLexica unidadInterr() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\?" );
-	}
-
-	public UnidadLexica unidadCorCieSim() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\]" );
-	}
-	public UnidadLexica unidadBarra() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\|" );
+		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, alex.lexema().substring(alex.lexema().length()-1));
 	}
 	public UnidadLexica unidadAux() {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.AUX, "aux" );
@@ -78,19 +49,16 @@ public class AnOperations {
 	public UnidadLexica unidadIgual() {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.IGUAL, "=" );
 	}
-	public UnidadLexica unidadIgualSim() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\=" );
-	}
 	public UnidadLexica unidadGuion() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.GUION, "\\-" );
+		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.GUION, "-" );
+	}
+	public UnidadLexica unidadComa() {
+		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.COMA, "," );
+	}
+	public UnidadLexica unidadPuntoComa() {
+		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PUNTOCOMA, ";" );
 	}
 	public UnidadLexica unidadSimbolo() {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.SIM, alex.lexema());
-	}
-	public UnidadLexica unidadGuionSim() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\-");
-	}
-	public UnidadLexica unidadCorcApSim() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, "\\[");
 	}
 }

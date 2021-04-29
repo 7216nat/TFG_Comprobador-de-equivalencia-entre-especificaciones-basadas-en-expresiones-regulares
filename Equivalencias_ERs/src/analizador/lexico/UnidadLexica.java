@@ -4,7 +4,7 @@ import java_cup.runtime.Symbol;
 
 public class UnidadLexica extends Symbol{
 	private int fila;
-	   private int col;
+	private int col;
 	   public UnidadLexica(int fila, int col, int clase, String lexema) {
 	     super(clase,lexema);
 		 this.fila = fila;

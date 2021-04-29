@@ -1,13 +1,31 @@
-package sintactico;
+package analizador.sintactico;
 
 import java_cup.runtime.*;
-import lexico.AnalizadorLexico;
-import lexico.UnidadLexica;
-import errores.ErrorAnalizador;
+import analizador.lexico.AnalizadorLexico;
+import analizador.lexico.UnidadLexica;
+import java.util.List;
+import java.util.ArrayList;
+import analizador.errores.ErrorAnalizador;
 
 scan with {: return getScanner().next_token(); :};
+action code{:
+   private boolean mapPerm = true;
+   public void setPerm(boolean bool){
+   		mapPerm = false;
+   }
+   public boolean getPerm(){
+   		return mapPerm;
+   }
+   public void write(String msg){
+   		System.out.println("Nodo: " + msg);
+   }
+:}
 parser code {: 
    private ErrorAnalizador errores;
+   private List<String> alist = new ArrayList<String>();
+   public List<String> getList(){
+   	 return alist;
+   }
    public void syntax_error(Symbol unidadLexica){
      errores.errorSintactico((UnidadLexica)unidadLexica);
    }
@@ -19,32 +37,25 @@ init with {:
 :};
 
 
-terminal        AUX, IGUAL, VAR, DEF, ALTER,  ASTERISCO, MAS, INTERR,
-                PAP, PCIE, CORAP, CORCIE, GUION, ESCAPESIM, SIM;
-
-non terminal    Pre, Auxs, Aux, Defs, Def, E0, RestE0, E1, RestE1, op1A, 
-                E2, E3, E4, E5, E6, RestE12;
+terminal        AUX, IGUAL, DEF, ALTER, ASTERISCO, MAS, INTERR, GUION,
+                PAP, PCIE, CORAP, CORCIE, ESCAPESIM, COMA, PUNTOCOMA,
+				SIM, VAR;
+non terminal    Pre, LAuxs, Auxs, Aux, LDefs, Defs, Def, E0, E1, 
+                E2, E3, Rangos, Rango;
                 
 
-Pre ::= Auxs Defs ;
-Auxs ::= Aux Auxs | ;
+Pre ::= LAuxs LDefs ;
+LAuxs ::= Auxs | ;
+Auxs ::= Auxs PUNTOCOMA Aux | Aux;
 Aux ::= AUX VAR IGUAL E0 ;
-Defs ::= Def Defs | ;
+LDefs ::= Defs | ;
+Defs ::= Defs PUNTOCOMA Def | Def;
 Def ::= DEF VAR IGUAL E0 ;
 
-E0 ::= E12 RestE0;
-RestE0 ::= ALTER E12 RestE0 | ;
+E0 ::= E0 ALTER E1 | E1;
+E1 ::= E1 E2 | E2;
+E2 ::= E3 ASTERISCO | E3 MAS | E3 INTERR | E3;
+E3 ::= SIM | VAR | ESCAPESIM | PAP E0 PCIE | CORAP Rangos CORCIE;
 
-E1 ::= E2 RestE1 ;
-RestE1 ::= E2 RestE1 | ;
-
-E2 ::= E3 RestE2;
-RestE2 ::= op2A RestE2 | ;
-op2A ::= ASTERISCO | MAS | INTERR ;
-
-E3 ::= PAP E0 PCIE | E4 ;
-
-E4 ::= CORAP E5 CORCIE | E6;
-
-E5 ::= E6 GUION E6 | E6 ;
-E6 ::= ESCAPESIM | SIM | VAR;
+Rangos ::= Rangos COMA Rango | Rango;
+Rango ::= SIM GUION SIM ;

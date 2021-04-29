@@ -1,6 +1,5 @@
 package analizador.errores;
 
-import analizador.excepciones.AnalizadorErrorException;
 import analizador.lexico.UnidadLexica;
 
 public class ErrorAnalizador {

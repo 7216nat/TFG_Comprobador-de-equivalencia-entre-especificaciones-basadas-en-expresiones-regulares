@@ -8,6 +8,7 @@ import errores.ErrorAnalizador;
 %column
 %class AnalizadorLexico
 %type  UnidadLexica
+%public
 %unicode
 
 %{
@@ -29,10 +30,11 @@ import errores.ErrorAnalizador;
   ops = new AnOperations(this);
 %init}
 
+letra = ([A-Z]|[a-z])
 ignorada = [ \t\r\b\n]
 def = def
 aux = aux
-var = \< [^>]* \>
+var = \<{letra}{letra}*\>
 PAp = \(
 PCie = \)
 CorAp = \[
@@ -43,19 +45,8 @@ Union = \|
 Posibilidad = \?
 Igual = \=
 Guion = \-
-
-PApSim = \\\(
-PCieSim = \\\)
-AnApSim = \\\<
-AnCieSim = \\\>
-CorApSim = \\\[
-CorCieSim = \\\]
-Asterisco = \\\*
-Mas = \\\+
-Barra = \\\|
-Interr = \\\?
-IgualSim = \\\=
-GuionSim = \\\- 
+Coma = \,
+PuntoComa = \;
 SimEscape = \\[^]
 Simbolo = [^]
 
@@ -74,19 +65,8 @@ Simbolo = [^]
 {Posibilidad}             {return ops.unidadPosibilidad();}
 {Igual}                   {return ops.unidadIgual();}
 {Guion}                   {return ops.unidadGuion();}
-
-{PApSim}                  {return ops.unidadPApSim();}
-{PCieSim}                 {return ops.unidadPCieSim();}
-{AnApSim}                 {return ops.unidadAnApSim();}
-{AnCieSim}                {return ops.unidadAnCieSim();}
-{CorApSim}                {return ops.unidadCorcApSim();}
-{CorCieSim}               {return ops.unidadCorCieSim();}
-{Asterisco}               {return ops.unidadAsterisco();}
-{Mas}                     {return ops.unidadMas();}
-{Barra}                   {return ops.unidadBarra();}
-{Interr}                  {return ops.unidadInterr();}
-{IgualSim}                {return ops.unidadIgualSim();}
-{GuionSim}                {return ops.unidadGuionSim();}
+{Coma}                    {return ops.unidadComa();}
+{PuntoComa}               {return ops.unidadPuntoComa();}
 {SimEscape}               {return ops.unidadSimEscape();}
 {Simbolo}                 {return ops.unidadSimbolo();}
-[^]                       {ops.error();}
+[^]                       {ops.errorLexico(fila(),columna(),lexema());}

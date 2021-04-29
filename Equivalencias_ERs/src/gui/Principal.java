@@ -86,8 +86,8 @@ public class Principal {
 		JList<String> list1 = new JList<String>();
 		list1.setVisibleRowCount(5);
 		DefaultListModel<String> strList = new DefaultListModel<String>();
-		strList.add(0, "(0|1)*");
-		strList.add(1, "0(120)*12");
+		strList.add(0, "0|1");
+		strList.add(1, "0*");
 		strList.add(2, "(0*1*)*");
 		strList.add(3, "(01|0)*0");
 		strList.add(4, "(a|b)*");
@@ -119,15 +119,15 @@ public class Principal {
 		JList<String> list2 = new JList<String>();
 		list2.setVisibleRowCount(5);
 		DefaultListModel<String> strList2 = new DefaultListModel<String>();
-		strList2.add(0, "01(201)*2");
-		strList2.add(1, "0*|1*");
-		strList2.add(2, "(0*1)*");
+		strList2.add(0, "01");
+		strList2.add(1, "0");
+		strList2.add(2, "%");
 		strList2.add(3, "0(10|0)*");
 		strList2.add(4, "a*(ba*)*");
 		strList2.add(5, "a*|b*");
 		strList2.add(6, "(cc)*|(cc)*(cb)(b|c)*");
 		strList2.add(7, "[a-bcd-tx]*");
-		strList2.add(8, "a|b|[c-h]");
+		strList2.add(8, "[a-c]|[d-h]");
 		strList2.add(9, "%abc|gh");
 		list2.setModel(strList2);
 
