@@ -1,31 +1,27 @@
 package analizador.sintactico;
 
 import java_cup.runtime.*;
+import objects.*;
 import analizador.lexico.AnalizadorLexico;
 import analizador.lexico.UnidadLexica;
+import analizador.sintactico.UnidadParse;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import analizador.errores.ErrorAnalizador;
 
 scan with {: return getScanner().next_token(); :};
 action code{:
    private boolean mapPerm = true;
-   public void setPerm(boolean bool){
-   		mapPerm = false;
-   }
-   public boolean getPerm(){
-   		return mapPerm;
-   }
+   private Map<String, UnidadParse> parselist = new HashMap<>();
+   private Map<String, UnidadParse> auxmap = new HashMap<>();
    public void write(String msg){
    		System.out.println("Nodo: " + msg);
    }
 :}
 parser code {: 
    private ErrorAnalizador errores;
-   private List<String> alist = new ArrayList<String>();
-   public List<String> getList(){
-   	 return alist;
-   }
    public void syntax_error(Symbol unidadLexica){
      errores.errorSintactico((UnidadLexica)unidadLexica);
    }
@@ -37,25 +33,89 @@ init with {:
 :};
 
 
-terminal        AUX, IGUAL, DEF, ALTER, ASTERISCO, MAS, INTERR, GUION,
-                PAP, PCIE, CORAP, CORCIE, ESCAPESIM, COMA, PUNTOCOMA,
-				SIM, VAR;
-non terminal    Pre, LAuxs, Auxs, Aux, LDefs, Defs, Def, E0, E1, 
-                E2, E3, Rangos, Rango;
+terminal     	AUX, IGUAL, DEF, ALTER, ASTERISCO, MAS, INTERR, GUION,
+                PAP, PCIE, CORAP, CORCIE, COMA, PUNTOCOMA;
+terminal String	LAMBDA, VACIO, SIM, VAR, ESCAPESIM;
+non terminal        Pre, LAuxs, Auxs, Aux, LDefs, Defs, Def; 
+non terminal UnidadParse  E0, E1, E2, E3, Rangos, Rango;
                 
 
-Pre ::= LAuxs LDefs ;
+Pre ::= LAuxs LDefs {: RESULT=parselist; :};
 LAuxs ::= Auxs | ;
 Auxs ::= Auxs PUNTOCOMA Aux | Aux;
-Aux ::= AUX VAR IGUAL E0 ;
+Aux ::= AUX VAR:v IGUAL E0:e {:  auxmap.put(v, e); :}; 
 LDefs ::= Defs | ;
 Defs ::= Defs PUNTOCOMA Def | Def;
-Def ::= DEF VAR IGUAL E0 ;
+Def ::= DEF VAR:v IGUAL E0:e {:  parselist.put(v, e); :};
 
-E0 ::= E0 ALTER E1 | E1;
-E1 ::= E1 E2 | E2;
-E2 ::= E3 ASTERISCO | E3 MAS | E3 INTERR | E3;
-E3 ::= SIM | VAR | ESCAPESIM | PAP E0 PCIE | CORAP Rangos CORCIE;
+E0 ::= E0: e1 ALTER E1: e2 
+		{:  ExpressionBase union;
+			if (e1.er.getType() == Tipo.VACIO)
+				union = e2.er;
+			else if (e2.er.getType() == Tipo.VACIO)
+				union = e1.er;
+			else
+				union = new Union(e1.er, e2.er);
+			RESULT= new UnidadParse(e1.str+"|"+e2.str, union); :}
+		| E1: e
+		{: RESULT=e; :};
+E1 ::= E1: e1 E2: e2
+		{:  if (e1.er.getType() == Tipo.VACIO || e2.er.getType() == Tipo.VACIO)
+				RESULT = new UnidadParse(e1.str+e2.str, new Vacio());
+			else{
+				ExpressionBase concat;
+				if (e1.er.getType() == Tipo.LAMBDA)
+					concat = e2.er;
+				else if (e2.er.getType() == Tipo.LAMBDA)
+					concat = e1.er;
+				else
+					concat = new Concat(e1.er, e2.er);
+				 RESULT = new UnidadParse(e1.str+e2.str, concat);
+			} :}   
+		| E2: e
+		{: RESULT = e; :}  ;
+E2 ::= E2: e ASTERISCO
+		{:  if (e.er.getType() == Tipo.KLEEN)
+				RESULT = e;
+			else
+				RESULT = new UnidadParse(e.str+"*", new Kleen(e.er)); :}  
+		| E2: e MAS
+		{:  RESULT = new UnidadParse(e.str+"+", new Concat(e.er, new Kleen(e.er))); :}   
+		| E3: e INTERR
+		{: RESULT = new UnidadParse(e.str+"?", new Union(e.er, new Lambdaa())); :}   
+		| E3: e 
+		{: RESULT = e; :};
+E3 ::= SIM: s
+		{: RESULT = new UnidadParse(s, new Simbolo(s)); :} 
+		| VAR: v
+		{:  if (auxmap.containsKey(v))
+				RESULT = auxmap.get(v);
+			else{
+				parser.report_error("Syntax error: " + v + ", there is not AUX with that name.",v);
+				throw new Exception("HashMap error");
+			} :}  
+		| LAMBDA: l
+		{: RESULT = new UnidadParse(l, new Lambdaa()); :}  
+		| VACIO: va
+		{: RESULT = new UnidadParse(va, new Vacio()); :} 
+		| ESCAPESIM: esc
+		{: RESULT = new UnidadParse("\\" + esc, new Simbolo(esc)); :}  
+		| PAP E0: e PCIE
+		{:  e.str = "(" + e.str +")"; 
+			RESULT = e; :}  
+		| CORAP Rangos: r CORCIE 
+		{:  r.str = "[" + r.str + "]";
+			RESULT = r; :};
 
-Rangos ::= Rangos COMA Rango | Rango;
-Rango ::= SIM GUION SIM ;
+Rangos ::= Rangos: e1 COMA Rango: e2 
+		{:  RESULT = new UnidadParse(e1.getStr()+","+e2.getStr(), new Union(e1.getER(), e2.getER())); :} 
+		| Rango: r 
+		{:  RESULT = r; :};
+Rango ::= SIM: s1 GUION SIM: s2 
+		{:  char c1 = s1.charAt(0);
+			char c2 = s2.charAt(0);
+			if (c1 > c2) {
+				parser.report_error("Syntax error: " + s1 + " > " + s2,s1);
+				throw new Exception("Action error");
+			}  
+			RESULT= new UnidadParse(s1+"-"+s2, new UnionRangos(new RangoCharacter(c1, c2))); :};

@@ -1,3 +1,5 @@
-aux <dad> = (ajdhad;
-aux <mao> = adasfa
-def <adsa> = <dad> | ad\def\)\)(\*\\[a-z,o-z]
+aux <a> = 2;
+aux <a> = a&b++c;
+aux <b> = adas
+def <adsa> = <a><b> | \a;
+def <sda> = %gh|h

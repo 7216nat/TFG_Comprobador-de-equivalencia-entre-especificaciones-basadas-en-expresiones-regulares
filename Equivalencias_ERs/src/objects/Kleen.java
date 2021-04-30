@@ -29,14 +29,6 @@ public class Kleen extends ExpressionBase {
 		}
 	}
 	
-	public Kleen(ExpressionBase padre, ExpressionBase e1) {
-		super(Tipo.KLEEN);
-		_e1 = e1;
-		if(_e1 instanceof Kleen) {
-			_e1 = ((Kleen)e1).getExpr();
-		}
-	}
-
 	@Override
 	public String toString() {
 		return "[" + _e1.toString() + "]" + KLEENS;

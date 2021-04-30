@@ -24,11 +24,11 @@ public class Main {
 			 
 		try{
 			 AnalizadorSintactico asint = new AnalizadorSintactico(alex);
-			 asint.parse();
+			 System.out.println(asint.parse().value.toString());
 			 System.out.println("OK");
 			 
 		}catch(Exception e) {
-			 e.getMessage();
+			System.out.println(e.getMessage());
 		}
 			 
 		}

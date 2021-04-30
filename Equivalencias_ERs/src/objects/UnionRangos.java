@@ -24,7 +24,7 @@ public class UnionRangos extends ExpressionBase {
 	 * Clase constructora por defecto
 	 */
 	public UnionRangos() {
-		this(null);
+		this((String)null);
 	}
 	
 	/**
@@ -37,6 +37,12 @@ public class UnionRangos extends ExpressionBase {
 		_rangos = new ArrayList<>();
 	}
 	
+	public UnionRangos(RangoCharacter rc) {
+		super(Tipo.UNIONRANGOS);
+		_e1 = rc;
+		_rangos = new ArrayList<>();
+		_rangos.add(rc);
+	}
 	/**
 	 * parsear el string, se añaden los puntos de interseccion al set \
 	 * antes de eso se interseccionan internamente para evitar repeticiones 

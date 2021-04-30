@@ -1,6 +1,6 @@
-package lexico;
+package analizador.lexico;
 
-import errores.ErrorAnalizador;
+import analizador.errores.ErrorAnalizador;
 
 %%
 %cup
@@ -35,6 +35,8 @@ ignorada = [ \t\r\b\n]
 def = def
 aux = aux
 var = \<{letra}{letra}*\>
+Lambda = \&
+Vacio = \%
 PAp = \(
 PCie = \)
 CorAp = \[
@@ -55,6 +57,8 @@ Simbolo = [^]
 {def}                     {return ops.unidadDef();}
 {aux}                     {return ops.unidadAux();}
 {var}                     {return ops.unidadVar();}
+{Lambda} 				  {return ops.unidadLambda();}
+{Vacio}					  {return ops.unidadVacio();}
 {PAp}                     {return ops.unidadPAP();}
 {PCie}                    {return ops.unidadPCie();}
 {CorAp}                   {return ops.unidadCorAp();}

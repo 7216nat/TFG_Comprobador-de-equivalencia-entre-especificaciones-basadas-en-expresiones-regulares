@@ -35,7 +35,13 @@ public class AnOperations {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ALTER, "|");
 	}
 	public UnidadLexica unidadVar() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.VAR, alex.lexema());
+		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.VAR, alex.lexema().substring(1, alex.lexema().length()-1));
+	}
+	public UnidadLexica unidadLambda() {
+		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.LAMBDA, "&");
+	}
+	public UnidadLexica unidadVacio() {
+		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.VACIO, "%");
 	}
 	public UnidadLexica unidadSimEscape() {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.ESCAPESIM, alex.lexema().substring(alex.lexema().length()-1));
