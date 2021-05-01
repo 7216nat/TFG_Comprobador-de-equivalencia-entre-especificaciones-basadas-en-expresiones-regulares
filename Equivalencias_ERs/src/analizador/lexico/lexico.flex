@@ -30,11 +30,11 @@ import analizador.errores.ErrorAnalizador;
   ops = new AnOperations(this);
 %init}
 
-letra = ([A-Z]|[a-z])
+
 ignorada = [ \t\r\b\n]
 def = def
 aux = aux
-var = \<{letra}{letra}*\>
+var = \<[^>][^>]*\>
 Lambda = \&
 Vacio = \%
 PAp = \(

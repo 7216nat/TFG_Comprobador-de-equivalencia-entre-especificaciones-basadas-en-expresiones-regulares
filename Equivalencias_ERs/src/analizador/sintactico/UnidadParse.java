@@ -21,6 +21,6 @@ public class UnidadParse {
 	
 	@Override
 	public String toString() {
-		return str + "  " + er.toString();
+		return str; //+ "  ";// + er.toString();
 	}
 }

@@ -3,11 +3,13 @@ package analizador.test;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.HashMap;
 
 import analizador.lexico.AnalizadorLexico;
 import analizador.lexico.UnidadLexica;
 import analizador.sintactico.AnalizadorSintactico;
 import analizador.sintactico.ClaseLexica;
+import analizador.sintactico.UnidadParse;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -24,6 +26,7 @@ public class Main {
 			 
 		try{
 			 AnalizadorSintactico asint = new AnalizadorSintactico(alex);
+			
 			 System.out.println(asint.parse().value.toString());
 			 System.out.println("OK");
 			 
