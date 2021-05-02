@@ -95,7 +95,8 @@ public class UnionRangos extends ExpressionBase {
 	 * Interseccion de todos los rangos con los puntos de intersecciones dadas \
 	 * y convertirlos en las uniones
 	 * @param set: se añaden los nuevos "simbolos" al set de simbolos
-	 * @param ss: lista de puntos de intersecciones dadas
+	 * @param inis: lista de puntos iniciales de intersecciones dadas
+	 * @param fins: lista de puntos finales de intersecciones dadas
 	 */
 	public void intersec(Set<String> set, Set<Character> inis, Set<Character> fins) {
 		List<RangoCharacter> tmp = new ArrayList<>();
@@ -115,7 +116,8 @@ public class UnionRangos extends ExpressionBase {
 					break;
 				if (rc.contiene(c, true)) {
 					rctmp = rc.interseccion(c, true);
-					tmp.add(rctmp);
+					if (rctmp != null) 
+						tmp.add(rctmp);
 				}
 			}
 			tmp.add(rc);
@@ -134,8 +136,10 @@ public class UnionRangos extends ExpressionBase {
 					break;
 				if (rc.contiene(c, false)) {
 					rctmp = rc.interseccion(c, false);
-					tmp.add(rctmp);
-					set.add(rctmp._sim);
+					if (rctmp != null) {
+						tmp.add(rctmp);
+						set.add(rctmp._sim);
+					}
 				}
 			}
 			tmp.add(rc);
@@ -212,23 +216,26 @@ public class UnionRangos extends ExpressionBase {
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		return _e1.ThomsonAFN(id);
+		// return _e1.ThomsonAFN(id);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		return _e1.ThomsonSimplAFN(id);
+		// return _e1.ThomsonSimplAFN(id);
+		throw new UnsupportedOperationException();
 	}
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(Map<Integer, BerrySethiNode> map, IdEstado id) {
 		// exception
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
-		parserRangos(inis, fins);
+		// parserRangos(inis, fins);
+		_e1.getSimbolosRangos(set, array, inis, fins);
 		array.add(this);
 	}
 	
@@ -257,16 +264,16 @@ public class UnionRangos extends ExpressionBase {
 
 	@Override
 	public String getVal() {
-		return "";
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public ExpressionBase derivada(String sim) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Set<ExpressionBase> derivadaParcial(String sim) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 }

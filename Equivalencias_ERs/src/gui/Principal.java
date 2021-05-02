@@ -52,8 +52,8 @@ public class Principal {
 	 */
 	public Principal(Controller ctrl) {
 		this.ctrl = ctrl;
-		initialize();
 		nombre = true;
+		initialize();
 		leng1 = new HashMap<String, UnidadParse>();
 		leng2 = new HashMap<String, UnidadParse>();
 
@@ -221,8 +221,8 @@ public class Principal {
 				String algoritmo = (String) algChoice.getSelectedItem();
 				System.out.println(algoritmo);
 
-				List<String> expr1 = new ArrayList<>();
-				List<String> expr2 = new ArrayList<>();
+				List<ExpressionBase> expr1 = new ArrayList<>();
+				List<ExpressionBase> expr2 = new ArrayList<>();
 
 				if (!metodo.equalsIgnoreCase("Todos")) {
 					int[] selInd1 = list1.getSelectedIndices();
@@ -236,23 +236,23 @@ public class Principal {
 						if (nombre) {
 							for (int i : selInd1) {
 								String aux = list1.getModel().getElementAt(i);
-								expr1.add(leng1.get(aux).toString());
+								expr1.add(leng1.get(aux).getER());
 								System.out.println(aux);
 							}
 							for (int i : selInd2) {
 								String aux = list2.getModel().getElementAt(i);
-								expr2.add(leng2.get(aux).toString());
+								expr2.add(leng2.get(aux).getER());
 								System.out.println(aux);
 							}
 						} else {
 							for (int i : selInd1) {
 								String aux = list1.getModel().getElementAt(i);
-								expr1.add(aux);
+								expr1.add(leng1.get(aux).getER());
 								System.out.println(aux);
 							}
 							for (int i : selInd2) {
 								String aux = list2.getModel().getElementAt(i);
-								expr2.add(aux);
+								expr2.add(leng2.get(aux).getER());
 								System.out.println(aux);
 							}
 
@@ -265,18 +265,18 @@ public class Principal {
 					if (nombre) {
 						for (int i = 0; i < list1.getModel().getSize(); i++) {
 							String aux = list1.getModel().getElementAt(i);
-							expr1.add(leng1.get(aux).toString());
+							expr1.add(leng1.get(aux).getER());
 						}
 						for (int i = 0; i < list2.getModel().getSize(); i++) {
 							String aux = list2.getModel().getElementAt(i);
-							expr2.add(leng2.get(aux).toString());
+							expr2.add(leng2.get(aux).getER());
 						}
 
 					} else {
 						for (int i = 0; i < list1.getModel().getSize(); i++)
-							expr1.add(list1.getModel().getElementAt(i));
+							expr1.add(leng1.get(list1.getModel().getElementAt(i)).getER());
 						for (int i = 0; i < list2.getModel().getSize(); i++)
-							expr2.add(list2.getModel().getElementAt(i));
+							expr2.add(leng2.get(list2.getModel().getElementAt(i)).getER());
 					}
 					String info = mensaje(algoritmo, metodo);
 					String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
@@ -388,13 +388,13 @@ public class Principal {
 						strList2.clear();
 
 						if (nombre) {
-							Iterator a1 = leng1.entrySet().iterator();
+							Iterator a1 = leng2.entrySet().iterator();
 							while (a1.hasNext()) {
 								Map.Entry par = (Map.Entry) a1.next();
 								strList2.addElement(par.getKey().toString());
 							}
 						} else {
-							Iterator a1 = leng1.entrySet().iterator();
+							Iterator a1 = leng2.entrySet().iterator();
 							while (a1.hasNext()) {
 								Map.Entry par = (Map.Entry) a1.next();
 								strList2.addElement(par.getValue().toString());

@@ -1,1 +1,2 @@
-def <cosa> = a*
+def <cosa> = [b-d];
+def <b> = [c-h]

@@ -9,9 +9,7 @@ import java.util.TreeSet;
 
 import algoritmo.Algoritmos;
 import algoritmo.Equivalencia;
-import automata.Automata;
 import automata.IdEstado;
-import objects.BerrySethiNode;
 import objects.ExpressionBase;
 import objects.Union;
 import objects.UnionRangos;
@@ -84,6 +82,46 @@ public class Controller {
 		}
 	}
 	
+	private void procesar(List<ExpressionBase> listER1, List<ExpressionBase> listER2) {
+		// variables globales en dos expresiones
+		_elist1 = listER1;
+		_elist2 = listER2;
+		Set<String> simbolosSet = new HashSet<>();
+		Set<Character> inis = new TreeSet<>();
+		Set<Character> fins = new TreeSet<>();
+		List<UnionRangos> rangos = new ArrayList<>();
+		
+		// parse lista de expresiones 1
+		for (ExpressionBase er: listER1) {
+			er.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+		}
+
+		// parse lista de expresiones 2
+		for (ExpressionBase er: listER2) {
+			er.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+		}
+
+		// interseccion y y obtener los nuevos simbolos
+		intersecUR(simbolosSet, rangos, inis, fins);
+				
+		// conseguir todos los simbolos incluidos los rangos
+		_simList = new ArrayList<>();
+		Iterator<String> it = simbolosSet.iterator();
+		while (it.hasNext()) {
+			String c = it.next();
+			_simList.add(c);
+		}
+		
+		if (!rangos.isEmpty()) {
+			// deshacer los Unionrangos
+			for(int i = 0; i < _elist1.size(); i++) {
+				_elist1.set(i, _elist1.get(i).buildTreeDefinitivo());
+			}
+			for(int i = 0; i < _elist2.size(); i++) {
+				_elist2.set(i, _elist2.get(i).buildTreeDefinitivo());
+			}
+		}
+	}
 	/**
 	 * A ser sustituido;
 	 * parsear los strings a ExpressionBase 
@@ -127,12 +165,13 @@ public class Controller {
 			_simList.add(c);
 		}
 		
+		
 		// deshacer los Unionrangos
-		for(ExpressionBase e: _elist1) {
-			e.buildTreeDefinitivo();
+		for(int i = 0; i < _elist1.size(); i++) {
+			_elist1.set(i, _elist1.get(i).buildTreeDefinitivo());
 		}
-		for(ExpressionBase e: _elist2) {
-			e.buildTreeDefinitivo();
+		for(int i = 0; i < _elist2.size(); i++) {
+			_elist2.set(i, _elist2.get(i).buildTreeDefinitivo());
 		}
 			
 	}
@@ -210,9 +249,18 @@ public class Controller {
 	 * @param listER1: list 1
 	 * @param listER2: list 2
 	 */
-	public void setERs(List<String> listER1, List<String> listER2) {
-		parser(listER1, listER2);
+	public void setERs(List<ExpressionBase> listER1, List<ExpressionBase> listER2) {
+		procesar(listER1, listER2);
 	}
+	
+	/**
+	 * set las dos listas de ERs
+	 * @param listER1: list 1
+	 * @param listER2: list 2
+	 */
+//	public void setERs(List<String> listER1, List<String> listER2) {
+//		parser(listER1, listER2);
+//	}
 	
 	/**
 	 * set algoritmo
@@ -322,7 +370,7 @@ public class Controller {
 	 * @param mode: modo seleccionado
 	 * @return: String result
 	 */
-	public String compEquiv(List<String> s1, List<String> s2,
+	public String compEquiv(List<ExpressionBase> s1, List<ExpressionBase> s2,
 			String algor, String mode) {
 		setAlgoritmo(algor);
 		setMode(mode);

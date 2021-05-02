@@ -127,23 +127,31 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	public RangoCharacter interseccion(char c, boolean ini) {
 		char tmp = _ini;
 		if (c == this._fin) {
-			_ini = _fin;
-			actualizarSim();
-			return new RangoCharacter(tmp, (char)(c-1));
+			if (!ini) {
+				_ini = _fin;
+				actualizarSim();
+				return new RangoCharacter(tmp, (char)(c-1));
+			}
+			else return null;
+		} 
+		else if (c == this._ini) {
+			if (ini) {
+				_ini = (char)(c+1);
+				actualizarSim();
+				return new RangoCharacter(c);
+			}
+			else return null;
 		}
-		if (c == this._ini) {
-			_ini = (char)(c+1);
-			actualizarSim();
-			return new RangoCharacter(c);
-		}
-		if (ini) {
-			this._ini = c;
-			actualizarSim();
-			return new RangoCharacter(tmp, (char)(c-1)); 
-		} else {
-			this._ini = (char)(c+1);
-			actualizarSim();
-			return new RangoCharacter(tmp, c); 
+		else {
+			if (ini) {
+				this._ini = c;
+				actualizarSim();
+				return new RangoCharacter(tmp, (char)(c-1)); 
+			} else {
+				this._ini = (char)(c+1);
+				actualizarSim();
+				return new RangoCharacter(tmp, c); 
+			}
 		}
 	}
 	
@@ -225,6 +233,8 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	@Override
 	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
 		// no needed, no included at beginning
+		inis.add(_ini);
+		fins.add(_fin);
 	}	
 
 	@Override
