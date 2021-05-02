@@ -48,7 +48,6 @@ Posibilidad = \?
 Igual = \=
 Guion = \-
 Coma = \,
-PuntoComa = \;
 SimEscape = \\[^]
 Simbolo = [^]
 
@@ -70,7 +69,6 @@ Simbolo = [^]
 {Igual}                   {return ops.unidadIgual();}
 {Guion}                   {return ops.unidadGuion();}
 {Coma}                    {return ops.unidadComa();}
-{PuntoComa}               {return ops.unidadPuntoComa();}
 {SimEscape}               {return ops.unidadSimEscape();}
 {Simbolo}                 {return ops.unidadSimbolo();}
 [^]                       {ops.errorLexico(fila(),columna(),lexema());}

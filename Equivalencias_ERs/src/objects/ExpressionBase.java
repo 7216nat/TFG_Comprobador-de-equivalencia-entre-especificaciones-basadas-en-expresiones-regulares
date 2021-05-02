@@ -108,7 +108,7 @@ public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, D
 			}
 			
 		}
-		//this instanceof Kleen
+		//this instanceof Kleen 
 		else {
 			if(e instanceof Kleen) {
 				return (((Kleen)this).getVal().charAt(0) < ((Kleen)e).getVal().charAt(0));

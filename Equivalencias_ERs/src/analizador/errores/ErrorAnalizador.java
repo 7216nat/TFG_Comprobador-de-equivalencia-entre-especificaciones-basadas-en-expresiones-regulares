@@ -1,14 +1,15 @@
 package analizador.errores;
 
 import analizador.lexico.UnidadLexica;
+import excepciones.AnalizadorErrorException;
 
 public class ErrorAnalizador {
 	public void errorLexico(int fila, String lexema) {//throws AnalizadorErrorException{
-	     //throw new AnalizadorErrorException("ERROR LEXICO fila "+fila+": Caracter inexperado: "+lexema);
-		System.out.println("ERROR LEXICO fila "+fila+": Caracter inesperado: "+lexema);
+	    throw new AnalizadorErrorException("No se ha podido cargar el archivo.\n"
+	    		+ "Error léxico al leer el archivo, en fila "+fila+": Carácter inesperado: "+lexema);
 	}
 	public void errorSintactico(UnidadLexica unidadLexica) {//throws AnalizadorErrorException{
-	     //throw new AnalizadorErrorException("ERROR SINTACTICO fila "+unidadLexica.fila()+", columna "+unidadLexica.columna()+" : Elemento inexperado "+unidadLexica.value);
-	     System.out.println("ERROR SINTACTICO fila "+unidadLexica.fila()+", columna "+unidadLexica.columna()+" : Elemento inexperado "+unidadLexica.value);
+	     throw new AnalizadorErrorException("No se ha podido cargar el archivo.\n"
+	     		+ "Error sintáctico al leer el archivo, en fila "+unidadLexica.fila()+", columna "+unidadLexica.columna()+": Elemento inesperado "+unidadLexica.value);
 	}
 }

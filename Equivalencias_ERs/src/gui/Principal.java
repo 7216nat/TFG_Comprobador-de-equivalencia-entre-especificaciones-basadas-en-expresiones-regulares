@@ -44,8 +44,8 @@ public class Principal {
 	private Controller ctrl;
 	private JFrame frmComprobadorEquivalencia;
 	private boolean nombre; // true si se ven los nombres, false si se ven las expresiones
-	private HashMap<String, UnidadParse> leng1;
-	private HashMap<String, UnidadParse> leng2;
+	private ArrayList<ElementoLista> leng1;
+	private ArrayList<ElementoLista> leng2;
 
 	/**
 	 * Create the application.
@@ -54,8 +54,8 @@ public class Principal {
 		this.ctrl = ctrl;
 		nombre = true;
 		initialize();
-		leng1 = new HashMap<String, UnidadParse>();
-		leng2 = new HashMap<String, UnidadParse>();
+		leng1 = new ArrayList<ElementoLista>();
+		leng2 = new ArrayList<ElementoLista>();
 
 		frmComprobadorEquivalencia.setVisible(true);
 
@@ -233,51 +233,30 @@ public class Principal {
 					else if (selInd2.length == 0)
 						res.setText("Selecciona el método \"Todos\" o alguna expresión en el lenguaje 2");
 					else {
-						if (nombre) {
 							for (int i : selInd1) {
 								String aux = list1.getModel().getElementAt(i);
-								expr1.add(leng1.get(aux).getER());
+								expr1.add(leng1.get(i).getExpresion());
 								System.out.println(aux);
 							}
 							for (int i : selInd2) {
 								String aux = list2.getModel().getElementAt(i);
-								expr2.add(leng2.get(aux).getER());
-								System.out.println(aux);
-							}
-						} else {
-							for (int i : selInd1) {
-								String aux = list1.getModel().getElementAt(i);
-								expr1.add(leng1.get(aux).getER());
-								System.out.println(aux);
-							}
-							for (int i : selInd2) {
-								String aux = list2.getModel().getElementAt(i);
-								expr2.add(leng2.get(aux).getER());
+								expr2.add(leng2.get(i).getExpresion());
 								System.out.println(aux);
 							}
 
-						}
 						String info = mensaje(algoritmo, metodo);
 						String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
 						res.setText(resul + "\n" + info);
 					}
-				} else {
-					if (nombre) {
-						for (int i = 0; i < list1.getModel().getSize(); i++) {
-							String aux = list1.getModel().getElementAt(i);
-							expr1.add(leng1.get(aux).getER());
+				} 
+				//Si se selecciona Todos
+				else {
+						for(ElementoLista i : leng1) {
+							expr1.add(i.getExpresion());
 						}
-						for (int i = 0; i < list2.getModel().getSize(); i++) {
-							String aux = list2.getModel().getElementAt(i);
-							expr2.add(leng2.get(aux).getER());
+						for(ElementoLista i : leng2) {
+							expr2.add(i.getExpresion());
 						}
-
-					} else {
-						for (int i = 0; i < list1.getModel().getSize(); i++)
-							expr1.add(leng1.get(list1.getModel().getElementAt(i)).getER());
-						for (int i = 0; i < list2.getModel().getSize(); i++)
-							expr2.add(leng2.get(list2.getModel().getElementAt(i)).getER());
-					}
 					String info = mensaje(algoritmo, metodo);
 					String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
 					res.setText(resul + "\n" + info);
@@ -335,40 +314,46 @@ public class Principal {
 				elegir.setFileFilter(filter);
 				int returnVal = elegir.showOpenDialog(frmComprobadorEquivalencia);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					System.out.println("You choose" + elegir.getSelectedFile().getName());
 					try {
 						Reader input = new InputStreamReader(new FileInputStream(elegir.getSelectedFile().getAbsolutePath()));
-						//Reader input = new InputStreamReader(new FileInputStream("input.txt"));
 						AnalizadorLexico alex = new AnalizadorLexico(input);
 						AnalizadorSintactico asint = new AnalizadorSintactico(alex);
-						leng1 = (HashMap<String, UnidadParse>) asint.parse().value;
+						HashMap<String, UnidadParse> arbol = (HashMap<String, UnidadParse>) asint.parse().value;
 
+						leng1.clear();
+						Iterator l1 = arbol.entrySet().iterator();
+						while(l1.hasNext()) {
+							Map.Entry par = (Map.Entry) l1.next();
+							UnidadParse exp = (UnidadParse) par.getValue();
+							leng1.add(new ElementoLista(par.getKey().toString(), exp.getER()));
+						}
+						
 						strList.clear();
 						if (nombre) {
-							Iterator a1 = leng1.entrySet().iterator();
+							Iterator a1 = leng1.iterator();
 							while (a1.hasNext()) {
-								Map.Entry par = (Map.Entry) a1.next();
-								strList.addElement(par.getKey().toString());
+								strList.addElement(((ElementoLista) a1.next()).getNombre());
 							}
 						} else {
-							Iterator a1 = leng1.entrySet().iterator();
+							Iterator a1 = leng1.iterator();
 							while (a1.hasNext()) {
-								Map.Entry par = (Map.Entry) a1.next();
-								strList.addElement(par.getValue().toString());
+								strList.addElement(((ElementoLista) a1.next()).getNombreExpresion());
 							}
 						}
 
 					} catch (FileNotFoundException e1) {
-
-					} catch (Exception e1) {
-
+						
+					}catch(RuntimeException e1) {
+						res.setText(e1.getMessage());
+					}
+					
+					catch (Exception e1) {
 					}
 
 				}
 			}
 
 		});
-
 		cargar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -377,34 +362,39 @@ public class Principal {
 				elegir.setFileFilter(filter);
 				int returnVal = elegir.showOpenDialog(frmComprobadorEquivalencia);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					System.out.println("You choose" + elegir.getSelectedFile().getName());
 					try {
 						Reader input = new InputStreamReader(new FileInputStream(elegir.getSelectedFile().getAbsolutePath()));
-						//Reader input = new InputStreamReader(new FileInputStream("input.txt"));
 						AnalizadorLexico alex = new AnalizadorLexico(input);
 						AnalizadorSintactico asint = new AnalizadorSintactico(alex);
-						leng2 = (HashMap<String, UnidadParse>) asint.parse().value;
+						HashMap<String, UnidadParse> arbol = (HashMap<String, UnidadParse>) asint.parse().value;
 
+						leng2.clear();
+						Iterator l2 = arbol.entrySet().iterator();
+						while(l2.hasNext()) {
+							Map.Entry par = (Map.Entry) l2.next();
+							UnidadParse exp = (UnidadParse) par.getValue();
+							leng2.add(new ElementoLista(par.getKey().toString(), exp.getER()));
+						}
+						
 						strList2.clear();
-
 						if (nombre) {
-							Iterator a1 = leng2.entrySet().iterator();
-							while (a1.hasNext()) {
-								Map.Entry par = (Map.Entry) a1.next();
-								strList2.addElement(par.getKey().toString());
+							Iterator a2 = leng2.iterator();
+							while (a2.hasNext()) {
+								strList2.addElement(((ElementoLista) a2.next()).getNombre());
 							}
 						} else {
-							Iterator a1 = leng2.entrySet().iterator();
-							while (a1.hasNext()) {
-								Map.Entry par = (Map.Entry) a1.next();
-								strList2.addElement(par.getValue().toString());
+							Iterator a2 = leng2.iterator();
+							while (a2.hasNext()) {
+								strList2.addElement(((ElementoLista) a2.next()).getNombreExpresion());
 							}
 						}
-						System.out.println("OK");
 
 					} catch (FileNotFoundException e1) {
 
-					} catch (Exception e1) {
+					} catch(RuntimeException e1) {
+						res.setText(e1.getMessage());
+					}
+					catch (Exception e1) {
 
 					}
 				}
@@ -418,37 +408,32 @@ public class Principal {
 			}
 
 		});
-
 		nombreExpr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (nombre) {
 					nombre = false;
 					strList.clear();
 					strList2.clear();
-					Iterator a1 = leng1.entrySet().iterator();
+					Iterator a1 = leng1.iterator();
 					while (a1.hasNext()) {
-						Map.Entry par = (Map.Entry) a1.next();
-						strList.addElement(par.getValue().toString());
+						strList.addElement(((ElementoLista) a1.next()).getNombreExpresion());
 					}
-					Iterator a2 = leng2.entrySet().iterator();
+					Iterator a2 = leng2.iterator();
 					while (a2.hasNext()) {
-						Map.Entry par = (Map.Entry) a2.next();
-						strList2.addElement(par.getValue().toString());
+						strList2.addElement(((ElementoLista) a2.next()).getNombreExpresion());
 					}
 
 				} else {
 					nombre = true;
 					strList.clear();
 					strList2.clear();
-					Iterator a1 = leng1.entrySet().iterator();
+					Iterator a1 = leng1.iterator();
 					while (a1.hasNext()) {
-						Map.Entry par = (Map.Entry) a1.next();
-						strList.addElement(par.getKey().toString());
+						strList.addElement(((ElementoLista) a1.next()).getNombre());
 					}
-					Iterator a2 = leng2.entrySet().iterator();
+					Iterator a2 = leng2.iterator();
 					while (a2.hasNext()) {
-						Map.Entry par = (Map.Entry) a2.next();
-						strList2.addElement(par.getKey().toString());
+						strList2.addElement(((ElementoLista) a2.next()).getNombre());
 					}
 				}
 			}

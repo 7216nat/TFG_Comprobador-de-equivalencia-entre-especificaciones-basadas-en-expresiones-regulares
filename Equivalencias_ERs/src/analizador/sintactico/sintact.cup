@@ -34,7 +34,7 @@ init with {:
 
 
 terminal     	AUX, IGUAL, DEF, ALTER, ASTERISCO, MAS, INTERR, GUION,
-                PAP, PCIE, CORAP, CORCIE, COMA, PUNTOCOMA;
+                PAP, PCIE, CORAP, CORCIE, COMA;
 terminal String	LAMBDA, VACIO, SIM, VAR, ESCAPESIM;
 non terminal        Pre, LAuxs, Auxs, Aux, LDefs, Defs, Def; 
 non terminal UnidadParse  E0, E1, E2, E3, Rangos, Rango;
@@ -42,10 +42,10 @@ non terminal UnidadParse  E0, E1, E2, E3, Rangos, Rango;
 
 Pre ::= LAuxs LDefs {: RESULT=parselist; :};
 LAuxs ::= Auxs | ;
-Auxs ::= Auxs PUNTOCOMA Aux | Aux;
+Auxs ::= Auxs Aux | Aux;
 Aux ::= AUX VAR:v IGUAL E0:e {:  auxmap.put(v, e); :}; 
 LDefs ::= Defs | ;
-Defs ::= Defs PUNTOCOMA Def | Def;
+Defs ::= Defs Def | Def;
 Def ::= DEF VAR:v IGUAL E0:e {:  parselist.put(v, e); :};
 
 E0 ::= E0: e1 ALTER E1: e2 
@@ -81,7 +81,7 @@ E2 ::= E2: e ASTERISCO
 				RESULT = new UnidadParse(e.str+"*", new Kleen(e.er)); :}  
 		| E2: e MAS
 		{:  RESULT = new UnidadParse(e.str+"+", new Concat(e.er, new Kleen(e.er))); :}   
-		| E3: e INTERR
+		| E2: e INTERR
 		{: RESULT = new UnidadParse(e.str+"?", new Union(e.er, new Lambdaa())); :}   
 		| E3: e 
 		{: RESULT = e; :};

@@ -1,6 +1,6 @@
 package excepciones;
 
-public class AnalizadorErrorException extends Exception {
+public class AnalizadorErrorException extends RuntimeException {
 	/**
 	 * 
 	 */

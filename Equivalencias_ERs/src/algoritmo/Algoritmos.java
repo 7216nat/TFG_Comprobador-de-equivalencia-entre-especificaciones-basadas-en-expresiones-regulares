@@ -64,7 +64,7 @@ public class Algoritmos {
 		if (inicial2.esFin())
 			iniAFD2.cambioFin(true);
 
-		// Acoplo el estado en los autómatas y les doy valor inicio.
+		// Acoplo el estado en los automatas y les doy valor inicio.
 		afd1.addEstado(iniAFD1);
 		afd1.cambioIni(iniAFD1);
 
@@ -75,12 +75,10 @@ public class Algoritmos {
 			return new Equivalencia(false, ("Cadena &\n"
 					+ "Aceptada por lenguaje1\n"
 					+ "Rechazada por lenguaje2"));
-//			return "&, final aut1, nofinal aut2";
 		} else if (!iniAFD1.esFin() && iniAFD2.esFin()) {
 			return new Equivalencia(false, ("Cadena &\n"
 					+ "Rechazada por lenguaje1\n"
 					+ "Aceptada por lenguaje2"));
-//			return "&, nofinal aut1, final aut2";
 		}
 
 		aExplorar.put(iniAFD1.getId(), iniAFD1);
@@ -93,13 +91,13 @@ public class Algoritmos {
 			Iterator<String> it = simb.iterator();
 			while (it.hasNext()) {
 				String s = it.next();
-				// si aún no se han explorado los estados, lo hago
+				// si aun no se han explorado los estados, lo hago
 				if (aExplorar.containsKey(comparo.getEstado1()) && !s.equals("&"))
 					determinarEstado(comparo.getEstado1(), afd1, s, idst, at1, aExplorar, sinlambda);
 				if (aExplorar.containsKey(comparo.getEstado2()) && !s.equals("&"))
 					determinarEstado(comparo.getEstado2(), afd2, s, idst, at2, aExplorar, sinlambda);
 				// Compruebo la existencia de las transiciones y su destino
-				// La transición existe y no está
+				// La transicion existe y no esta
 				int dest1 = afd1.existsTransEq(comparo.getEstado1(), s);
 				boolean tr1 = (dest1 > -1);
 				int dest2 = afd2.existsTransEq(comparo.getEstado2(), s);
@@ -111,12 +109,10 @@ public class Algoritmos {
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 								+ "Aceptada por lenguaje1\n"
 								+ "Rechazada por lenguaje2"));
-//						return (comparo.getSimbolos() + s + ", final TP, error");
 					else
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 								+ "Rechazada por lenguaje1\n"
 								+ "Aceptada por lenguaje2"));
-//						return (comparo.getSimbolos() + s + ", no final TP, error");
 				}
 
 				else if (!tr1 && tr2) {
@@ -124,22 +120,18 @@ public class Algoritmos {
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 								+ "Aceptada por lenguaje2\n"
 								+ "Error"));
-//						return (comparo.getSimbolos() + s + ", final TP2, error");
 					else
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 								+ "Rechazada por lenguaje2\n"
 								+ "Error"));
-//						return (comparo.getSimbolos() + s + ", no final TP2, error");
 				} else if (tr1 && tr2 && afd1.esFinal(dest1) && !afd2.esFinal(dest2)) {
 					return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 							+ "Aceptada por lenguaje1\n"
 							+ "Rechazada por lenguaje2"));
-//					return (comparo.getSimbolos() + s + ", final TP, no final TP2");
 				} else if (tr1 && tr2 && !afd1.esFinal(dest1) && afd2.esFinal(dest2)) {
 					return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 							+ "Rechazada por lenguaje1\n"
 							+ "Aceptada por lenguaje2"));
-//					return (comparo.getSimbolos() + s + ", no final TP, final TP2");
 				}
 				if (tr1 && tr2) {
 					EstadoTh estado1 = (EstadoTh) afd1.getEstado(dest1);
@@ -147,7 +139,6 @@ public class Algoritmos {
 					if (!estado1.sameHKDet(estado2)) {
 						SimEsEs c = new SimEsEs(dest1, dest2, comparo.getSimbolos() + s);
 						aComparar.add(c);
-						// No se qué pasa con la siguiente línea.
 						estado1.unirIgualA(estado2);
 					}
 				}
@@ -184,7 +175,7 @@ public class Algoritmos {
 			// Recorre todas las transiciones
 			while (transIt.hasNext()) {
 				Transicion tAux = transIt.next();
-				// Si la transición es con el símbolo que estoy evaluando:
+				// Si la transicion es con el símbolo que estoy evaluando:
 				if (tAux.getSymb().equals(simb)) {
 					esTrans = true;
 					EstadoTh aux;
@@ -270,7 +261,7 @@ public class Algoritmos {
 	 * algoritmo de las derivadas
 	 ***************************/
 	public static Equivalencia equivalenciaDer(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, List<String> simb) {
-		// Quita el símbolo & de la lista de símbolos
+		// Quita el simbolo & de la lista de simbolos
 		quitarLambda(simb);
 
 		AutomataHK afd1 = new AutomataHK();
@@ -307,19 +298,16 @@ public class Algoritmos {
 
 		aComparar.add(new SimEsEs(afd1.getIni().getId(), afd2.getIni().getId(), ""));
 
-		// set1 y set2 llevan las expresiones que ya están en algún estado
+		// set1 y set2 llevan las expresiones que ya estan en algun estado
 		Map<ExpressionBase, EstadoHK> set1 = new HashMap<>();
 		Map<ExpressionBase, EstadoHK> set2 = new HashMap<>();
 		set1.put(ex1, s1);
 		set2.put(ex2, s2);
-		/*
-		 * set1.add(ex1); set2.add(ex2);
-		 */
 
 		while (!aComparar.isEmpty()) {
 			SimEsEs nodo = aComparar.poll();
 			Iterator<String> itSimb = simb.iterator();
-			// Para cada símbolo existente
+			// Para cada simbolo existente
 			while (itSimb.hasNext()) {
 				String s = itSimb.next();
 
@@ -355,12 +343,10 @@ public class Algoritmos {
 					return new Equivalencia(false, ("Cadena " + nodo.getSimbolos()+s+"\n"
 							+ "Aceptada por lenguaje1\n"
 							+ "Rechazada por lenguaje2"));
-//					return (nodo.getSimbolos() + s + ", final aut1, no final aut2");
 				if (!estadonuevo1.esFin() && estadonuevo2.esFin())
 					return new Equivalencia(false, ("Cadena "+nodo.getSimbolos()+s+"\n"
 							+ "Rechazada por lenguaje1\n"
 							+ "Aceptada por lenguaje2"));
-//					return (nodo.getSimbolos() + s + ", no final aut1, final aut2");
 
 				if (!estadonuevo1.same(estadonuevo2)) {
 					SimEsEs c = new SimEsEs(estadonuevo1.getId(), estadonuevo2.getId(), nodo.getSimbolos() + s);
@@ -375,7 +361,7 @@ public class Algoritmos {
 	}
 
 	public static Equivalencia equivalenciaDerPar(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, List<String> simb) {
-		//Quitar vacíos de la lista
+		//Quitar vacios de la lista
 		quitarLambda(simb);
 		
 		AutomataHK afd1 = new AutomataHK();
@@ -405,12 +391,10 @@ public class Algoritmos {
 			return new Equivalencia(false, ("Cadena &\n"
 					+ "Aceptada por lenguaje1\n"
 					+ "Rechazada por lenguaje2"));
-//			return ("&, final aut1, no final aut2");
 		else if (!afd1.getIni().esFin() && afd2.getIni().esFin())
 			return new Equivalencia(false, ("Cadena &\n"
 					+ "Rechazada por lenguaje1\n"
 					+ "Aceptada por lenguaje2"));
-//			return ("&, no final aut1, final aut2");
 
 		aComparar.add(new SimEsEs(afd1.getIni().getId(), afd2.getIni().getId(), ""));
 		
@@ -462,12 +446,10 @@ public class Algoritmos {
 					return new Equivalencia(false, ("Cadena "+nodo.getSimbolos()+s+"\n"
 							+ "Aceptada por lenguaje1\n"
 							+ "Rechazada por lenguaje2"));
-//					return (nodo.getSimbolos() + s + ", final aut1, no final aut2");
 				if (!estadoNuevo1.esFin() && estadoNuevo2.esFin())
 					return new Equivalencia(false, ("Cadena "+nodo.getSimbolos()+s+"\n"
 							+ "Rechazada por lenguaje1\n"
 							+ "Aceptada por lenguaje2"));
-//					return (nodo.getSimbolos() + s + ", no final aut1, final aut2");
 
 				if (!estadoNuevo1.same(estadoNuevo2)) {
 					SimEsEs c = new SimEsEs(estadoNuevo1.getId(), estadoNuevo2.getId(), nodo.getSimbolos() + s);

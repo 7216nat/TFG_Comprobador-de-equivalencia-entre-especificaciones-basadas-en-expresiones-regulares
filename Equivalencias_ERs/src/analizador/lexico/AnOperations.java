@@ -61,9 +61,6 @@ public class AnOperations {
 	public UnidadLexica unidadComa() {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.COMA, "," );
 	}
-	public UnidadLexica unidadPuntoComa() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PUNTOCOMA, ";" );
-	}
 	public UnidadLexica unidadSimbolo() {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.SIM, alex.lexema());
 	}
