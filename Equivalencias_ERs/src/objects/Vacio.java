@@ -56,7 +56,6 @@ public class Vacio extends Lenguaje {
 
 	@Override
 	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> sort, Set<Character> sortRango) {
-		// no needed
 	}
 	
 	@Override

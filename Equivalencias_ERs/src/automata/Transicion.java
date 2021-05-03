@@ -4,15 +4,20 @@ public class Transicion {
 	private int estadoF;
 	private String symbol;
 
+	/**
+	 * 
+	 * @param st: estado al que va
+	 * @param simb: simbolo por el que se sigue la transicion
+	 */
 	public Transicion(int st, String simb) {
 		estadoF = st;
 		symbol = simb;
 	}
 
-	public int getId() {
-		return estadoF;
-	}
-
+/**
+ * 
+ * @return el simbolo por el que se sigue la transicion
+ */
 	public String getSymb() {
 		return symbol;
 	}
@@ -21,7 +26,10 @@ public class Transicion {
 	public String toString() {
 		return ("Viaja a " + estadoF + " por " + symbol);
 	}
-
+	/**
+	 * 
+	 * @return el estado final de la transicion
+	 */
 	public int getEstadoDest() {
 		return estadoF;
 	}

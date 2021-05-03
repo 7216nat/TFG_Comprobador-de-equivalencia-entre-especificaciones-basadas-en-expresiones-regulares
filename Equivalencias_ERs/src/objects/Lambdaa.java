@@ -11,7 +11,6 @@ import automata.*;
 public class Lambdaa extends Lenguaje {
 
 	private static final String _regex = "&";
-	//private static final String _regex = "\\w\\*.*";
 	private static final String lambda = "&";
 	
 	public Lambdaa() {

@@ -211,30 +211,28 @@ public class UnionRangos extends ExpressionBase {
 
 	@Override
 	public boolean match(String string) {
-		return false; // Pattern.matches(_regex, string);
+		return false;
 	}
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
-		// return _e1.ThomsonAFN(id);
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public AutomataTS ThomsonSimplAFN(IdEstado id) {
-		// return _e1.ThomsonSimplAFN(id);
 		throw new UnsupportedOperationException();
 	}
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(Map<Integer, BerrySethiNode> map, IdEstado id) {
-		// exception
+		
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
-		// parserRangos(inis, fins);
+		
 		_e1.getSimbolosRangos(set, array, inis, fins);
 		array.add(this);
 	}

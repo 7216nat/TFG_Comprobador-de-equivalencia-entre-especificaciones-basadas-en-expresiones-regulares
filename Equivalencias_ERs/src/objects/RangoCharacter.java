@@ -232,7 +232,6 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 
 	@Override
 	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
-		// no needed, no included at beginning
 		inis.add(_ini);
 		fins.add(_fin);
 	}	

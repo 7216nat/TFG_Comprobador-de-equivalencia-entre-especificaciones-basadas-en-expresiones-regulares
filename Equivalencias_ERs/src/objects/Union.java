@@ -11,7 +11,6 @@ import automata.*;
 
 public class Union extends ExpressionBase {
 	
-	//private static final String _regex = "\\w+[+][\\w\\+\\*\\(\\)]+";
 	private static final String _regex = "|";
 	private static final String unionS = "|";
 	private ExpressionBase _e1;

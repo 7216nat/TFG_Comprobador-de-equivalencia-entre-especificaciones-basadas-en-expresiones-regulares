@@ -8,7 +8,6 @@ public abstract class Lenguaje extends ExpressionBase {
 	protected Lenguaje(String sim, Tipo tipo) {
 		super(tipo);
 		_sim = sim;
-		// Auto-generated constructor stub
 	}
 	
 	public boolean esSimb(String a) {
@@ -24,7 +23,6 @@ public abstract class Lenguaje extends ExpressionBase {
 	
 	@Override
 	public ExpressionBase buildTreeDefinitivo() {
-		// Auto-generated method stub
 		return this;
 	}
 	

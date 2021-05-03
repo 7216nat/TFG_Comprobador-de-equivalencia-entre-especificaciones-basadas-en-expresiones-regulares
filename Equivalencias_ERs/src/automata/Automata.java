@@ -12,10 +12,9 @@ import java.util.Set;
 
 public class Automata {
 	protected Map<Integer, Estado> aut;
-	// referencias al estado inicial y final
+	// referencias al estado inicial y finales
 	protected Estado _ini;
 	protected List<Estado> _acept;
-	// problemente necesitemos ArrayList para los estados de aceptacion
 
 	/**
 	 * Constructora por defecto

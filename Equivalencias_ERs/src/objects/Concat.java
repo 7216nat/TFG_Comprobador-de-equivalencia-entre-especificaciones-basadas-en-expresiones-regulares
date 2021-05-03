@@ -9,7 +9,6 @@ import automata.*;
 
 public class Concat extends ExpressionBase {
 
-	// private static final String _regex = "\\w\\w[\\w\\+\\*\\(\\)]+";
 	private static final String _regex = "";
 	private static final String Conc = "";
 	private ExpressionBase _e1;

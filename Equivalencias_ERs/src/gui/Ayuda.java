@@ -77,7 +77,24 @@ public class Ayuda extends JFrame {
 	
 	private void setTextos() {
 		infLenguaje = "El lenguaje se abrirá a partir de un archivo de texto con extensión \".txt\".\n"
-				+ "Más información en próximas entregas.";
+				+ "El lenguaje tendrá una sección de auxiliares y una de definiciones (siempre en ese orden).\n"
+				+ "Los auxiliares se definirán como \" aux <clave> = expresion_regular\", en clave se escribirá el identificador del auxiliar "
+				+ "y en expresion_regular se anota la expresión que define el auxiliar.\n"
+				+ "Las definiciones de definirán como \" def <clave> expresion_regular\".\n"
+				+ "Tanto en los auxiliares como en las definiciones se podrán escribir claves definidas en los auxiliares ya definidos anteriormente, pero no en las definiciones.\n"
+				+ "En la aplicación no podrá verse la definición de los auxiliares, tan solo de las definiciones, aquellas partes que se definan como auxiliares, se mostrará la expresión del auxiliar.\n"
+				+ "Las expresiones regulares se escribirán utilizando los caracteres:\n"
+				+ " · | para la unión \n"
+				+ " · * para el cierre de Kleen.\n"
+				+ " · + para el cierre de Kleen positivo.\n"
+				+ " · ? para la posibilidad.\n"
+				+ " · Dos símbolos seguidos implica la concatenación entre ambos lados\n"
+				+ " · [rangos] para rangos de símbolos.\n"
+				+ "Entre los corchetes se podrán definir varios rangos separados por coma, y los rangos se definirán como a-b, siendo a el primero elemento del rango y b el segundo, a siempre debe ser menor que b.\n"
+				+ "Si se quiere escribir, como parte del lenguaje, un símbolo del metalenguaje, deberá escribirse con la barra de escape delante, es decir, para añadir \"(\" a la expresión como un símbolo, habrá que escribir \"\\(\".\n"
+				+ "Los espacios en blanco, retornos de carro, tabuladores y saltos de línea se ignoran, para añadirlos como símbolo en una expresión regular, hay que añadirlos como "
+				+ "\\b, \\r, \\t o \\ n";
+		
 		infPrograma = "Los lenguajes se cargarán utilizando los botones \"cargar lenguaje\" sobre las listas. \n"
 				+ "Para seleccionar varias expresiones regulares simultáneamente, se deben seleccionar pulsando el botón control.\n"
 				+ "Para seleccionar varias expresiones en un intervalo, se puede pulsar el botón shift.\n"

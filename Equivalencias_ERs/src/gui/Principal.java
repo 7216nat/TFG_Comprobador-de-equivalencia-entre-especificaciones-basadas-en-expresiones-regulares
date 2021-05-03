@@ -19,6 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import analizador.lexico.AnalizadorLexico;
 import analizador.sintactico.AnalizadorSintactico;
+import analizador.sintactico.ElementoLista;
 import analizador.sintactico.UnidadParse;
 import control.Controller;
 import objects.ExpressionBase;
@@ -318,15 +319,17 @@ public class Principal {
 						Reader input = new InputStreamReader(new FileInputStream(elegir.getSelectedFile().getAbsolutePath()));
 						AnalizadorLexico alex = new AnalizadorLexico(input);
 						AnalizadorSintactico asint = new AnalizadorSintactico(alex);
-						HashMap<String, UnidadParse> arbol = (HashMap<String, UnidadParse>) asint.parse().value;
-
-						leng1.clear();
-						Iterator l1 = arbol.entrySet().iterator();
-						while(l1.hasNext()) {
-							Map.Entry par = (Map.Entry) l1.next();
-							UnidadParse exp = (UnidadParse) par.getValue();
-							leng1.add(new ElementoLista(par.getKey().toString(), exp.getER()));
-						}
+//						HashMap<String, UnidadParse> arbol = (HashMap<String, UnidadParse>) asint.parse().value;
+//
+//						leng1.clear();
+//						Iterator l1 = arbol.entrySet().iterator();
+//						while(l1.hasNext()) {
+//							Map.Entry par = (Map.Entry) l1.next();
+//							UnidadParse exp = (UnidadParse) par.getValue();
+//							leng1.add(0, new ElementoLista(par.getKey().toString(), exp.getER()));
+//						}
+						leng1 = (ArrayList<ElementoLista>) asint.parse().value;
+						
 						
 						strList.clear();
 						if (nombre) {
@@ -366,15 +369,16 @@ public class Principal {
 						Reader input = new InputStreamReader(new FileInputStream(elegir.getSelectedFile().getAbsolutePath()));
 						AnalizadorLexico alex = new AnalizadorLexico(input);
 						AnalizadorSintactico asint = new AnalizadorSintactico(alex);
-						HashMap<String, UnidadParse> arbol = (HashMap<String, UnidadParse>) asint.parse().value;
-
-						leng2.clear();
-						Iterator l2 = arbol.entrySet().iterator();
-						while(l2.hasNext()) {
-							Map.Entry par = (Map.Entry) l2.next();
-							UnidadParse exp = (UnidadParse) par.getValue();
-							leng2.add(new ElementoLista(par.getKey().toString(), exp.getER()));
-						}
+//						HashMap<String, UnidadParse> arbol = (HashMap<String, UnidadParse>) asint.parse().value;
+//
+//						leng2.clear();
+//						Iterator l2 = arbol.entrySet().iterator();
+//						while(l2.hasNext()) {
+//							Map.Entry par = (Map.Entry) l2.next();
+//							UnidadParse exp = (UnidadParse) par.getValue();
+//							leng2.add(0, new ElementoLista(par.getKey().toString(), exp.getER()));
+//						}
+						leng2 = (ArrayList<ElementoLista>) asint.parse().value;
 						
 						strList2.clear();
 						if (nombre) {
@@ -410,10 +414,12 @@ public class Principal {
 		});
 		nombreExpr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int[] selInd1 = list1.getSelectedIndices();
+				int[] selInd2 = list1.getSelectedIndices();
+				strList.clear();
+				strList2.clear();
 				if (nombre) {
 					nombre = false;
-					strList.clear();
-					strList2.clear();
 					Iterator a1 = leng1.iterator();
 					while (a1.hasNext()) {
 						strList.addElement(((ElementoLista) a1.next()).getNombreExpresion());
@@ -425,8 +431,7 @@ public class Principal {
 
 				} else {
 					nombre = true;
-					strList.clear();
-					strList2.clear();
+					
 					Iterator a1 = leng1.iterator();
 					while (a1.hasNext()) {
 						strList.addElement(((ElementoLista) a1.next()).getNombre());
@@ -436,6 +441,8 @@ public class Principal {
 						strList2.addElement(((ElementoLista) a2.next()).getNombre());
 					}
 				}
+				list1.setSelectedIndices(selInd1);
+				list2.setSelectedIndices(selInd2);
 			}
 
 		});

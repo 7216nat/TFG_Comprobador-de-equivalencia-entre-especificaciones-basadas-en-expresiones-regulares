@@ -155,8 +155,8 @@ public class Estado {
 	 * end Funciones para Thomson Simplificado
 	 */
 	
-	/**
-	 * Funciones añadidas en algoritmo de seguidores
+	/*
+	  Funciones añadidas en algoritmo de seguidores
 	 */
 	
 	@Override
@@ -171,8 +171,8 @@ public class Estado {
 	     return id == estado.id;
 	}
 	
-	/**
-	 * END Funciones añadidas en algoritmo de seguidores
+	/*
+	  END Funciones añadidas en algoritmo de seguidores
 	 */
 	
 	@Override

@@ -10,9 +10,6 @@ import automata.*;
 //import java.util.regex.*;  
 public class Kleen extends ExpressionBase {
 
-	// private static final String _regex =
-	// "\\w\\*[\\w\\+\\*\\(\\)]+|\\)\\*[\\w\\+\\*\\(\\)]*";
-	// private static final String _regex = "\\w\\*.*";
 	private static final String _regex = "*";
 	private static final String KLEENS = "*";
 	private ExpressionBase _e1;
