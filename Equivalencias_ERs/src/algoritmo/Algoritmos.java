@@ -75,9 +75,7 @@ public class Algoritmos {
 		if (iniAFD1.esFin() && !iniAFD2.esFin()) {
 			return new Equivalencia(false, ("Cadena &\n" + ACEP_RECH));
 		} else if (!iniAFD1.esFin() && iniAFD2.esFin()) {
-			return new Equivalencia(false, ("Cadena &\n"
-					+ "Rechazada por lenguaje1\n"
-					+ "Aceptada por lenguaje2"));
+			return new Equivalencia(false, ("Cadena &\n" + RECH_ACEP));
 		}
 
 		aExplorar.put(iniAFD1.getId(), iniAFD1);
@@ -105,9 +103,6 @@ public class Algoritmos {
 				// Si hay diferencias, muestro un error
 				if (tr1 && !tr2) {
 					if (afd1.esFinal(dest1))
-//						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
-//								+ "Posible de crear por lenguaje1\n"
-//								+ "Imposible en el lenguaje2"));
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"+ ACEP_RECH));
 					else
 						return new Equivalencia(false, ("Cadena intermedia "+comparo.getSimbolos()+s+"\n"
@@ -117,9 +112,6 @@ public class Algoritmos {
 
 				else if (!tr1 && tr2) {
 					if (afd2.esFinal(dest2))
-//						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
-//								+ "Imposible en lenguaje1\n"
-//								+ "Posible de crear en lenguaje2"));
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"+ RECH_ACEP));
 					else
 						return new Equivalencia(false, ("Cadena intermedia "+comparo.getSimbolos()+s+"\n"
@@ -227,12 +219,12 @@ public class Algoritmos {
 		// construir listas de follows descendente
 		bsn.buildEstados(new HashSet<>());
 		Automata a1 = Algoritmos.buildBerrySethiAutomata(states, bsn, idst);
-		a1.show();
+
 		states = new HashMap<>();
 		bsn = e2.createBerrySethiNode(states, idst);
 		bsn.buildEstados(new HashSet<>());
 		Automata a2 = Algoritmos.buildBerrySethiAutomata(states, bsn, idst);
-		a2.show();
+
 		return Algoritmos.detHopKarp(a1, a2, idst, simb, true);
 	}
 /**

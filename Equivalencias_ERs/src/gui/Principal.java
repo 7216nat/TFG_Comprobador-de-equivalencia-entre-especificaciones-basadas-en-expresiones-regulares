@@ -20,6 +20,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import analizador.lexico.AnalizadorLexico;
 import analizador.sintactico.AnalizadorSintactico;
 import control.Controller;
+import control.ElementoLista;
 import objects.ExpressionBase;
 
 import java.awt.event.ActionEvent;
@@ -38,8 +39,8 @@ public class Principal {
 	private Controller ctrl;
 	private JFrame frmComprobadorEquivalencia;
 	private boolean nombre; // true si se ven los nombres, false si se ven las expresiones
-	private ArrayList<ElementoLista> leng1;
-	private ArrayList<ElementoLista> leng2;
+	private List<ElementoLista> leng1;
+	private List<ElementoLista> leng2;
 
 	/**
 	 * Create the application.
@@ -48,8 +49,8 @@ public class Principal {
 		this.ctrl = ctrl;
 		nombre = true;
 		initialize();
-		leng1 = new ArrayList<ElementoLista>();
-		leng2 = new ArrayList<ElementoLista>();
+		leng1 = new ArrayList<>();
+		leng2 = new ArrayList<>();
 
 		frmComprobadorEquivalencia.setVisible(true);
 
@@ -195,8 +196,8 @@ public class Principal {
 				String metodo = (String) metChoice.getSelectedItem();
 				String algoritmo = (String) algChoice.getSelectedItem();
 
-				List<ExpressionBase> expr1 = new ArrayList<>();
-				List<ExpressionBase> expr2 = new ArrayList<>();
+				List<ElementoLista> expr1 = new ArrayList<>();
+				List<ElementoLista> expr2 = new ArrayList<>();
 
 				if (!metodo.equalsIgnoreCase("Todos")) {
 					int[] selInd1 = list1.getSelectedIndices();
@@ -207,30 +208,21 @@ public class Principal {
 					else if (selInd2.length == 0)
 						res.setText("Selecciona el método \"Todos\" o alguna expresión en el lenguaje 2");
 					else {
-							for (int i : selInd1) {
-								expr1.add(leng1.get(i).getExpresion());
+						for (int i : selInd1)
+							expr1.add(leng1.get(i));
 								
-							}
-							for (int i : selInd2) {
-								expr2.add(leng2.get(i).getExpresion());
-								
-							}
+						for (int i : selInd2)
+							expr2.add(leng2.get(i));
 
 						String info = mensaje(algoritmo, metodo);
 						String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
 						res.setText(resul + "\n" + info);
 					}
 				} 
-				//Si se selecciona Todos
+				// Si se selecciona Todos
 				else {
-						for(ElementoLista i : leng1) {
-							expr1.add(i.getExpresion());
-						}
-						for(ElementoLista i : leng2) {
-							expr2.add(i.getExpresion());
-						}
 					String info = mensaje(algoritmo, metodo);
-					String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
+					String resul = ctrl.compEquiv(leng1, leng2, algoritmo, metodo);
 					res.setText(resul + "\n" + info);
 				}
 			}
@@ -296,12 +288,12 @@ public class Principal {
 						
 						strList.clear();
 						if (nombre) {
-							Iterator a1 = leng1.iterator();
+							Iterator<ElementoLista> a1 = leng1.iterator();
 							while (a1.hasNext()) {
 								strList.addElement(((ElementoLista) a1.next()).getNombre());
 							}
 						} else {
-							Iterator a1 = leng1.iterator();
+							Iterator<ElementoLista> a1 = leng1.iterator();
 							while (a1.hasNext()) {
 								strList.addElement(((ElementoLista) a1.next()).getNombreExpresion());
 							}
@@ -313,7 +305,6 @@ public class Principal {
 					}catch(RuntimeException e1) {
 						res.setText(e1.getMessage());
 					}
-					
 					catch (Exception e1) {
 						res.setText(e1.getMessage());
 					}
@@ -339,12 +330,12 @@ public class Principal {
 						
 						strList2.clear();
 						if (nombre) {
-							Iterator a2 = leng2.iterator();
+							Iterator<ElementoLista> a2 = leng2.iterator();
 							while (a2.hasNext()) {
 								strList2.addElement(((ElementoLista) a2.next()).getNombre());
 							}
 						} else {
-							Iterator a2 = leng2.iterator();
+							Iterator<ElementoLista> a2 = leng2.iterator();
 							while (a2.hasNext()) {
 								strList2.addElement(((ElementoLista) a2.next()).getNombreExpresion());
 							}
@@ -378,11 +369,11 @@ public class Principal {
 				strList2.clear();
 				if (nombre) {
 					nombre = false;
-					Iterator a1 = leng1.iterator();
+					Iterator<ElementoLista> a1 = leng1.iterator();
 					while (a1.hasNext()) {
 						strList.addElement(((ElementoLista) a1.next()).getNombreExpresion());
 					}
-					Iterator a2 = leng2.iterator();
+					Iterator<ElementoLista> a2 = leng2.iterator();
 					while (a2.hasNext()) {
 						strList2.addElement(((ElementoLista) a2.next()).getNombreExpresion());
 					}
@@ -390,11 +381,11 @@ public class Principal {
 				} else {
 					nombre = true;
 					
-					Iterator a1 = leng1.iterator();
+					Iterator<ElementoLista> a1 = leng1.iterator();
 					while (a1.hasNext()) {
 						strList.addElement(((ElementoLista) a1.next()).getNombre());
 					}
-					Iterator a2 = leng2.iterator();
+					Iterator<ElementoLista> a2 = leng2.iterator();
 					while (a2.hasNext()) {
 						strList2.addElement(((ElementoLista) a2.next()).getNombre());
 					}

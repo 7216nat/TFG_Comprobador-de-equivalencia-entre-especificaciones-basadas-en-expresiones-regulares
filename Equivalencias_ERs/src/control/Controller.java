@@ -22,9 +22,12 @@ public class Controller {
 	private AlgoritmoExec _algoritmo = null;
 	private ModeExecution _mode = null;
 	
-	private List<ExpressionBase> _elist1 = null;
-	private List<ExpressionBase> _elist2 = null;
+	private List<ElementoLista> elemList1 = null;
+	private List<ElementoLista> elemList2 = null;
 	
+	private List<ExpressionBase> elist1 = null;
+	private List<ExpressionBase> elist2 = null;
+			
 	private ExpressionBase _e1 = null;
 	private ExpressionBase _e2 = null;
 	
@@ -80,23 +83,26 @@ public class Controller {
 		}
 	}
 	
-	private void procesar(List<ExpressionBase> listER1, List<ExpressionBase> listER2) {
+	private void procesar(List<ElementoLista> listER1, List<ElementoLista> listER2) {
 		// variables globales en dos expresiones
-		_elist1 = listER1;
-		_elist2 = listER2;
+		elemList1 = listER1;
+		elemList2 = listER2;
+		elist1 = new ArrayList<>();
+		elist2 = new ArrayList<>();
 		Set<String> simbolosSet = new HashSet<>();
 		Set<Character> inis = new TreeSet<>();
 		Set<Character> fins = new TreeSet<>();
 		List<UnionRangos> rangos = new ArrayList<>();
+		ExpressionBase er;
 		
-		// parse lista de expresiones 1
-		for (ExpressionBase er: listER1) {
-			er.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+		// recolectar simbolos y rangos
+		for (ElementoLista el: listER1) {
+			el.expresion.getSimbolosRangos(simbolosSet, rangos, inis, fins);
 		}
 
-		// parse lista de expresiones 2
-		for (ExpressionBase er: listER2) {
-			er.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+		// recolectar simbolos y rangos
+		for (ElementoLista el: listER2) {
+			el.expresion.getSimbolosRangos(simbolosSet, rangos, inis, fins);
 		}
 
 		// interseccion y y obtener los nuevos simbolos
@@ -110,14 +116,17 @@ public class Controller {
 			_simList.add(c);
 		}
 		
-		if (!rangos.isEmpty()) {
-			// deshacer los Unionrangos
-			for(int i = 0; i < _elist1.size(); i++) {
-				_elist1.set(i, _elist1.get(i).buildTreeDefinitivo());
-			}
-			for(int i = 0; i < _elist2.size(); i++) {
-				_elist2.set(i, _elist2.get(i).buildTreeDefinitivo());
-			}
+		
+		// deshacer los Unionrangos
+		for (ElementoLista el: elemList1) {
+			er = el.expresion.buildTreeDefinitivo();
+			el.expresion = er;
+			elist1.add(er);
+		}
+		for (ElementoLista el: elemList2) {
+			er = el.expresion.buildTreeDefinitivo();
+			el.expresion = er;
+			elist2.add(er);
 		}
 	}
 	
@@ -194,7 +203,7 @@ public class Controller {
 	 * @param listER1: list 1
 	 * @param listER2: list 2
 	 */
-	public void setERs(List<ExpressionBase> listER1, List<ExpressionBase> listER2) {
+	public void setERs(List<ElementoLista> listER1, List<ElementoLista> listER2) {
 		procesar(listER1, listER2);
 	}
 	
@@ -253,15 +262,19 @@ public class Controller {
 	 * @return: string resul
 	 */
 	private String emparejar() {
-		String ret = "";
-		Iterator<ExpressionBase> it1 = _elist1.iterator();
+		StringBuilder bld = new StringBuilder();
+		ElementoLista elem1, elem2;
+		Iterator<ElementoLista> it1 = elemList1.iterator();
 		while (it1.hasNext()) {
-			_e1 = it1.next();
-			Iterator<ExpressionBase> it2 = _elist2.iterator();
+			elem1 = it1.next();
+			_e1 = elem1.expresion;
+			Iterator<ElementoLista> it2 = elemList2.iterator();
 			while (it2.hasNext()) {
-				_e2 = it2.next();
+				elem2 = it2.next();
+				_e2 = elem2.expresion;
 				if (compare().isEq()) {
-					ret += _e1.toString() + " equivalente a " + _e2.toString() + "\n"; 
+					bld.append( "[" + elem1.nombre+ " => " + elem1.expresionInterfaz + "]" +
+								" equivalente a " + "[" + elem2.nombre+ " => " + elem2.expresionInterfaz + "]" + "\n"); 
 					it2.remove();
 					it1.remove();
 					break;
@@ -269,13 +282,13 @@ public class Controller {
 			}
 		}
 		
-		String unpair1 = "\nSin emparejar de la lista 1:\n";
-		String unpair2 = "\nSin emparejar de la lista 2:\n"; 
-		for (ExpressionBase er: _elist1) unpair1 += er.toString() + "\n";
-		for (ExpressionBase er: _elist2) unpair2 += er.toString() + "\n";
-		if (!_elist1.isEmpty()) ret += unpair1;
-		if (!_elist2.isEmpty()) ret += unpair2;
-		return ret;
+		StringBuilder unpair1 = new StringBuilder("\nSin emparejar de la lista 1:\n");
+		StringBuilder unpair2 = new StringBuilder("\nSin emparejar de la lista 2:\n");
+		for (ElementoLista el: elemList1) unpair1.append("[" + el.nombre+ " => " + el.expresionInterfaz + "]" + "\n");
+		for (ElementoLista el: elemList2) unpair2.append("[" + el.nombre+ " => " + el.expresionInterfaz + "]" + "\n");
+		if (!elemList1.isEmpty()) bld.append(unpair1);
+		if (!elemList2.isEmpty()) bld.append(unpair2);
+		return bld.toString();
 	}
 	
 	/**
@@ -285,8 +298,8 @@ public class Controller {
 	public String run() {
 		switch(_mode) {
 		case TODOS: case SELECTED:
-			_e1 = unionListaERs(_elist1);
-			_e2 = unionListaERs(_elist2);
+			_e1 = unionListaERs(elist1);
+			_e2 = unionListaERs(elist2);
 			return compare().getMsg();
 		case UNOAUNO:
 			return emparejar();
@@ -304,7 +317,7 @@ public class Controller {
 	 * @param mode: modo seleccionado
 	 * @return: String result
 	 */
-	public String compEquiv(List<ExpressionBase> s1, List<ExpressionBase> s2,
+	public String compEquiv(List<ElementoLista> s1, List<ElementoLista> s2,
 			String algor, String mode) {
 		setAlgoritmo(algor);
 		setMode(mode);

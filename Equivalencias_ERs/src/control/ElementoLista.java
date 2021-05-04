@@ -1,11 +1,11 @@
-package gui;
+package control;
 
 import objects.ExpressionBase;
 
 public class ElementoLista {
-	private String nombre; 
-	private ExpressionBase expresion;
-	private String expresionInterfaz;
+	protected String nombre; 
+	protected ExpressionBase expresion;
+	protected String expresionInterfaz;
 	
 	public ElementoLista(String name, ExpressionBase exp, String expVista) {
 		nombre = name;
