@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import automata.AutomataTS;
 import automata.IdEstado;
@@ -13,8 +12,6 @@ import automata.IdEstado;
  * Clase hoja
  */
 public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacter> {
-	
-	private static final String _regex = "[\\w-\\w]";
 	
 	private char _ini;
 	private char _fin;
@@ -68,6 +65,10 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 		else _sim = _ini + "-" + _fin;
 	}
 	
+	@Override
+	public String toString() { 
+		return  "[" + _sim + "]"; 
+	}
 	/**
 	 * @param rc
 	 * @return el objeto de llamada contenido en rc
@@ -218,16 +219,6 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 		
 		map.put(iD, bs);
 		return bs;
-	}
-
-	@Override
-	public ExpressionBase cloneMe() {
-		return new RangoCharacter();
-	}
-
-	@Override
-	public boolean match(String string) {
-		return Pattern.matches(_regex, string);
 	}
 
 	@Override

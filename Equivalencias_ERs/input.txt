@@ -1,2 +1,6 @@
-def <sda> = [b-d];
+aux <as> = ads
+def <sda> = [b-d]
 def <a> = [a-x]
+def <b> = %
+def <x> = a|&
+def <z> = abcd

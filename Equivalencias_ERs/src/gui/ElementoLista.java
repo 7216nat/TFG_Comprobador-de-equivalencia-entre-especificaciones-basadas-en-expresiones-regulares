@@ -1,4 +1,4 @@
-package analizador.sintactico;
+package gui;
 
 import objects.ExpressionBase;
 

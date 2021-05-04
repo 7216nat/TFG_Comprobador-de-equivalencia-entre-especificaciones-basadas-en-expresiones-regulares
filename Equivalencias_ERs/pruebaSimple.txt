@@ -1,2 +1,5 @@
-def <cosa> = [b-d];
+def <cosa> = [b-d]
 def <b> = [c-h]
+def <b> = %d
+def <x> = a|&
+def <z> = axcd

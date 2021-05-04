@@ -4,7 +4,7 @@ import java_cup.runtime.*;
 import objects.*;
 import analizador.lexico.AnalizadorLexico;
 import analizador.lexico.UnidadLexica;
-import analizador.sintactico.UnidadParse;
+import gui.ElementoLista;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import analizador.errores.ErrorAnalizador;
 scan with {: return getScanner().next_token(); :};
 action code{:
    private boolean mapPerm = true;
-   private Map<String, UnidadParse> parselist = new HashMap<>();
+   private List<ElementoLista> parselist = new ArrayList<>();
    private Map<String, UnidadParse> auxmap = new HashMap<>();
    public void write(String msg){
    		System.out.println("Nodo: " + msg);
@@ -46,7 +46,7 @@ Auxs ::= Auxs Aux | Aux;
 Aux ::= AUX VAR:v IGUAL E0:e {:  auxmap.put(v, e); :}; 
 LDefs ::= Defs | ;
 Defs ::= Defs Def | Def;
-Def ::= DEF VAR:v IGUAL E0:e {:  parselist.put(v, e); :};
+Def ::= DEF VAR:v IGUAL E0:e {:  parselist.add(new ElementoLista(v, e.er, e.str)); :};
 
 E0 ::= E0: e1 ALTER E1: e2 
 		{:  ExpressionBase union;
@@ -91,8 +91,7 @@ E3 ::= SIM: s
 		{:  if (auxmap.containsKey(v))
 				RESULT = auxmap.get(v);
 			else{
-				parser.report_error("Syntax error: " + v + ", there is not AUX with that name.",v);
-				throw new Exception("HashMap error");
+				throw new Exception("Syntax error: " + v + ", there is not AUX with that name.");
 			} :}  
 		| LAMBDA: l
 		{: RESULT = new UnidadParse(l, new Lambdaa()); :}  
@@ -115,7 +114,6 @@ Rango ::= SIM: s1 GUION SIM: s2
 		{:  char c1 = s1.charAt(0);
 			char c2 = s2.charAt(0);
 			if (c1 > c2) {
-				parser.report_error("Syntax error: " + s1 + " > " + s2,s1);
-				throw new Exception("Action error");
+				throw new Exception("Syntax error: " + s1 + " > " + s2);
 			}  
 			RESULT= new UnidadParse(s1+"-"+s2, new UnionRangos(new RangoCharacter(c1, c2))); :};

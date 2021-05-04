@@ -4,33 +4,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import automata.*;
 
 public class Lambdaa extends Lenguaje {
 
-	private static final String _regex = "&";
 	private static final String lambda = "&";
 	
 	public Lambdaa() {
 		super(lambda, Tipo.LAMBDA);
 	}
 	
-	public Lambdaa(ExpressionBase padre) {
-		super(lambda, Tipo.LAMBDA);
-	}
-
-	@Override
-	public ExpressionBase cloneMe() {
-		return new Lambdaa();
-	}
-
-	@Override
-	public boolean match(String string) {
-		return Pattern.matches(_regex, string);
-	}
-
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
 		int ini = id.nextId(); 

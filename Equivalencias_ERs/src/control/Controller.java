@@ -13,8 +13,6 @@ import automata.IdEstado;
 import objects.ExpressionBase;
 import objects.Union;
 import objects.UnionRangos;
-import parser.ParserER;
-import parser.String_ref;
 
 public class Controller {
 	
@@ -122,59 +120,6 @@ public class Controller {
 			}
 		}
 	}
-	/**
-	 * A ser sustituido;
-	 * parsear los strings a ExpressionBase 
-	 * @param listReg1: list1
-	 * @param listReg2: list2
-	 */
-	private void parser(List<String> listReg1, List<String> listReg2) {
-		// variables globales en dos expresiones
-		_elist1 = new ArrayList<>();
-		_elist2 = new ArrayList<>();
-		Set<String> simbolosSet = new HashSet<>();
-		Set<Character> inis = new TreeSet<>();
-		Set<Character> fins = new TreeSet<>();
-		List<UnionRangos> rangos = new ArrayList<>();
-		ExpressionBase er;
-		// parse lista de expresiones 1
-		for (String str: listReg1) {
-			ParserER parser = new ParserER(new String_ref(str));
-			er = parser.parse();
-			er.getSimbolosRangos(simbolosSet, rangos, inis, fins);
-			_elist1.add(er);
-		}
-
-		// parse lista de expresiones 2
-		for (String str: listReg2) {
-			ParserER parser = new ParserER(new String_ref(str));
-			er = parser.parse();
-			er.getSimbolosRangos(simbolosSet, rangos, inis, fins);
-			_elist2.add(er);
-		}
-
-		// interseccion y y obtener los nuevos simbolos
-		intersecUR(simbolosSet, rangos, inis, fins);
-
-		
-		// conseguir todos los simbolos incluidos los rangos
-		_simList = new ArrayList<>();
-		Iterator<String> it = simbolosSet.iterator();
-		while (it.hasNext()) {
-			String c = it.next();
-			_simList.add(c);
-		}
-		
-		
-		// deshacer los Unionrangos
-		for(int i = 0; i < _elist1.size(); i++) {
-			_elist1.set(i, _elist1.get(i).buildTreeDefinitivo());
-		}
-		for(int i = 0; i < _elist2.size(); i++) {
-			_elist2.set(i, _elist2.get(i).buildTreeDefinitivo());
-		}
-			
-	}
 	
 	/**
 	 * OR de los elementos de la lista 
@@ -252,15 +197,6 @@ public class Controller {
 	public void setERs(List<ExpressionBase> listER1, List<ExpressionBase> listER2) {
 		procesar(listER1, listER2);
 	}
-	
-	/**
-	 * set las dos listas de ERs
-	 * @param listER1: list 1
-	 * @param listER2: list 2
-	 */
-//	public void setERs(List<String> listER1, List<String> listER2) {
-//		parser(listER1, listER2);
-//	}
 	
 	/**
 	 * set algoritmo
@@ -351,8 +287,6 @@ public class Controller {
 		case TODOS: case SELECTED:
 			_e1 = unionListaERs(_elist1);
 			_e2 = unionListaERs(_elist2);
-			System.out.println(_e1.toString());
-			System.out.println(_e2.toString());
 			return compare().getMsg();
 		case UNOAUNO:
 			return emparejar();

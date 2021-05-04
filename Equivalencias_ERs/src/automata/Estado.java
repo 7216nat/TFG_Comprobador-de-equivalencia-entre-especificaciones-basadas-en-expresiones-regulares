@@ -2,12 +2,13 @@ package automata;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class Estado {
 	private int id;
 	private boolean inicial;
 	private boolean fin;
-	private HashSet<Transicion> trans;
+	private Set<Transicion> trans;
 
 	/**
 	 * Constructora si el estado no es ni inicial ni final
@@ -56,7 +57,7 @@ public class Estado {
 	 * devuelve set de transiciones
 	 * @return
 	 */
-	public HashSet<Transicion> getTrans() {
+	public Set<Transicion> getTrans() {
 		return trans;
 	}
 
@@ -64,7 +65,7 @@ public class Estado {
 	 * Se llama con el estado al que vamos a meterle las transiciones del estado
 	 * entre parentesis
 	 */
-	public void unir(HashSet<Transicion> es2) {
+	public void unir(Set<Transicion> es2) {
 		this.trans.addAll(es2);
 	}
 	
@@ -103,7 +104,7 @@ public class Estado {
 	 */
 	public void recolocarTransiciones(int es2, int es1) {
 		Iterator<Transicion> it = trans.iterator();
-		HashSet<Transicion> aux = new HashSet<>();
+		Set<Transicion> aux = new HashSet<>();
 		while (it.hasNext()) {
 			Transicion t = it.next();
 			if (t.getEstadoDest() == es2) {
@@ -141,7 +142,7 @@ public class Estado {
 	 */
 	public void recolocarTransicionesSinBorrar(int es2, int es1) {
 		Iterator<Transicion> it = trans.iterator();
-		HashSet<Transicion> aux = new HashSet<>();
+		Set<Transicion> aux = new HashSet<>();
 		while (it.hasNext()) {
 			Transicion t = it.next();
 			if (t.getEstadoDest() == es2) {

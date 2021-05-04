@@ -1,10 +1,11 @@
 package automata;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class EstadoTh extends Estado{
-	private HashSet<Integer> equiv;
-	private HashSet<Integer> igualA;
+	private Set<Integer> equiv;
+	private Set<Integer> igualA;
 	
 	public EstadoTh(int id) {
 		super(id);
@@ -24,7 +25,7 @@ public class EstadoTh extends Estado{
 		es2.equiv.addAll(this.equiv);
 	}
 	
-	public HashSet<Integer> getEq(){
+	public Set<Integer> getEq(){
 		return this.equiv;
 	}
 	

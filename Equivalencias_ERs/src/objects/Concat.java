@@ -9,7 +9,6 @@ import automata.*;
 
 public class Concat extends ExpressionBase {
 
-	private static final String _regex = "";
 	private static final String Conc = "";
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
@@ -23,26 +22,10 @@ public class Concat extends ExpressionBase {
 		_e1 = e1;
 		_e2 = e2;
 	}
-	
-	public Concat(ExpressionBase padre, ExpressionBase e1, ExpressionBase e2) {
-		super(Tipo.CONCAT);
-		_e1 = e1;
-		_e2 = e2;
-	}
 
 	@Override
 	public String toString() {
 		return _e1.toString() + _e2.toString();
-	}
-
-	@Override
-	public ExpressionBase cloneMe() {
-		return new Concat();
-	}
-
-	@Override
-	public boolean match(String string) {
-		return false; // Pattern.matches(_regex, string);
 	}
 
 	@Override

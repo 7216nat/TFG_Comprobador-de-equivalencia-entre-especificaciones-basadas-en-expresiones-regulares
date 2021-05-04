@@ -6,11 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 import automata.*;
-
-//import java.util.regex.*;  
+ 
 public class Kleen extends ExpressionBase {
 
-	private static final String _regex = "*";
 	private static final String KLEENS = "*";
 	private ExpressionBase _e1;
 
@@ -21,24 +19,11 @@ public class Kleen extends ExpressionBase {
 	public Kleen(ExpressionBase e1) {
 		super(Tipo.KLEEN);
 		_e1 = e1;		
-		if(_e1 instanceof Kleen) {
-			_e1 = ((Kleen)e1).getExpr();
-		}
 	}
 	
 	@Override
 	public String toString() {
-		return "[" + _e1.toString() + "]" + KLEENS;
-	}
-
-	@Override
-	public ExpressionBase cloneMe() {
-		return new Kleen();
-	}
-
-	@Override
-	public boolean match(String string) {
-		return false; // Pattern.matches(_regex, string);
+		return "(" + _e1.toString() + ")" + KLEENS;
 	}
 
 	@Override

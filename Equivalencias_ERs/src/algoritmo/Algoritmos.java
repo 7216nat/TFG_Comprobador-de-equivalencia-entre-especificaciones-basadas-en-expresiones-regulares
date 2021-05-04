@@ -1,6 +1,5 @@
 package algoritmo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,15 +24,17 @@ import objects.ExpressionBase;
 public class Algoritmos {
 	
 	static final String EQ = "Equivalentes";
-	static final String AcepRech = "Aceptada por lenguaje1\nRechazada por lenguaje2";
-	static final String RechAcep = "Rechazada por lenguaje1\nAceptada por lenguaje2";
+	static final String ACEP_RECH = "Aceptada por lenguaje1\nRechazada por lenguaje2";
+	static final String RECH_ACEP = "Rechazada por lenguaje1\nAceptada por lenguaje2";
 	/**
+	 * Determinacion Hopcraft-Karp
 	 * 
-	 * @param at1:  el aut贸mata 1 a comparar
-	 * @param at2:  el aut贸mata 2 a comparar
-	 * @param idst: el id del pr贸ximo estado
-	 * @param simb: arraylist donde se nos dicen los s铆mbolos que hay en la
-	 *              expresi贸n
+	 * @param at1:  el automata 1 a comparar
+	 * @param at2:  el automata 2 a comparar
+	 * @param idst: el id del proximo estado
+	 * @param simb: arraylist donde se nos dicen los simbolos que hay en la
+	 *              expresion
+	 * @param sinlambda: indica si hay que realizar lambdacierre
 	 * @return
 	 */
 	public static Equivalencia detHopKarp(Automata at1, Automata at2, IdEstado idst, List<String> simb, boolean sinlambda) {
@@ -72,9 +73,7 @@ public class Algoritmos {
 		afd2.cambioIni(iniAFD2);
 
 		if (iniAFD1.esFin() && !iniAFD2.esFin()) {
-			return new Equivalencia(false, ("Cadena &\n"
-					+ "Aceptada por lenguaje1\n"
-					+ "Rechazada por lenguaje2"));
+			return new Equivalencia(false, ("Cadena &\n" + ACEP_RECH));
 		} else if (!iniAFD1.esFin() && iniAFD2.esFin()) {
 			return new Equivalencia(false, ("Cadena &\n"
 					+ "Rechazada por lenguaje1\n"
@@ -108,30 +107,26 @@ public class Algoritmos {
 					if (afd1.esFinal(dest1))
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 								+ "Aceptada por lenguaje1\n"
-								+ "Rechazada por lenguaje2"));
+								+ "Error en el lenguaje2"));
 					else
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 								+ "Rechazada por lenguaje1\n"
-								+ "Aceptada por lenguaje2"));
+								+ "Error en el lenguaje2"));
 				}
 
 				else if (!tr1 && tr2) {
 					if (afd2.esFinal(dest2))
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 								+ "Aceptada por lenguaje2\n"
-								+ "Error"));
+								+ "Error en el lenguaje1"));
 					else
 						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
 								+ "Rechazada por lenguaje2\n"
-								+ "Error"));
+								+ "Error en el lenguaje1"));
 				} else if (tr1 && tr2 && afd1.esFinal(dest1) && !afd2.esFinal(dest2)) {
-					return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
-							+ "Aceptada por lenguaje1\n"
-							+ "Rechazada por lenguaje2"));
+					return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"+ ACEP_RECH));
 				} else if (tr1 && tr2 && !afd1.esFinal(dest1) && afd2.esFinal(dest2)) {
-					return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
-							+ "Rechazada por lenguaje1\n"
-							+ "Aceptada por lenguaje2"));
+					return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"+ RECH_ACEP));
 				}
 				if (tr1 && tr2) {
 					EstadoTh estado1 = (EstadoTh) afd1.getEstado(dest1);
@@ -175,7 +170,7 @@ public class Algoritmos {
 			// Recorre todas las transiciones
 			while (transIt.hasNext()) {
 				Transicion tAux = transIt.next();
-				// Si la transicion es con el s铆mbolo que estoy evaluando:
+				// Si la transicion es con el simbolo que estoy evaluando:
 				if (tAux.getSymb().equals(simb)) {
 					esTrans = true;
 					EstadoTh aux;
@@ -213,40 +208,59 @@ public class Algoritmos {
 		}
 	}
 
-	
+	/***
+	 * Metodo Berry-Sethi
+	 * @param e1: er 1
+	 * @param e2: er 2
+	 * @param idst: contador de identificadores
+	 * @param simb: conjunto de simbolos
+	 * @return Mensaje de equivalencia
+	 */
 	public static Equivalencia equivalenciaBerrySethi(ExpressionBase e1, ExpressionBase e2, IdEstado idst, List<String> simb) {
 		Map<Integer, BerrySethiNode> states = new HashMap<>();
 		BerrySethiNode bsn;
 		
+		// creacion de nodos berrysethi ascendente
 		bsn = e1.createBerrySethiNode(states, idst);
+		// construir listas de follows descendente
 		bsn.buildEstados(new HashSet<>());
 		Automata a1 = Algoritmos.buildBerrySethiAutomata(states, bsn, idst);
-		
+		a1.show();
 		states = new HashMap<>();
 		bsn = e2.createBerrySethiNode(states, idst);
 		bsn.buildEstados(new HashSet<>());
 		Automata a2 = Algoritmos.buildBerrySethiAutomata(states, bsn, idst);
-		
+		a2.show();
 		return Algoritmos.detHopKarp(a1, a2, idst, simb, true);
 	}
-	/*********************************
-	 *****algoritmo de berrysethi*****
-	 *********************************/
+/**
+ * Construir un automata por el metodo berrysethi
+ *
+ * @param list: diccionario de <id, nodo>: siendo id el identificador del estado y nodo el nodo asociado
+ * @param root: nodo raiz
+ * @param idst: contador de identificadores
+ * @return automata BS
+ */
 	public static Automata buildBerrySethiAutomata(Map<Integer, BerrySethiNode> list, BerrySethiNode root, IdEstado idst) {
 		Automata aut = new Automata();
 		Estado state;
+		
+		// construye todos los estados
 		for (Entry<Integer, BerrySethiNode> entry : list.entrySet()) {
 			int id = entry.getKey();
 			BerrySethiNode bsn = entry.getValue();
+			// ver si es final o no
 			if (root.getLast().contains(id))
 				state = new Estado(id, false, true);
 			else
 				state = new Estado(id);
 			aut.addEstado(state);
+			// a馻dir las transiciones
 			for (Integer i : bsn.getFollow())
-				state.addTrans(new Transicion(i, bsn.getSim()));
+				state.addTrans(new Transicion(i, list.get(i).getSim()));
 		}
 		
+		// el estado inicial
 		if (root.getEmpty())
 			state = new Estado(idst.nextId(), true, true);
 		else
@@ -288,13 +302,9 @@ public class Algoritmos {
 		Queue<SimEsEs> aComparar = new LinkedList<>();
 
 		if (afd1.getIni().esFin() && !afd2.getIni().esFin())
-			return new Equivalencia(false, ("Cadena &\n"
-					+ "Aceptada por lenguaje1\n"
-					+ "Rechazada por lenguaje2"));
+			return new Equivalencia(false, ("Cadena &\n"+ ACEP_RECH));
 		else if (!afd1.getIni().esFin() && afd2.getIni().esFin())
-			return new Equivalencia(false, ("Cadena &\n"
-					+ "Rechazada por lenguaje1\n"
-					+ "Aceptada por lenguaje2"));
+			return new Equivalencia(false, ("Cadena &\n"+ RECH_ACEP));
 
 		aComparar.add(new SimEsEs(afd1.getIni().getId(), afd2.getIni().getId(), ""));
 
@@ -340,13 +350,9 @@ public class Algoritmos {
 				es2.addTrans(tr2);
 
 				if (estadonuevo1.esFin() && !estadonuevo2.esFin())
-					return new Equivalencia(false, ("Cadena " + nodo.getSimbolos()+s+"\n"
-							+ "Aceptada por lenguaje1\n"
-							+ "Rechazada por lenguaje2"));
+					return new Equivalencia(false, ("Cadena " + nodo.getSimbolos()+s+"\n"+ ACEP_RECH));
 				if (!estadonuevo1.esFin() && estadonuevo2.esFin())
-					return new Equivalencia(false, ("Cadena "+nodo.getSimbolos()+s+"\n"
-							+ "Rechazada por lenguaje1\n"
-							+ "Aceptada por lenguaje2"));
+					return new Equivalencia(false, ("Cadena "+nodo.getSimbolos()+s+"\n"+ RECH_ACEP));
 
 				if (!estadonuevo1.same(estadonuevo2)) {
 					SimEsEs c = new SimEsEs(estadonuevo1.getId(), estadonuevo2.getId(), nodo.getSimbolos() + s);
@@ -388,13 +394,9 @@ public class Algoritmos {
 		Queue<SimEsEs> aComparar = new LinkedList<>();
 		
 		if(afd1.getIni().esFin() && !afd2.getIni().esFin())
-			return new Equivalencia(false, ("Cadena &\n"
-					+ "Aceptada por lenguaje1\n"
-					+ "Rechazada por lenguaje2"));
+			return new Equivalencia(false, ("Cadena &\n"+ ACEP_RECH));
 		else if (!afd1.getIni().esFin() && afd2.getIni().esFin())
-			return new Equivalencia(false, ("Cadena &\n"
-					+ "Rechazada por lenguaje1\n"
-					+ "Aceptada por lenguaje2"));
+			return new Equivalencia(false, ("Cadena &\n"+ RECH_ACEP));
 
 		aComparar.add(new SimEsEs(afd1.getIni().getId(), afd2.getIni().getId(), ""));
 		
@@ -443,13 +445,9 @@ public class Algoritmos {
 				es2.addTrans(tr2);
 				
 				if (estadoNuevo1.esFin() && !estadoNuevo2.esFin())
-					return new Equivalencia(false, ("Cadena "+nodo.getSimbolos()+s+"\n"
-							+ "Aceptada por lenguaje1\n"
-							+ "Rechazada por lenguaje2"));
+					return new Equivalencia(false, ("Cadena "+nodo.getSimbolos()+s+"\n"+ ACEP_RECH));
 				if (!estadoNuevo1.esFin() && estadoNuevo2.esFin())
-					return new Equivalencia(false, ("Cadena "+nodo.getSimbolos()+s+"\n"
-							+ "Rechazada por lenguaje1\n"
-							+ "Aceptada por lenguaje2"));
+					return new Equivalencia(false, ("Cadena "+nodo.getSimbolos()+s+"\n"+ RECH_ACEP));
 
 				if (!estadoNuevo1.same(estadoNuevo2)) {
 					SimEsEs c = new SimEsEs(estadoNuevo1.getId(), estadoNuevo2.getId(), nodo.getSimbolos() + s);

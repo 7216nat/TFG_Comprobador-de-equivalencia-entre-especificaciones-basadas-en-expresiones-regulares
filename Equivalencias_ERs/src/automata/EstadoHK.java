@@ -1,11 +1,12 @@
 package automata;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import objects.ExpressionBase;
 
 public class EstadoHK extends Estado {
-	private HashSet<Integer> equiv;
+	private Set<Integer> equiv;
 	private ExpressionBase ex;
 	
 	public EstadoHK(int _id, ExpressionBase _ex) {

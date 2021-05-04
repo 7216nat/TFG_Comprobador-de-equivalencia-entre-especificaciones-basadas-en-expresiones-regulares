@@ -14,27 +14,14 @@ import automata.*;
  */
 public class UnionRangos extends ExpressionBase {
 	
-	private static final String _regex = "[";
-	private static final String unionRangosS = "[";
 	private ExpressionBase _e1;
-	private String _str;
 	private List<RangoCharacter> _rangos;
 	
 	/**
 	 * Clase constructora por defecto
 	 */
 	public UnionRangos() {
-		this((String)null);
-	}
-	
-	/**
-	 * Clase constructora
-	 * @param str: string que contiene el rango 
-	 */
-	public UnionRangos(String str) {
-		super(Tipo.UNIONRANGOS);
-		_str = str;
-		_rangos = new ArrayList<>();
+		this(null);
 	}
 	
 	public UnionRangos(RangoCharacter rc) {
@@ -42,37 +29,6 @@ public class UnionRangos extends ExpressionBase {
 		_e1 = rc;
 		_rangos = new ArrayList<>();
 		_rangos.add(rc);
-	}
-	/**
-	 * parsear el string, se añaden los puntos de interseccion al set \
-	 * antes de eso se interseccionan internamente para evitar repeticiones 
-	 * @param ss
-	 */
-	public void parserRangos(Set<Character> inis, Set<Character> fins) {
-		
-		char c;
-		int i = 0;
-		while (i < _str.length()) { // Procesado de String
-			c = _str.charAt(i);
-			if (i == _str.length()-1 || _str.charAt(i+1) != '-') {
-				_rangos.add(new RangoCharacter(c));
-			}
-			else {
-				i +=2;
-				if (_str.charAt(i) < c) {
-					System.out.println("ER inválido, Rango incorrecto");
-					System.exit(1);
-				}
-				_rangos.add(new RangoCharacter(c ,_str.charAt(i)));
-			}
-			i++;
-		}
-		
-		selfIntersec(); 					// Intersecciones internas
-		for (RangoCharacter rc: _rangos) {  // Añadidos de puntos de interseccion
-			inis.add(rc.get_ini());
-			fins.add(rc.get_fin());
-		}
 	}
 	
 	/**
@@ -149,70 +105,7 @@ public class UnionRangos extends ExpressionBase {
 		_rangos = tmp;
 		unirRangos();
 	}
-	
-	/**
-	 * Quitar repeticiones, unir en caso de intersecciones
-	 */
-	private void selfIntersec() {
-		List<RangoCharacter> tmp = new ArrayList<>();
-		Iterator<RangoCharacter> it = _rangos.iterator(), ittmp;
-		RangoCharacter rc, rctmp;
-		boolean existe;
-		tmp.add(it.next());
-		
-		while (it.hasNext()) {
-			rc = it.next();
-			ittmp = tmp.iterator();
-			existe = false;
-			
-			while(ittmp.hasNext()) {
-				rctmp = ittmp.next();
-				if(rc.contenida(rctmp)) {
-					existe = true;
-					break;
-				}
-				else if (rc.contiene(rctmp)) { 
-					ittmp.remove();
-				}
-				else if (rc.isIntersec(rctmp)) {
-					rc.union(rctmp);
-					ittmp.remove();
-				}
-			}
-			
-			if (!existe) tmp.add(rc);
-		}
-		
-		_rangos = tmp;
-	}
-	
-	/**
-	 * Devuelve si esta union contiene el sim
-	 * @param sim
-	 * @return boolean
-	 */
-	public boolean contiene(String sim) {
-		for (RangoCharacter rc: _rangos) {
-			if (rc._sim.equals(sim))
-				return true;
-		}
-		return false;
-	}
 
-	@Override
-	public String toString() {
-		return "{" + _e1.toString() + "}";
-	}
-
-	@Override
-	public ExpressionBase cloneMe() {
-		return new UnionRangos();
-	}
-
-	@Override
-	public boolean match(String string) {
-		return false;
-	}
 
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
@@ -226,7 +119,6 @@ public class UnionRangos extends ExpressionBase {
 	
 	@Override
 	public BerrySethiNode createBerrySethiNode(Map<Integer, BerrySethiNode> map, IdEstado id) {
-		
 		throw new UnsupportedOperationException();
 	}
 

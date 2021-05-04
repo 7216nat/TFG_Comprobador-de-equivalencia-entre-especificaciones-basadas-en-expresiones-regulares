@@ -11,7 +11,6 @@ import automata.*;
 
 public class Union extends ExpressionBase {
 	
-	private static final String _regex = "|";
 	private static final String unionS = "|";
 	private ExpressionBase _e1;
 	private ExpressionBase _e2;
@@ -39,15 +38,6 @@ public class Union extends ExpressionBase {
 		return  "(" + _e1.toString() + unionS +  _e2.toString() + ")";
 	}
 
-	@Override
-	public ExpressionBase cloneMe() {
-		return new Union();
-	}
-
-	@Override
-	public boolean match(String string) {
-		return false; //Pattern.matches(_regex, string);
-	}
 	@Override
 	public AutomataTS ThomsonAFN(IdEstado id) {
 		int ini = id.nextId(), acept, iniPrev1, iniPrev2;

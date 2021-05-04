@@ -17,31 +17,6 @@ public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, D
 	protected ExpressionBase(Tipo tipo) {
 		type = tipo;
 	}
-
-	/**
-	 * devuelve una copia de la clase: funcion de la factoria
-	 * @return
-	 */
-	public abstract ExpressionBase cloneMe();
-
-	/**
-	 * comprueba el tipo de simbolo: funcion de la factoria
-	 * @param string
-	 * @return
-	 */
-	public abstract boolean match(String string);
-
-	/**
-	 * parse de simbolo: funcion de la factoria
-	 * @param string
-	 * @return
-	 */
-	public ExpressionBase parse(String string) {
-		ExpressionBase exp = null;
-		if (match(string))
-			exp = cloneMe();
-		return exp;
-	}
 	
 	/**
 	 * conseguir de la expresion siguiendo el orden de los parametros: 

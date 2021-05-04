@@ -4,27 +4,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import automata.*;
 
 public class Vacio extends Lenguaje {
 
-	private static final String _regex = "%";
 	private static final String CojVacio = "%";
 	
 	public Vacio() {
 		super(CojVacio, Tipo.VACIO);
-	}
-
-	@Override
-	public ExpressionBase cloneMe() {
-		return new Vacio();
-	}
-
-	@Override
-	public boolean match(String string) {
-		return Pattern.matches(_regex, string);
 	}
 
 	@Override

@@ -1,11 +1,7 @@
 package objects;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import automata.IdEstado;
 
 public class BerrySethiNode {
 	
@@ -150,19 +146,13 @@ public class BerrySethiNode {
 			case SIMB:
 				if (this.esHoja()) {
 					this.fol.addAll(follow);
-					//list.put(id.nextId(), this);
 				}
 				break;
 			case RANGO:
 				if (this.esHoja()) {
 					this.fol.addAll(follow);
-					// list.put(id.nextId(), this);
 				}
 				break;
-//			case UNIONRANGOS:
-//				fol.addAll(follow);
-//				left.buildEstados(list, follow);
-//				break;
 			case UNION:
 				this.fol.addAll(follow);
 				left.buildEstados(follow);
@@ -175,26 +165,9 @@ public class BerrySethiNode {
 				follow.addAll(left.first);
 				left.buildEstados(follow);
 				break;
-//			case KLEENPOS:
-//				this.fol.addAll(follow);
-//				follow.addAll(left.first);
-//				left.buildEstados(list, follow);
-//				break;
 			case LAMBDA:
-//				if (this.esHoja()) {
-//					this.fol.addAll(follow);
-//					//list.add(this);
-//				}
 				break;
-//			case LAMBDAEXP:
-//				this.fol.addAll(follow);
-//				left.buildEstados(list, follow);
-//				break;
 			case VACIO:
-//				if (this.esHoja()) {
-//					this.fol.addAll(follow);
-//					list.add(this);
-//				}
 				break;
 			default:
 				break;

@@ -4,14 +4,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import automata.*;
 
 // Comentarios en ExpressionBase
 public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
-
-	private static final String _regex = "\\w";
 
 	/**
 	 * construtora por defecto
@@ -30,11 +27,6 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 	}
 
 	@Override
-	public ExpressionBase cloneMe() {
-		return new Simbolo();
-	}
-
-	@Override
 	public boolean equals(Object o) {
 		if (o == this)
 			return true;
@@ -48,12 +40,6 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 	@Override
 	public int hashCode() {
 		return _sim.hashCode();
-	}
-
-
-	@Override
-	public boolean match(String string) {
-		return Pattern.matches(_regex, string);
 	}
 
 	@Override
