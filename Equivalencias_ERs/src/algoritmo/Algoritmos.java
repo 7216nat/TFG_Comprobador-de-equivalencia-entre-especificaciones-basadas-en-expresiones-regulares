@@ -43,11 +43,11 @@ public class Algoritmos {
 		Estado inicial = at1.getIni();
 		Estado inicial2 = at2.getIni();
 
-		// Creo los autómatas
+		// Creo los automatas
 		Automata afd1 = new Automata();
 		Automata afd2 = new Automata();
 
-		// Creo el primer estado del autómata
+		// Creo el primer estado del automata
 		EstadoTh iniAFD1;
 		EstadoTh iniAFD2;
 		if (!sinlambda) {
@@ -105,24 +105,26 @@ public class Algoritmos {
 				// Si hay diferencias, muestro un error
 				if (tr1 && !tr2) {
 					if (afd1.esFinal(dest1))
-						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
-								+ "Aceptada por lenguaje1\n"
-								+ "Error en el lenguaje2"));
+//						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
+//								+ "Posible de crear por lenguaje1\n"
+//								+ "Imposible en el lenguaje2"));
+						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"+ ACEP_RECH));
 					else
-						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
-								+ "Rechazada por lenguaje1\n"
-								+ "Error en el lenguaje2"));
+						return new Equivalencia(false, ("Cadena intermedia "+comparo.getSimbolos()+s+"\n"
+								+ "Posible de crear (puede no ser aceptada) por lenguaje1\n"
+								+ "Imposible en lenguaje2"));
 				}
 
 				else if (!tr1 && tr2) {
 					if (afd2.esFinal(dest2))
-						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
-								+ "Aceptada por lenguaje2\n"
-								+ "Error en el lenguaje1"));
+//						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
+//								+ "Imposible en lenguaje1\n"
+//								+ "Posible de crear en lenguaje2"));
+						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"+ RECH_ACEP));
 					else
-						return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"
-								+ "Rechazada por lenguaje2\n"
-								+ "Error en el lenguaje1"));
+						return new Equivalencia(false, ("Cadena intermedia "+comparo.getSimbolos()+s+"\n"
+								+ "Imposible en lenguaje1\n"
+								+ "Posible de crear (puede no ser aceptada) por lenguaje2"));
 				} else if (tr1 && tr2 && afd1.esFinal(dest1) && !afd2.esFinal(dest2)) {
 					return new Equivalencia(false, ("Cadena "+comparo.getSimbolos()+s+"\n"+ ACEP_RECH));
 				} else if (tr1 && tr2 && !afd1.esFinal(dest1) && afd2.esFinal(dest2)) {

@@ -61,7 +61,7 @@ public class Principal {
 	private void initialize() {
 		frmComprobadorEquivalencia = new JFrame();
 		frmComprobadorEquivalencia.setTitle("Comprobador equivalencia");
-		frmComprobadorEquivalencia.setBounds(100, 100, 520, 314);
+		frmComprobadorEquivalencia.setBounds(100, 100, 520, 400);
 		frmComprobadorEquivalencia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 6, 0, 0, 0, 0, 0 };
@@ -98,16 +98,7 @@ public class Principal {
 		JList<String> list1 = new JList<String>();
 		list1.setVisibleRowCount(5);
 		DefaultListModel<String> strList = new DefaultListModel<String>();
-//		strList.add(0, "0|1");
-//		strList.add(1, "0*");
-//		strList.add(2, "(0*1*)*");
-//		strList.add(3, "(01|0)*0");
-//		strList.add(4, "(a|b)*");
-//		strList.add(5, "b*a*|a*b*");
-//		strList.add(6, "(cb*c|cb*b)*");
-//		strList.add(7, "[a-cde-tx]*");
-//		strList.add(8, "[a-c]|[d-h]");
-//		strList.add(9, "%|gh");
+
 		list1.setModel(strList);
 
 		JToggleButton nombreExpr = new JToggleButton("Expresiones");
@@ -132,16 +123,7 @@ public class Principal {
 		JList<String> list2 = new JList<String>();
 		list2.setVisibleRowCount(5);
 		DefaultListModel<String> strList2 = new DefaultListModel<String>();
-//		strList2.add(0, "01");
-//		strList2.add(1, "0");
-//		strList2.add(2, "%");
-//		strList2.add(3, "0(10|0)*");
-//		strList2.add(4, "a*(ba*)*");
-//		strList2.add(5, "a*|b*");
-//		strList2.add(6, "(cc)*|(cc)*(cb)(b|c)*");
-//		strList2.add(7, "[a-bcd-tx]*");
-//		strList2.add(8, "[a-c]|[d-h]");
-//		strList2.add(9, "%abc|gh");
+
 		list2.setModel(strList2);
 
 		JScrollPane scrollPane2 = new JScrollPane();
@@ -211,9 +193,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent e) {
 
 				String metodo = (String) metChoice.getSelectedItem();
-				System.out.println(metodo);
 				String algoritmo = (String) algChoice.getSelectedItem();
-				System.out.println(algoritmo);
 
 				List<ExpressionBase> expr1 = new ArrayList<>();
 				List<ExpressionBase> expr2 = new ArrayList<>();
@@ -228,14 +208,12 @@ public class Principal {
 						res.setText("Selecciona el método \"Todos\" o alguna expresión en el lenguaje 2");
 					else {
 							for (int i : selInd1) {
-								String aux = list1.getModel().getElementAt(i);
 								expr1.add(leng1.get(i).getExpresion());
-								System.out.println(aux);
+								
 							}
 							for (int i : selInd2) {
-								String aux = list2.getModel().getElementAt(i);
 								expr2.add(leng2.get(i).getExpresion());
-								System.out.println(aux);
+								
 							}
 
 						String info = mensaje(algoritmo, metodo);
@@ -312,15 +290,7 @@ public class Principal {
 						Reader input = new InputStreamReader(new FileInputStream(elegir.getSelectedFile().getAbsolutePath()));
 						AnalizadorLexico alex = new AnalizadorLexico(input);
 						AnalizadorSintactico asint = new AnalizadorSintactico(alex);
-//						HashMap<String, UnidadParse> arbol = (HashMap<String, UnidadParse>) asint.parse().value;
-//
-//						leng1.clear();
-//						Iterator l1 = arbol.entrySet().iterator();
-//						while(l1.hasNext()) {
-//							Map.Entry par = (Map.Entry) l1.next();
-//							UnidadParse exp = (UnidadParse) par.getValue();
-//							leng1.add(0, new ElementoLista(par.getKey().toString(), exp.getER()));
-//						}
+						
 						leng1 = (ArrayList<ElementoLista>) asint.parse().value;
 						
 						
@@ -336,6 +306,7 @@ public class Principal {
 								strList.addElement(((ElementoLista) a1.next()).getNombreExpresion());
 							}
 						}
+						res.setText("");
 
 					} catch (FileNotFoundException e1) {
 						
@@ -344,6 +315,7 @@ public class Principal {
 					}
 					
 					catch (Exception e1) {
+						res.setText(e1.getMessage());
 					}
 
 				}
@@ -362,15 +334,7 @@ public class Principal {
 						Reader input = new InputStreamReader(new FileInputStream(elegir.getSelectedFile().getAbsolutePath()));
 						AnalizadorLexico alex = new AnalizadorLexico(input);
 						AnalizadorSintactico asint = new AnalizadorSintactico(alex);
-//						HashMap<String, UnidadParse> arbol = (HashMap<String, UnidadParse>) asint.parse().value;
-//
-//						leng2.clear();
-//						Iterator l2 = arbol.entrySet().iterator();
-//						while(l2.hasNext()) {
-//							Map.Entry par = (Map.Entry) l2.next();
-//							UnidadParse exp = (UnidadParse) par.getValue();
-//							leng2.add(0, new ElementoLista(par.getKey().toString(), exp.getER()));
-//						}
+
 						leng2 = (ArrayList<ElementoLista>) asint.parse().value;
 						
 						strList2.clear();
@@ -385,6 +349,7 @@ public class Principal {
 								strList2.addElement(((ElementoLista) a2.next()).getNombreExpresion());
 							}
 						}
+						res.setText("");
 
 					} catch (FileNotFoundException e1) {
 
@@ -392,7 +357,7 @@ public class Principal {
 						res.setText(e1.getMessage());
 					}
 					catch (Exception e1) {
-
+						res.setText(e1.getMessage());
 					}
 				}
 			}
@@ -408,7 +373,7 @@ public class Principal {
 		nombreExpr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int[] selInd1 = list1.getSelectedIndices();
-				int[] selInd2 = list1.getSelectedIndices();
+				int[] selInd2 = list2.getSelectedIndices();
 				strList.clear();
 				strList2.clear();
 				if (nombre) {

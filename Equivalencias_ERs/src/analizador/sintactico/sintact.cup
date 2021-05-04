@@ -91,7 +91,7 @@ E3 ::= SIM: s
 		{:  if (auxmap.containsKey(v))
 				RESULT = auxmap.get(v);
 			else{
-				throw new Exception("Syntax error: " + v + ", there is not AUX with that name.");
+				throw new Exception("Error sintáctico al leer el archivo: no hay ningún auxiliar previo con el nombre \""+ v +"\".");
 			} :}  
 		| LAMBDA: l
 		{: RESULT = new UnidadParse(l, new Lambdaa()); :}  
