@@ -156,4 +156,11 @@ public class Kleen extends ExpressionBase {
 		ret.addAll(concatAll(t1, this));
 		return ret;
 	}
+
+	@Override
+	public ExpressionBase copy() {
+		// TODO Auto-generated method stub
+		return new Kleen(_e1.copy());
+	}
+
 }

@@ -78,5 +78,11 @@ public class Vacio extends Lenguaje {
 		ret.add(new Vacio());
 		return ret;
 	}
+
+	@Override
+	public ExpressionBase copy() {
+		// TODO Auto-generated method stub
+		return new Vacio();
+	}
 		
 }

@@ -204,5 +204,9 @@ public class Concat extends ExpressionBase {
 		return ret;
 	}
 
+	@Override
+	public ExpressionBase copy() {
+		return new Concat(_e1.copy(), _e2.copy());
+	}
 
 }

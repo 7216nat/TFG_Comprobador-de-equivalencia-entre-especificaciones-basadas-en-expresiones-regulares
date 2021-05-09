@@ -10,7 +10,7 @@ import algoritmo.Derivada;
 import algoritmo.DerivadaParcial;
 import algoritmo.Thomson;
 
-public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, DerivadaParcial {
+public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, DerivadaParcial, Cloneable {
 	
 	private Tipo type;
 
@@ -36,6 +36,8 @@ public abstract class ExpressionBase implements BerrySethi, Thomson, Derivada, D
 	 * @return ExpressionBase final
 	 */
 	public abstract ExpressionBase buildTreeDefinitivo();
+	
+	public abstract ExpressionBase copy();
 	
 	public Tipo getType() {
 		return this.type;

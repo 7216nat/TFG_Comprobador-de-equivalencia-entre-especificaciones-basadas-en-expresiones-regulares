@@ -124,7 +124,6 @@ public class UnionRangos extends ExpressionBase {
 
 	@Override
 	public void getSimbolosRangos(Set<String> set, List<UnionRangos> array, Set<Character> inis, Set<Character> fins) {
-		
 		_e1.getSimbolosRangos(set, array, inis, fins);
 		array.add(this);
 	}
@@ -165,5 +164,10 @@ public class UnionRangos extends ExpressionBase {
 	@Override
 	public Set<ExpressionBase> derivadaParcial(String sim) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public ExpressionBase copy() {
+		return new UnionRangos((RangoCharacter)_e1.copy());
 	}
 }

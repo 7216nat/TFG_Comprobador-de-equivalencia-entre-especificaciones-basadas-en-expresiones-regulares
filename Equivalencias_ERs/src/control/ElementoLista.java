@@ -12,6 +12,12 @@ public class ElementoLista {
 		expresion = exp;
 		expresionInterfaz = expVista;
 	}
+	
+	public ElementoLista (ElementoLista el) {
+		nombre = el.nombre;
+		expresion = el.expresion.copy();
+		expresionInterfaz = el.expresionInterfaz;
+	}
 	/**
 	 * 
 	 * @return la clave de la expresion

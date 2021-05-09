@@ -86,4 +86,10 @@ public class Lambdaa extends Lenguaje {
 		ret.add(new Vacio());
 		return ret;
 	}
+
+	@Override
+	public ExpressionBase copy() {
+		return new Lambdaa();
+	}
+
 }

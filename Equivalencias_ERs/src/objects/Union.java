@@ -196,6 +196,12 @@ public class Union extends ExpressionBase {
 		ret.addAll(t2);
 		return ret;
 	}
+
+	@Override
+	public ExpressionBase copy() {
+		// TODO Auto-generated method stub
+		return new Union(_e1.copy(), _e2.copy());
+	}
 	
 	
 }

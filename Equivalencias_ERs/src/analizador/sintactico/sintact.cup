@@ -114,6 +114,6 @@ Rango ::= SIM: s1 GUION SIM: s2
 		{:  char c1 = s1.charAt(0);
 			char c2 = s2.charAt(0);
 			if (c1 > c2) {
-				throw new Exception("Syntax error: " + s1 + " > " + s2);
+				throw new Exception("Syntax Range error: " + s1 + " > " + s2);
 			}  
 			RESULT= new UnidadParse(s1+"-"+s2, new UnionRangos(new RangoCharacter(c1, c2))); :};

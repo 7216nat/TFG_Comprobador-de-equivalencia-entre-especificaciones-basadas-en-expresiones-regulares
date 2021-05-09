@@ -209,10 +209,10 @@ public class Principal {
 						res.setText("Selecciona el método \"Todos\" o alguna expresión en el lenguaje 2");
 					else {
 						for (int i : selInd1)
-							expr1.add(leng1.get(i));
+							expr1.add(new ElementoLista(leng1.get(i)));
 								
 						for (int i : selInd2)
-							expr2.add(leng2.get(i));
+							expr2.add(new ElementoLista(leng2.get(i)));
 
 						String info = mensaje(algoritmo, metodo);
 						String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
@@ -221,8 +221,12 @@ public class Principal {
 				} 
 				// Si se selecciona Todos
 				else {
+					for (ElementoLista el : leng1)
+						expr1.add(new ElementoLista(el));	
+					for (ElementoLista el : leng2)
+						expr2.add(new ElementoLista(el));
 					String info = mensaje(algoritmo, metodo);
-					String resul = ctrl.compEquiv(leng1, leng2, algoritmo, metodo);
+					String resul = ctrl.compEquiv(new ArrayList<>(leng1), new ArrayList<>(leng2), algoritmo, metodo);
 					res.setText(resul + "\n" + info);
 				}
 			}

@@ -128,7 +128,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	public RangoCharacter interseccion(char c, boolean ini) {
 		char tmp = _ini;
 		if (c == this._fin) {
-			if (!ini) {
+			if (ini) {
 				_ini = _fin;
 				actualizarSim();
 				return new RangoCharacter(tmp, (char)(c-1));
@@ -136,7 +136,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 			else return null;
 		} 
 		else if (c == this._ini) {
-			if (ini) {
+			if (!ini) {
 				_ini = (char)(c+1);
 				actualizarSim();
 				return new RangoCharacter(c);
@@ -246,5 +246,10 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 				ret.add(new Lambdaa());
 		else ret.add(new Vacio());
 		return ret;
+	}
+
+	@Override
+	public ExpressionBase copy() {
+		return new RangoCharacter(_ini, _fin);
 	}
 }

@@ -117,4 +117,10 @@ public class Simbolo extends Lenguaje implements Comparable<Simbolo> {
 		else ret.add(new Vacio());
 		return ret;
 	}
+
+	@Override
+	public ExpressionBase copy() {
+		// TODO Auto-generated method stub
+		return new Simbolo(_sim);
+	}
 }

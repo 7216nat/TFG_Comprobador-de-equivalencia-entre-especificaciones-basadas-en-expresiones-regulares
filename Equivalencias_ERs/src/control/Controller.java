@@ -24,9 +24,6 @@ public class Controller {
 	
 	private List<ElementoLista> elemList1 = null;
 	private List<ElementoLista> elemList2 = null;
-	
-	private List<ExpressionBase> elist1 = null;
-	private List<ExpressionBase> elist2 = null;
 			
 	private ExpressionBase _e1 = null;
 	private ExpressionBase _e2 = null;
@@ -87,46 +84,90 @@ public class Controller {
 		// variables globales en dos expresiones
 		elemList1 = listER1;
 		elemList2 = listER2;
-		elist1 = new ArrayList<>();
-		elist2 = new ArrayList<>();
+		List<ExpressionBase> elist1 = new ArrayList<>();
+		List<ExpressionBase> elist2 = new ArrayList<>();
 		Set<String> simbolosSet = new HashSet<>();
 		Set<Character> inis = new TreeSet<>();
 		Set<Character> fins = new TreeSet<>();
 		List<UnionRangos> rangos = new ArrayList<>();
+		_simList = new ArrayList<>();
 		ExpressionBase er;
 		
 		// recolectar simbolos y rangos
-		for (ElementoLista el: listER1) {
+		for (ElementoLista el: elemList1) {
 			el.expresion.getSimbolosRangos(simbolosSet, rangos, inis, fins);
 		}
 
 		// recolectar simbolos y rangos
-		for (ElementoLista el: listER2) {
+		for (ElementoLista el: elemList2) {
 			el.expresion.getSimbolosRangos(simbolosSet, rangos, inis, fins);
 		}
-
+		System.out.println(simbolosSet.toString());
 		// interseccion y y obtener los nuevos simbolos
 		intersecUR(simbolosSet, rangos, inis, fins);
 				
 		// conseguir todos los simbolos incluidos los rangos
+		Iterator<String> it = simbolosSet.iterator();
+		while (it.hasNext()) {
+			String c = it.next();
+			_simList.add(c);
+		}
+		if (!rangos.isEmpty()) {
+			// deshacer los Unionrangos
+			for (ElementoLista el: elemList1) {
+				er = el.expresion.buildTreeDefinitivo();
+				elist1.add(er);
+			}
+			for (ElementoLista el: elemList2) {
+				er = el.expresion.buildTreeDefinitivo();
+				elist2.add(er);
+			}
+		}else {
+			for (ElementoLista el: elemList1) {
+				elist1.add(el.expresion);
+			}
+			for (ElementoLista el: elemList2) {
+				elist2.add(el.expresion);
+			}
+		}
+		
+		_e1 = unionListaERs(elist1);
+		_e2 = unionListaERs(elist2);
+	}
+	
+	private void procesar(ExpressionBase ER1, ExpressionBase ER2) {
+		// variables globales en dos expresiones
+		Set<String> simbolosSet = new HashSet<>();
+		Set<Character> inis = new TreeSet<>();
+		Set<Character> fins = new TreeSet<>();
+		List<UnionRangos> rangos = new ArrayList<>();
 		_simList = new ArrayList<>();
+		
+		// recolectar simbolos y rangos
+		ER1.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+		
+
+		// recolectar simbolos y rangos
+		ER2.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+			
+		// interseccion y y obtener los nuevos simbolos
+		intersecUR(simbolosSet, rangos, inis, fins);
+				
+		// conseguir todos los simbolos incluidos los rangos
 		Iterator<String> it = simbolosSet.iterator();
 		while (it.hasNext()) {
 			String c = it.next();
 			_simList.add(c);
 		}
 		
-		
 		// deshacer los Unionrangos
-		for (ElementoLista el: elemList1) {
-			er = el.expresion.buildTreeDefinitivo();
-			el.expresion = er;
-			elist1.add(er);
+		if (!rangos.isEmpty()) {
+			_e1 = ER1.buildTreeDefinitivo();
+			_e2 = ER2.buildTreeDefinitivo();
 		}
-		for (ElementoLista el: elemList2) {
-			er = el.expresion.buildTreeDefinitivo();
-			el.expresion = er;
-			elist2.add(er);
+		else {
+			_e1 = ER1;
+			_e2 = ER2;
 		}
 	}
 	
@@ -204,7 +245,9 @@ public class Controller {
 	 * @param listER2: list 2
 	 */
 	public void setERs(List<ElementoLista> listER1, List<ElementoLista> listER2) {
-		procesar(listER1, listER2);
+		// procesar(listER1, listER2);
+		elemList1 = listER1;
+		elemList2 = listER2;
 	}
 	
 	/**
@@ -264,14 +307,16 @@ public class Controller {
 	private String emparejar() {
 		StringBuilder bld = new StringBuilder();
 		ElementoLista elem1, elem2;
+		ExpressionBase er1, er2;
 		Iterator<ElementoLista> it1 = elemList1.iterator();
 		while (it1.hasNext()) {
 			elem1 = it1.next();
-			_e1 = elem1.expresion;
+			er1 = elem1.expresion;
 			Iterator<ElementoLista> it2 = elemList2.iterator();
 			while (it2.hasNext()) {
 				elem2 = it2.next();
-				_e2 = elem2.expresion;
+				er2 = elem2.expresion;
+				procesar(er1, er2);
 				if (compare().isEq()) {
 					bld.append( "[" + elem1.nombre+ " => " + elem1.expresionInterfaz + "]" +
 								" equivalente a " + "[" + elem2.nombre+ " => " + elem2.expresionInterfaz + "]" + "\n"); 
@@ -298,8 +343,7 @@ public class Controller {
 	public String run() {
 		switch(_mode) {
 		case TODOS: case SELECTED:
-			_e1 = unionListaERs(elist1);
-			_e2 = unionListaERs(elist2);
+			procesar(elemList1, elemList2);
 			return compare().getMsg();
 		case UNOAUNO:
 			return emparejar();
