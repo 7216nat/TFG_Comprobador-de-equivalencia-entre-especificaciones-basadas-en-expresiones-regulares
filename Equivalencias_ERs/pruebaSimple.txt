@@ -1,4 +1,4 @@
-def <cosa> = [b-d]
+def <cosa> = [a-x]
 def <b> = [c-h]
 def <b> = %d
 def <x> = a|&

@@ -226,7 +226,7 @@ public class Principal {
 					for (ElementoLista el : leng2)
 						expr2.add(new ElementoLista(el));
 					String info = mensaje(algoritmo, metodo);
-					String resul = ctrl.compEquiv(new ArrayList<>(leng1), new ArrayList<>(leng2), algoritmo, metodo);
+					String resul = ctrl.compEquiv(expr1, expr2, algoritmo, metodo);
 					res.setText(resul + "\n" + info);
 				}
 			}

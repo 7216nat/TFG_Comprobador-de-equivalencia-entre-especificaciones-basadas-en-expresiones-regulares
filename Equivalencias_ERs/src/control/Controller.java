@@ -102,7 +102,7 @@ public class Controller {
 		for (ElementoLista el: elemList2) {
 			el.expresion.getSimbolosRangos(simbolosSet, rangos, inis, fins);
 		}
-		System.out.println(simbolosSet.toString());
+
 		// interseccion y y obtener los nuevos simbolos
 		intersecUR(simbolosSet, rangos, inis, fins);
 				

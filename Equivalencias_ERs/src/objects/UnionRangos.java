@@ -24,11 +24,11 @@ public class UnionRangos extends ExpressionBase {
 		this(null);
 	}
 	
-	public UnionRangos(RangoCharacter rc) {
+	public UnionRangos(ExpressionBase expressionBase) {
 		super(Tipo.UNIONRANGOS);
-		_e1 = rc;
+		_e1 = expressionBase;
 		_rangos = new ArrayList<>();
-		_rangos.add(rc);
+		_rangos.add((RangoCharacter)expressionBase);
 	}
 	
 	/**
@@ -168,6 +168,6 @@ public class UnionRangos extends ExpressionBase {
 
 	@Override
 	public ExpressionBase copy() {
-		return new UnionRangos((RangoCharacter)_e1.copy());
+		return new UnionRangos(_e1.copy());
 	}
 }

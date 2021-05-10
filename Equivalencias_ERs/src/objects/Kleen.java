@@ -159,7 +159,6 @@ public class Kleen extends ExpressionBase {
 
 	@Override
 	public ExpressionBase copy() {
-		// TODO Auto-generated method stub
 		return new Kleen(_e1.copy());
 	}
 
