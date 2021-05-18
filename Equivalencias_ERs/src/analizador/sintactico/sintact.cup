@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import analizador.errores.ErrorAnalizador;
+import analizador.lexico.StringLocalizado;
 
 scan with {: return getScanner().next_token(); :};
 action code{:
@@ -35,7 +36,7 @@ init with {:
 
 terminal     	AUX, IGUAL, DEF, ALTER, ASTERISCO, MAS, INTERR, GUION,
                 PAP, PCIE, CORAP, CORCIE, COMA;
-terminal String	LAMBDA, VACIO, SIM, VAR, ESCAPESIM;
+terminal StringLocalizado	LAMBDA, VACIO, SIM, VAR, ESCAPESIM;
 non terminal        Pre, LAuxs, Auxs, Aux, LDefs, Defs, Def; 
 non terminal UnidadParse  E0, E1, E2, E3, Rangos, Rango;
                 
@@ -43,10 +44,10 @@ non terminal UnidadParse  E0, E1, E2, E3, Rangos, Rango;
 Pre ::= LAuxs LDefs {: RESULT=parselist; :};
 LAuxs ::= Auxs | ;
 Auxs ::= Auxs Aux | Aux;
-Aux ::= AUX VAR:v IGUAL E0:e {:  auxmap.put(v, e); :}; 
+Aux ::= AUX VAR:v IGUAL E0:e {:  auxmap.put(v.toString(), e); :}; 
 LDefs ::= Defs | ;
 Defs ::= Defs Def | Def;
-Def ::= DEF VAR:v IGUAL E0:e {:  parselist.add(new ElementoLista(v, e.er, e.str)); :};
+Def ::= DEF VAR:v IGUAL E0:e {:  parselist.add(new ElementoLista(v.toString(), e.er, e.str)); :};
 
 E0 ::= E0: e1 ALTER E1: e2 
 		{:  ExpressionBase union;
@@ -86,19 +87,19 @@ E2 ::= E2: e ASTERISCO
 		| E3: e 
 		{: RESULT = e; :};
 E3 ::= SIM: s
-		{: RESULT = new UnidadParse(s, new Simbolo(s)); :} 
+		{: RESULT = new UnidadParse(s.toString(), new Simbolo(s.toString())); :} 
 		| VAR: v
-		{:  if (auxmap.containsKey(v))
-				RESULT = auxmap.get(v);
+		{:  if (auxmap.containsKey(v.toString()))
+				RESULT = auxmap.get(v.toString());
 			else{
-				throw new Exception("Error sintáctico al leer el archivo: no hay ningún auxiliar previo con el nombre \""+ v +"\".");
+				throw new Exception("line " + v.fila() + ", colum " + v.col() + ":Error sintáctico al leer el archivo: no hay ningún auxiliar previo con el nombre \""+ v.toString() +"\".");
 			} :}  
 		| LAMBDA: l
-		{: RESULT = new UnidadParse(l, new Lambdaa()); :}  
+		{: RESULT = new UnidadParse(l.toString(), new Lambdaa()); :}  
 		| VACIO: va
-		{: RESULT = new UnidadParse(va, new Vacio()); :} 
+		{: RESULT = new UnidadParse(va.toString(), new Vacio()); :} 
 		| ESCAPESIM: esc
-		{: RESULT = new UnidadParse("\\" + esc, new Simbolo(esc)); :}  
+		{: RESULT = new UnidadParse("\\" + esc, new Simbolo(esc.toString())); :}  
 		| PAP E0: e PCIE
 		{:  e.str = "(" + e.str +")"; 
 			RESULT = e; :}  
@@ -111,9 +112,9 @@ Rangos ::= Rangos: e1 COMA Rango: e2
 		| Rango: r 
 		{:  RESULT = r; :};
 Rango ::= SIM: s1 GUION SIM: s2 
-		{:  char c1 = s1.charAt(0);
-			char c2 = s2.charAt(0);
+		{:  char c1 = s1.toString().charAt(0);
+			char c2 = s2.toString().charAt(0);
 			if (c1 > c2) {
-				throw new Exception("Syntax Range error: " + s1 + " > " + s2);
+				throw new Exception("line " + s1.fila() + ", colum " + s1.col() + ": Syntax Range error: " + s1 + " > " + s2);
 			}  
 			RESULT= new UnidadParse(s1+"-"+s2, new UnionRangos(new RangoCharacter(c1, c2))); :};

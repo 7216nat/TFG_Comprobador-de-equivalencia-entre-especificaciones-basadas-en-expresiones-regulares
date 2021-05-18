@@ -318,8 +318,8 @@ public class Controller {
 				er2 = elem2.expresion;
 				procesar(er1, er2);
 				if (compare().isEq()) {
-					bld.append( "[" + elem1.nombre+ " => " + elem1.expresionInterfaz + "]" +
-								" equivalente a " + "[" + elem2.nombre+ " => " + elem2.expresionInterfaz + "]" + "\n"); 
+					bld.append( "[" + elem1.nombre + "]" +
+								" equivalente a " + "[" + elem2.nombre + "]\n"); 
 					it2.remove();
 					it1.remove();
 					break;
@@ -329,8 +329,8 @@ public class Controller {
 		
 		StringBuilder unpair1 = new StringBuilder("\nSin emparejar de la lista 1:\n");
 		StringBuilder unpair2 = new StringBuilder("\nSin emparejar de la lista 2:\n");
-		for (ElementoLista el: elemList1) unpair1.append("[" + el.nombre+ " => " + el.expresionInterfaz + "]" + "\n");
-		for (ElementoLista el: elemList2) unpair2.append("[" + el.nombre+ " => " + el.expresionInterfaz + "]" + "\n");
+		for (ElementoLista el: elemList1) unpair1.append("[" + el.nombre + "]\n");
+		for (ElementoLista el: elemList2) unpair2.append("[" + el.nombre + "]\n");
 		if (!elemList1.isEmpty()) bld.append(unpair1);
 		if (!elemList2.isEmpty()) bld.append(unpair2);
 		return bld.toString();

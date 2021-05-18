@@ -252,7 +252,6 @@ public class Algoritmos {
 			// añadir las transiciones
 			for (Integer i : bsn.getFollow())
 				state.addTrans(new Transicion(i, list.get(i).getSim()));
-			System.out.println(bsn.toString());
 		}
 		
 		// el estado inicial

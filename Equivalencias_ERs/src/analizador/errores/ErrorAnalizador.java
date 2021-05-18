@@ -13,9 +13,9 @@ public class ErrorAnalizador {
 	 * @param fila: fila
 	 * @param lexema: error lexema
 	 */
-	public void errorLexico(int fila, String lexema) {
+	public void errorLexico(int fila, int columna,String lexema) {
 	    throw new AnalizadorErrorException("No se ha podido cargar el archivo.\n"
-	    		+ "Error léxico al leer el archivo, en fila "+fila+": Carácter inesperado: "+lexema);
+	    		+ "Error léxico al leer el archivo, en fila "+fila+", columna "+columna+": Carácter inesperado: "+lexema);
 	}
 	/**
 	 * Exception no controlada de error sintactico

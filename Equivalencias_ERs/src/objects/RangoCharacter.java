@@ -62,7 +62,7 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	 */
 	public void actualizarSim() {
 		if (_ini == _fin) _sim = _ini + "";
-		else _sim = _ini + "-" + _fin;
+		else _sim = "[" + _ini + "-" + _fin+"]";
 	}
 	
 	@Override
