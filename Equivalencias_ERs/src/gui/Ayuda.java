@@ -27,6 +27,7 @@ public class Ayuda extends JFrame {
 	 */
 	public Ayuda() {
 		setTextos();
+		this.setTitle("Ayuda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 500);
 		contentPane = new JPanel();
@@ -76,7 +77,7 @@ public class Ayuda extends JFrame {
 	}
 	
 	private void setTextos() {
-		infLenguaje = "El lenguaje se abrirá a partir de un archivo de texto con extensión \".txt\".\n"
+		infLenguaje = "El lenguaje se extraerá de un archivo de texto con extensión \".txt\".\n"
 				+ "El lenguaje tendrá una sección de auxiliares y una de definiciones (siempre en ese orden).\n"
 				+ "Los auxiliares se definirán como \" aux <clave> = expresion_regular\", en clave se escribirá el identificador del auxiliar "
 				+ "y en expresion_regular se anota la expresión que define el auxiliar.\n"
@@ -105,12 +106,17 @@ public class Ayuda extends JFrame {
 				+ "El botón Expresiones varía la vista de la lista entre nombres y expresiones regulares.\n"
 				+ "En algoritmo se seleccionará el algoritmo con el que se hará la comprobación de equivalencia.\n"
 				+ "En método se seleccionará el método de selección de las expresiones regulares (más en la pestaña info de ayuda).\n"
-				+ "Pulsar equivalencia para que se haga la comprobación y ver el resultado en el cuadro inferior.";
+				+ "Pulsar equivalencia para que se haga la comprobación y ver el resultado en el cuadro inferior.\n"
+				+ "Posibles resultados:\n"
+				+ "Si son equivalentes: el método Seleccionados mostrará equivalentes si solo se ha seleccionado una expresión de cada lenguaje o posiblemente equivalentes si se seleccionaron más;"
+				+ " el método Todos devolverá posiblemente equivalentes y el método Uno a Uno mostrará la lista de parejas equivalentes de cada lenguaje y la lista de expresiones sin pareja.\n"
+				+ "Si no son equivalentes: cualquiera de los métodos mostrará una cadena de ejemplo que es aceptada o puede crearse por uno de los lenguajes y no por el otro.\n\n"
+				+ "\"Posiblemente equivalentes\" significa que la unión de las expresiones es equivalentes, pero esa unión puede dar lugar a diferentes lenguajes, la forma más segura de ver la equivalencia es usando el método \"Uno a uno \".";
 		info = "Algoritmos utilizados para crear los autómatas:\n"
 				+ " · Thompson: se sigue un algoritmo de Thompson + determinación con lambda-transiciones.\n"
 				+ " · Seguidores: se siguen el algoritmo de Thompson, se eliminan las lambda-transiciones y luego se sigue el proceso de determinación.\n"
 				+ " · Derivadas: se sigue el algoritmo de derivadas.\n"
-				+ " · Derivadas parciales: se siguen los algoritmos de derivadas parciales y determinación simultáneamente."
+				+ " · Derivadas parciales: se siguen los algoritmos de derivadas parciales y determinación simultáneamente.\n"
 				+ " · Berry-Sethi: se sigue el algoritmo de Berry-Sethi y luego se hace la determinación.\n\n"
 				
 				+ "Métodos de entrada:\n"

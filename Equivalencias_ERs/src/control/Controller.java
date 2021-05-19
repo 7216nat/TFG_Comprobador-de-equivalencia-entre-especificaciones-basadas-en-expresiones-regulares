@@ -342,9 +342,18 @@ public class Controller {
 	 */
 	public String run() {
 		switch(_mode) {
-		case TODOS: case SELECTED:
+		case TODOS:
 			procesar(elemList1, elemList2);
-			return compare().getMsg();
+			Equivalencia s = compare();
+			if(s.isEq())
+				return ("Podrían ser equivalentes, utilice el método \"Uno a uno\" para estar seguro");			
+			return s.getMsg();
+		case SELECTED:
+			procesar(elemList1, elemList2);
+			Equivalencia t = compare();
+			if(t.isEq()&& elemList1.size()>1 && elemList2.size() >1)
+				return ("Podrían ser equivalentes, utilice el método \"Uno a uno\" para estar seguro");			
+			return t.getMsg();
 		case UNOAUNO:
 			return emparejar();
 		default:

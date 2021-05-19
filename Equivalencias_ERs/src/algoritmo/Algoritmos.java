@@ -360,7 +360,9 @@ public class Algoritmos {
 
 		return new Equivalencia(true ,EQ);
 	}
-
+	/***************************
+	 * algoritmo de las derivadas parciales
+	 ***************************/
 	public static Equivalencia equivalenciaDerPar(ExpressionBase ex1, ExpressionBase ex2, IdEstado idst, List<String> simb) {
 		//Quitar vacios de la lista
 		quitarLambda(simb);

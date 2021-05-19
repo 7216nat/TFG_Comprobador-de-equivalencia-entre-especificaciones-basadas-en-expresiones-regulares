@@ -146,8 +146,8 @@ public class Principal {
 		gbc_metChoice.insets = new Insets(0, 0, 5, 5);
 		gbc_metChoice.gridx = 3;
 		gbc_metChoice.gridy = 5;
-		metChoice.addItem("Todos");
 		metChoice.addItem("Seleccionados");
+		metChoice.addItem("Todos");
 		metChoice.addItem("Uno a uno");
 
 		JComboBox<String> algChoice = new JComboBox<String>();
@@ -199,7 +199,7 @@ public class Principal {
 				List<ElementoLista> expr1 = new ArrayList<>();
 				List<ElementoLista> expr2 = new ArrayList<>();
 
-				if (!metodo.equalsIgnoreCase("Todos")) {
+				if (metodo.equalsIgnoreCase("Seleccionados")) {
 					int[] selInd1 = list1.getSelectedIndices();
 					int[] selInd2 = list2.getSelectedIndices();
 
