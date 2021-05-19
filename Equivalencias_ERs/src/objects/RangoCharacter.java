@@ -61,13 +61,15 @@ public class RangoCharacter extends Lenguaje implements Comparable<RangoCharacte
 	 * Actualizar toString()
 	 */
 	public void actualizarSim() {
-		if (_ini == _fin) _sim = _ini + "";
-		else _sim = "[" + _ini + "-" + _fin+"]";
+		_sim = _ini + "";
 	}
 	
 	@Override
 	public String toString() { 
-		return  "[" + _sim + "]"; 
+		if 	(_ini != _fin)
+			return  "[" + _ini + "-" + _fin + "]"; 
+		else
+			return "[" + _ini + "]";
 	}
 	/**
 	 * @param rc
