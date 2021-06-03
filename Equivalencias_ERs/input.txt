@@ -1,6 +1,6 @@
 aux <as> = ads
 def <sda> = [a-b][c-d]
 def <a> = [a-b][c-d][m-x]	
-def <b> = %
+def <b> = a
 def <x> = (ab)*lk
 def <z> = abc|ef

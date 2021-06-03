@@ -80,52 +80,61 @@ public class Controller {
 		}
 	}
 	
-	private void procesar(List<ElementoLista> listER1, List<ElementoLista> listER2) {
+	private boolean procesar(List<ElementoLista> listER1, List<ElementoLista> listER2) {
 		// variables globales en dos expresiones
 		elemList1 = listER1;
 		elemList2 = listER2;
 		List<ExpressionBase> elist1 = new ArrayList<>();
 		List<ExpressionBase> elist2 = new ArrayList<>();
-		Set<String> simbolosSet = new HashSet<>();
+		Set<String> simbolosSet1 = new HashSet<>();
+		Set<String> simbolosSet2 = new HashSet<>();
 		Set<Character> inis = new TreeSet<>();
 		Set<Character> fins = new TreeSet<>();
-		List<UnionRangos> rangos = new ArrayList<>();
+		List<UnionRangos> rangos1 = new ArrayList<>();
+		List<UnionRangos> rangos2 = new ArrayList<>();
 		_simList = new ArrayList<>();
 		ExpressionBase er;
 		
 		// recolectar simbolos y rangos
 		for (ElementoLista el: elemList1) {
-			el.expresion.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+			el.expresion.getSimbolosRangos(simbolosSet1, rangos1, inis, fins);
 		}
 
 		// recolectar simbolos y rangos
 		for (ElementoLista el: elemList2) {
-			el.expresion.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+			el.expresion.getSimbolosRangos(simbolosSet2, rangos2, inis, fins);
 		}
-
+		
 		// interseccion y y obtener los nuevos simbolos
-		intersecUR(simbolosSet, rangos, inis, fins);
-				
+		intersecUR(simbolosSet1, rangos1, inis, fins);
+		intersecUR(simbolosSet2, rangos2, inis, fins);
+		if (!simbolosSet1.containsAll(simbolosSet2) || !simbolosSet2.containsAll(simbolosSet1)) {
+			return false;
+		}
 		// conseguir todos los simbolos incluidos los rangos
-		Iterator<String> it = simbolosSet.iterator();
+		Iterator<String> it = simbolosSet1.iterator();
 		while (it.hasNext()) {
 			String c = it.next();
 			_simList.add(c);
 		}
-		if (!rangos.isEmpty()) {
+		if (!rangos1.isEmpty()) {
 			// deshacer los Unionrangos
 			for (ElementoLista el: elemList1) {
 				er = el.expresion.buildTreeDefinitivo();
 				elist1.add(er);
 			}
+		}else {
+			for (ElementoLista el: elemList1) {
+				elist1.add(el.expresion);
+			}
+		}
+		if (!rangos2.isEmpty()) {
+			// deshacer los Unionrangos
 			for (ElementoLista el: elemList2) {
 				er = el.expresion.buildTreeDefinitivo();
 				elist2.add(er);
 			}
 		}else {
-			for (ElementoLista el: elemList1) {
-				elist1.add(el.expresion);
-			}
 			for (ElementoLista el: elemList2) {
 				elist2.add(el.expresion);
 			}
@@ -133,42 +142,53 @@ public class Controller {
 		
 		_e1 = unionListaERs(elist1);
 		_e2 = unionListaERs(elist2);
+		return true;
 	}
 	
-	private void procesar(ExpressionBase ER1, ExpressionBase ER2) {
+	private boolean procesar(ExpressionBase ER1, ExpressionBase ER2) {
 		// variables globales en dos expresiones
-		Set<String> simbolosSet = new HashSet<>();
+		Set<String> simbolosSet1 = new HashSet<>();
+		Set<String> simbolosSet2 = new HashSet<>();
 		Set<Character> inis = new TreeSet<>();
 		Set<Character> fins = new TreeSet<>();
-		List<UnionRangos> rangos = new ArrayList<>();
+		List<UnionRangos> rangos1 = new ArrayList<>();
+		List<UnionRangos> rangos2 = new ArrayList<>();
 		_simList = new ArrayList<>();
 		
 		// recolectar simbolos y rangos
-		ER1.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+		ER1.getSimbolosRangos(simbolosSet1, rangos1, inis, fins);
 		
 
 		// recolectar simbolos y rangos
-		ER2.getSimbolosRangos(simbolosSet, rangos, inis, fins);
+		ER2.getSimbolosRangos(simbolosSet2, rangos2, inis, fins);
 			
 		// interseccion y y obtener los nuevos simbolos
-		intersecUR(simbolosSet, rangos, inis, fins);
-				
+		intersecUR(simbolosSet1, rangos1, inis, fins);
+		intersecUR(simbolosSet2, rangos2, inis, fins);
+		if (!simbolosSet1.containsAll(simbolosSet2) || !simbolosSet2.containsAll(simbolosSet1)) {
+			return false;
+		}
 		// conseguir todos los simbolos incluidos los rangos
-		Iterator<String> it = simbolosSet.iterator();
+		Iterator<String> it = simbolosSet1.iterator();
 		while (it.hasNext()) {
 			String c = it.next();
 			_simList.add(c);
 		}
 		
 		// deshacer los Unionrangos
-		if (!rangos.isEmpty()) {
+		if (!rangos1.isEmpty()) {
 			_e1 = ER1.buildTreeDefinitivo();
-			_e2 = ER2.buildTreeDefinitivo();
 		}
 		else {
 			_e1 = ER1;
+		}
+		if (!rangos2.isEmpty()) {
+			_e2 = ER2.buildTreeDefinitivo();
+		}
+		else {
 			_e2 = ER2;
 		}
+		return true;
 	}
 	
 	/**
@@ -316,13 +336,14 @@ public class Controller {
 			while (it2.hasNext()) {
 				elem2 = it2.next();
 				er2 = elem2.expresion;
-				procesar(er1, er2);
-				if (compare().isEq()) {
-					bld.append( "[" + elem1.nombre + "]" +
-								" equivalente a " + "[" + elem2.nombre + "]\n"); 
-					it2.remove();
-					it1.remove();
-					break;
+				if (procesar(er1, er2)) {
+					if (compare().isEq()) {
+						bld.append( "[" + elem1.nombre + "]" +
+									" equivalente a " + "[" + elem2.nombre + "]\n"); 
+						it2.remove();
+						it1.remove();
+						break;
+					}
 				}
 			}
 		}
@@ -341,19 +362,30 @@ public class Controller {
 	 * @return: String result
 	 */
 	public String run() {
+		String msg;
 		switch(_mode) {
 		case TODOS:
-			procesar(elemList1, elemList2);
-			Equivalencia s = compare();
-			if(s.isEq())
-				return ("Podrían ser equivalentes, utilice el método \"Uno a uno\" para estar seguro");			
-			return s.getMsg();
+			if (procesar(elemList1, elemList2)) {
+				Equivalencia s = compare();
+				if(s.isEq())
+					return ("Podrían ser equivalentes, utilice el método \"Uno a uno\" para estar seguro");
+				msg = s.getMsg();
+			}
+			else {
+				msg = "No contienen los mismos simbolos, por tanto nunca podrían ser equivalentes";
+			}
+			return msg;
 		case SELECTED:
-			procesar(elemList1, elemList2);
-			Equivalencia t = compare();
-			if(t.isEq()&& elemList1.size()>1 && elemList2.size() >1)
-				return ("Podrían ser equivalentes, utilice el método \"Uno a uno\" para estar seguro");			
-			return t.getMsg();
+			if (procesar(elemList1, elemList2)) {
+				Equivalencia t = compare();
+				if(t.isEq()&& elemList1.size()>1 && elemList2.size() >1)
+					return ("Podrían ser equivalentes, utilice el método \"Uno a uno\" para estar seguro");	
+				msg = t.getMsg();
+			}
+			else {
+				msg = "No contienen los mismos simbolos, por tanto nunca podrían ser equivalentes";
+			}
+			return msg;
 		case UNOAUNO:
 			return emparejar();
 		default:
