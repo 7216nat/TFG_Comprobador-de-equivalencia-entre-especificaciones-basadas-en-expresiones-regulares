@@ -1,0 +1,10 @@
+aux <letra> = [a-z, A-Z]
+aux <dig> = [0-9]
+aux <digPos> = [1-9]
+aux <nat> = (<digPos> <dig>*) | 0
+aux <pExp> = (e|E) (\-)? <nat>
+aux <pDec> = . ((<dig>* <digPos>)|0)
+aux <enteroAux> = (\+ | \-)? <nat>
+def <variable> = <letra> (<letra> | <dig> | _)*
+def <entero> = <enteroAux>
+def <num_real> = <enteroAux> (<pDec> | <pExp>| <pDec> <pExp>)

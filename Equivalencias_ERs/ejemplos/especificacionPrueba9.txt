@@ -1,0 +1,9 @@
+aux <letra> = [a-z] | [A-Z]
+aux <digitoPositivo> = [1-9]
+aux <digito> = [0-9]
+aux <parteDecimal> = \. <digito>* <digitoPositivo>
+aux <enteroAux> = (\+ | \-)? <digitoPositivo> <digito>*
+aux <parteExponencial> = (e|E) <enteroAux>
+def <identificador> = <letra> (<letra> | <digito> | _)*
+def <entero> = <enteroAux>
+def <real> = <enteroAux> (<parteDecimal> | <parteExponencial> | <parteDecimal> <parteExponencial>)

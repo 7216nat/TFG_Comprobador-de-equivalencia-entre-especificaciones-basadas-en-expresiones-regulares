@@ -1,0 +1,10 @@
+aux <letra> = [a-z, A-Z]
+aux <digito> = [0-9]
+aux <enteros> = ([1-9] <digito>* | 0)
+aux <decimales> = (<digito>* [1-9] | 0)
+aux <Sum> = \+
+aux <Res> = \-
+aux <NIntAux> = (<Sum> | <Res>)? <enteros>  
+def <Var> = <letra> (<letra> | <digito> | _) *  
+def <NInt> = <NIntAux>
+def <NReal> = <NIntAux>. <decimales> ((e | E) <enteros>)? 

@@ -1,0 +1,9 @@
+aux <DigitoPos> =  [1-9]
+aux <Digito> = (0 | [1-9])
+aux <Ent> = <DigitoPos> <Digito>*
+aux <PDec> = . <Digito>* <DigitoPos>
+aux <PExp> = (e | E) (\-)? <DigitoPos> <Digito>*
+aux <letra> = [a-z, A-Z]
+def <EntNum> = ( \- | \+)? ( <Ent> | 0)
+def <RealNum> = (\- | \+)? (<Ent> | 0) (<PDec> | <PExp> | <PDec> <PExp>)
+def <Variable> = <letra> ( <letra> | <Digito> | \_ )*

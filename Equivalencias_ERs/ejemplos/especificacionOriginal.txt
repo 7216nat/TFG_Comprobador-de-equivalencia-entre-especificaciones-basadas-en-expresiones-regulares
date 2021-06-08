@@ -1,0 +1,10 @@
+aux <Letra> =  [a-z] | [A-Z]
+aux <DPos> = [1-9]
+aux <Digito> = <DPos> | 0
+aux <Signo> =(\+|\-)
+aux <PEnt> = (<DPos> <Digito>* | 0)
+aux <PDec> = . (<Digito>* <DPos> | 0)
+aux <PExp> = (e|E) <Signo>?  <PEnt>
+def <Iden> = <Letra> (<Letra> | <Digito> | _)*
+def <LEnt> = <Signo>? <PEnt>
+def <LReal> = <Signo>? <PEnt> (<PDec> | <PExp> | <PDec> <PExp>)

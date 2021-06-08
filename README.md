@@ -3,7 +3,7 @@
   <br>
 </h1>
 
-<h4 align="center">Una pequeña herramienta que permite hacer comparaciones entre dos especificaciones basadas en expresiones regulares, TFG para el grado de Ingenieria Informatica de Universidad Complutense de Madrid.</h4>
+<h4 align="center">Una pequeña herramienta que permite hacer comparaciones entre dos especificaciones basadas en expresiones regulares,  TFG para el grado de Ingenieria Informatica de Universidad Complutense de Madrid.</h4>
 
 <p align="center">
   <a href="#palabras-claves">Palabras claves</a> •
@@ -33,17 +33,18 @@
 Para clonar y ejecutar esta aplicación, necesitarás [Git](https://git-scm.com) y alguna IDE ([Eclipse](https://www.eclipse.org/downloads/), [Netbeans](https://netbeans.apache.org/download/index.html),...):
 
 ```bash
-# Clone este repositorio
+# Clonar este repositorio
 $ git clone https://github.com/7216nat/TFG_Expresiones_Regulares/
 
 # abrir con IDE y ejecutar el main
 
-# cargue algunos ejemplos de de src/ejemplos y pruebe con ellos, para más informacion consulte nuestra memoria del proyecto
+# cargue algunos ejemplos de de /ejemplos y pruebe con ellos, 
+# para más informacion consulte nuestra memoria del proyecto
 ```
 
 ## Créditos
 
-Este programa ha utilizada las siguientes herramientas de open source:
+Este programa ha utilizado las siguientes herramientas de open source:
 
 - [JFlex](https://jflex.de/)
 - [Cup Parser](https://www.cs.princeton.edu/~appel/modern/java/CUP/)

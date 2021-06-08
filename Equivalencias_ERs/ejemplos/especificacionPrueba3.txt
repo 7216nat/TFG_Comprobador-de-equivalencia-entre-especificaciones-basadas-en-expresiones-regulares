@@ -1,0 +1,9 @@
+aux <letra> = [a-z, A-Z]
+aux <digPos> = [1-9]
+aux <dig> = (<digPos> | 0)
+aux <ParteEnt> = (<digPos>) (<dig>)*
+aux <ParteReal> = (<dig>)* (<digPos>)
+aux <NumEntAux> = (\+ | \-) ? (<ParteEnt>)
+def <Var> = <letra> (<letra> | <dig> | _ )*
+def <NumEnt> = <NumEntAux>
+def <NumReal> = (\+ | \-) ? (<ParteEnt>) ( \. (<ParteReal>)) ? (( E | e ) (<NumEntAux> | 0)) ?

@@ -1,0 +1,9 @@
+aux <DigPos> = [1-9]
+aux <Dig> = (<DigPos> | 0)
+aux <Letra> = [a-z] | [A-Z]
+aux <ParteEnt> = <DigPos> <Dig>*
+aux <ParteDec> = <Dig>* <DigPos>
+aux <NumEntAux> = (\+ | \-)? <ParteEnt>
+def <NombreVar> = <Letra> (<Letra> | <Dig> | _)*
+def <NumEnt> = <NumEntAux>
+def <NumReal> = (\+ | \-)? <ParteEnt> (\. <ParteDec> (e|E) <NumEntAux> | \. <ParteDec> | (e|E) <NumEntAux>)

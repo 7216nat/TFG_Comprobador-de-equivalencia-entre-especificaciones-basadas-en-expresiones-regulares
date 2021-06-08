@@ -1,0 +1,9 @@
+aux <DigPos> = [1-9]
+aux <Digito> = [0-9]
+aux <NumPos> = <DigPos> <Digito>*
+aux <Exp> =  (e|E) <Digito>
+aux <Decimal> = . <Digito>* <DigPos>
+aux <Letra> = [a-z,A-Z]
+def <SimProp> = <Letra> (<Letra>| _| <Digito>)*
+def <Int> =  ( (\+) | (\-) )? (0 | <NumPos>)
+def <Real> = <Digito> (<Decimal> | <Exp> | <Decimal> <Exp>)

@@ -1,0 +1,9 @@
+aux <letra> = [a-z, A-Z]
+aux <digito_pos> = [1-9]
+aux <digito> = [0-9]
+aux <parte_entera> = (\+|\-)? (<digito_pos> (<digito>)* | 0)
+aux <parte_decimal> = . (((<digito>)* <digito_pos>) |0)
+aux <parte_exp> = (E|e) <parte_entera>
+def <id> = <letra> (<letra> | <digito> | _)*
+def <lit_entero> = <parte_entera>
+def <lit_real> = <parte_entera> (<parte_decimal> | <parte_exp> | <parte_decimal> <parte_exp>)

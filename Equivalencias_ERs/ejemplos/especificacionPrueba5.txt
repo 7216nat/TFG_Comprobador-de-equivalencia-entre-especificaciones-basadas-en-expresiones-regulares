@@ -1,0 +1,9 @@
+aux <letra> = [a-z, A-Z]
+aux <digito> = [0-9]
+aux <dig_nozero> = [1-9]
+aux <decimal> = . <digito>* <dig_nozero>
+aux <enteroAux> = (\+|\-)? <dig_nozero> <digito>*
+aux <exponencial> = (e|E) <enteroAux>
+def <entero> = <enteroAux>
+def <real> = <enteroAux> (<decimal> | <exponencial> | <decimal> <exponencial>)
+def <variable> = <letra> (<letra> | <digito> | _)*
