@@ -3,7 +3,7 @@
   <br>
 </h1>
 
-<h4 align="center">Una pequeña herramienta que permite hacer comparaciones entre dos especificaciones basadas en expresiones regulares,  TFG para el grado de Ingenieria Informatica de Universidad Complutense de Madrid.</h4>
+<h4 align="center">Una pequeña herramienta que permite hacer comparaciones entre dos especificaciones basadas en expresiones regulares,<br> TFG para el grado de Ingenieria Informatica de Universidad Complutense de Madrid.</h4>
 
 <p align="center">
   <a href="#palabras-claves">Palabras claves</a> •
