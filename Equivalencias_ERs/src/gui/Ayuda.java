@@ -111,8 +111,8 @@ public class Ayuda extends JFrame {
 				+ "Si son equivalentes: el método Seleccionados mostrará equivalentes si solo se ha seleccionado una expresión de cada lenguaje o posiblemente equivalentes si se seleccionaron más;"
 				+ " el método Todos devolverá posiblemente equivalentes y el método Uno a Uno mostrará la lista de parejas equivalentes de cada lenguaje y la lista de expresiones sin pareja.\n"
 				+ "Si no son equivalentes: cualquiera de los métodos mostrará una cadena de ejemplo que es aceptada o puede crearse por uno de los lenguajes y no por el otro.\n\n"
-				+ "\"Posiblemente equivalentes\" significa que la unión de las expresiones es equivalentes, pero esa unión puede dar lugar a diferentes lenguajes, la forma más segura de ver la equivalencia es usando el método \"Uno a uno \".";
-		info = "Algoritmos utilizados para crear los autómatas:\n"
+				+ "\"Posiblemente equivalentes\" significa que la comprobación de equivalencia entre la unión de todas las definiciones de un lenguaje con la del otro ha resultado positiva, pero esa unión puede dar lugar a diferentes lenguajes, la forma más segura de ver la equivalencia es usando el método \"Uno a uno \".";
+		info = "Secuencia de algoritmos utilizados para crear los autómatas y hacer la comprobación de equivalencia:\\n"
 				+ " · Thompson: se sigue un algoritmo de Thompson + determinación con lambda-transiciones.\n"
 				+ " · Seguidores: se siguen el algoritmo de Thompson, se eliminan las lambda-transiciones y luego se sigue el proceso de determinación.\n"
 				+ " · Derivadas: se sigue el algoritmo de derivadas.\n"
@@ -120,9 +120,10 @@ public class Ayuda extends JFrame {
 				+ " · Berry-Sethi: se sigue el algoritmo de Berry-Sethi y luego se hace la determinación.\n\n"
 				
 				+ "Métodos de entrada:\n"
-				+ " · Todos: se hace la unión de todas las expresiones regulares de cada lenguaje.\nNota: si se elige esta opción, se ignoran qué expresiones regulares se hayan marcado o no.\n"
+				+ " · Todos: se hace la unión de todas las expresiones regulares de cada lenguaje.\nNota: si se elige esta opción, se ignoran qué expresiones regulares se han marcado.\n"
 				+ " · Seleccionados: se hace la unión de todas las expresiones regulares marcadas en cada lenguaje.\n"
-				+ " · Uno a uno: se compara cada expresión del lenguaje 1 con las del lenguaje 2, emparejando las que sean equivalentes. Como resultado, se muestran las parejas desemparejadas si ha quedado alguna.\n\n"
+				+ " · Uno a uno: se compara cada expresión del lenguaje 1 con las del lenguaje 2, emparejando las que sean equivalentes. Como resultado, "
+				+ "se muestran las parejas de expresiones equivalentes y las definiciones que no han podido emparejarse.\n\n"
 				
 				+ "Método para la comprobación de equivalencia: Hopcroft-Karp siguiendo independientemente del algoritmo y método de entrada\n";
 	}
