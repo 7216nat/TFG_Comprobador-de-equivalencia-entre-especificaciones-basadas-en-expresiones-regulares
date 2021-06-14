@@ -38,6 +38,8 @@ $ git clone https://github.com/7216nat/TFG_Expresiones_Regulares/
 
 # abrir con IDE y ejecutar el main
 
+# incluir lib/cup.jar al Build Path
+
 # cargue algunos ejemplos de de /ejemplos y pruebe con ellos, 
 # para más informacion consulte nuestra memoria del proyecto
 ```
