@@ -36,9 +36,11 @@ Para clonar y ejecutar esta aplicación, necesitarás [Git](https://git-scm.com)
 # Clonar este repositorio
 $ git clone https://github.com/7216nat/TFG_Expresiones_Regulares/
 
-# abrir con IDE y ejecutar el main
+# abrir con IDE
 
 # incluir lib/cup.jar al Build Path
+
+# ejecutar el src/Main/Main.java
 
 # cargue algunos ejemplos de de /ejemplos y pruebe con ellos, 
 # para más informacion consulte nuestra memoria del proyecto
