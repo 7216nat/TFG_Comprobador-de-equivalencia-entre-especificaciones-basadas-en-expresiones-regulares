@@ -30,17 +30,22 @@
 
 ## Cómo utilizar
 
-Para clonar y ejecutar esta aplicación, necesitarás [Git](https://git-scm.com) y alguna IDE ([Eclipse](https://www.eclipse.org/downloads/), [Netbeans](https://netbeans.apache.org/download/index.html),...):
+Para clonar y ejecutar esta aplicación, necesitarás [Git](https://git-scm.com), instalada JRE o JDK >= 8 [Java SE downloads](https://www.oracle.com/java/technologies/javase-downloads.html) y alguna IDE ([Eclipse](https://www.eclipse.org/downloads/), [Netbeans](https://netbeans.apache.org/download/index.html),...):
 
-```bash
+```bash 
 # Clonar este repositorio
 $ git clone https://github.com/7216nat/TFG_Expresiones_Regulares/
 
-# abrir con IDE
+* 1
+    # ejecutar Comprobador_equivalencias.jar
 
-# incluir lib/cup.jar al Build Path
+* 2
 
-# ejecutar el src/Main/Main.java
+    # abrir con IDE
+
+    # incluir lib/cup.jar al Build Path
+
+    # ejecutar el src/main/Main.java
 
 # cargue algunos ejemplos de de /ejemplos y pruebe con ellos, 
 # para más informacion consulte nuestra memoria del proyecto
