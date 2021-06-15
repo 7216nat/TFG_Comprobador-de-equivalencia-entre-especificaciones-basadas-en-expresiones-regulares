@@ -35,7 +35,7 @@ Para clonar y ejecutar esta aplicación, necesitarás [Git](https://git-scm.com)
 
 ```bash 
 # Clonar este repositorio
-$ git clone https://github.com/7216nat/TFG_Expresiones_Regulares/
+$ git clone https://github.com/7216nat/TFG_Comprobador-de-equivalencia-entre-especificaciones-basadas-en-expresiones-regulares
  
 # ejecutar Comprobador_equivalencias.jar
 
