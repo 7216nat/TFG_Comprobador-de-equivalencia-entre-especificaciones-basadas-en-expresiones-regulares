@@ -31,16 +31,15 @@
 
 ## Cómo utilizar
 
-Para clonar y ejecutar esta aplicación, necesitarás [Git](https://git-scm.com), instalada JRE o JDK >= 8 [Java SE downloads](https://www.oracle.com/java/technologies/javase-downloads.html) y alguna IDE ([Eclipse](https://www.eclipse.org/downloads/), [Netbeans](https://netbeans.apache.org/download/index.html),...):
+Para clonar y ejecutar esta aplicación, necesitarás [Git](https://git-scm.com), tener instalada JRE o JDK >= 8 [Java SE downloads](https://www.oracle.com/java/technologies/javase-downloads.html) y alguna IDE ([Eclipse](https://www.eclipse.org/downloads/), [Netbeans](https://netbeans.apache.org/download/index.html),...):
 
 ```bash 
 # Clonar este repositorio
 $ git clone https://github.com/7216nat/TFG_Expresiones_Regulares/
+ 
+# ejecutar Comprobador_equivalencias.jar
 
-* 1
-    # ejecutar Comprobador_equivalencias.jar
-
-* 2
+* alternativamente
 
     # abrir con IDE
 
