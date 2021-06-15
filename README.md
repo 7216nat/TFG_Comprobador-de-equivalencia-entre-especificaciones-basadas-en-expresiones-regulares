@@ -22,6 +22,7 @@
 * Algoritmo de Derivadas
 * Algoritmo de Derivadas parciales
 * Algoritmo de Berry-Sethi
+* Algoritmo de Seguidores
 * Autómata Finito Determinista
 * Autómata Finito No Determinista
 * Determinación de autómatas
@@ -69,7 +70,7 @@ eprint...
 
 ## Agradecimiento especial
 
-Agradecimiento especial al nuestro director del proyecto:
+Agradecimiento especial a nuestro director del proyecto:
 
 #### José Luis Sierra Rodríguez
 
